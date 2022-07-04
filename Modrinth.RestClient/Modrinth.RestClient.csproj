@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	    <Description>A Modrinth REST client using RestEase</Description>
+        <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
+        <PackageTags>modrinth;api;labrinth;restease</PackageTags>
+        <Authors>Zechiax</Authors>
+        <PackageReleaseNotes>- Added Async to name of every method to better show that they are asynchronous
+- Added User-Agent option to Constructor and as a parameter to Modrinth's API
+- Updated documentation</PackageReleaseNotes>
+	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+	    <PackageReadmeFile>README.md</PackageReadmeFile>
+	    <PackageVersion>2.0.0</PackageVersion>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\README.md">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="RestEase" Version="1.5.7" />
+    </ItemGroup>
+
+</Project>
