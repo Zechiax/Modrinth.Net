@@ -1,4 +1,6 @@
 # Modrinth.RestClient
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Modrinth.RestClient?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient)
+
 ## Usage
 - All methods are asynchronous
 ```csharp
