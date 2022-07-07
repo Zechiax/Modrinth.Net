@@ -5,17 +5,15 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	    <Description>A Modrinth REST client using RestEase</Description>
+	    <Description>A Modrinth API wrapper using RestEase</Description>
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Added Async to name of every method to better show that they are asynchronous
-- Added User-Agent option to Constructor and as a parameter to Modrinth's API
-- Updated documentation</PackageReleaseNotes>
+        <PackageReleaseNotes>- Added option to provide Polly's AsyncPolicy in client constructor</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.0.0</PackageVersion>
+	    <PackageVersion>2.1.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
