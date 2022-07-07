@@ -1,5 +1,7 @@
 ﻿using System.Text;
+using Microsoft.Extensions.Http;
 using Modrinth.RestClient.Models;
+using Polly;
 using RestEase;
 using Version = Modrinth.RestClient.Models.Version;
 
@@ -122,6 +124,7 @@ public static class ModrinthApi
     /// <summary>
     /// API Url of the production server
     /// </summary>
+    // ReSharper disable once MemberCanBePrivate.Global
     public const string BaseUrl = "https://api.modrinth.com/v2";
 
     /// <summary>
@@ -138,6 +141,26 @@ public static class ModrinthApi
     public static IModrinthApi NewClient(string url = BaseUrl, string userAgent = "")
     {
         var api = new RestEase.RestClient(url)
+        {
+            // Custom query builder to comply with Modrinth's API specification
+            QueryStringBuilder = new ModrinthQueryBuilder()
+        }.For<IModrinthApi>();
+
+        api.UserAgentHeader = userAgent;
+
+        return api;
+    }
+    
+    /// <summary>
+    /// Initializes new RestClient from <see cref="IModrinthApi"/> with specified policy
+    /// </summary>
+    /// <param name="userAgent">User-Agent header you want to use while communicating with Modrinth API, it's recommended to set 'a uniquely-identifying' one (<a href="https://docs.modrinth.com/api-spec/#section/User-Agents">see the docs</a>)</param>
+    /// <param name="url">Custom API url, default is <see cref="BaseUrl"/></param>
+    /// <param name="policy">Use custom Polly resiliency policy <a href="https://github.com/App-vNext/Polly#resilience-policies=">see Polly</a></param>
+    /// <returns>New RestEase RestClient from <see cref="IModrinthApi"/> interface</returns>
+    public static IModrinthApi NewClient(IAsyncPolicy<HttpResponseMessage> policy, string url = BaseUrl, string userAgent = "")
+    {
+        var api = new RestEase.RestClient(url, new PolicyHttpMessageHandler(policy))
         {
             // Custom query builder to comply with Modrinth's API specification
             QueryStringBuilder = new ModrinthQueryBuilder()
