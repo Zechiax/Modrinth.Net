@@ -46,8 +46,8 @@ public interface IModrinthApi
     /// Check project slug/ID validity
     /// </summary>
     /// <returns></returns>
-    [Get("project/{id|slug}/check")]
-    Task<string> CheckProjectIdSlugValidityAsync([Path("slug|id")] string slugOrId);
+    [Get("project/{slugORid}/check")]
+    Task<string> CheckProjectIdSlugValidityAsync([Path("slugORid")] string slugOrId);
 
     /// <summary>
     /// Get specific version by ID
