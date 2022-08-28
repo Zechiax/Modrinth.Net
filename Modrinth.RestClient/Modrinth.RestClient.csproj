@@ -13,7 +13,7 @@
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.2.0</PackageVersion>
+	    <PackageVersion>2.2.2</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

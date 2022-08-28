@@ -28,7 +28,7 @@ public class TeamMember
     /// <summary>
     /// The user's permissions in bitflag format (requires authorization to view)
     /// </summary>
-    public Permissions Permissions { get; set; }
+    public Permissions? Permissions { get; set; }
 
     /// <summary>
     /// Whether or not the user has accepted to be on the team (requires authorization to view)
