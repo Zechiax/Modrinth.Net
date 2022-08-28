@@ -6,11 +6,9 @@
 ```csharp
 using Modrinth.RestClient;
 
-// Modrinth recommended to set a uniquely-identifying user-agent
+// Modrinth recommends to set a uniquely-identifying user-agent
 var api = ModrinthApi.NewClient(userAgent: "My_Awesome_Project");
 
-// Change from GetProjectBySlug to only GetProject in version >=1.1.0
-// In version >=2.0.0 all methods have suffix "Async"
 var project = await api.GetProjectAsync("sodium");
         
 Console.WriteLine(project.Description);

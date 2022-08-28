@@ -9,11 +9,11 @@
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Added option to provide Polly's AsyncPolicy in client constructor</PackageReleaseNotes>
+        <PackageReleaseNotes>- Support for resource packs</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.1.0</PackageVersion>
+	    <PackageVersion>2.2.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

@@ -4,6 +4,9 @@ using Newtonsoft.Json;
 
 namespace Modrinth.RestClient.Models;
 
+/// <summary>
+/// Search Result Model
+/// </summary>
 public class SearchResult
 {
     /// <summary>

@@ -4,6 +4,9 @@ using Newtonsoft.Json;
 
 namespace Modrinth.RestClient.Models;
 
+/// <summary>
+/// Team Member Model
+/// </summary>
 public class TeamMember
 {
     /// <summary>
