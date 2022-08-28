@@ -3,5 +3,6 @@
 public enum ProjectType
 {
     Mod,
-    Modpack
+    Modpack,
+    Resourcepack
 }

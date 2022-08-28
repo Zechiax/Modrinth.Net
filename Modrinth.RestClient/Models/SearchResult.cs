@@ -65,6 +65,12 @@ public class SearchResult
     /// The username of the project's author
     /// </summary>
     public string Author { get; set; }
+    
+    /// <summary>
+    /// A list of the categories that the project has which are not secondary
+    /// </summary>
+    [JsonProperty("display_categories")]
+    public string[] DisplayCategories { get; set; }
 
     /// <summary>
     /// The date the project was created

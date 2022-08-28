@@ -19,6 +19,11 @@ public class Dependency
     public string? ProjectId { get; set; }
 
     /// <summary>
+    /// The file name of the dependency, mostly used for showing external dependencies on modpacks
+    /// </summary>
+    public string? FileName { get; set; }
+
+    /// <summary>
     /// The type of dependency that this version has
     /// </summary>
     [JsonProperty("dependency_type")]

@@ -117,6 +117,11 @@ public class Project
     public DateTime Updated { get; set; }
 
     /// <summary>
+    /// The date the project's status was set to approved or unlisted
+    /// </summary>
+    public DateTime? Approved { get; set; }
+
+    /// <summary>
     /// The total number of users following the project
     /// </summary>
     public int Followers { get; set; }

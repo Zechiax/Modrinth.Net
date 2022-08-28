@@ -21,7 +21,7 @@ public interface IModrinthApi
     /// <summary>
     /// Gets project by slug or ID
     /// </summary>
-    /// <param name="slugOrId"></param>
+    /// <param name="slugOrId">The ID or slug of the project</param>
     /// <returns></returns>
     [Get("project/{slugORid}")]
     Task<Project> GetProjectAsync([Path("slugORid")] string slugOrId);
@@ -37,10 +37,17 @@ public interface IModrinthApi
     /// <summary>
     /// Gets version list of a project by its ID
     /// </summary>
-    /// <param name="slugOrId"></param>
+    /// <param name="slugOrId">The ID or slug of the project</param>
     /// <returns></returns>
     [Get("project/{slugORid}/version")]
     Task<Version[]> GetProjectVersionListAsync([Path("slugORid")] string slugOrId);
+    
+    /// <summary>
+    /// Check project slug/ID validity
+    /// </summary>
+    /// <returns></returns>
+    [Get("project/{id|slug}/check")]
+    Task<string> CheckProjectIdSlugValidityAsync([Path("slug|id")] string slugOrId);
 
     /// <summary>
     /// Get specific version by ID
@@ -105,6 +112,14 @@ public interface IModrinthApi
     /// <returns></returns>
     [Get("team/{id}/members")]
     Task<TeamMember[]> GetTeamMembersByTeamIdAsync([Path("id")] string teamId);
+
+    /// <summary>
+    /// Gets the members of multiple teams
+    /// </summary>
+    /// <param name="ids">The IDs of the teams</param>
+    /// <returns></returns>
+    [Get("teams")]
+    Task<TeamMember[][]> GetMembersOfMultipleTeamsAsync([Query("ids")] IEnumerable<string> ids);
 
     /// <summary>
     /// Search Modrinth for project by it's name
