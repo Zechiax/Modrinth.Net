@@ -203,42 +203,67 @@ public class ModrinthQueryBuilder : QueryStringBuilder
         {
             return string.Empty;
         }
-
-        var sb = new StringBuilder();
-        SortedDictionary<string, List<string>> query = new SortedDictionary<string, List<string>>();
         
-        // Each key will have list of values as its value
-        foreach (var kvp in info.QueryParams)
-        {
-            if (query.ContainsKey(kvp.Key) && kvp.Value is not null)
-            {
-                var list = query[kvp.Key];
-                list.Add(kvp.Value);
-            }
-            // First time we see the key
-            else if (kvp.Value is not null)
-            {
-                query.Add(kvp.Key, new List<string> {kvp.Value});
-            }
-        }
+        var query = GetKeyValues(info.QueryParams);
+        
+        return BuildTheQueryString(query);
+    }
 
-        var counter = query.Count;
+    private static string BuildTheQueryString(IDictionary<string, IList<string>> queryParams)
+    {
+        var sb = new StringBuilder();
+        var counter = queryParams.Count;
+        
         // Let's build the query string
-        foreach (var (key, list) in query)
+        foreach (var (key, list) in queryParams)
         {
             counter--;
             sb.Append($"{key}=[");
 
-            for (int i = 0; i < list.Count; i++)
+            for (var i = 0; i < list.Count; i++)
             {
-                // Check if we have the last value
-                sb.Append($"\"{list[i]}\"{(i == (list.Count - 1) ? null : ',')}");
+                sb.Append(i == list.Count - 1
+                    // Last element
+                    ? $"\"{list[i]}\"]"
+                    : $"\"{list[i]}\",");
             }
 
-            // Check for the last value
-            sb.Append($"]{(counter == 0 ? null : "&")}");
+            // If there are other values, add &
+            if (counter <= 0)
+            {
+                sb.Append('&');
+            }
         }
-        
+
         return sb.ToString();
+    }
+
+    /// <summary>
+    /// Joins values of the same key to only 1 key, for id:5, id:6 it will create id:[5,6] and so on
+    /// </summary>
+    /// <param name="kvp"></param>
+    /// <returns></returns>
+    private static SortedDictionary<string, IList<string>> GetKeyValues(IEnumerable<KeyValuePair<string, string?>> kvp)
+    {
+        var query = new SortedDictionary<string, IList<string>>();
+        var keyValuePairs = kvp as KeyValuePair<string, string?>[] ?? kvp.ToArray();
+        
+        // Each key will have list of values as its value
+        foreach (var (key, value) in keyValuePairs)
+        {
+            // Key is already in the list
+            if (query.ContainsKey(key) && value is not null)
+            {
+                var list = query[key];
+                list.Add(value);
+            }
+            // First time we see the key
+            else if (value is not null)
+            {
+                query.Add(key, new List<string> {value});
+            }
+        }
+
+        return query;
     }
 }
