@@ -9,11 +9,11 @@
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Support for resource packs</PackageReleaseNotes>
+        <PackageReleaseNotes>- Added multiple versions endpoint</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.2.2</PackageVersion>
+	    <PackageVersion>2.2.3</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
