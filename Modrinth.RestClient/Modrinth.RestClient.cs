@@ -43,6 +43,14 @@ public interface IModrinthApi
     Task<Version[]> GetProjectVersionListAsync([Path("slugORid")] string slugOrId);
     
     /// <summary>
+    /// Gets multiple versions by their ids
+    /// </summary>
+    /// <param name="ids"></param>
+    /// <returns></returns>
+    [Get("projects")]
+    Task<Version[]> GetMultipleVersionsAsync([Query("ids")] IEnumerable<string> ids);
+    
+    /// <summary>
     /// Check project slug/ID validity
     /// </summary>
     /// <returns></returns>
