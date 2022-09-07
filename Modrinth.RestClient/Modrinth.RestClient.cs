@@ -218,15 +218,10 @@ public class ModrinthQueryBuilder : QueryStringBuilder
         foreach (var (key, list) in queryParams)
         {
             counter--;
+            
             sb.Append($"{key}=[");
-
-            for (var i = 0; i < list.Count; i++)
-            {
-                sb.Append(i == list.Count - 1
-                    // Last element
-                    ? $"\"{list[i]}\"]"
-                    : $"\"{list[i]}\",");
-            }
+            sb.Append(string.Join(',', list));
+            sb.Append(']');
 
             // If there are other values, add &
             if (counter <= 0)
