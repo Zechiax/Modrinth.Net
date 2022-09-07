@@ -220,11 +220,12 @@ public class ModrinthQueryBuilder : QueryStringBuilder
             counter--;
             
             sb.Append($"{key}=[");
-            sb.Append(string.Join(',', list));
+            var ids = list.Select(x => string.Concat('"', x, '"'));
+            sb.Append(string.Join(',', ids));
             sb.Append(']');
 
             // If there are other values, add &
-            if (counter <= 0)
+            if (counter > 0)
             {
                 sb.Append('&');
             }
