@@ -45,9 +45,9 @@ public interface IModrinthApi
     /// <summary>
     /// Gets multiple versions by their ids
     /// </summary>
-    /// <param name="ids"></param>
+    /// <param name="ids">The IDs of the versions</param>
     /// <returns></returns>
-    [Get("projects")]
+    [Get("versions")]
     Task<Version[]> GetMultipleVersionsAsync([Query("ids")] IEnumerable<string> ids);
     
     /// <summary>
