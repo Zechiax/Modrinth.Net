@@ -1,6 +1,7 @@
 ﻿using Modrinth.RestClient.Models;
 using Modrinth.RestClient.Models.Tags;
 using RestEase;
+using Index = Modrinth.RestClient.Models.Enums.Index;
 using Version = Modrinth.RestClient.Models.Version;
 
 namespace Modrinth.RestClient;
@@ -56,14 +57,22 @@ public interface IModrinthApi
     /// <returns></returns>
     [Get("project/{slugORid}/check")]
     Task<string> CheckProjectIdSlugValidityAsync([Path("slugORid")] string slugOrId);
-    
+
     /// <summary>
     /// Search Modrinth for project by it's name
     /// </summary>
     /// <param name="query">The query to search for</param>
+    /// <param name="index"></param>
+    /// <param name="offset"></param>
+    /// <param name="limit"></param>
+    /// <param name="filters"></param>
     /// <returns></returns>
     [Get("search")]
-    Task<SearchResponse> SearchProjectsAsync([Query("query")] string query);
+    Task<SearchResponse> SearchProjectsAsync(
+        [Query("query")] string query, 
+        [Query("index")] Index index = Index.Downloads,
+        [Query("offset")] ulong offset = 0,
+        [Query("limit")] ulong limit = 10);
     
     #endregion
 
