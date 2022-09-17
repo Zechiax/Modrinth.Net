@@ -62,10 +62,9 @@ public interface IModrinthApi
     /// Search Modrinth for project by it's name
     /// </summary>
     /// <param name="query">The query to search for</param>
-    /// <param name="index"></param>
-    /// <param name="offset"></param>
-    /// <param name="limit"></param>
-    /// <param name="filters"></param>
+    /// <param name="index">The sorting method used for sorting search results</param>
+    /// <param name="offset">The offset into the search. Skips this number of results</param>
+    /// <param name="limit">The number of results returned by the search</param>
     /// <returns></returns>
     [Get("search")]
     Task<SearchResponse> SearchProjectsAsync(
