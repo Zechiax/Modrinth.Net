@@ -37,7 +37,7 @@ public class Version
     /// The release channel for this version
     /// </summary>
     [JsonProperty("version_type")]
-    public VersionType VersionType { get; set; }
+    public ProjectVersionType ProjectVersionType { get; set; }
     
     /// <summary>
     /// The mod loaders that this version supports

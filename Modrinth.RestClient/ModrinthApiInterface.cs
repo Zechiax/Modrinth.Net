@@ -1,4 +1,5 @@
 ﻿using Modrinth.RestClient.Models;
+using Modrinth.RestClient.Models.Tags;
 using RestEase;
 using Version = Modrinth.RestClient.Models.Version;
 
@@ -15,6 +16,8 @@ public interface IModrinthApi
     [Header("User-Agent")] 
     string UserAgentHeader { get; set; } 
 
+    #region ProjectEnpoints
+    
     /// <summary>
     /// Gets project by slug or ID
     /// </summary>
@@ -53,7 +56,19 @@ public interface IModrinthApi
     /// <returns></returns>
     [Get("project/{slugORid}/check")]
     Task<string> CheckProjectIdSlugValidityAsync([Path("slugORid")] string slugOrId);
+    
+    /// <summary>
+    /// Search Modrinth for project by it's name
+    /// </summary>
+    /// <param name="query">The query to search for</param>
+    /// <returns></returns>
+    [Get("search")]
+    Task<SearchResponse> SearchProjectsAsync([Query("query")] string query);
+    
+    #endregion
 
+    #region VersionEndpoints
+    
     /// <summary>
     /// Get specific version by ID
     /// </summary>
@@ -85,7 +100,10 @@ public interface IModrinthApi
     /// <returns></returns>
     [Get("users")]
     Task<User[]> GetMultipleUsersByIdAsync([Query("ids")] IEnumerable<string> ids);
+    
+    #endregion
 
+    #region UserEnpoints
     /// <summary>
     /// Gets all projects of a user by their ID
     /// </summary>
@@ -101,6 +119,10 @@ public interface IModrinthApi
     /// <returns></returns>
     [Get("user/{username}/projects")]
     Task<Project[]> GetUserProjectsByUsernameAsync([Path("username")] string username);
+    
+    #endregion
+    
+    #region TeamEndpoints
 
     /// <summary>
     /// Gets project's team members by project's slug or ID
@@ -125,12 +147,52 @@ public interface IModrinthApi
     /// <returns></returns>
     [Get("teams")]
     Task<TeamMember[][]> GetMembersOfMultipleTeamsAsync([Query("ids")] IEnumerable<string> ids);
+    
+    #endregion
+    
+    #region TagEnpoints
 
     /// <summary>
-    /// Search Modrinth for project by it's name
+    /// Gets an array of categories, their icons, and applicable project types
     /// </summary>
-    /// <param name="query">The query to search for</param>
     /// <returns></returns>
-    [Get("search")]
-    Task<SearchResponse> SearchProjectsAsync([Query("query")] string query);
+    [Get("tag/category")]
+    Task<Category[]> GetCategoriesAsync();
+    
+    /// <summary>
+    /// Gets an array of loaders, their icons, and supported project types
+    /// </summary>
+    /// <returns></returns>
+    [Get("tag/loader")]
+    Task<Loader[]> GetLoadersAsync();
+    
+    /// <summary>
+    /// Gets an array of game versions and information about them
+    /// </summary>
+    /// <returns></returns>
+    [Get("tag/game_version")]
+    Task<GameVersion[]> GetGameVersionsAsync();
+    
+    /// <summary>
+    /// Gets an array of licenses and information about them
+    /// </summary>
+    /// <returns></returns>
+    [Get("tag/license")]
+    Task<License[]> GetLicensesAsync();
+    
+    /// <summary>
+    /// Gets an array of donation platforms and information about them
+    /// </summary>
+    /// <returns></returns>
+    [Get("tag/donation_platform")]
+    Task<DonationPlatform[]> GetDonationPlatformsAsync();
+    
+    /// <summary>
+    /// Gets an array of valid report types
+    /// </summary>
+    /// <returns></returns>
+    [Get("tag/report_type")]
+    Task<string[]> GetReportTypesAsync();
+
+    #endregion
 }

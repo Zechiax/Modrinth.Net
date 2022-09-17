@@ -1,6 +1,6 @@
 ﻿namespace Modrinth.RestClient.Models.Enums;
 
-public enum VersionType
+public enum ProjectVersionType
 {
     Release,
     Beta,

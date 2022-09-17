@@ -9,11 +9,11 @@
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Added multiple versions endpoint</PackageReleaseNotes>
+        <PackageReleaseNotes>- Add all tag endpoints</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.2.4</PackageVersion>
+	    <PackageVersion>2.2.5</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
