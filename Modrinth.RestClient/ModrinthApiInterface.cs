@@ -69,7 +69,7 @@ public interface IModrinthApi
     /// <returns></returns>
     [Get("search")]
     Task<SearchResponse> SearchProjectsAsync(
-        [Query("query")] string query, 
+        [Query("query")] string query,
         [Query("index")] Index index = Index.Downloads,
         [Query("offset")] ulong offset = 0,
         [Query("limit")] ulong limit = 10);
