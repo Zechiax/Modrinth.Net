@@ -93,11 +93,17 @@ public class ModrinthQueryBuilder : QueryStringBuilder
         foreach (var (key, list) in queryParams)
         {
             counter--;
-            
-            sb.Append($"{key}=[");
-            var ids = list.Select(x => string.Concat('"', x, '"'));
-            sb.Append(string.Join(',', ids));
-            sb.Append(']');
+            if (list.Count > 1)
+            {
+                sb.Append($"{key}=[");
+                var ids = list.Select(x => string.Concat('"', x, '"'));
+                sb.Append(string.Join(',', ids));
+                sb.Append(']');
+            }
+            else
+            {
+                sb.Append($"{key}={list.First()}");
+            }
 
             // If there are other values, add &
             if (counter > 0)
