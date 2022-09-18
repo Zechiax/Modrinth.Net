@@ -101,7 +101,7 @@ public interface IModrinthApi
     /// <param name="usernameOrId"></param>
     /// <returns></returns>
     [Get("user/{usernameORId}")]
-    Task<User> GetUserByAsync([Path("usernameORId")] string usernameOrId);
+    Task<User> GetUserAsync([Path("usernameORId")] string usernameOrId);
 
     #region UserEnpoints
     /// <summary>
