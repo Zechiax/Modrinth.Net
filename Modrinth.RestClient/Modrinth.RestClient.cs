@@ -1,5 +1,8 @@
 ﻿using System.Text;
 using Microsoft.Extensions.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
+using Newtonsoft.Json.Serialization;
 using Polly;
 using RestEase;
 
