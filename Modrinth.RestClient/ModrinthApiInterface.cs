@@ -84,22 +84,6 @@ public interface IModrinthApi
     /// <returns></returns>
     [Get("version/{id}")]
     Task<Version> GetVersionByIdAsync([Path("id")] string versionId);
-    
-    /// <summary>
-    /// Gets user by his ID
-    /// </summary>
-    /// <param name="userId"></param>
-    /// <returns></returns>
-    [Get("user/{id}")]
-    Task<User> GetUserByIdAsync([Path("id")] string userId);
-    
-    /// <summary>
-    /// Gets user by username
-    /// </summary>
-    /// <param name="username"></param>
-    /// <returns></returns>
-    [Get("user/{username}")]
-    Task<User> GetUserByUsernameAsync([Path("username")] string username);
 
     /// <summary>
     /// Gets multiple users by their IDs
@@ -110,6 +94,14 @@ public interface IModrinthApi
     Task<User[]> GetMultipleUsersByIdAsync([Query("ids")] IEnumerable<string> ids);
     
     #endregion
+
+    /// <summary>
+    /// Gets user by his ID
+    /// </summary>
+    /// <param name="usernameOrId"></param>
+    /// <returns></returns>
+    [Get("user/{usernameORId}")]
+    Task<User> GetUserByAsync([Path("usernameORId")] string usernameOrId);
 
     #region UserEnpoints
     /// <summary>

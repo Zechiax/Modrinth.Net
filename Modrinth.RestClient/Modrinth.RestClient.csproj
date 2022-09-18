@@ -9,11 +9,12 @@
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Add all tag endpoints</PackageReleaseNotes>
+        <PackageReleaseNotes>- Allow search to have more parameters
+- Join get user by id and username to GetUser</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.2.5</PackageVersion>
+	    <PackageVersion>2.3.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
