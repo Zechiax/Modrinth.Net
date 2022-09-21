@@ -118,6 +118,7 @@ public class ModrinthQueryBuilder : QueryStringBuilder
         foreach (var (key, list) in queryParams)
         {
             counter--;
+            // TODO: Better solution for detecting ids query parameter, like checking if it implements IEnumerable
             // When we use ids, we have to make it into an array, even with only 1 value
             if (list.Count > 1 || key is "ids")
             {
