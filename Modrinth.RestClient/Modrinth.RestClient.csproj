@@ -9,12 +9,12 @@
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Allow search to have more parameters
-- Join get user by id and username to GetUser</PackageReleaseNotes>
+        <PackageReleaseNotes>- Allow index in search
+- Fix getting multiple ids with only 1 provided</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.3.1</PackageVersion>
+	    <PackageVersion>2.3.2</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

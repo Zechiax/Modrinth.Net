@@ -1,5 +1,7 @@
+using System.Net;
 using System.Runtime.CompilerServices;
 using NUnit.Framework.Internal.Commands;
+using RestEase;
 
 namespace Modrinth.RestClient.Test;
 
@@ -22,7 +24,7 @@ public class Tests
     }
 
     [Test]
-    public async Task TestMultipleSearchWithOnlyOneId()
+    public async Task TestMultipleSearchWithOneId()
     {
         var search = await _api.SearchProjectsAsync("");
 
@@ -31,5 +33,13 @@ public class Tests
         var projects = await _api.GetMultipleProjectsAsync(new [] {projectId});
         
         Assert.That(projects, Is.Not.Empty);
+    }
+    
+    [Test]
+    public async Task TestMultipleSearchWithZeroIds()
+    {
+        var projects = await _api.GetMultipleProjectsAsync(Array.Empty<string>());
+        
+        Assert.That(projects, Is.Empty);
     }
 }
