@@ -118,7 +118,8 @@ public class ModrinthQueryBuilder : QueryStringBuilder
         foreach (var (key, list) in queryParams)
         {
             counter--;
-            if (list.Count > 1)
+            // When we use ids, we have to make it into an array, even with only 1 value
+            if (list.Count > 1 || key is "ids")
             {
                 sb.Append($"{key}=[");
                 var ids = list.Select(x => string.Concat('"', x, '"'));
