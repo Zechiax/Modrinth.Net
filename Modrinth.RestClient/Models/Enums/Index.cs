@@ -7,7 +7,6 @@ namespace Modrinth.RestClient.Models.Enums;
 /// <summary>
 /// The sorting method used for sorting search results
 /// </summary>
-[JsonConverter(typeof(StringEnumConverter))]
 public enum Index
 {
     Relevance,
