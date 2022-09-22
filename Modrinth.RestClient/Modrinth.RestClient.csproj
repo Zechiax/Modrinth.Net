@@ -10,11 +10,12 @@
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
         <PackageReleaseNotes>- Allow index in search
-- Fix getting multiple ids with only 1 provided</PackageReleaseNotes>
+- Fix getting multiple ids with only 1 provided
+- Rename method for getting user's projects</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.3.2</PackageVersion>
+	    <PackageVersion>2.4.0</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>

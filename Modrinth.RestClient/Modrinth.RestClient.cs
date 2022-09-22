@@ -118,9 +118,10 @@ public class ModrinthQueryBuilder : QueryStringBuilder
         foreach (var (key, list) in queryParams)
         {
             counter--;
+            
             // TODO: Better solution for detecting ids query parameter, like checking if it implements IEnumerable
             // When we use ids, we have to make it into an array, even with only 1 value
-            if (list.Count > 1 || key is "ids")
+            if (list.Count > 1 || key == "ids")
             {
                 sb.Append($"{key}=[");
                 var ids = list.Select(x => string.Concat('"', x, '"'));
@@ -159,15 +160,15 @@ public class ModrinthQueryBuilder : QueryStringBuilder
         foreach (var (key, value) in keyValuePairs)
         {
             // Key is already in the list
-            if (query.ContainsKey(key) && value is not null)
+            if (query.ContainsKey(key) && (value is not null))
             {
                 var list = query[key];
                 list.Add(value);
             }
             // First time we see the key
-            else if (value is not null)
+            else if (value is not null || key == "ids")
             {
-                query.Add(key, new List<string> {value});
+                query.Add(key, value is null ? new List<string>() : new List<string> {value});
             }
         }
 

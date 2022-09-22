@@ -95,31 +95,23 @@ public interface IModrinthApi
     
     #endregion
 
+    #region UserEnpoints
     /// <summary>
-    /// Gets user by his ID
+    /// Gets user by his username or ID
     /// </summary>
     /// <param name="usernameOrId"></param>
     /// <returns></returns>
     [Get("user/{usernameORId}")]
     Task<User> GetUserAsync([Path("usernameORId")] string usernameOrId);
+    
+    /// <summary>
+    /// Gets all projects of a user by their username or ID
+    /// </summary>
+    /// <param name="usernameOrId"></param>
+    /// <returns></returns>
+    [Get("user/{usernameORId}/projects")]
+    Task<Project[]> GetUsersProjectsByUserIdAsync([Path("usernameORId")] string usernameOrId);
 
-    #region UserEnpoints
-    /// <summary>
-    /// Gets all projects of a user by their ID
-    /// </summary>
-    /// <param name="userId"></param>
-    /// <returns></returns>
-    [Get("user/{id}/projects")]
-    Task<Project[]> GetUsersProjectsByUserIdAsync([Path("id")] string userId);
-    
-    /// <summary>
-    /// Gets all projects of a user by their username
-    /// </summary>
-    /// <param name="username"></param>
-    /// <returns></returns>
-    [Get("user/{username}/projects")]
-    Task<Project[]> GetUserProjectsByUsernameAsync([Path("username")] string username);
-    
     #endregion
     
     #region TeamEndpoints

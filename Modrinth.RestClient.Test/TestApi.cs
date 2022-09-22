@@ -34,12 +34,4 @@ public class Tests
         
         Assert.That(projects, Is.Not.Empty);
     }
-    
-    [Test]
-    public async Task TestMultipleSearchWithZeroIds()
-    {
-        var projects = await _api.GetMultipleProjectsAsync(Array.Empty<string>());
-        
-        Assert.That(projects, Is.Empty);
-    }
 }
