@@ -7,7 +7,7 @@ namespace Modrinth.RestClient.Models;
 public class User
 {
     /// <summary>
-    /// Direct URL of this user
+    /// A direct link to this user
     /// </summary>
     public string Url => $"{ModrinthApi.ModrinthUrl}/user/{Id}";
     

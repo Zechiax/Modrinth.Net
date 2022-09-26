@@ -7,7 +7,7 @@ namespace Modrinth.RestClient.Models;
 public class Project
 {
     /// <summary>
-    /// Direct URL of this project
+    /// A direct link to this project
     /// </summary>
     public string Url => $"{ModrinthApi.ModrinthUrl}/{ProjectType.ToString().ToLower()}/{Id}";
 

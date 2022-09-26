@@ -10,7 +10,7 @@ namespace Modrinth.RestClient.Models;
 public class SearchResult
 {
     /// <summary>
-    /// URL to the project of this search result
+    /// A direct link to the project of this search result
     /// </summary>
     public string Url => $"{ModrinthApi.ModrinthUrl}/{ProjectType.ToString().ToLower()}/{ProjectId}";
     

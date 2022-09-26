@@ -6,7 +6,7 @@ namespace Modrinth.RestClient.Extensions;
 public static class ProjectExtensions
 {
     /// <summary>
-    /// Return URL to version details of specific version
+    /// Returns a direct link to version details of specific version
     /// </summary>
     /// <param name="project"></param>
     /// <param name="version">Version for which the URL should be returned</param>
@@ -17,7 +17,7 @@ public static class ProjectExtensions
     }
     
     /// <summary>
-    /// Return URL to version details of specific version
+    /// Returns a direct link to version details of specific version
     /// </summary>
     /// <param name="project"></param>
     /// <param name="versionId">ID of the version</param>
