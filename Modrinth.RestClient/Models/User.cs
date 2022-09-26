@@ -7,6 +7,11 @@ namespace Modrinth.RestClient.Models;
 public class User
 {
     /// <summary>
+    /// Direct URL of this user
+    /// </summary>
+    public string Url => $"{ModrinthApi.ModrinthUrl}/user/{Id}";
+    
+    /// <summary>
     /// The user's username
     /// </summary>
     public string Username { get; set; }

@@ -7,6 +7,11 @@ namespace Modrinth.RestClient.Models;
 public class Project
 {
     /// <summary>
+    /// Direct URL of this project
+    /// </summary>
+    public string Url => $"{ModrinthApi.ModrinthUrl}/{ProjectType.ToString().ToLower()}/{Id}";
+
+    /// <summary>
     /// The slug of a project, used for vanity URLs
     /// </summary>
     public string Slug { get; set; }
