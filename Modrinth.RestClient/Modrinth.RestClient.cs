@@ -99,14 +99,10 @@ public class ModrinthQueryBuilder : QueryStringBuilder
     /// <returns></returns>
     public override string Build(QueryStringBuilderInfo info)
     {
-        if (!info.QueryParams.Any())
-        {
-            return string.Empty;
-        }
-        
-        var query = GetKeyValues(info.QueryParams);
-        
-        return BuildTheQueryString(query);
+        return !info.QueryParams.Any() ? 
+            string.Empty 
+            : 
+            BuildTheQueryString(GetKeyValues(info.QueryParams));
     }
 
     private static string BuildTheQueryString(IDictionary<string, IList<string>> queryParams)
