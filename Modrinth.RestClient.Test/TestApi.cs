@@ -1,8 +1,3 @@
-using System.Net;
-using System.Runtime.CompilerServices;
-using NUnit.Framework.Internal.Commands;
-using RestEase;
-
 namespace Modrinth.RestClient.Test;
 
 public class Tests
@@ -12,7 +7,7 @@ public class Tests
     [SetUp]
     public void Setup()
     {
-        _api = ModrinthApi.NewClient(userAgent: "Modrinth.RestClient.Test");
+        _api = ModrinthApi.NewClient(userAgent: "Zechiax/Modrinth.RestClient.Test");
     }
 
     [Test]

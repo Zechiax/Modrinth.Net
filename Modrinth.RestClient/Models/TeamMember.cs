@@ -10,6 +10,11 @@ namespace Modrinth.RestClient.Models;
 public class TeamMember
 {
     /// <summary>
+    /// A direct link to a user of this TeamMember
+    /// </summary>
+    public string Url => User.Url;
+    
+    /// <summary>
     /// The ID of the team this team member is a member of
     /// </summary>
     [JsonProperty("team_id")]
