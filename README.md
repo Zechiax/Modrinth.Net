@@ -19,3 +19,4 @@ Console.WriteLine(project.Description);
 - As of right now, this does not cover every endpoint, but rather most of the common `GET` endpoints
   - So it can only get information, not upload
 - For API specification [see here](https://docs.modrinth.com/api-spec/)
+- For getting response status code, which do not indicate success, [see here](https://github.com/canton7/RestEase#response-status-codes)
