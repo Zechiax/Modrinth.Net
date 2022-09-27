@@ -1,4 +1,5 @@
 ﻿#pragma warning disable CS8618
+using Modrinth.RestClient.Helpers;
 using Modrinth.RestClient.Models.Enums;
 using Newtonsoft.Json;
 
@@ -9,7 +10,7 @@ public class User
     /// <summary>
     /// A direct link to this user
     /// </summary>
-    public string Url => $"{ModrinthApi.ModrinthUrl}/user/{Id}";
+    public string Url => this.GetDirectUrl();
     
     /// <summary>
     /// The user's username

@@ -16,11 +16,6 @@ namespace Modrinth.RestClient;
 public static class ModrinthApi
 {
     /// <summary>
-    /// Url of the normal Modrinth web
-    /// </summary>
-    public const string ModrinthUrl = "https://modrinth.com";
-    
-    /// <summary>
     /// API Url of the production server
     /// </summary>
     // ReSharper disable once MemberCanBePrivate.Global

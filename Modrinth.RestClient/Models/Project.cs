@@ -1,4 +1,5 @@
 ﻿#pragma warning disable CS8618
+using Modrinth.RestClient.Helpers;
 using Modrinth.RestClient.Models.Enums;
 using Newtonsoft.Json;
 
@@ -9,7 +10,7 @@ public class Project
     /// <summary>
     /// A direct link to this project
     /// </summary>
-    public string Url => $"{ModrinthApi.ModrinthUrl}/{ProjectType.ToString().ToLower()}/{Id}";
+    public string Url => this.GetDirectUrl();
 
     /// <summary>
     /// The slug of a project, used for vanity URLs
