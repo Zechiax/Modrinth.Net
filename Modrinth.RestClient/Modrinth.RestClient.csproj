@@ -9,12 +9,12 @@
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Added URL properties to Project, User, SearchResult, TeamMember and extension to help create version URL
+        <PackageReleaseNotes>- Added support for getting version by file hash
 </PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.5.1</PackageVersion>
+	    <PackageVersion>2.5.2</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
