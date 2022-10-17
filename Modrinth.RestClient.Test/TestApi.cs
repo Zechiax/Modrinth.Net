@@ -1,3 +1,5 @@
+using Modrinth.RestClient.Models.Enums;
+
 namespace Modrinth.RestClient.Test;
 
 public class Tests
@@ -28,5 +30,37 @@ public class Tests
         var projects = await _api.GetMultipleProjectsAsync(new [] {projectId});
         
         Assert.That(projects, Is.Not.Empty);
+    }
+
+    [Test]
+    public async Task GetVersionByHashSha1()
+    {
+        var search = await _api.SearchProjectsAsync("");
+
+        var first = search.Hits.First();
+
+        var versionById = await _api.GetVersionByIdAsync((await _api.GetProjectAsync(first.ProjectId)).Versions.First());
+
+        var hashesSha1 = versionById.Files.First().Hashes.Sha1;
+
+        var versionByHash = await _api.GetVersionByHashAsync(hashesSha1);
+        
+        Assert.That(versionById.Id, Is.EqualTo(versionByHash.Id));
+    }
+    
+    [Test]
+    public async Task GetVersionByHashSha512()
+    {
+        var search = await _api.SearchProjectsAsync("");
+
+        var first = search.Hits.First();
+
+        var versionById = await _api.GetVersionByIdAsync((await _api.GetProjectAsync(first.ProjectId)).Versions.First());
+
+        var hashesSha1 = versionById.Files.First().Hashes.Sha512;
+
+        var versionByHash = await _api.GetVersionByHashAsync(hashesSha1, HashAlgorithm.Sha512);
+        
+        Assert.That(versionById.Id, Is.EqualTo(versionByHash.Id));
     }
 }

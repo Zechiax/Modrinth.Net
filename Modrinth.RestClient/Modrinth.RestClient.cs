@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Microsoft.Extensions.Http;
+using Modrinth.RestClient.Models.Enums;
 using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Polly;
 using RestEase;
@@ -127,7 +127,7 @@ public class ModrinthQueryBuilder : QueryStringBuilder
             else
             {
                 // TODO: Make better solution, this is because RestEase call .ToString() on enums and that will parse it with capital letters, but Modrinth won't work with that, so we have to lower it
-                sb.Append(Enum.TryParse<Index>(list.First(), out _)
+                sb.Append(Enum.TryParse<Index>(list.First(), out _) || Enum.TryParse<HashAlgorithm>(list.First(), out _)
                     ? $"{key}={list.First().ToLower()}"
                     : $"{key}={list.First()}");
             }

@@ -86,6 +86,16 @@ public interface IModrinthApi
     Task<Version> GetVersionByIdAsync([Path("id")] string versionId);
 
     /// <summary>
+    /// Get specific version by file hash
+    /// </summary>
+    /// <param name="hash">The hash of the file, considering its byte content, and encoded in hexadecimal</param>
+    /// <param name="hashAlgorithm"></param>
+    /// <returns></returns>
+    [Get("version_file/{hash}")]
+    Task<Version> GetVersionByHashAsync([Path("hash")] string hash,
+        [Query("algorithm")] Models.Enums.HashAlgorithm hashAlgorithm = Models.Enums.HashAlgorithm.Sha1);
+
+    /// <summary>
     /// Gets multiple users by their IDs
     /// </summary>
     /// <param name="ids">The IDs of the projects</param>
