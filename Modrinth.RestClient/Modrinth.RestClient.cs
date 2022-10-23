@@ -63,6 +63,7 @@ public static class ModrinthApi
     /// <param name="url">Custom API url, default is <see cref="BaseUrl"/></param>
     /// <param name="policy">Use custom Polly resiliency policy <a href="https://github.com/App-vNext/Polly#resilience-policies=">see Polly</a></param>
     /// <returns>New RestEase RestClient from <see cref="IModrinthApi"/> interface</returns>
+    [Obsolete("NewClient with Polly resiliency policy will be removed in Modrinth.RestClient >= 2.6.0 to use the least amount of dependencies")]
     public static IModrinthApi NewClient(IAsyncPolicy<HttpResponseMessage> policy, string url = BaseUrl, string userAgent = "")
     {
         var api = new RestEase.RestClient(url, new PolicyHttpMessageHandler(policy))
@@ -76,15 +77,6 @@ public static class ModrinthApi
 
         return api;
     }
-}
-
-/// <summary>
-/// A lower case naming strategy
-/// </summary>
-public class LowerCaseNamingStrategy : NamingStrategy
-{
-    /// <inheritdoc />
-    protected override string ResolvePropertyName(string name) => name.ToLower();
 }
 
 /// <summary>
@@ -115,7 +107,6 @@ public class ModrinthQueryBuilder : QueryStringBuilder
         {
             counter--;
             
-            // TODO: Better solution for detecting ids query parameter, like checking if it implements IEnumerable
             // When we use ids, we have to make it into an array, even with only 1 value
             if (list.Count > 1 || key == "ids")
             {
