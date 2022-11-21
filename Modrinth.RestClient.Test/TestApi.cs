@@ -31,6 +31,16 @@ public class Tests
         
         Assert.That(projects, Is.Not.Empty);
     }
+    
+    [Test]
+    public async Task GetMultipleProjects()
+    {
+        var search = await _api.SearchProjectsAsync("");
+
+        var ids = search.Hits.Select(x => x.ProjectId);
+
+        var projects = await _api.GetMultipleProjectsAsync(ids);
+    }
 
     [Test]
     public async Task GetVersionByHashSha1()
