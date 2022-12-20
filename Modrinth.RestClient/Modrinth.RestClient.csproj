@@ -9,11 +9,11 @@
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>Fix search with multiple words searching only for the first word</PackageReleaseNotes>
+        <PackageReleaseNotes>Change default index value to Relevance as opposed to Index</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.5.4</PackageVersion>
+	    <PackageVersion>2.5.5</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
