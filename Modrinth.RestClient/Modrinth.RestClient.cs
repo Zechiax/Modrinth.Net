@@ -3,6 +3,7 @@ using Microsoft.Extensions.Http;
 using Modrinth.RestClient.Extensions;
 using Modrinth.RestClient.Models.Enums;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Polly;
 using RestEase;
@@ -34,7 +35,14 @@ public static class ModrinthApi
     // ReSharper disable once MemberCanBePrivate.Global
     public static JsonSerializerSettings GetJsonSerializerSettings()
     {
-        return new JsonSerializerSettings();
+        return new JsonSerializerSettings()
+        {
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            Converters = new List<JsonConverter>()
+            {
+                new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() }
+            }
+        };
     }
 
     /// <summary>
@@ -80,11 +88,15 @@ public static class ModrinthApi
     }
 }
 
+
 /// <summary>
 /// Custom query builder for Modrinth, as Modrinth requires arrays to be formatted as ids=["someId1", "someId2"]
 /// </summary>
 public class ModrinthQueryBuilder : QueryStringBuilder
 {
+    private StringBuilder _builder = new();
+    private readonly SortedDictionary<string, IList<string>> _query = new();
+    
     /// <summary>
     /// Override of the Build method for QueryStringBuilder to provide formatting for Modrinth
     /// </summary>
@@ -92,15 +104,17 @@ public class ModrinthQueryBuilder : QueryStringBuilder
     /// <returns></returns>
     public override string Build(QueryStringBuilderInfo info)
     {
+        _query.Clear();
+        _builder.Clear();
+        
         return !info.QueryParams.Any() ? 
             string.Empty 
             : 
             BuildTheQueryString(GetKeyValues(info.QueryParams));
     }
 
-    private static string BuildTheQueryString(IDictionary<string, IList<string>> queryParams)
+    private string BuildTheQueryString(IDictionary<string, IList<string>> queryParams)
     {
-        var sb = new StringBuilder();
         var counter = queryParams.Count;
         
         // Let's build the query string
@@ -111,15 +125,15 @@ public class ModrinthQueryBuilder : QueryStringBuilder
             // When we use ids, we have to make it into an array, even with only 1 value
             if (list.Count > 1 || key == "ids")
             {
-                sb.Append($"{key}=[");
+                _builder.Append($"{key}=[");
                 var ids = list.Select(x => string.Concat('"', x, '"'));
-                sb.Append(string.Join(',', ids));
-                sb.Append(']');
+                _builder.Append(string.Join(',', ids));
+                _builder.Append(']');
             }
             else
             {
                 // TODO: Make better solution, this is because RestEase call .ToString() on enums and that will parse it with capital letters, but Modrinth won't work with that, so we have to lower it
-                sb.Append(Enum.TryParse<Index>(list.First(), out _) || Enum.TryParse<HashAlgorithm>(list.First(), out _)
+                _builder.Append(Enum.TryParse<Index>(list.First(), out _) || Enum.TryParse<HashAlgorithm>(list.First(), out _)
                     ? $"{key}={list.First().ToLower().EscapeIfContains()}"
                     : $"{key}={list.First().EscapeIfContains()}");
             }
@@ -127,11 +141,11 @@ public class ModrinthQueryBuilder : QueryStringBuilder
             // If there are other values, add &
             if (counter > 0)
             {
-                sb.Append('&');
+                _builder.Append('&');
             }
         }
 
-        return sb.ToString();
+        return _builder.ToString();
     }
 
     /// <summary>
@@ -139,27 +153,26 @@ public class ModrinthQueryBuilder : QueryStringBuilder
     /// </summary>
     /// <param name="kvp"></param>
     /// <returns></returns>
-    private static SortedDictionary<string, IList<string>> GetKeyValues(IEnumerable<KeyValuePair<string, string?>> kvp)
+    private SortedDictionary<string, IList<string>> GetKeyValues(IEnumerable<KeyValuePair<string, string?>> kvp)
     {
-        var query = new SortedDictionary<string, IList<string>>();
         var keyValuePairs = kvp as KeyValuePair<string, string?>[] ?? kvp.ToArray();
         
         // Each key will have list of values as its value
         foreach (var (key, value) in keyValuePairs)
         {
             // Key is already in the list
-            if (query.ContainsKey(key) && (value is not null))
+            if (_query.ContainsKey(key) && (value is not null))
             {
-                var list = query[key];
+                var list = _query[key];
                 list.Add(value);
             }
             // First time we see the key
             else if (value is not null || key == "ids")
             {
-                query.Add(key, value is null ? new List<string>() : new List<string> {value});
+                _query.Add(key, value is null ? new List<string>() : new List<string> {value});
             }
         }
 
-        return query;
+        return _query;
     }
 }
