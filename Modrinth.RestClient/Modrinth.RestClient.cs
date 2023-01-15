@@ -37,11 +37,6 @@ public static class ModrinthApi
     {
         return new JsonSerializerSettings()
         {
-            ContractResolver = new CamelCasePropertyNamesContractResolver(),
-            Converters = new List<JsonConverter>()
-            {
-                new StringEnumConverter { NamingStrategy = new CamelCaseNamingStrategy() }
-            }
         };
     }
 
