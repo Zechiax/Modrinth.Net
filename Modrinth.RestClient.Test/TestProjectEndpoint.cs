@@ -7,9 +7,6 @@ public class TestProjectEndpoint
     [SetUp]
     public void Setup()
     {
-        var token = "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";//Environment.GetEnvironmentVariable("AUTH_TOKEN");
-        if (string.IsNullOrWhiteSpace(token))
-            throw new Exception("No auth token provided");
         _client = ModrinthApi.GetInstance();
     }
 
