@@ -27,6 +27,12 @@ public class ProjectApi : IProjectApi
         var response = await _client.Request(ProjectPathSegment, slugOrId).PatchJsonAsync(project);
         return response.ResponseMessage.IsSuccessStatusCode;
     }
+    
+    public async Task<bool> DeleteProjectAsync(string slugOrId)
+    {
+        var response = await _client.Request(ProjectPathSegment, slugOrId).DeleteAsync();
+        return response.ResponseMessage.IsSuccessStatusCode;
+    }
 
     /// <inheritdoc />
     public async Task<Models.Project[]> GetMultipleProjectsAsync(IEnumerable<string> ids)
@@ -42,6 +48,18 @@ public class ProjectApi : IProjectApi
     public async Task<SlugIdValidity> CheckProjectIdSlugValidityAsync(string slugOrId)
     {
         return await _client.Request(ProjectPathSegment, slugOrId, "check").GetJsonAsync<SlugIdValidity>();
+    }
+
+    public async Task<bool> FollowProjectAsync(string slugOrId)
+    {
+        var response = await _client.Request(ProjectPathSegment, slugOrId, "follow").PostAsync();
+        return response.ResponseMessage.IsSuccessStatusCode;
+    }
+
+    public async Task<bool> UnfollowProjectAsync(string slugOrId)
+    {
+        var response = await _client.Request(ProjectPathSegment, slugOrId, "follow").DeleteAsync();
+        return response.ResponseMessage.IsSuccessStatusCode;
     }
 
     /// <inheritdoc />

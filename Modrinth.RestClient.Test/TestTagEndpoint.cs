@@ -7,7 +7,7 @@ public class TestTagEndpoint
     [SetUp]
     public void Setup()
     {
-        _client = ModrinthApi.GetInstance(ModrinthApi.StagingBaseUrl);
+        _client = ModrinthApi.GetInstance();
     }
     
     [Test]

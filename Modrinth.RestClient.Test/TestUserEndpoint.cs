@@ -1,6 +1,4 @@
-﻿using Flurl.Http.Testing;
-
-namespace Modrinth.RestClient.Test;
+﻿namespace Modrinth.RestClient.Test;
 
 public class TestUserEndpoint
 {
@@ -12,7 +10,7 @@ public class TestUserEndpoint
         var token = Environment.GetEnvironmentVariable("AUTH_TOKEN");
         if (string.IsNullOrWhiteSpace(token))
             throw new Exception("No auth token provided");
-        _client = ModrinthApi.GetInstance(ModrinthApi.StagingBaseUrl, authorization: token);
+        _client = ModrinthApi.GetInstance();
     }
 
     [Test]

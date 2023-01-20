@@ -1,21 +1,22 @@
-using Modrinth.RestClient.Models.Enums;
-
 namespace Modrinth.RestClient.Test;
 
 public class TestProjectEndpoint
 {
-    private ModrinthApi _api = null!;
+    private ModrinthApi _client = null!;
     
     [SetUp]
     public void Setup()
     {
-        _api = ModrinthApi.GetInstance(url: ModrinthApi.StagingBaseUrl, userAgent: "Modrinth.RestClient.Test");
+        var token = "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";//Environment.GetEnvironmentVariable("AUTH_TOKEN");
+        if (string.IsNullOrWhiteSpace(token))
+            throw new Exception("No auth token provided");
+        _client = ModrinthApi.GetInstance();
     }
 
     [Test]
     public async Task TestEmptySearch()
     {
-        var search = await _api.Project.SearchProjectsAsync("");
+        var search = await _client.Project.SearchProjectsAsync("");
         
         Assert.That(search.TotalHits, Is.GreaterThan(0));
     }
@@ -23,7 +24,7 @@ public class TestProjectEndpoint
     [Test]
     public async Task TestSearch()
     {
-        var search = await _api.Project.SearchProjectsAsync("fabric");
+        var search = await _client.Project.SearchProjectsAsync("fabric");
         
         Assert.That(search.TotalHits, Is.GreaterThan(0));
     }
@@ -31,7 +32,7 @@ public class TestProjectEndpoint
     [Test]
     public async Task TestGetProject()
     {
-        var project = await _api.Project.GetProjectAsync("gravestones");
+        var project = await _client.Project.GetProjectAsync("gravestones");
 
         Assert.That(project.Title, Is.EqualTo("Gravestones"));
     }
@@ -39,8 +40,17 @@ public class TestProjectEndpoint
     [Test]
     public async Task TestCheckIdSlugValidity()
     {
-        var validity = await _api.Project.CheckProjectIdSlugValidityAsync("gravestones");
+        var validity = await _client.Project.CheckProjectIdSlugValidityAsync("gravestones");
 
         Assert.That(validity.Id, Is.Not.Empty);
+    }
+
+    [Test]
+    public async Task TestFollowUnfollowProject()
+    {
+        var success1 = await _client.Project.FollowProjectAsync("gravestones");
+        var success2 = await _client.Project.UnfollowProjectAsync("gravestones");
+        Assert.That(success1, Is.True);
+        Assert.That(success2, Is.True);
     }
 }
