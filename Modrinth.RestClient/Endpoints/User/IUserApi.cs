@@ -7,25 +7,30 @@ public interface IUserApi
     /// </summary>
     /// <param name="usernameOrId"></param>
     /// <returns></returns>
-    Task<Models.User> GetUserAsync(string usernameOrId);
+    Task<Models.User> GetAsync(string usernameOrId);
     
     /// <summary>
     /// Gets all projects of a user by their username or ID
     /// </summary>
     /// <param name="usernameOrId"></param>
     /// <returns></returns>
-    Task<Models.Project[]> GetUsersProjectsByUserIdAsync(string usernameOrId);
+    Task<Models.Project[]> GetProjectsAsync(string usernameOrId);
 
     /// <summary>
     /// Gets multiple users by their IDs
     /// </summary>
     /// <param name="ids">The IDs of the projects</param>
     /// <returns></returns>
-    Task<Models.User[]> GetMultipleUsersByIdAsync(IEnumerable<string> ids);
+    Task<Models.User[]> GetMultipleAsync(IEnumerable<string> ids);
     
     /// <summary>
     /// Gets current user by authentication token
     /// </summary>
     /// <returns></returns>
     Task<Models.User> GetCurrentUserAsync();
+    
+    Task<Notification[]> GetNotificationsAsync(string usernameOrId);
+    
+    Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId);
+    
 }

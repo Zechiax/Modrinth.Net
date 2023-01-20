@@ -13,19 +13,19 @@ public class UserApi : IUserApi
     }
 
     /// <inheritdoc />
-    public async Task<Models.User> GetUserAsync(string usernameOrId)
+    public async Task<Models.User> GetAsync(string usernameOrId)
     {
         return await _client.Request(UserPathSegment, usernameOrId).GetJsonAsync<Models.User>();
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetUsersProjectsByUserIdAsync(string usernameOrId)
+    public async Task<Models.Project[]> GetProjectsAsync(string usernameOrId)
     {
         return await _client.Request(UserPathSegment, usernameOrId, "projects").GetJsonAsync<Models.Project[]>();
     }
 
     /// <inheritdoc />
-    public async Task<Models.User[]> GetMultipleUsersByIdAsync(IEnumerable<string> ids)
+    public async Task<Models.User[]> GetMultipleAsync(IEnumerable<string> ids)
     {
         return await _client.Request("users").SetQueryParam("ids", ids.ToModrinthQueryString())
             .GetJsonAsync<Models.User[]>();
@@ -35,5 +35,15 @@ public class UserApi : IUserApi
     public async Task<Models.User> GetCurrentUserAsync()
     {
         return await _client.Request(UserPathSegment).GetJsonAsync<Models.User>();
+    }
+
+    public async Task<Notification[]> GetNotificationsAsync(string usernameOrId)
+    {
+        return await _client.Request(UserPathSegment, usernameOrId, "notifications").GetJsonAsync<Notification[]>();
+    }
+
+    public async Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId)
+    {
+        return await _client.Request(UserPathSegment, usernameOrId, "follows").GetJsonAsync<Models.Project[]>();
     }
 }
