@@ -9,7 +9,7 @@ namespace Modrinth.RestClient.Helpers;
 public static class UrlCreatorHelper
 {
     /// <summary>
-    /// Url of the normal Modrinth web
+    /// Base Modrinth URL
     /// </summary>
     public const string ModrinthUrl = "https://modrinth.com";
 
