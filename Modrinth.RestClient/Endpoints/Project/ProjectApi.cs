@@ -22,6 +22,12 @@ public class ProjectApi : IProjectApi
         return await _client.Request(ProjectPathSegment, slugOrId).GetJsonAsync<Models.Project>();
     }
 
+    public async Task<bool> ModifyProjectAsync(string slugOrId, Models.Project project)
+    {
+        var response = await _client.Request(ProjectPathSegment, slugOrId).PatchJsonAsync(project);
+        return response.ResponseMessage.IsSuccessStatusCode;
+    }
+
     /// <inheritdoc />
     public async Task<Models.Project[]> GetMultipleProjectsAsync(IEnumerable<string> ids)
     {
