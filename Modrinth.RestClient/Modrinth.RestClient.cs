@@ -67,6 +67,8 @@ public class ModrinthApi
         Tag = new TagApi(client);
         Team = new TeamApi(client);
         User = new UserApi(client);
+        Version = new VersionApi(client);
+        VersionFile = new VersionFileApi(client);
     }
 
     public static ModrinthApi GetInstance(string url = BaseUrl, string userAgent = "", string authorization = "") {
