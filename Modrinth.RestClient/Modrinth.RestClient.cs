@@ -1,16 +1,9 @@
-﻿using System.Text;
-using Flurl.Http;
-using Microsoft.Extensions.Http;
+﻿using Flurl.Http;
 using Modrinth.RestClient.Endpoints.Project;
 using Modrinth.RestClient.Endpoints.Tag;
 using Modrinth.RestClient.Endpoints.Team;
 using Modrinth.RestClient.Endpoints.User;
 using Modrinth.RestClient.Endpoints.VersionFile;
-using Modrinth.RestClient.Models.Enums;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Serialization;
-using Polly;
-using Index = Modrinth.RestClient.Models.Enums.Index;
 
 namespace Modrinth.RestClient;
 
