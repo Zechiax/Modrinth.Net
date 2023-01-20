@@ -33,9 +33,9 @@ public class ProjectApi : IProjectApi
     }
 
     /// <inheritdoc />
-    public async Task<string> CheckProjectIdSlugValidityAsync(string slugOrId)
+    public async Task<SlugIdValidity> CheckProjectIdSlugValidityAsync(string slugOrId)
     {
-        return await _client.Request(ProjectPathSegment, slugOrId, "check").GetStringAsync();
+        return await _client.Request(ProjectPathSegment, slugOrId, "check").GetJsonAsync<SlugIdValidity>();
     }
 
     /// <inheritdoc />

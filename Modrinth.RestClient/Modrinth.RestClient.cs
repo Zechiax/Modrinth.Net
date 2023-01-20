@@ -18,7 +18,7 @@ namespace Modrinth.RestClient;
 /// <summary>
 /// Base for creating new clients using RestEase from <see cref="IModrinthApi"/> interface
 /// </summary>
-public class ModrinthApi
+public class ModrinthApi 
 {
     private static ModrinthApi? _instance;
     private static readonly object Lock = new();
@@ -62,16 +62,18 @@ public class ModrinthApi
     /// <param name="userAgent">User-Agent header you want to use while communicating with Modrinth API, it's recommended to set 'a uniquely-identifying' one (<a href="https://docs.modrinth.com/api-spec/#section/User-Agents">see the docs</a>)</param>
     /// <param name="url">Custom API url, default is <see cref="BaseUrl"/></param>
     /// <returns>New RestEase RestClient from <see cref="IModrinthApi"/> interface</returns>
-    private ModrinthApi(string url = BaseUrl, string userAgent = "", string Authorization = "")
+    private ModrinthApi(string url = BaseUrl, string userAgent = "", string authorization = "")
     {
         var client = new FlurlClient(url)
             .WithHeader("User-Agent", userAgent)
-            .WithHeader("Authorization", Authorization)
+            .WithHeader("Authorization", authorization)
             .WithHeader("Accept", "application/json")
             .WithHeader("Content-Type", "application/json");
-        
+
         Project = new ProjectApi(client);
         Tag = new TagApi(client);
+        Team = new TeamApi(client);
+        User = new UserApi(client);
     }
 
     public static ModrinthApi GetInstance(string url = BaseUrl, string userAgent = "", string authorization = "") {

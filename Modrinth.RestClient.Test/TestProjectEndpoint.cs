@@ -21,7 +21,15 @@ public class TestProjectEndpoint
     }
     
     [Test]
-    public async Task TestProjectSearch()
+    public async Task TestSearch()
+    {
+        var search = await _api.Project.SearchProjectsAsync("fabric");
+        
+        Assert.That(search.TotalHits, Is.GreaterThan(0));
+    }
+    
+    [Test]
+    public async Task TestGetProject()
     {
         var project = await _api.Project.GetProjectAsync("gravestones");
 
@@ -29,10 +37,10 @@ public class TestProjectEndpoint
     }
     
     [Test]
-    public async Task TestProjectVersions()
+    public async Task TestCheckIdSlugValidity()
     {
-        var versions = await _api.Project.CheckProjectIdSlugValidityAsync("gravestones");
+        var validity = await _api.Project.CheckProjectIdSlugValidityAsync("gravestones");
 
-        Assert.That(versions, Is.EqualTo("gravestones"));
+        Assert.That(validity.Id, Is.Not.Empty);
     }
 }

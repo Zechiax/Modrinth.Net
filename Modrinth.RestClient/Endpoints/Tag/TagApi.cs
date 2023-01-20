@@ -3,6 +3,7 @@ using Modrinth.RestClient.Models.Tags;
 
 namespace Modrinth.RestClient.Endpoints.Tag;
 
+/// <inheritdoc />
 public class TagApi : ITagApi
 {
     private readonly FlurlClient _client;

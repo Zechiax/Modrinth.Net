@@ -22,4 +22,10 @@ public interface IUserApi
     /// <param name="ids">The IDs of the projects</param>
     /// <returns></returns>
     Task<Models.User[]> GetMultipleUsersByIdAsync(IEnumerable<string> ids);
+    
+    /// <summary>
+    /// Gets current user by authentication token
+    /// </summary>
+    /// <returns></returns>
+    Task<Models.User> GetCurrentUserAsync();
 }

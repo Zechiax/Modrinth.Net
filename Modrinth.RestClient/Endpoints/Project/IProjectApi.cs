@@ -23,7 +23,7 @@ public interface IProjectApi
     /// Check project slug/ID validity
     /// </summary>
     /// <returns></returns>
-    Task<string> CheckProjectIdSlugValidityAsync(string slugOrId);
+    Task<SlugIdValidity> CheckProjectIdSlugValidityAsync(string slugOrId);
     
     /// <summary>
     /// Search Modrinth for project by it's name
