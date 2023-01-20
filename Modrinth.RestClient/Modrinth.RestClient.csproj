@@ -9,12 +9,14 @@
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Added support for getting version by file hash
-</PackageReleaseNotes>
+        <PackageReleaseNotes>- Remove RestEase and HttpPolly
+- Use Flurl for requests
+- Add more endpoints
+- Rewrite main logic</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>2.5.2</PackageVersion>
+	    <PackageVersion>3.0.0-alpha</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
