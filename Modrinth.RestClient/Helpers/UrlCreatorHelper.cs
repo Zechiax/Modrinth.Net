@@ -25,6 +25,7 @@ public static class UrlCreatorHelper
             ProjectType.Mod => "mod",
             ProjectType.Modpack => "modpack",
             ProjectType.Resourcepack => "resourcepack",
+            ProjectType.Shader => "shader",
             // Return lower string, this should work for all, but it is not guaranteed
             _ => projectType.ToString().ToLower()
         };

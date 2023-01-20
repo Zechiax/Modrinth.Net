@@ -27,4 +27,12 @@ public class TestProjectEndpoint
 
         Assert.That(project.Title, Is.EqualTo("Gravestones"));
     }
+    
+    [Test]
+    public async Task TestProjectVersions()
+    {
+        var versions = await _api.Project.CheckProjectIdSlugValidityAsync("gravestones");
+
+        Assert.That(versions, Is.EqualTo("gravestones"));
+    }
 }

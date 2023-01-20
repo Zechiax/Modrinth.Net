@@ -4,5 +4,6 @@ public enum ProjectType
 {
     Mod,
     Modpack,
-    Resourcepack
+    Resourcepack,
+    Shader
 }

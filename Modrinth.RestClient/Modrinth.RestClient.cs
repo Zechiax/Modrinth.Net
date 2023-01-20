@@ -71,6 +71,7 @@ public class ModrinthApi
             .WithHeader("Content-Type", "application/json");
         
         Project = new ProjectApi(client);
+        Tag = new TagApi(client);
     }
 
     public static ModrinthApi GetInstance(string url = BaseUrl, string userAgent = "", string authorization = "") {
