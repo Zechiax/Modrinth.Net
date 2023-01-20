@@ -26,9 +26,9 @@ public interface IProjectApi
     /// <returns></returns>
     Task<Models.Project> GetProjectAsync(string slugOrId);
     
-    Task<bool> ModifyProjectAsync(string slugOrId, Models.Project project);
+    Task ModifyProjectAsync(string slugOrId, Models.Project project);
     
-    Task<bool> DeleteProjectAsync(string slugOrId);
+    Task DeleteProjectAsync(string slugOrId);
     
     /// <summary>
     /// Gets multiple projects by their IDs
@@ -43,7 +43,7 @@ public interface IProjectApi
     /// <returns></returns>
     Task<SlugIdValidity> CheckProjectIdSlugValidityAsync(string slugOrId);
     
-    Task<bool> FollowProjectAsync(string slugOrId);
+    Task FollowProjectAsync(string slugOrId);
     
-    Task<bool> UnfollowProjectAsync(string slugOrId);
+    Task UnfollowProjectAsync(string slugOrId);
 }

@@ -45,9 +45,8 @@ public class TestProjectEndpoint
     [Test]
     public async Task TestFollowUnfollowProject()
     {
-        var success1 = await _client.Project.FollowProjectAsync("gravestones");
-        var success2 = await _client.Project.UnfollowProjectAsync("gravestones");
-        Assert.That(success1, Is.True);
-        Assert.That(success2, Is.True);
+        // Will throw exception if not authorized / some other error
+        await _client.Project.FollowProjectAsync("gravestones");
+        await _client.Project.UnfollowProjectAsync("gravestones");
     }
 }

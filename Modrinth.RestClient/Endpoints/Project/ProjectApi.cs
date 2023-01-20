@@ -22,16 +22,14 @@ public class ProjectApi : IProjectApi
         return await _client.Request(ProjectPathSegment, slugOrId).GetJsonAsync<Models.Project>();
     }
 
-    public async Task<bool> ModifyProjectAsync(string slugOrId, Models.Project project)
+    public async Task ModifyProjectAsync(string slugOrId, Models.Project project)
     {
-        var response = await _client.Request(ProjectPathSegment, slugOrId).PatchJsonAsync(project);
-        return response.ResponseMessage.IsSuccessStatusCode;
+        await _client.Request(ProjectPathSegment, slugOrId).PatchJsonAsync(project);
     }
     
-    public async Task<bool> DeleteProjectAsync(string slugOrId)
+    public async Task DeleteProjectAsync(string slugOrId)
     {
-        var response = await _client.Request(ProjectPathSegment, slugOrId).DeleteAsync();
-        return response.ResponseMessage.IsSuccessStatusCode;
+       await _client.Request(ProjectPathSegment, slugOrId).DeleteAsync();
     }
 
     /// <inheritdoc />
@@ -50,16 +48,14 @@ public class ProjectApi : IProjectApi
         return await _client.Request(ProjectPathSegment, slugOrId, "check").GetJsonAsync<SlugIdValidity>();
     }
 
-    public async Task<bool> FollowProjectAsync(string slugOrId)
+    public async Task FollowProjectAsync(string slugOrId)
     {
-        var response = await _client.Request(ProjectPathSegment, slugOrId, "follow").PostAsync();
-        return response.ResponseMessage.IsSuccessStatusCode;
+        await _client.Request(ProjectPathSegment, slugOrId, "follow").PostAsync();
     }
 
-    public async Task<bool> UnfollowProjectAsync(string slugOrId)
+    public async Task UnfollowProjectAsync(string slugOrId)
     {
-        var response = await _client.Request(ProjectPathSegment, slugOrId, "follow").DeleteAsync();
-        return response.ResponseMessage.IsSuccessStatusCode;
+        await _client.Request(ProjectPathSegment, slugOrId, "follow").DeleteAsync();
     }
 
     /// <inheritdoc />
