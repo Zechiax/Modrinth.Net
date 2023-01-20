@@ -23,3 +23,5 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       run: dotnet test --no-build --verbosity normal
+      with:
+        AUTH_TOKEN: ${{secrets.AUTH_TOKEN}}
