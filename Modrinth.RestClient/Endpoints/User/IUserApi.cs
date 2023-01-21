@@ -27,7 +27,7 @@ public interface IUserApi
     /// Gets current user by authentication token
     /// </summary>
     /// <returns></returns>
-    Task<Models.User> GetCurrentUserAsync();
+    Task<Models.User> GetCurrentAsync();
     
     Task<Notification[]> GetNotificationsAsync(string usernameOrId);
     

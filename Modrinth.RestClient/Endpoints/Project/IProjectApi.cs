@@ -13,7 +13,7 @@ public interface IProjectApi
     /// <param name="offset">The offset into the search. Skips this number of results</param>
     /// <param name="limit">The number of results returned by the search</param>
     /// <returns></returns>
-    Task<SearchResponse> SearchProjectsAsync(
+    Task<SearchResponse> SearchAsync(
         string query,
         Index index = Index.Downloads,
         ulong offset = 0,

@@ -32,7 +32,7 @@ public class TestVersionEndpoint
     public async Task TestGetMultipleVersions()
     {
         // Not really a 'unit' test, but we need to find a project with more than one version
-        var search = await _client.Project.SearchProjectsAsync("");
+        var search = await _client.Project.SearchAsync("");
         
         // We will find the first project that has more than one version
         var projectWithMoreVersions = search.Hits.FirstOrDefault(p => p.DateCreated != p.DateModified);

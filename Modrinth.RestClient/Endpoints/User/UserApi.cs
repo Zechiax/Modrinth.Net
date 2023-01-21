@@ -32,16 +32,18 @@ public class UserApi : IUserApi
     }
 
     /// <inheritdoc />
-    public async Task<Models.User> GetCurrentUserAsync()
+    public async Task<Models.User> GetCurrentAsync()
     {
         return await _client.Request(UserPathSegment).GetJsonAsync<Models.User>();
     }
 
+    /// <inheritdoc />
     public async Task<Notification[]> GetNotificationsAsync(string usernameOrId)
     {
         return await _client.Request(UserPathSegment, usernameOrId, "notifications").GetJsonAsync<Notification[]>();
     }
 
+    /// <inheritdoc />
     public async Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId)
     {
         return await _client.Request(UserPathSegment, usernameOrId, "follows").GetJsonAsync<Models.Project[]>();

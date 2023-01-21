@@ -14,7 +14,7 @@ public class TestProjectEndpoint
     [Test]
     public async Task TestEmptySearch()
     {
-        var search = await _client.Project.SearchProjectsAsync("");
+        var search = await _client.Project.SearchAsync("");
         
         Assert.That(search.TotalHits, Is.GreaterThan(0));
     }
@@ -22,7 +22,7 @@ public class TestProjectEndpoint
     [Test]
     public async Task TestSearch()
     {
-        var search = await _client.Project.SearchProjectsAsync("fabric");
+        var search = await _client.Project.SearchAsync("fabric");
         
         Assert.That(search.TotalHits, Is.GreaterThan(0));
     }
@@ -54,7 +54,7 @@ public class TestProjectEndpoint
     [Test]
     public async Task TestGetMultipleProjects()
     {
-        var search = await _client.Project.SearchProjectsAsync("");
+        var search = await _client.Project.SearchAsync("");
         var ids = search.Hits.Select(p => p.ProjectId).Take(5).ToList();
         var projects = await _client.Project.GetMultipleAsync(ids);
         
