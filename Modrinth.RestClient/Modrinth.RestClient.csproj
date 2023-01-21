@@ -14,7 +14,7 @@
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
 	    <PackageVersion>3.0.0-alpha.1</PackageVersion>
-	    <TargetFrameworks>net6.0;netstandard2.1</TargetFrameworks>
+	    <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
