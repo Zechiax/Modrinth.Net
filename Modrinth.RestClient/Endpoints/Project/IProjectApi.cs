@@ -24,26 +24,26 @@ public interface IProjectApi
     /// </summary>
     /// <param name="slugOrId">The ID or slug of the project</param>
     /// <returns></returns>
-    Task<Models.Project> GetProjectAsync(string slugOrId);
+    Task<Models.Project> GetAsync(string slugOrId);
     
-    Task ModifyProjectAsync(string slugOrId, Models.Project project);
+    Task ModifyAsync(string slugOrId, Models.Project project);
     
-    Task DeleteProjectAsync(string slugOrId);
+    Task DeleteAsync(string slugOrId);
     
     /// <summary>
     /// Gets multiple projects by their IDs
     /// </summary>
     /// <param name="ids">IEnumerable of string ids</param>
     /// <returns></returns>
-    Task<Models.Project[]> GetMultipleProjectsAsync(IEnumerable<string> ids);
+    Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids);
 
     /// <summary>
     /// Check project slug/ID validity
     /// </summary>
     /// <returns></returns>
-    Task<SlugIdValidity> CheckProjectIdSlugValidityAsync(string slugOrId);
+    Task<SlugIdValidity> CheckIdSlugValidityAsync(string slugOrId);
     
-    Task FollowProjectAsync(string slugOrId);
+    Task FollowAsync(string slugOrId);
     
-    Task UnfollowProjectAsync(string slugOrId);
+    Task UnfollowAsync(string slugOrId);
 }

@@ -7,7 +7,7 @@ public interface IVersionApi
     /// </summary>
     /// <param name="versionId"></param>
     /// <returns></returns>
-    Task<Version> GetVersionByIdAsync(string versionId);
+    Task<Version> GetAsync(string versionId);
     
     /// <summary>
     /// Gets version list of a project by its ID
@@ -21,5 +21,5 @@ public interface IVersionApi
     /// </summary>
     /// <param name="ids">The IDs of the versions</param>
     /// <returns></returns>
-    Task<Version[]> GetMultipleVersionsAsync(IEnumerable<string> ids);
+    Task<Version[]> GetMultipleAsync(IEnumerable<string> ids);
 }

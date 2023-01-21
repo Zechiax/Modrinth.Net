@@ -29,7 +29,7 @@ public class TestProjectEndpoint
     [Test]
     public async Task TestGetProject()
     {
-        var project = await _client.Project.GetProjectAsync("gravestones");
+        var project = await _client.Project.GetAsync("gravestones");
 
         Assert.That(project.Title, Is.EqualTo("Gravestones"));
     }
@@ -37,7 +37,7 @@ public class TestProjectEndpoint
     [Test]
     public async Task TestCheckIdSlugValidity()
     {
-        var validity = await _client.Project.CheckProjectIdSlugValidityAsync("gravestones");
+        var validity = await _client.Project.CheckIdSlugValidityAsync("gravestones");
 
         Assert.That(validity.Id, Is.Not.Empty);
     }
@@ -46,7 +46,7 @@ public class TestProjectEndpoint
     public async Task TestFollowUnfollowProject()
     {
         // Will throw exception if not authorized / some other error
-        await _client.Project.FollowProjectAsync("gravestones");
-        await _client.Project.UnfollowProjectAsync("gravestones");
+        await _client.Project.FollowAsync("gravestones");
+        await _client.Project.UnfollowAsync("gravestones");
     }
 }

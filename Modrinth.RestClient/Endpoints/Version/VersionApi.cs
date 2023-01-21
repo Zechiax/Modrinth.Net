@@ -11,7 +11,7 @@ public class VersionApi : IVersionApi
     {
         _client = client;
     }
-    public async Task<Version> GetVersionByIdAsync(string versionId)
+    public async Task<Version> GetAsync(string versionId)
     {
         return await _client.Request(VersionsPath, versionId).GetJsonAsync<Version>();
     }
@@ -21,7 +21,7 @@ public class VersionApi : IVersionApi
         return await _client.Request("project", slugOrId, VersionsPath).GetJsonAsync<Version[]>();
     }
 
-    public async Task<Version[]> GetMultipleVersionsAsync(IEnumerable<string> ids)
+    public async Task<Version[]> GetMultipleAsync(IEnumerable<string> ids)
     {
         return await _client.Request("versions").SetQueryParam("ids", ids.ToModrinthQueryString())
             .GetJsonAsync<Version[]>();

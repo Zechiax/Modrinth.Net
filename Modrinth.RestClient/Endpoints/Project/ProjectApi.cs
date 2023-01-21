@@ -17,23 +17,23 @@ public class ProjectApi : IProjectApi
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project> GetProjectAsync(string slugOrId)
+    public async Task<Models.Project> GetAsync(string slugOrId)
     {
         return await _client.Request(ProjectPathSegment, slugOrId).GetJsonAsync<Models.Project>();
     }
 
-    public async Task ModifyProjectAsync(string slugOrId, Models.Project project)
+    public async Task ModifyAsync(string slugOrId, Models.Project project)
     {
         await _client.Request(ProjectPathSegment, slugOrId).PatchJsonAsync(project);
     }
     
-    public async Task DeleteProjectAsync(string slugOrId)
+    public async Task DeleteAsync(string slugOrId)
     {
        await _client.Request(ProjectPathSegment, slugOrId).DeleteAsync();
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetMultipleProjectsAsync(IEnumerable<string> ids)
+    public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids)
     {
         var projects = _client.Request(ProjectPathSegment, "search")
             .SetQueryParam("ids", ids.ToModrinthQueryString())
@@ -43,17 +43,17 @@ public class ProjectApi : IProjectApi
     }
 
     /// <inheritdoc />
-    public async Task<SlugIdValidity> CheckProjectIdSlugValidityAsync(string slugOrId)
+    public async Task<SlugIdValidity> CheckIdSlugValidityAsync(string slugOrId)
     {
         return await _client.Request(ProjectPathSegment, slugOrId, "check").GetJsonAsync<SlugIdValidity>();
     }
 
-    public async Task FollowProjectAsync(string slugOrId)
+    public async Task FollowAsync(string slugOrId)
     {
         await _client.Request(ProjectPathSegment, slugOrId, "follow").PostAsync();
     }
 
-    public async Task UnfollowProjectAsync(string slugOrId)
+    public async Task UnfollowAsync(string slugOrId)
     {
         await _client.Request(ProjectPathSegment, slugOrId, "follow").DeleteAsync();
     }

@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using Modrinth.RestClient.Models.Enums;
 
 namespace Modrinth.RestClient.Endpoints.User;
 
@@ -13,12 +14,4 @@ public class Notification
     public string Link { get; set; }
     public bool Read { get; set; }
     public DateTime Created { get; set; }
-}
-
-public enum NotificationType
-{
-    [JsonPropertyName("project_update")]
-    ProjectUpdate,
-    [JsonPropertyName("team_invite")]
-    TeamInvite,
 }
