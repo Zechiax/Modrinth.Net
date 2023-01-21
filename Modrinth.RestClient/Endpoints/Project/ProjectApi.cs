@@ -30,7 +30,7 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids)
     {
-        var projects = _client.Request(ProjectPathSegment, "search")
+        var projects = _client.Request("projects")
             .SetQueryParam("ids", ids.ToModrinthQueryString())
             .GetJsonAsync<Models.Project[]>();
         

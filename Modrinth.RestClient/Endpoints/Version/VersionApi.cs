@@ -1,5 +1,6 @@
 ﻿using Flurl.Http;
 using Modrinth.RestClient.Extensions;
+using Version = Modrinth.RestClient.Models.Version;
 
 namespace Modrinth.RestClient.Endpoints.Project;
 
@@ -27,7 +28,8 @@ public class VersionApi : IVersionApi
     /// <inheritdoc />
     public async Task<Version[]> GetMultipleAsync(IEnumerable<string> ids)
     {
-        return await _client.Request("versions").SetQueryParam("ids", ids.ToModrinthQueryString())
+        return await _client.Request("versions")
+            .SetQueryParam("ids", ids.ToModrinthQueryString())
             .GetJsonAsync<Version[]>();
     }
 

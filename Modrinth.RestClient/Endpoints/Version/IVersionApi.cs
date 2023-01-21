@@ -1,4 +1,6 @@
-﻿namespace Modrinth.RestClient.Endpoints.Project;
+﻿using Version = Modrinth.RestClient.Models.Version;
+
+namespace Modrinth.RestClient.Endpoints.Project;
 
 public interface IVersionApi
 {

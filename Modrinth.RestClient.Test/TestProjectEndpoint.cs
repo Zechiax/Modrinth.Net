@@ -1,5 +1,6 @@
 namespace Modrinth.RestClient.Test;
 
+[TestFixture]
 public class TestProjectEndpoint
 {
     private ModrinthApi _client = null!;
@@ -48,5 +49,17 @@ public class TestProjectEndpoint
         // Will throw exception if not authorized / some other error
         await _client.Project.FollowAsync("gravestones");
         await _client.Project.UnfollowAsync("gravestones");
+    }
+
+    [Test]
+    public async Task TestGetMultipleProjects()
+    {
+        var search = await _client.Project.SearchProjectsAsync("");
+        var ids = search.Hits.Select(p => p.ProjectId).Take(5).ToList();
+        var projects = await _client.Project.GetMultipleAsync(ids);
+        
+        Assert.That(projects, Is.Not.Null);
+        // Check that all requested projects ids are present in the response
+        Assert.That(projects.Select(p => p.Id).All(ids.Contains), Is.True);
     }
 }

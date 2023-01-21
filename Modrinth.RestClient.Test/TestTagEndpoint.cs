@@ -1,5 +1,6 @@
 ﻿namespace Modrinth.RestClient.Test;
 
+[TestFixture]
 public class TestTagEndpoint
 {
     private ModrinthApi _client = null!;
