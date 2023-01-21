@@ -1,4 +1,5 @@
-﻿using Flurl.Http;
+﻿using System.Net;
+using Flurl.Http;
 using Modrinth.RestClient.Endpoints.Project;
 using Modrinth.RestClient.Endpoints.Tag;
 using Modrinth.RestClient.Endpoints.Team;
@@ -67,6 +68,11 @@ public class ModrinthApi : IModrinthApi
             .WithHeader("Accept", "application/json")
             .WithHeader("Content-Type", "application/json");
 
+        _client.Configure(settings =>
+        {
+            settings.OnErrorAsync = HandleFlurlErrorAsync;
+        });
+        
         if (!string.IsNullOrEmpty(token))
         {
             _client.WithHeader("Authorization", token);
@@ -78,5 +84,9 @@ public class ModrinthApi : IModrinthApi
         User = new UserApi(_client);
         Version = new VersionApi(_client);
         VersionFile = new VersionFileApi(_client);
+    }
+    
+    private static async Task HandleFlurlErrorAsync(FlurlCall call) {
+        
     }
 }

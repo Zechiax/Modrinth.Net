@@ -1,4 +1,6 @@
-﻿namespace Modrinth.RestClient.Test;
+﻿using Flurl.Http;
+
+namespace Modrinth.RestClient.Test;
 
 [TestFixture]
 public class TestUserEndpoint : EndpointTests
@@ -39,5 +41,12 @@ public class TestUserEndpoint : EndpointTests
         
         Assert.That(user, Is.Not.Null);
         Assert.That(user.Id, Is.EqualTo(currentUser.Id));
+    }
+    
+    // Test for current user with unauthenticated client
+    [Test]
+    public void TestGetCurrentUser_Unauthenticated()
+    {
+        Assert.ThrowsAsync<FlurlHttpException>(async () => await _noAuthClient.User.GetCurrentAsync());
     }
 }
