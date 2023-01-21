@@ -88,7 +88,7 @@ public class ModrinthApi : IModrinthApi
                     throw new ArgumentException("User-Agent cannot be empty", nameof(userAgent));
                 }
 
-                _instance ??= new ModrinthApi(url, userAgent, token);
+                _instance ??= new ModrinthApi(token: token, userAgent: userAgent, url: url);
             }
         }
         return _instance;
