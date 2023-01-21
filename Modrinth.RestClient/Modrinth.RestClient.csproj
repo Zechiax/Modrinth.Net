@@ -9,14 +9,12 @@
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Remove RestEase and HttpPolly
-- Use Flurl for requests
-- Add more endpoints
-- Rewrite main logic</PackageReleaseNotes>
+        <PackageReleaseNotes>- More coverage of tests =&gt; fix some bugs
+- Rename most enpoint methods</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>3.0.0-alpha</PackageVersion>
+	    <PackageVersion>3.0.0-alpha.1</PackageVersion>
     </PropertyGroup>
 
     <ItemGroup>
