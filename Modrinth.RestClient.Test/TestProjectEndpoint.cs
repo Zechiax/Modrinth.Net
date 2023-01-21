@@ -15,16 +15,25 @@ public class TestProjectEndpoint
     public async Task TestEmptySearch()
     {
         var search = await _client.Project.SearchAsync("");
-        
-        Assert.That(search.TotalHits, Is.GreaterThan(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(search.TotalHits, Is.GreaterThan(0));
+            Assert.That(search.Hits, Is.Not.Null);
+            Assert.That(search.Hits, Is.Not.Empty);
+        });
     }
-    
+
     [Test]
     public async Task TestSearch()
     {
         var search = await _client.Project.SearchAsync("fabric");
         
-        Assert.That(search.TotalHits, Is.GreaterThan(0));
+        Assert.Multiple(() =>
+        {
+            Assert.That(search.TotalHits, Is.GreaterThan(0));
+            Assert.That(search.Hits, Is.Not.Null);
+            Assert.That(search.Hits, Is.Not.Empty);
+        });
     }
     
     [Test]
