@@ -1,15 +1,8 @@
 namespace Modrinth.RestClient.Test;
 
 [TestFixture]
-public class TestProjectEndpoint
+public class TestProjectEndpoint : EndpointTests
 {
-    private IModrinthApi _client = null!;
-    
-    [SetUp]
-    public void Setup()
-    {
-        _client = ModrinthApi.GetInstance();
-    }
 
     [Test]
     public async Task TestEmptySearch()

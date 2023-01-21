@@ -5,6 +5,8 @@ namespace Modrinth.RestClient.Test;
 [SetUpFixture]
 public class EndpointTests
 {
+    protected IModrinthApi _client = null!;
+    
     [OneTimeSetUp]
     public void SetUp()
     {
@@ -14,6 +16,6 @@ public class EndpointTests
             throw new Exception("MODRINTH_TOKEN environment variable is not set.");
         }
         var userAgent = $"Zechiax/Modrinth.RestClient.Test/{Assembly.GetExecutingAssembly().GetName().Version}";
-        ModrinthApi.GetInstance(url: ModrinthApi.StagingBaseUrl, userAgent: userAgent , token: token);
+        _client = new ModrinthApi(url: ModrinthApi.StagingBaseUrl, userAgent: userAgent , token: token);
     }
 }

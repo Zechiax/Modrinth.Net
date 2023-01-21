@@ -1,16 +1,8 @@
 ﻿namespace Modrinth.RestClient.Test;
 
 [TestFixture]
-public class TestTeamEndpoint
+public class TestTeamEndpoint : EndpointTests
 {
-    private IModrinthApi _client = null!;
-    
-    [SetUp]
-    public void Setup()
-    {
-        _client = ModrinthApi.GetInstance();
-    }
-    
     [Test]
     public async Task GetProjectTeamAsync_WithValidSlugOrId_ShouldReturnProjectTeam()
     {

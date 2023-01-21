@@ -13,9 +13,6 @@ namespace Modrinth.RestClient;
 /// </summary>
 public class ModrinthApi : IModrinthApi
 {
-    private static ModrinthApi? _instance;
-    private static readonly object Lock = new();
-
     /// <summary>
     /// API Url of the production server
     /// </summary>
@@ -26,6 +23,8 @@ public class ModrinthApi : IModrinthApi
     /// API Url of the staging server
     /// </summary>
     public const string StagingBaseUrl = "https://staging-api.modrinth.com/v2";
+    
+    protected FlurlClient _client;
 
     #region Endpoints
 
@@ -56,41 +55,28 @@ public class ModrinthApi : IModrinthApi
     /// <param name="userAgent">User-Agent header you want to use while communicating with Modrinth API, it's recommended to set a uniquely-identifying one (<a href="https://docs.modrinth.com/api-spec/#section/User-Agents">see the docs</a>)</param>
     /// <param name="url">Custom API url, default is <see cref="BaseUrl"/></param>
     /// <returns></returns>
-    private ModrinthApi(string token = "", string userAgent = "", string url = BaseUrl)
+    public ModrinthApi(string? userAgent = null, string? token = null, string url = BaseUrl)
     {
-        var client = new FlurlClient(url)
+        if (string.IsNullOrEmpty(userAgent))
+        {
+            throw new ArgumentException("User-Agent cannot be empty", nameof(userAgent));
+        }
+
+        _client = new FlurlClient(url)
             .WithHeader("User-Agent", userAgent)
-            .WithHeader("Authorization", token)
             .WithHeader("Accept", "application/json")
             .WithHeader("Content-Type", "application/json");
 
-        Project = new ProjectApi(client);
-        Tag = new TagApi(client);
-        Team = new TeamApi(client);
-        User = new UserApi(client);
-        Version = new VersionApi(client);
-        VersionFile = new VersionFileApi(client);
-    }
-
-    /// <summary>
-    /// Returns a new instance of <see cref="ModrinthApi"/> if it's not already created, otherwise returns the existing one
-    /// </summary>
-    /// <param name="token">Authentication token for Authenticated requests</param>
-    /// <param name="userAgent">User-Agent header you want to use while communicating with Modrinth API, it's recommended to set a uniquely-identifying one (<a href="https://docs.modrinth.com/api-spec/#section/User-Agents">see the docs</a>)</param>
-    /// <param name="url">Custom API url, default is <see cref="BaseUrl"/></param>
-    /// <returns></returns>
-    public static IModrinthApi GetInstance(string userAgent = "", string token = "" , string url = BaseUrl) {
-        if (_instance == null) {
-            lock (Lock)
-            {
-                if (string.IsNullOrEmpty(userAgent))
-                {
-                    throw new ArgumentException("User-Agent cannot be empty", nameof(userAgent));
-                }
-
-                _instance ??= new ModrinthApi(token: token, userAgent: userAgent, url: url);
-            }
+        if (!string.IsNullOrEmpty(token))
+        {
+            _client.WithHeader("Authorization", token);
         }
-        return _instance;
+
+        Project = new ProjectApi(_client);
+        Tag = new TagApi(_client);
+        Team = new TeamApi(_client);
+        User = new UserApi(_client);
+        Version = new VersionApi(_client);
+        VersionFile = new VersionFileApi(_client);
     }
 }

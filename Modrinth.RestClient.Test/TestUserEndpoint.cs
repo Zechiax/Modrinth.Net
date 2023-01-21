@@ -1,16 +1,8 @@
 ﻿namespace Modrinth.RestClient.Test;
 
 [TestFixture]
-public class TestUserEndpoint
+public class TestUserEndpoint : EndpointTests
 {
-    private IModrinthApi _client = null!;
-    
-    [SetUp]
-    public void Setup()
-    {
-        _client = ModrinthApi.GetInstance();
-    }
-
     [Test]
     public async Task TestGetCurrentUser()
     {

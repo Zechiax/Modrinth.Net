@@ -1,16 +1,8 @@
 namespace Modrinth.RestClient.Test;
 
 [TestFixture]
-public class TestVersionEndpoint
-{
-    private IModrinthApi _client = null!;
-    
-    [SetUp]
-    public void Setup()
-    {
-        _client = ModrinthApi.GetInstance();
-    }
-    
+public class TestVersionEndpoint : EndpointTests
+{   
     [Test]
     public async Task TestGetVersions()
     {

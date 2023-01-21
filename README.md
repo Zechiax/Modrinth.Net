@@ -13,7 +13,7 @@
 using Modrinth.RestClient;
 
 // You must provide a user-agent, and optionally an authentication token if you wish to access authenticated API endpoints
-var client = ModrinthApi.GetInstance(userAgent: "My_Awesome_Project" , token: "Your_Authentication_Token");
+var client = new ModrinthApi(userAgent: "My_Awesome_Project" , token: "Your_Authentication_Token");
 
 var project = await client.Project.GetAsync("sodium");
 
