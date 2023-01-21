@@ -14,6 +14,6 @@ public class EndpointTests
             throw new Exception("MODRINTH_TOKEN environment variable is not set.");
         }
         var userAgent = $"Zechiax/Modrinth.RestClient.Test/{Assembly.GetExecutingAssembly().GetName().Version}";
-        ModrinthApi.GetInstance(url: ModrinthApi.StagingBaseUrl, userAgent: userAgent , authorization: token);
+        ModrinthApi.GetInstance(url: ModrinthApi.StagingBaseUrl, userAgent: userAgent , token: token);
     }
 }

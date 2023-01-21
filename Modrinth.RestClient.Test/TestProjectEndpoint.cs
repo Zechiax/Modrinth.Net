@@ -3,7 +3,7 @@ namespace Modrinth.RestClient.Test;
 [TestFixture]
 public class TestProjectEndpoint
 {
-    private ModrinthApi _client = null!;
+    private IModrinthApi _client = null!;
     
     [SetUp]
     public void Setup()

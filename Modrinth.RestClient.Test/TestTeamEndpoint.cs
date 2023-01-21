@@ -3,7 +3,7 @@
 [TestFixture]
 public class TestTeamEndpoint
 {
-    private ModrinthApi _client = null!;
+    private IModrinthApi _client = null!;
     
     [SetUp]
     public void Setup()

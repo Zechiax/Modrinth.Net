@@ -8,6 +8,20 @@
 - Progress of the rewrite can be found [here](https://github.com/Zechiax/Modrinth.RestClient/pull/26)
 
 ## Usage
+
+### Version 3.0.0
+```csharp
+using Modrinth.RestClient;
+
+// You must provide a user-agent, and optionally an authentication token if you wish to access authenticated API endpoints
+var client = ModrinthApi.GetInstance(userAgent: "My_Awesome_Project" , token: "Your_Authentication_Token");
+
+var project = await client.Project.GetAsync("sodium");
+
+Console.WriteLine(project.Description);
+```
+
+### Version 2.X.X
 - All methods are asynchronous
 ```csharp
 using Modrinth.RestClient;
