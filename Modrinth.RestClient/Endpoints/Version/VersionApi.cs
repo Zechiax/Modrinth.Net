@@ -1,5 +1,6 @@
 ﻿using Flurl.Http;
 using Modrinth.RestClient.Extensions;
+using Version = Modrinth.RestClient.Models.Version;
 
 namespace Modrinth.RestClient.Endpoints.Project;
 
@@ -11,19 +12,30 @@ public class VersionApi : IVersionApi
     {
         _client = client;
     }
-    public async Task<Version> GetVersionByIdAsync(string versionId)
+
+    /// <inheritdoc />
+    public async Task<Version> GetAsync(string versionId)
     {
         return await _client.Request(VersionsPath, versionId).GetJsonAsync<Version>();
     }
 
+    /// <inheritdoc />
     public async Task<Version[]> GetProjectVersionListAsync(string slugOrId)
     {
         return await _client.Request("project", slugOrId, VersionsPath).GetJsonAsync<Version[]>();
     }
 
-    public async Task<Version[]> GetMultipleVersionsAsync(IEnumerable<string> ids)
+    /// <inheritdoc />
+    public async Task<Version[]> GetMultipleAsync(IEnumerable<string> ids)
     {
-        return await _client.Request("versions").SetQueryParam("ids", ids.ToModrinthQueryString())
+        return await _client.Request("versions")
+            .SetQueryParam("ids", ids.ToModrinthQueryString())
             .GetJsonAsync<Version[]>();
+    }
+
+    /// <inheritdoc />
+    public async Task DeleteAsync(string versionId)
+    {
+        await _client.Request(VersionsPath, versionId).DeleteAsync();
     }
 }
