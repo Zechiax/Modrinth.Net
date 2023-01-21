@@ -5,7 +5,6 @@
 # ⚠️ Project is currently undergoing major rewrite to version 3.0.0 ⚠️
 - Versions <3.0.0 are not supported anymore as there will be breaking changes in the future, but they work for now.
 - I don't recommend using alpha versions, but if you want to, you can find them on NuGet - but be aware that they will change a lot.
-- Progress of the rewrite can be found [here](https://github.com/Zechiax/Modrinth.RestClient/pull/26)
 
 ## Usage
 
