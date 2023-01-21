@@ -17,15 +17,21 @@ public class ProjectApi : IProjectApi
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project> GetProjectAsync(string slugOrId)
+    public async Task<Models.Project> GetAsync(string slugOrId)
     {
         return await _client.Request(ProjectPathSegment, slugOrId).GetJsonAsync<Models.Project>();
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetMultipleProjectsAsync(IEnumerable<string> ids)
+    public async Task DeleteAsync(string slugOrId)
     {
-        var projects = _client.Request(ProjectPathSegment, "search")
+       await _client.Request(ProjectPathSegment, slugOrId).DeleteAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids)
+    {
+        var projects = _client.Request("projects")
             .SetQueryParam("ids", ids.ToModrinthQueryString())
             .GetJsonAsync<Models.Project[]>();
         
@@ -33,13 +39,31 @@ public class ProjectApi : IProjectApi
     }
 
     /// <inheritdoc />
-    public async Task<SlugIdValidity> CheckProjectIdSlugValidityAsync(string slugOrId)
+    public async Task<SlugIdValidity> CheckIdSlugValidityAsync(string slugOrId)
     {
         return await _client.Request(ProjectPathSegment, slugOrId, "check").GetJsonAsync<SlugIdValidity>();
     }
 
     /// <inheritdoc />
-    public async Task<SearchResponse> SearchProjectsAsync(string query, Index index = Index.Downloads, ulong offset = 0, ulong limit = 10)
+    public async Task<Dependencies> GetDependenciesAsync(string slugOrId)
+    {
+        return await _client.Request(ProjectPathSegment, slugOrId, "dependencies").GetJsonAsync<Dependencies>();
+    }
+
+    /// <inheritdoc />
+    public async Task FollowAsync(string slugOrId)
+    {
+        await _client.Request(ProjectPathSegment, slugOrId, "follow").PostAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task UnfollowAsync(string slugOrId)
+    {
+        await _client.Request(ProjectPathSegment, slugOrId, "follow").DeleteAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task<SearchResponse> SearchAsync(string query, Index index = Index.Downloads, ulong offset = 0, ulong limit = 10)
     {
         return await _client.Request("search")
             .SetQueryParam("query", query)

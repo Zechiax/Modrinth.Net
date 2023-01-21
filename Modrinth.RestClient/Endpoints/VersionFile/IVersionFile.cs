@@ -10,6 +10,7 @@ public interface IVersionFile
     /// <returns></returns>
     Task<Version> GetVersionByHashAsync(string hash,
         Models.Enums.HashAlgorithm hashAlgorithm = Models.Enums.HashAlgorithm.Sha1);
-    
-    
+
+    Task DeleteVersionByHashAsync(string hash,
+        Models.Enums.HashAlgorithm hashAlgorithm = Models.Enums.HashAlgorithm.Sha1);
 }
