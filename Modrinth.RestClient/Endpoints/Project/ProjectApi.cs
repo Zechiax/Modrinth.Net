@@ -22,11 +22,6 @@ public class ProjectApi : IProjectApi
         return await _client.Request(ProjectPathSegment, slugOrId).GetJsonAsync<Models.Project>();
     }
 
-    public async Task ModifyAsync(string slugOrId, Models.Project project)
-    {
-        await _client.Request(ProjectPathSegment, slugOrId).PatchJsonAsync(project);
-    }
-    
     public async Task DeleteAsync(string slugOrId)
     {
        await _client.Request(ProjectPathSegment, slugOrId).DeleteAsync();
@@ -46,6 +41,11 @@ public class ProjectApi : IProjectApi
     public async Task<SlugIdValidity> CheckIdSlugValidityAsync(string slugOrId)
     {
         return await _client.Request(ProjectPathSegment, slugOrId, "check").GetJsonAsync<SlugIdValidity>();
+    }
+
+    public async Task<Dependencies> GetDependenciesAsync(string slugOrId)
+    {
+        return await _client.Request(ProjectPathSegment, slugOrId, "dependencies").GetJsonAsync<Dependencies>();
     }
 
     public async Task FollowAsync(string slugOrId)

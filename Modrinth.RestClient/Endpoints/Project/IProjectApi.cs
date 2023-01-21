@@ -26,8 +26,6 @@ public interface IProjectApi
     /// <returns></returns>
     Task<Models.Project> GetAsync(string slugOrId);
     
-    Task ModifyAsync(string slugOrId, Models.Project project);
-    
     Task DeleteAsync(string slugOrId);
     
     /// <summary>
@@ -42,6 +40,8 @@ public interface IProjectApi
     /// </summary>
     /// <returns></returns>
     Task<SlugIdValidity> CheckIdSlugValidityAsync(string slugOrId);
+
+    Task<Dependencies> GetDependenciesAsync(string slugOrId);
     
     Task FollowAsync(string slugOrId);
     

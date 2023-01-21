@@ -22,4 +22,8 @@ public interface IVersionApi
     /// <param name="ids">The IDs of the versions</param>
     /// <returns></returns>
     Task<Version[]> GetMultipleAsync(IEnumerable<string> ids);
+    
+    Task DeleteAsync(string versionId);
+    
+    
 }
