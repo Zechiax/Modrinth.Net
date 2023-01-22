@@ -8,11 +8,11 @@
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Add IModrinthApi interface</PackageReleaseNotes>
+        <PackageReleaseNotes>- Renamed entry point to ModrinthClient</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>3.0.0-alpha.4</PackageVersion>
+	    <PackageVersion>3.0.0-alpha.5</PackageVersion>
 	    <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
