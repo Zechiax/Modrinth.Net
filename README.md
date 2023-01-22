@@ -13,12 +13,24 @@
 using Modrinth.RestClient;
 
 // You must provide a user-agent, and optionally an authentication token if you wish to access authenticated API endpoints
-var client = new ModrinthApi(userAgent: "My_Awesome_Project" , token: "Your_Authentication_Token");
+var client = new ModrinthClient(userAgent: "My_Awesome_Project" , token: "Your_Authentication_Token");
 
 var project = await client.Project.GetAsync("sodium");
 
 Console.WriteLine(project.Description);
 ```
+
+#### How does version 3.0.0 differ from 2.X.X?
+- Dropped use of `RestEase` library
+  - It's a great library, but it was not really suited for this project
+  - Currently using [Flurl](https://flurl.dev/) library to create and send requests
+- Not using 1 big API class anymore, but rather multiple smaller ones - for each endpoint
+  - To provide more unified experience, there is a `ModrinthClient` class, which contains all the smaller API classes
+  - It's easier to use, as it will be more similar to the API specification
+    - Instead of `client.GetProjectAsync("sodium")` you will do `client.Project.GetAsync("sodium")`
+- It's set up to be easily extendable
+- All methods will be unit tested
+- It has the foundation for authenticated API endpoints, some of them are already implemented
 
 ### Version 2.X.X
 - All methods are asynchronous
