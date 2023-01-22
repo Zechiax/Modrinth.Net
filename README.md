@@ -8,6 +8,8 @@
 
 ## Usage
 
+- Install the [NuGet package](https://www.nuget.org/packages/Modrinth.RestClient)
+
 ### Version 3.0.0
 ```csharp
 using Modrinth.RestClient;
