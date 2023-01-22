@@ -10,9 +10,9 @@ namespace Modrinth.RestClient;
 
 
 /// <summary>
-/// Base for creating new clients using RestEase from <see cref="IModrinthApi"/> interface
+/// Base for creating new clients using RestEase from <see cref="IModrinthClient"/> interface
 /// </summary>
-public class ModrinthApi : IModrinthApi
+public class ModrinthClient : IModrinthClient
 {
     /// <summary>
     /// API Url of the production server
@@ -50,13 +50,13 @@ public class ModrinthApi : IModrinthApi
     #endregion
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="ModrinthApi"/> class.
+    /// Initializes a new instance of the <see cref="ModrinthClient"/> class.
     /// </summary>
     /// <param name="token">Authentication token for Authenticated requests</param>
     /// <param name="userAgent">User-Agent header you want to use while communicating with Modrinth API, it's recommended to set a uniquely-identifying one (<a href="https://docs.modrinth.com/api-spec/#section/User-Agents">see the docs</a>)</param>
     /// <param name="url">Custom API url, default is <see cref="BaseUrl"/></param>
     /// <returns></returns>
-    public ModrinthApi(string? userAgent = null, string? token = null, string url = BaseUrl)
+    public ModrinthClient(string? userAgent = null, string? token = null, string url = BaseUrl)
     {
         if (string.IsNullOrEmpty(userAgent))
         {

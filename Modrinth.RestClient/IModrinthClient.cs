@@ -9,7 +9,7 @@ namespace Modrinth.RestClient;
 /// <summary>
 /// Entry point for the API
 /// </summary>
-public interface IModrinthApi
+public interface IModrinthClient
 {
     /// <inheritdoc cref="IProjectApi" />
     IProjectApi Project { get; }
