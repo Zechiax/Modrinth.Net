@@ -25,9 +25,12 @@ public class ModrinthClient : IModrinthClient
     /// </summary>
     public const string StagingBaseUrl = "https://staging-api.modrinth.com/v2";
     
-    protected FlurlClient _client;
+    protected readonly FlurlClient Client;
 
     #region Endpoints
+
+    /// <inheritdoc />
+    public bool IsDisposed { get; private set; } = false;
 
     /// <inheritdoc />
     public IProjectApi Project { get; }
@@ -63,30 +66,40 @@ public class ModrinthClient : IModrinthClient
             throw new ArgumentException("User-Agent cannot be empty", nameof(userAgent));
         }
 
-        _client = new FlurlClient(url)
+        Client = new FlurlClient(url)
             .WithHeader("User-Agent", userAgent)
             .WithHeader("Accept", "application/json")
             .WithHeader("Content-Type", "application/json");
 
-        _client.Configure(settings =>
+        Client.Configure(settings =>
         {
             settings.OnErrorAsync = HandleFlurlErrorAsync;
         });
         
         if (!string.IsNullOrEmpty(token))
         {
-            _client.WithHeader("Authorization", token);
+            Client.WithHeader("Authorization", token);
         }
 
-        Project = new ProjectApi(_client);
-        Tag = new TagApi(_client);
-        Team = new TeamApi(_client);
-        User = new UserApi(_client);
-        Version = new VersionApi(_client);
-        VersionFile = new VersionFileApi(_client);
+        Project = new ProjectApi(Client);
+        Tag = new TagApi(Client);
+        Team = new TeamApi(Client);
+        User = new UserApi(Client);
+        Version = new VersionApi(Client);
+        VersionFile = new VersionFileApi(Client);
     }
     
     private static async Task HandleFlurlErrorAsync(FlurlCall call) {
         
     }
+
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        if (IsDisposed || Client.IsDisposed) return;
+        Client.Dispose();
+        IsDisposed = true;
+        GC.SuppressFinalize(this);
+    }
+
 }

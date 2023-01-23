@@ -9,8 +9,13 @@ namespace Modrinth.RestClient;
 /// <summary>
 /// Entry point for the API
 /// </summary>
-public interface IModrinthClient
+public interface IModrinthClient : IDisposable
 {
+    /// <summary>
+    /// If the client has been disposed 
+    /// </summary>
+    public bool IsDisposed { get; }
+    
     /// <inheritdoc cref="IProjectApi" />
     IProjectApi Project { get; }
     
