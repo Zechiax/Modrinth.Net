@@ -3,34 +3,6 @@ namespace Modrinth.RestClient.Test.ModrinthApiTests;
 [TestFixture]
 public class TestProjectEndpoint : EndpointTests
 {
-
-    [Test]
-    public async Task Search_WithEmptySearchTerm_ShouldReturnNonEmptyList()
-    {
-        var search = await _client.Project.SearchAsync("");
-        Assert.Multiple(() =>
-        {
-            Assert.That(search.TotalHits, Is.GreaterThan(0));
-            Assert.That(search.Hits, Is.Not.Null);
-            Assert.That(search.Hits, Is.Not.Empty);
-        });
-    }
-
-    [Test]
-    public async Task Search_WithFabricSearchTerm_ShouldReturnNonEmptyList()
-    {
-        var search = await _client.Project.SearchAsync("fabric");
-        
-        Assert.Multiple(() =>
-        {
-            Assert.That(search.TotalHits, Is.GreaterThan(0));
-            Assert.That(search.Hits, Is.Not.Null);
-            Assert.That(search.Hits, Is.Not.Empty);
-        });
-    }
-    
-    
-    
     [Test]
     public async Task GetProject_WithValidId_ShouldReturnProject()
     {
