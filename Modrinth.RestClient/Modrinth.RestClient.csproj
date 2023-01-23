@@ -4,15 +4,15 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-	    <Description>A Modrinth API wrapper using RestEase</Description>
+	    <Description>An asynchronous Modrinth API wrapper</Description>
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.RestClient</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
-        <PackageReleaseNotes>- Renamed entry point to ModrinthClient</PackageReleaseNotes>
+        <PackageReleaseNotes>https://github.com/Zechiax/Modrinth.RestClient/releases</PackageReleaseNotes>
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>3.0.0-alpha.5</PackageVersion>
+	    <PackageVersion>3.0.0-alpha.6</PackageVersion>
 	    <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
