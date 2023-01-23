@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Modrinth.RestClient.Test;
+namespace Modrinth.RestClient.Test.ModrinthApiTests;
 
 [SetUpFixture]
 public class EndpointTests
@@ -11,7 +11,7 @@ public class EndpointTests
     [OneTimeSetUp]
     public void SetUp()
     {
-        var token = Environment.GetEnvironmentVariable("MODRINTH_TOKEN");
+        var token = "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";//Environment.GetEnvironmentVariable("MODRINTH_TOKEN");
         if (string.IsNullOrEmpty(token))
         {
             throw new Exception("MODRINTH_TOKEN environment variable is not set.");

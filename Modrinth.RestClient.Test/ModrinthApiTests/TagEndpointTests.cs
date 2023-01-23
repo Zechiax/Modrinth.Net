@@ -1,10 +1,10 @@
-﻿namespace Modrinth.RestClient.Test;
+﻿namespace Modrinth.RestClient.Test.ModrinthApiTests;
 
 [TestFixture]
 public class TestTagEndpoint : EndpointTests
 {
     [Test]
-    public async Task TestGetCategories()
+    public async Task GetCategories_ShouldReturnCategories()
     {
         var categories = await _client.Tag.GetCategoriesAsync();
         Assert.That(categories, Is.Not.Null);
@@ -12,7 +12,7 @@ public class TestTagEndpoint : EndpointTests
     }
 
     [Test]
-    public async Task TestGetLoaders()
+    public async Task GetLoaders_ShouldReturnLoaders()
     {
         var loaders = await _client.Tag.GetLoadersAsync();
         Assert.That(loaders, Is.Not.Null);
@@ -20,7 +20,7 @@ public class TestTagEndpoint : EndpointTests
     }
     
     [Test]
-    public async Task TestGetGameVersions()
+    public async Task GetGameVersions_ShouldReturnGameVersions()
     {
         var gameVersions = await _client.Tag.GetGameVersionsAsync();
         Assert.That(gameVersions, Is.Not.Null);
@@ -28,7 +28,7 @@ public class TestTagEndpoint : EndpointTests
     }
     
     [Test]
-    public async Task TestGetLicense()
+    public async Task GetLicenses_ShouldReturnLicenses()
     {
         var licenses = await _client.Tag.GetLicensesAsync();
         Assert.That(licenses, Is.Not.Null);
@@ -36,7 +36,7 @@ public class TestTagEndpoint : EndpointTests
     }
     
     [Test]
-    public async Task TestGetDonationPlatforms()
+    public async Task GetDonationPlatforms_ShouldReturnDonationPlatforms()
     {
         var donationPlatforms = await _client.Tag.GetDonationPlatformsAsync();
         Assert.That(donationPlatforms, Is.Not.Null);
@@ -44,7 +44,7 @@ public class TestTagEndpoint : EndpointTests
     }
     
     [Test]
-    public async Task TestGetReportTypes()
+    public async Task GetReportTypes_ShouldReturnReportTypes()
     {
         var reportTypes = await _client.Tag.GetReportTypesAsync();
         Assert.That(reportTypes, Is.Not.Null);

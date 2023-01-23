@@ -1,11 +1,11 @@
-namespace Modrinth.RestClient.Test;
+namespace Modrinth.RestClient.Test.ModrinthApiTests;
 
 [TestFixture]
 public class TestProjectEndpoint : EndpointTests
 {
 
     [Test]
-    public async Task TestEmptySearch()
+    public async Task Search_WithEmptySearchTerm_ShouldReturnNonEmptyList()
     {
         var search = await _client.Project.SearchAsync("");
         Assert.Multiple(() =>
@@ -17,7 +17,7 @@ public class TestProjectEndpoint : EndpointTests
     }
 
     [Test]
-    public async Task TestSearch()
+    public async Task Search_WithFabricSearchTerm_ShouldReturnNonEmptyList()
     {
         var search = await _client.Project.SearchAsync("fabric");
         
@@ -29,8 +29,10 @@ public class TestProjectEndpoint : EndpointTests
         });
     }
     
+    
+    
     [Test]
-    public async Task TestGetProject()
+    public async Task GetProject_WithValidId_ShouldReturnProject()
     {
         var project = await _client.Project.GetAsync("gravestones");
 
@@ -38,7 +40,7 @@ public class TestProjectEndpoint : EndpointTests
     }
     
     [Test]
-    public async Task TestCheckIdSlugValidity()
+    public async Task CheckIdSlugValidity_WithValidId_ShouldReturnId()
     {
         var validity = await _client.Project.CheckIdSlugValidityAsync("gravestones");
 
@@ -46,7 +48,7 @@ public class TestProjectEndpoint : EndpointTests
     }
 
     [Test]
-    public async Task TestFollowUnfollowProject()
+    public async Task FollowAndUnfollow_WithValidId_ShouldSuccessfullyFollowAndUnfollow()
     {
         // Will throw exception if not authorized / some other error
         await _client.Project.FollowAsync("gravestones");
@@ -54,10 +56,35 @@ public class TestProjectEndpoint : EndpointTests
     }
 
     [Test]
-    public async Task TestGetMultipleProjects()
+    public async Task GetMultiple_WithValidIdList_ShouldReturnAllRequestedProjects()
     {
         var search = await _client.Project.SearchAsync("");
         var ids = search.Hits.Select(p => p.ProjectId).Take(5).ToList();
+        var projects = await _client.Project.GetMultipleAsync(ids);
+        
+        Assert.That(projects, Is.Not.Null);
+        // Check that all requested projects ids are present in the response
+        Assert.That(projects.Select(p => p.Id).All(ids.Contains), Is.True);
+    }
+    
+    // Multiple ids but with only 1 id
+    [Test]
+    public async Task GetMultiple_WithSingleId_ShouldReturnRequestedProject()
+    {
+        var search = await _client.Project.SearchAsync("");
+        var ids = search.Hits.Select(p => p.ProjectId).Take(1).ToList();
+        var projects = await _client.Project.GetMultipleAsync(ids);
+        
+        Assert.That(projects, Is.Not.Null);
+        // Check that all requested projects ids are present in the response
+        Assert.That(projects.Select(p => p.Id).All(ids.Contains), Is.True);
+    }
+    
+    // Multiple ids but with empty list
+    [Test]
+    public async Task GetMultiple_WithNoId_ShouldSuccessfullyReturn()
+    {
+        var ids = new List<string>();
         var projects = await _client.Project.GetMultipleAsync(ids);
         
         Assert.That(projects, Is.Not.Null);

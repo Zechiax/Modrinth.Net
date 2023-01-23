@@ -1,6 +1,6 @@
 ﻿using Flurl.Http;
 
-namespace Modrinth.RestClient.Test;
+namespace Modrinth.RestClient.Test.ModrinthApiTests;
 
 [TestFixture]
 public class TestUserEndpoint : EndpointTests
