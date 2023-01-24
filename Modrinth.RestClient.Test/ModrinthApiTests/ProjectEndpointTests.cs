@@ -63,4 +63,14 @@ public class TestProjectEndpoint : EndpointTests
         // Check that all requested projects ids are present in the response
         Assert.That(projects.Select(p => p.Id).All(ids.Contains), Is.True);
     }
+    
+    // Get dependencies
+    [Test]
+    public async Task GetDependencies_WithValidId_ShouldReturnDependencies()
+    {
+        var dependencies = await _client.Project.GetDependenciesAsync("gravestones");
+        
+        // Can be empty
+        Assert.That(dependencies, Is.Not.Null);
+    }
 }
