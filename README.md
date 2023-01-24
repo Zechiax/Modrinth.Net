@@ -1,6 +1,5 @@
 # Modrinth.RestClient
-[![Nuget](https://img.shields.io/nuget/v/Modrinth.RestClient?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Modrinth.RestClient?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient)
-- Modrinth API wrapper using [RestEase](https://github.com/canton7/RestEase) library
+[![Nuget](https://img.shields.io/nuget/v/Modrinth.RestClient?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient) ![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Modrinth.RestClient?label=NuGet%20Pre-release&style=for-the-badge)
 
 # ⚠️ Project is currently undergoing major rewrite to version 3.0.0 ⚠️
 - Versions <3.0.0 are not supported anymore as there will be breaking changes in the future, but they work for now.
