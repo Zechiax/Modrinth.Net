@@ -1,13 +1,13 @@
 ﻿using Flurl.Http;
-using Modrinth.Net.Endpoints.Project;
-using Modrinth.Net.Endpoints.Tag;
-using Modrinth.Net.Endpoints.Team;
-using Modrinth.Net.Endpoints.User;
-using Modrinth.Net.Endpoints.VersionFile;
-using Modrinth.Net.Exceptions;
+using Modrinth.Endpoints.Project;
+using Modrinth.Endpoints.Tag;
+using Modrinth.Endpoints.Team;
+using Modrinth.Endpoints.User;
+using Modrinth.Endpoints.Version;
+using Modrinth.Endpoints.VersionFile;
+using Modrinth.Exceptions;
 
-namespace Modrinth.Net;
-
+namespace Modrinth;
 
 /// <summary>
 /// Base for creating new clients using RestEase from <see cref="IModrinthClient"/> interface

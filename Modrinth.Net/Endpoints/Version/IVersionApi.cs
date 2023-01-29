@@ -1,6 +1,4 @@
-﻿using Version = Modrinth.Net.Models.Version;
-
-namespace Modrinth.Net.Endpoints.Project;
+﻿namespace Modrinth.Endpoints.Version;
 
 public interface IVersionApi
 {

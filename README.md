@@ -12,7 +12,7 @@
 - Install the [NuGet package](https://www.nuget.org/packages/Modrinth.Net)
 
 ```csharp
-using Modrinth.Net;
+using Modrinth;
 
 // You must provide a user-agent, and optionally an authentication token if you wish to access authenticated API endpoints
 var client = new ModrinthClient(userAgent: "My_Awesome_Project" , token: "Your_Authentication_Token");
@@ -33,7 +33,7 @@ The package has been renamed from "Modrinth.RestClient" to "Modrinth.Net", so yo
 
 1. Uninstall the old "Modrinth.RestClient" package
 2. Install the new "Modrinth.Net" package
-3. Replace the old namespace "Modrinth.RestClient" with the new namespace "Modrinth.Net" in your code
+3. Replace the old namespace "Modrinth.RestClient" with the new namespace "Modrinth" in your code
 
 - Old package: [Modrinth.RestClient](https://www.nuget.org/packages/Modrinth.RestClient)
 - New package: [Modrinth.Net](https://www.nuget.org/packages/Modrinth.Net)
@@ -54,7 +54,7 @@ var client = ModrinthApi.NewClient(userAgent: "My_Awesome_Project");
 var project = await client.GetProjectAsync("sodium");
 
 // New
-using Modrinth.Net;
+using Modrinth;
 
 var client = new ModrinthClient(userAgent: "My_Awesome_Project");
 var project = await client.Project.GetAsync("sodium");

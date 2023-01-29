@@ -1,4 +1,4 @@
-﻿namespace Modrinth.Net.Models.Enums;
+﻿namespace Modrinth.Models.Enums;
 
 public enum ProjectVersionType
 {

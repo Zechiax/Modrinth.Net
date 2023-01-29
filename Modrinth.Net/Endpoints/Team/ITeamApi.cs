@@ -1,6 +1,6 @@
-﻿using Modrinth.Net.Models;
+﻿using Modrinth.Models;
 
-namespace Modrinth.Net.Endpoints.Team;
+namespace Modrinth.Endpoints.Team;
 
 public interface ITeamApi
 {

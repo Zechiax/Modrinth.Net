@@ -1,8 +1,8 @@
-﻿using Modrinth.Net.Models.Enums;
+﻿using Modrinth.Models.Enums;
 using Newtonsoft.Json;
 
 #pragma warning disable CS8618
-namespace Modrinth.Net.Models.Tags;
+namespace Modrinth.Models.Tags;
 
 public class Loader
 {

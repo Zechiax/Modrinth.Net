@@ -1,8 +1,8 @@
 ﻿using Flurl.Http;
-using Modrinth.Net.Models;
-using Modrinth.Net.Extensions;
+using Modrinth.Extensions;
+using Modrinth.Models;
 
-namespace Modrinth.Net.Endpoints.Team;
+namespace Modrinth.Endpoints.Team;
 
 /// <inheritdoc />
 public class TeamApi : ITeamApi

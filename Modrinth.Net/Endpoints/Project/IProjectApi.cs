@@ -1,7 +1,6 @@
-﻿using Modrinth.Net.Models;
-using Index = Modrinth.Net.Models.Enums.Index;
+﻿using Modrinth.Models;
 
-namespace Modrinth.Net.Endpoints.Project;
+namespace Modrinth.Endpoints.Project;
 
 public interface IProjectApi
 {

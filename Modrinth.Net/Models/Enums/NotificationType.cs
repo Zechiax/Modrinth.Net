@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Modrinth.Net.Models.Enums;
+namespace Modrinth.Models.Enums;
 
 public enum NotificationType
 {

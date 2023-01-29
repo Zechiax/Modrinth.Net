@@ -1,4 +1,4 @@
-﻿namespace Modrinth.Net.Endpoints.Project;
+﻿namespace Modrinth.Endpoints.Project;
 
 public class SlugIdValidity
 {

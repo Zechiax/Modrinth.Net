@@ -1,4 +1,4 @@
-﻿namespace Modrinth.Net.Models.Tags;
+﻿namespace Modrinth.Models.Tags;
 
 #pragma warning disable CS8618
 

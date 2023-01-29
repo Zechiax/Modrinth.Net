@@ -1,4 +1,4 @@
-﻿using Index = Modrinth.Net.Models.Enums.Index;
+﻿using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Net.Test.ModrinthApiTests;
 

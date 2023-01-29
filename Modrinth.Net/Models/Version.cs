@@ -1,8 +1,8 @@
 ﻿#pragma warning disable CS8618
-using Modrinth.Net.Models.Enums;
+using Modrinth.Models.Enums;
 using Newtonsoft.Json;
 
-namespace Modrinth.Net.Models;
+namespace Modrinth.Models;
 
 public class Version
 {

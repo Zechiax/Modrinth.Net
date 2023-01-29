@@ -1,4 +1,4 @@
-﻿namespace Modrinth.Net.Models.Enums;
+﻿namespace Modrinth.Models.Enums;
 
 [Flags]
 public enum Permissions

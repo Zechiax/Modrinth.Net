@@ -1,9 +1,8 @@
 ﻿using Flurl.Http;
-using Modrinth.Net.Models;
-using Modrinth.Net.Extensions;
-using Index = Modrinth.Net.Models.Enums.Index;
+using Modrinth.Extensions;
+using Modrinth.Models;
 
-namespace Modrinth.Net.Endpoints.Project;
+namespace Modrinth.Endpoints.Project;
 
 public class ProjectApi : IProjectApi
 {

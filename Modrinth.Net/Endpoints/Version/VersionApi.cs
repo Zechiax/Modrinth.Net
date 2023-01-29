@@ -1,8 +1,7 @@
 ﻿using Flurl.Http;
-using Modrinth.Net.Extensions;
-using Version = Modrinth.Net.Models.Version;
+using Modrinth.Extensions;
 
-namespace Modrinth.Net.Endpoints.Project;
+namespace Modrinth.Endpoints.Version;
 
 public class VersionApi : IVersionApi
 {

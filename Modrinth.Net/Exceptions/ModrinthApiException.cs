@@ -1,6 +1,6 @@
 using System.Net;
 
-namespace Modrinth.Net.Exceptions;
+namespace Modrinth.Exceptions;
 
 public class ModrinthApiException : Exception
 {

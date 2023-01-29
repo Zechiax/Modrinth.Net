@@ -1,4 +1,4 @@
-﻿namespace Modrinth.Net.Endpoints.VersionFile;
+﻿namespace Modrinth.Endpoints.VersionFile;
 
 public interface IVersionFile
 {
@@ -8,7 +8,7 @@ public interface IVersionFile
     /// <param name="hash">The hash of the file, considering its byte content, and encoded in hexadecimal</param>
     /// <param name="hashAlgorithm"></param>
     /// <returns></returns>
-    Task<Version> GetVersionByHashAsync(string hash,
+    Task<System.Version> GetVersionByHashAsync(string hash,
         Models.Enums.HashAlgorithm hashAlgorithm = Models.Enums.HashAlgorithm.Sha1);
 
     Task DeleteVersionByHashAsync(string hash,

@@ -1,8 +1,8 @@
-using Modrinth.Net.Extensions;
-using Modrinth.Net.Helpers;
-using Modrinth.Net.Models;
-using Modrinth.Net.Models.Enums;
-using Version = Modrinth.Net.Models.Version;
+using Modrinth.Extensions;
+using Modrinth.Helpers;
+using Modrinth.Models;
+using Modrinth.Models.Enums;
+using Version = Modrinth.Models.Version;
 
 namespace Modrinth.Net.Test;
 

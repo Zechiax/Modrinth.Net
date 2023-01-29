@@ -1,6 +1,4 @@
-using System.Net.Mime;
-
-namespace Modrinth.Net.Extensions;
+namespace Modrinth.Extensions;
 
 public static class StringExtensions
 {

@@ -1,8 +1,4 @@
-﻿using System.Runtime.Serialization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
-namespace Modrinth.Net.Models.Enums;
+﻿namespace Modrinth.Models.Enums;
 
 /// <summary>
 /// The sorting method used for sorting search results

@@ -1,4 +1,6 @@
-﻿namespace Modrinth.Net.Endpoints.User;
+﻿using Modrinth.Models;
+
+namespace Modrinth.Endpoints.User;
 
 public interface IUserApi
 {

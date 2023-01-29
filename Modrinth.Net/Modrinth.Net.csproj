@@ -12,8 +12,9 @@
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>3.0.0</PackageVersion>
+	    <PackageVersion>3.0.1</PackageVersion>
 	    <TargetFramework>net6.0</TargetFramework>
+	    <RootNamespace>Modrinth</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>

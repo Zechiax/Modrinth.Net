@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
-using Modrinth.Net.Models.Enums;
+using Modrinth.Models.Enums;
 
-namespace Modrinth.Net.Endpoints.User;
+namespace Modrinth.Models;
 
 public class Notification
 {

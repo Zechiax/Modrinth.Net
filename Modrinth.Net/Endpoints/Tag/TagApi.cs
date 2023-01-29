@@ -1,7 +1,7 @@
 ﻿using Flurl.Http;
-using Modrinth.Net.Models.Tags;
+using Modrinth.Models.Tags;
 
-namespace Modrinth.Net.Endpoints.Tag;
+namespace Modrinth.Endpoints.Tag;
 
 /// <inheritdoc />
 public class TagApi : ITagApi

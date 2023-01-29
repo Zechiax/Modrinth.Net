@@ -1,8 +1,7 @@
 ﻿using Flurl.Http;
-using Modrinth.Net.Models.Enums;
-using Modrinth.Net.Extensions;
+using Modrinth.Models.Enums;
 
-namespace Modrinth.Net.Endpoints.VersionFile;
+namespace Modrinth.Endpoints.VersionFile;
 
 public class VersionFileApi : IVersionFile
 {
@@ -14,10 +13,10 @@ public class VersionFileApi : IVersionFile
     }
 
     /// <inheritdoc />
-    public async Task<Version> GetVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
+    public async Task<System.Version> GetVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
     {
         return await _client.Request(VersionFilePathSegment, hash)
-            .SetQueryParam("algorithm", hashAlgorithm.ToString().ToLower()).GetJsonAsync<Version>();
+            .SetQueryParam("algorithm", hashAlgorithm.ToString().ToLower()).GetJsonAsync<System.Version>();
     }
 
     /// <inheritdoc />

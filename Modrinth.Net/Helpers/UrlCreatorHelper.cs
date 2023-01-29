@@ -1,7 +1,7 @@
-﻿using Modrinth.Net.Models;
-using Modrinth.Net.Models.Enums;
+﻿using Modrinth.Models;
+using Modrinth.Models.Enums;
 
-namespace Modrinth.Net.Helpers;
+namespace Modrinth.Helpers;
 
 /// <summary>
 /// Class for creating direct links to Modrinth

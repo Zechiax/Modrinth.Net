@@ -1,5 +1,5 @@
 ﻿#pragma warning disable CS8618
-namespace Modrinth.Net.Models.Enums;
+namespace Modrinth.Models.Enums;
 
 public class License
 {

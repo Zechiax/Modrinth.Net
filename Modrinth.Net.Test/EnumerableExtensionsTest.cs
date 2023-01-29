@@ -1,4 +1,4 @@
-﻿using Modrinth.Net.Extensions;
+﻿using Modrinth.Extensions;
 using NUnit.Framework;
 
 namespace Modrinth.Net.Test;

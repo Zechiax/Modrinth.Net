@@ -1,5 +1,5 @@
 ﻿using Flurl.Http;
-using Modrinth.Net.Exceptions;
+using Modrinth.Exceptions;
 
 namespace Modrinth.Net.Test.ModrinthApiTests;
 

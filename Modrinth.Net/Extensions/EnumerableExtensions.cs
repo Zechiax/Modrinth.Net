@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Modrinth.Net.Extensions;
+namespace Modrinth.Extensions;
 
 public static class EnumerableExtensions
 {

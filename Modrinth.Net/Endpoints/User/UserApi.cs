@@ -1,7 +1,8 @@
 ﻿using Flurl.Http;
-using Modrinth.Net.Extensions;
+using Modrinth.Extensions;
+using Modrinth.Models;
 
-namespace Modrinth.Net.Endpoints.User;
+namespace Modrinth.Endpoints.User;
 
 public class UserApi : IUserApi
 {

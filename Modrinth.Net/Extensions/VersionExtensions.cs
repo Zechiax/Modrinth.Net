@@ -1,7 +1,6 @@
-﻿using Modrinth.Net.Models;
-using Version = Modrinth.Net.Models.Version;
+﻿using Modrinth.Models;
 
-namespace Modrinth.Net.Extensions;
+namespace Modrinth.Extensions;
 
 public static class VersionExtensions
 {
