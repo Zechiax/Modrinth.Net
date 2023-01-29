@@ -3,7 +3,6 @@
 [![Nuget](https://img.shields.io/nuget/v/Modrinth.Net?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.Net) 
 [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Modrinth.Net?label=NuGet%20Pre-release&style=for-the-badge)](https://www.nuget.org/packages/Modrinth.Net)
 
-
 - C# Wrapper for the [Modrinth API](https://docs.modrinth.com/api-spec/)
 - Previously known as "Modrinth.RestClient"
 
