@@ -1,22 +1,18 @@
-# Modrinth.RestClient
+# Modrinth.Net
 [![GitHub](https://img.shields.io/github/license/Zechiax/Modrinth.RestClient?style=for-the-badge)](https://github.com/Zechiax/Modrinth.RestClient)
 [![Nuget](https://img.shields.io/nuget/v/Modrinth.RestClient?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient) 
 [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Modrinth.RestClient?label=NuGet%20Pre-release&style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient)
 
 
-- A Modrinth API client for .NET
-
-# ⚠️ Project is currently undergoing major rewrite to version 3.0.0 ⚠️
-- Versions <3.0.0 are not supported anymore as there will be breaking changes in the future, but they work for now.
-- I don't recommend using alpha versions, but if you want to, you can find them on NuGet - but be aware that they will change a lot.
+- C# Wrapper for the [Modrinth API](https://docs.modrinth.com/api-spec/)
+- Previously known as "Modrinth.RestClient"
 
 ## Usage
 
-- Install the [NuGet package](https://www.nuget.org/packages/Modrinth.RestClient)
+- Install the [NuGet package](https://www.nuget.org/packages/Modrinth.Net)
 
-### Version 3.0.0
 ```csharp
-using Modrinth.RestClient;
+using Modrinth.Net;
 
 // You must provide a user-agent, and optionally an authentication token if you wish to access authenticated API endpoints
 var client = new ModrinthClient(userAgent: "My_Awesome_Project" , token: "Your_Authentication_Token");
@@ -26,35 +22,32 @@ var project = await client.Project.GetAsync("sodium");
 Console.WriteLine(project.Description);
 ```
 
-#### How does version 3.0.0 differ from 2.X.X?
-- Dropped use of `RestEase` library
-  - It's a great library, but it was not really suited for this project
-  - Currently using [Flurl](https://flurl.dev/) library to create and send requests
-- Not using 1 big API class anymore, but rather multiple smaller ones - for each endpoint
-  - To provide more unified experience, there is a `ModrinthClient` class, which contains all the smaller API classes
-  - It's easier to use, as it will be more similar to the API specification
+### Upgrade from 2.X.X to 3.0.0
+
+The package has been renamed from "Modrinth.RestClient" to "Modrinth.Net", so you will need to do the following to upgrade:
+
+1. Uninstall the old "Modrinth.RestClient" package
+2. Install the new "Modrinth.Net" package
+3. Replace the old namespace "Modrinth.RestClient" with the new namespace "Modrinth.Net" in your code
+
+#### API Changes from 2.X.X to 3.0.0
+- New client class
+  - `ModrinthClient` is the new client class, which contains all the smaller API classes
+  - It's similar to the API specification:
     - Instead of `client.GetProjectAsync("sodium")` you will do `client.Project.GetAsync("sodium")`
     - `client.GetProjectTeamMembersByProjectAsync("sodium")` will become `client.Team.GetProjectTeamAsync("sodium")`
     - And so on
-- It's set up to be easily extendable
-- All methods will be unit tested
-- It has the foundation for authenticated API endpoints, some of them are already implemented
 
-### Version 2.X.X
-- All methods are asynchronous
 ```csharp
+// Old
 using Modrinth.RestClient;
 
-// Modrinth recommends to set a uniquely-identifying user-agent
-var api = ModrinthApi.NewClient(userAgent: "My_Awesome_Project");
+var client = ModrinthApi.NewClient(userAgent: "My_Awesome_Project");
+var project = await client.GetProjectAsync("sodium");
 
-var project = await api.GetProjectAsync("sodium");
-        
-Console.WriteLine(project.Description);
+// New
+using Modrinth.Net;
+
+var client = new ModrinthClient(userAgent: "My_Awesome_Project");
+var project = await client.Project.GetAsync("sodium");
 ```
-
-## Info
-- As of right now, this does not cover every endpoint, but rather most of the common `GET` endpoints
-  - So it can only get information, not upload
-- For API specification [see here](https://docs.modrinth.com/api-spec/)
-- For getting response status code, which do not indicate success, [see here](https://github.com/canton7/RestEase#response-status-codes)
