@@ -22,6 +22,11 @@ var project = await client.Project.GetAsync("sodium");
 Console.WriteLine(project.Description);
 ```
 
+### Unsuccesful API calls
+- If the API call was unsuccessful, the client will throw an `ModrinthApiException` exception
+- This will be thrown if the API call return non-200 status code, or if the response body is not valid JSON
+- This approach will be revisited in future versions
+
 ### Upgrade from 2.X.X to 3.0.0
 
 The package has been renamed from "Modrinth.RestClient" to "Modrinth.Net", so you will need to do the following to upgrade:

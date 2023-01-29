@@ -91,8 +91,8 @@ public class ModrinthClient : IModrinthClient
     
     private static async Task HandleFlurlErrorAsync(FlurlCall call) {
         call.ExceptionHandled = true;
-        
-        throw new ModrinthApiException(call.Exception.Message, call.Response.ResponseMessage.StatusCode);
+
+        throw new ModrinthApiException(call.Exception.Message, call.Response.ResponseMessage.StatusCode, call.Response.ResponseMessage.Content);
     }
 
     /// <inheritdoc />
