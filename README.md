@@ -1,5 +1,10 @@
 # Modrinth.RestClient
-[![Nuget](https://img.shields.io/nuget/v/Modrinth.RestClient?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient) [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Modrinth.RestClient?label=NuGet%20Pre-release&style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient)
+[![GitHub](https://img.shields.io/github/license/Zechiax/Modrinth.RestClient?style=for-the-badge)](https://github.com/Zechiax/Modrinth.RestClient)
+[![Nuget](https://img.shields.io/nuget/v/Modrinth.RestClient?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient) 
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Modrinth.RestClient?label=NuGet%20Pre-release&style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient)
+
+
+- A Modrinth API client for .NET
 
 # ⚠️ Project is currently undergoing major rewrite to version 3.0.0 ⚠️
 - Versions <3.0.0 are not supported anymore as there will be breaking changes in the future, but they work for now.
@@ -29,6 +34,8 @@ Console.WriteLine(project.Description);
   - To provide more unified experience, there is a `ModrinthClient` class, which contains all the smaller API classes
   - It's easier to use, as it will be more similar to the API specification
     - Instead of `client.GetProjectAsync("sodium")` you will do `client.Project.GetAsync("sodium")`
+    - `client.GetProjectTeamMembersByProjectAsync("sodium")` will become `client.Team.GetProjectTeamAsync("sodium")`
+    - And so on
 - It's set up to be easily extendable
 - All methods will be unit tested
 - It has the foundation for authenticated API endpoints, some of them are already implemented

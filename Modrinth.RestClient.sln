@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modrinth.RestClient", "Modrinth.RestClient\Modrinth.RestClient.csproj", "{4A2201CB-9AAB-4563-AAAF-8162B4DB56AF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modrinth.Net", "Modrinth.Net\Modrinth.Net.csproj", "{4A2201CB-9AAB-4563-AAAF-8162B4DB56AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modrinth.RestClient.Test", "Modrinth.RestClient.Test\Modrinth.RestClient.Test.csproj", "{736DCF37-F3DB-4FF0-9AB0-49C4CE463749}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Modrinth.Net.Test", "Modrinth.Net.Test\Modrinth.Net.Test.csproj", "{736DCF37-F3DB-4FF0-9AB0-49C4CE463749}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

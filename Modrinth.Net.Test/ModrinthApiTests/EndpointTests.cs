@@ -1,0 +1,23 @@
+﻿using System.Reflection;
+
+namespace Modrinth.Net.Test.ModrinthApiTests;
+
+[SetUpFixture]
+public class EndpointTests
+{
+    protected IModrinthClient _client = null!;
+    protected IModrinthClient _noAuthClient = null!;
+    
+    [OneTimeSetUp]
+    public void SetUp()
+    {
+        var token = Environment.GetEnvironmentVariable("MODRINTH_TOKEN");
+        if (string.IsNullOrEmpty(token))
+        {
+            throw new Exception("MODRINTH_TOKEN environment variable is not set.");
+        }
+        var userAgent = $"Zechiax/Modrinth.Net.Test/{Assembly.GetExecutingAssembly().GetName().Version}";
+        _client = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent, token: token);
+        _noAuthClient = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent);
+    }
+}
