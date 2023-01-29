@@ -4,6 +4,7 @@ using Modrinth.Net.Endpoints.Tag;
 using Modrinth.Net.Endpoints.Team;
 using Modrinth.Net.Endpoints.User;
 using Modrinth.Net.Endpoints.VersionFile;
+using Modrinth.Net.Exceptions;
 
 namespace Modrinth.Net;
 
@@ -89,7 +90,9 @@ public class ModrinthClient : IModrinthClient
     }
     
     private static async Task HandleFlurlErrorAsync(FlurlCall call) {
+        call.ExceptionHandled = true;
         
+        throw new ModrinthApiException(call.Exception.Message, call.Response.ResponseMessage.StatusCode);
     }
 
     /// <inheritdoc />

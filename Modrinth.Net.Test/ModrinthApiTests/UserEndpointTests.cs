@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using Modrinth.Net.Exceptions;
 
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
@@ -47,6 +48,6 @@ public class TestUserEndpoint : EndpointTests
     [Test]
     public void TestGetCurrentUser_Unauthenticated()
     {
-        Assert.ThrowsAsync<FlurlHttpException>(async () => await _noAuthClient.User.GetCurrentAsync());
+        Assert.ThrowsAsync<ModrinthApiException>(async () => await _noAuthClient.User.GetCurrentAsync());
     }
 }

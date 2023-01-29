@@ -12,7 +12,7 @@
 	    <PackageLicenseExpression>MIT</PackageLicenseExpression>
 	    <GenerateDocumentationFile>true</GenerateDocumentationFile>
 	    <PackageReadmeFile>README.md</PackageReadmeFile>
-	    <PackageVersion>3.0.0-rc.1</PackageVersion>
+	    <PackageVersion>3.0.0</PackageVersion>
 	    <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
