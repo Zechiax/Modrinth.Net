@@ -1,7 +1,7 @@
 # Modrinth.Net
-[![GitHub](https://img.shields.io/github/license/Zechiax/Modrinth.RestClient?style=for-the-badge)](https://github.com/Zechiax/Modrinth.RestClient)
-[![Nuget](https://img.shields.io/nuget/v/Modrinth.RestClient?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient) 
-[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Modrinth.RestClient?label=NuGet%20Pre-release&style=for-the-badge)](https://www.nuget.org/packages/Modrinth.RestClient)
+[![GitHub](https://img.shields.io/github/license/Zechiax/Modrinth.Net?style=for-the-badge)](https://github.com/Zechiax/Modrinth.Net)
+[![Nuget](https://img.shields.io/nuget/v/Modrinth.Net?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.Net) 
+[![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Modrinth.Net?label=NuGet%20Pre-release&style=for-the-badge)](https://www.nuget.org/packages/Modrinth.Net)
 
 
 - C# Wrapper for the [Modrinth API](https://docs.modrinth.com/api-spec/)
@@ -29,6 +29,9 @@ The package has been renamed from "Modrinth.RestClient" to "Modrinth.Net", so yo
 1. Uninstall the old "Modrinth.RestClient" package
 2. Install the new "Modrinth.Net" package
 3. Replace the old namespace "Modrinth.RestClient" with the new namespace "Modrinth.Net" in your code
+
+- Old package: [Modrinth.RestClient](https://www.nuget.org/packages/Modrinth.RestClient)
+- New package: [Modrinth.Net](https://www.nuget.org/packages/Modrinth.Net)
 
 #### API Changes from 2.X.X to 3.0.0
 - New client class
