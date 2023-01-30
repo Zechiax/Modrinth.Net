@@ -5,12 +5,12 @@
 public class License
 {
     /// <summary>
-    /// The short identifier of the license
+    ///     The short identifier of the license
     /// </summary>
     public string Short { get; set; }
-    
+
     /// <summary>
-    /// The full name of the license
+    ///     The full name of the license
     /// </summary>
     public string Name { get; set; }
 }

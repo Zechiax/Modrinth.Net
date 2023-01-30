@@ -8,6 +8,7 @@ public class UserApi : IUserApi
 {
     private const string UserPathSegment = "user";
     private readonly FlurlClient _client;
+
     public UserApi(FlurlClient client)
     {
         _client = client;

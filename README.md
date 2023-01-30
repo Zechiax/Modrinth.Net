@@ -1,6 +1,7 @@
 # Modrinth.Net
+
 [![GitHub](https://img.shields.io/github/license/Zechiax/Modrinth.Net?style=for-the-badge)](https://github.com/Zechiax/Modrinth.Net)
-[![Nuget](https://img.shields.io/nuget/v/Modrinth.Net?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.Net) 
+[![Nuget](https://img.shields.io/nuget/v/Modrinth.Net?style=for-the-badge)](https://www.nuget.org/packages/Modrinth.Net)
 [![Nuget (with prereleases)](https://img.shields.io/nuget/vpre/Modrinth.Net?label=NuGet%20Pre-release&style=for-the-badge)](https://www.nuget.org/packages/Modrinth.Net)
 
 - C# Wrapper for the [Modrinth API](https://docs.modrinth.com/api-spec/)
@@ -22,13 +23,15 @@ Console.WriteLine(project.Description);
 ```
 
 ### Unsuccesful API calls
+
 - If the API call was unsuccessful, the client will throw an `ModrinthApiException` exception
 - This will be thrown if the API call return non-200 status code, or if the response body is not valid JSON
 - This approach will be revisited in future versions
 
 ### Upgrade from 2.X.X to 3.0.0
 
-The package has been renamed from "Modrinth.RestClient" to "Modrinth.Net", so you will need to do the following to upgrade:
+The package has been renamed from "Modrinth.RestClient" to "Modrinth.Net", so you will need to do the following to
+upgrade:
 
 1. Uninstall the old "Modrinth.RestClient" package
 2. Install the new "Modrinth.Net" package
@@ -38,12 +41,13 @@ The package has been renamed from "Modrinth.RestClient" to "Modrinth.Net", so yo
 - New package: [Modrinth.Net](https://www.nuget.org/packages/Modrinth.Net)
 
 #### API Changes from 2.X.X to 3.0.0
+
 - New client class
-  - `ModrinthClient` is the new client class, which contains all the smaller API classes
-  - It's similar to the API specification:
-    - Instead of `client.GetProjectAsync("sodium")` you will do `client.Project.GetAsync("sodium")`
-    - `client.GetProjectTeamMembersByProjectAsync("sodium")` will become `client.Team.GetProjectTeamAsync("sodium")`
-    - And so on
+    - `ModrinthClient` is the new client class, which contains all the smaller API classes
+    - It's similar to the API specification:
+        - Instead of `client.GetProjectAsync("sodium")` you will do `client.Project.GetAsync("sodium")`
+        - `client.GetProjectTeamMembersByProjectAsync("sodium")` will become `client.Team.GetProjectTeamAsync("sodium")`
+        - And so on
 
 ```csharp
 // Old

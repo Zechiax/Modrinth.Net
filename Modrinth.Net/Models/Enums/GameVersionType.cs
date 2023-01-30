@@ -3,19 +3,22 @@
 public enum GameVersionType
 {
     /// <summary>
-    /// Alpha version
+    ///     Alpha version
     /// </summary>
     Alpha,
+
     /// <summary>
-    /// Beta version
+    ///     Beta version
     /// </summary>
     Beta,
+
     /// <summary>
-    /// Stable game version
+    ///     Stable game version
     /// </summary>
     Release,
+
     /// <summary>
-    /// Testing version
+    ///     Testing version
     /// </summary>
     Snapshot
 }

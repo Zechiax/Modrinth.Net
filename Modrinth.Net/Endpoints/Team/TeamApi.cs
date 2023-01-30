@@ -9,6 +9,7 @@ public class TeamApi : ITeamApi
 {
     private const string TeamsPathSegment = "team";
     private readonly FlurlClient _client;
+
     public TeamApi(FlurlClient client)
     {
         _client = client;
@@ -29,6 +30,7 @@ public class TeamApi : ITeamApi
     /// <inheritdoc />
     public async Task<TeamMember[][]> GetMultipleAsync(IEnumerable<string> ids)
     {
-        return await _client.Request("teams").SetQueryParam("ids", ids.ToModrinthQueryString()).GetJsonAsync<TeamMember[][]>();
+        return await _client.Request("teams").SetQueryParam("ids", ids.ToModrinthQueryString())
+            .GetJsonAsync<TeamMember[][]>();
     }
 }
