@@ -6,7 +6,6 @@
 [![Modrinth API](https://img.shields.io/badge/Modrinth%20API-v2-449C59?style=for-the-badge)](https://docs.modrinth.com/api-spec/)
 
 - C# Wrapper for the [Modrinth API](https://docs.modrinth.com/api-spec/)
-- Previously known as "Modrinth.RestClient"
 
 ## Usage
 
@@ -29,37 +28,7 @@ Console.WriteLine(project.Description);
 - This will be thrown if the API call return non-200 status code, or if the response body is not valid JSON
 - This approach will be revisited in future versions
 
-### Upgrade from 2.X.X to 3.0.0
+## Info
 
-The package has been renamed from "Modrinth.RestClient" to "Modrinth.Net", so you will need to do the following to
-upgrade:
-
-1. Uninstall the old "Modrinth.RestClient" package
-2. Install the new "Modrinth.Net" package
-3. Replace the old namespace "Modrinth.RestClient" with the new namespace "Modrinth" in your code
-
-- Old package: [Modrinth.RestClient](https://www.nuget.org/packages/Modrinth.RestClient)
-- New package: [Modrinth.Net](https://www.nuget.org/packages/Modrinth.Net)
-
-#### API Changes from 2.X.X to 3.0.0
-
-- New client class
-    - `ModrinthClient` is the new client class, which contains all the smaller API classes
-    - It's similar to the API specification:
-        - Instead of `client.GetProjectAsync("sodium")` you will do `client.Project.GetAsync("sodium")`
-        - `client.GetProjectTeamMembersByProjectAsync("sodium")` will become `client.Team.GetProjectTeamAsync("sodium")`
-        - And so on
-
-```csharp
-// Old
-using Modrinth.RestClient;
-
-var client = ModrinthApi.NewClient(userAgent: "My_Awesome_Project");
-var project = await client.GetProjectAsync("sodium");
-
-// New
-using Modrinth;
-
-var client = new ModrinthClient(userAgent: "My_Awesome_Project");
-var project = await client.Project.GetAsync("sodium");
-```
+- This package was previously called 'Modrinth.RestClient', while completely rewriting it, I've decided to rename it to 'Modrinth.Net', continuing the versioning from the previous package
+  - The old package can be found [here](https://www.nuget.org/packages/Modrinth.RestClient/)
