@@ -15,7 +15,7 @@ public interface IModrinthClient : IDisposable
     /// <summary>
     ///     If the client has been disposed
     /// </summary>
-    public bool IsDisposed { get; }
+    bool IsDisposed { get; }
 
     /// <inheritdoc cref="IProjectApi" />
     IProjectApi Project { get; }
