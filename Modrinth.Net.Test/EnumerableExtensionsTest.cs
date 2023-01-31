@@ -1,5 +1,4 @@
 ﻿using Modrinth.Extensions;
-using NUnit.Framework;
 
 namespace Modrinth.Net.Test;
 
@@ -14,7 +13,7 @@ public class StringExtensionsTest
         var actual = items.ToModrinthQueryString();
         Assert.That(actual, Is.EqualTo(expected));
     }
-    
+
     [Test]
     public void TestToModrinthQueryString_OneItem()
     {
@@ -23,7 +22,7 @@ public class StringExtensionsTest
         var actual = items.ToModrinthQueryString();
         Assert.That(actual, Is.EqualTo(expected));
     }
-    
+
     [Test]
     public void TestToModrinthQueryString_NoItems()
     {
