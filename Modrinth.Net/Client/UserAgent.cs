@@ -33,27 +33,41 @@ public class UserAgent
     {
         // Needs checks for null
         var sb = new StringBuilder();
-        
+
+        var before = false;
         if (GitHubUsername != null)
         {
             sb.Append(GitHubUsername);
-            sb.Append('/');
+            before = true;
         }
         
         if (ProjectName != null)
         {
+            if (before)
+            {
+                sb.Append('/');
+            }
             sb.Append(ProjectName);
-            sb.Append('/');
+            before = true;
         }
         
         if (ProjectVersion != null)
         {
+            if (before)
+            {
+                sb.Append('/');
+            }
             sb.Append(ProjectVersion);
+            before = true;
         }
         
         if (Contact != null)
         {
-            sb.Append(" (");
+            if (before)
+            {
+                sb.Append(' ');
+            }
+            sb.Append('(');
             sb.Append(Contact);
             sb.Append(')');
         }
