@@ -2,7 +2,7 @@ namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
 public class TestVersionEndpoint : EndpointTests
-{   
+{
     [Test]
     public async Task TestGetVersions()
     {
@@ -11,7 +11,7 @@ public class TestVersionEndpoint : EndpointTests
         Assert.That(version, Is.Not.Null);
         Assert.That(version.ProjectId, Is.EqualTo(project.Id));
     }
-    
+
     [Test]
     public async Task TestGetProjectVersionList()
     {
@@ -26,7 +26,7 @@ public class TestVersionEndpoint : EndpointTests
     {
         // Not really a 'unit' test, but we need to find a project with more than one version
         var search = await _client.Project.SearchAsync("");
-        
+
         // We will find the first project that has more than one version
         var projectWithMoreVersions = search.Hits.FirstOrDefault(p => p.DateCreated != p.DateModified);
 
@@ -37,15 +37,15 @@ public class TestVersionEndpoint : EndpointTests
         }
 
         var project = await _client.Project.GetAsync(projectWithMoreVersions.ProjectId);
-        
+
         if (project.Versions.Length < 2)
         {
             Assert.Fail("Project with more than one version has less than two versions");
             return;
         }
-        
+
         var versions = await _client.Version.GetMultipleAsync(project.Versions);
-        
+
         Assert.That(versions, Is.Not.Null);
         Assert.That(versions, Is.Not.Empty);
     }

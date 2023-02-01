@@ -9,7 +9,7 @@ public static class EnumerableExtensions
         // It needs to be in format like this: ["AABBCCDD", "EEFFGGHH"]
         var sb = new StringBuilder();
         sb.Append('[');
-        
+
         var any = false;
         foreach (var item in items)
         {
@@ -17,12 +17,9 @@ public static class EnumerableExtensions
             any = true;
         }
 
-        if (any)
-        {
-            sb.Remove(sb.Length - 1, 1);
-        }
+        if (any) sb.Remove(sb.Length - 1, 1);
 
-        
+
         sb.Append(']');
         return sb.ToString();
     }

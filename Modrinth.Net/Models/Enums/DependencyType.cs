@@ -3,19 +3,22 @@
 public enum DependencyType
 {
     /// <summary>
-    /// Dependency is required
+    ///     Dependency is required
     /// </summary>
     Required,
+
     /// <summary>
-    /// Dependency is optional
+    ///     Dependency is optional
     /// </summary>
     Optional,
+
     /// <summary>
-    /// Dependency is incompatible
+    ///     Dependency is incompatible
     /// </summary>
     Incompatible,
+
     /// <summary>
-    /// Dependency is embedded
+    ///     Dependency is embedded
     /// </summary>
     Embedded
 }

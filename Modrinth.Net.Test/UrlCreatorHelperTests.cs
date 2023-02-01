@@ -19,12 +19,12 @@ public class UrlCreatorHelperTests
         };
 
         var url = project.GetDirectUrl();
-        
+
         Assert.That(url, Is.Not.Null);
         Assert.That(url, Is.Not.Empty);
         Assert.That(url, Is.EqualTo($"https://modrinth.com/mod/{project.Id}"));
     }
-    
+
     [Test]
     public void CreateDirectUserUrl_WithValidId_ShouldReturnValidUrl()
     {
@@ -34,7 +34,7 @@ public class UrlCreatorHelperTests
         };
 
         var url = user.GetDirectUrl();
-        
+
         Assert.That(url, Is.Not.Null);
         Assert.That(url, Is.Not.Empty);
         Assert.That(url, Is.EqualTo($"https://modrinth.com/user/{user.Id}"));
@@ -47,20 +47,20 @@ public class UrlCreatorHelperTests
         {
             Id = "AABBCCDD"
         };
-        
+
         var project = new Project
         {
             Id = "AABBCCDD",
             ProjectType = ProjectType.Mod
         };
-        
+
         var url = version.GetUrl(project);
-        
+
         Assert.That(url, Is.Not.Null);
         Assert.That(url, Is.Not.Empty);
         Assert.That(url, Is.EqualTo($"https://modrinth.com/mod/{project.Id}/version/{version.Id}"));
     }
-    
+
     [Test]
     public void CreateDirectSearchResultUrl_WithValidId_ShouldReturnValidUrl()
     {
@@ -71,7 +71,7 @@ public class UrlCreatorHelperTests
         };
 
         var url = searchResult.GetDirectUrl();
-        
+
         Assert.That(url, Is.Not.Null);
         Assert.That(url, Is.Not.Empty);
         Assert.That(url, Is.EqualTo($"https://modrinth.com/mod/{searchResult.ProjectId}"));

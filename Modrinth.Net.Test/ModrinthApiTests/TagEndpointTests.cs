@@ -18,7 +18,7 @@ public class TestTagEndpoint : EndpointTests
         Assert.That(loaders, Is.Not.Null);
         Assert.That(loaders, Is.Not.Empty);
     }
-    
+
     [Test]
     public async Task GetGameVersions_ShouldReturnGameVersions()
     {
@@ -26,7 +26,7 @@ public class TestTagEndpoint : EndpointTests
         Assert.That(gameVersions, Is.Not.Null);
         Assert.That(gameVersions, Is.Not.Empty);
     }
-    
+
     [Test]
     public async Task GetLicenses_ShouldReturnLicenses()
     {
@@ -34,7 +34,7 @@ public class TestTagEndpoint : EndpointTests
         Assert.That(licenses, Is.Not.Null);
         Assert.That(licenses, Is.Not.Empty);
     }
-    
+
     [Test]
     public async Task GetDonationPlatforms_ShouldReturnDonationPlatforms()
     {
@@ -42,7 +42,7 @@ public class TestTagEndpoint : EndpointTests
         Assert.That(donationPlatforms, Is.Not.Null);
         Assert.That(donationPlatforms, Is.Not.Empty);
     }
-    
+
     [Test]
     public async Task GetReportTypes_ShouldReturnReportTypes()
     {

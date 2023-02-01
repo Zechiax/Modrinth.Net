@@ -5,12 +5,12 @@
 public class DonationPlatform
 {
     /// <summary>
-    /// The short identifier of the donation platform
+    ///     The short identifier of the donation platform
     /// </summary>
     public string Short { get; set; }
-    
+
     /// <summary>
-    /// The full name of the donation platform
+    ///     The full name of the donation platform
     /// </summary>
     public string Name { get; set; }
 }

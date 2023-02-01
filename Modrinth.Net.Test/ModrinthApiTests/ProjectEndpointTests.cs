@@ -10,7 +10,7 @@ public class TestProjectEndpoint : EndpointTests
 
         Assert.That(project.Title, Is.EqualTo("Gravestones"));
     }
-    
+
     [Test]
     public async Task CheckIdSlugValidity_WithValidId_ShouldReturnId()
     {
@@ -33,12 +33,12 @@ public class TestProjectEndpoint : EndpointTests
         var search = await _client.Project.SearchAsync("");
         var ids = search.Hits.Select(p => p.ProjectId).Take(5).ToList();
         var projects = await _client.Project.GetMultipleAsync(ids);
-        
+
         Assert.That(projects, Is.Not.Null);
         // Check that all requested projects ids are present in the response
         Assert.That(projects.Select(p => p.Id).All(ids.Contains), Is.True);
     }
-    
+
     // Multiple ids but with only 1 id
     [Test]
     public async Task GetMultiple_WithSingleId_ShouldReturnRequestedProject()
@@ -46,30 +46,30 @@ public class TestProjectEndpoint : EndpointTests
         var search = await _client.Project.SearchAsync("");
         var ids = search.Hits.Select(p => p.ProjectId).Take(1).ToList();
         var projects = await _client.Project.GetMultipleAsync(ids);
-        
+
         Assert.That(projects, Is.Not.Null);
         // Check that all requested projects ids are present in the response
         Assert.That(projects.Select(p => p.Id).All(ids.Contains), Is.True);
     }
-    
+
     // Multiple ids but with empty list
     [Test]
     public async Task GetMultiple_WithNoId_ShouldSuccessfullyReturn()
     {
         var ids = new List<string>();
         var projects = await _client.Project.GetMultipleAsync(ids);
-        
+
         Assert.That(projects, Is.Not.Null);
         // Check that all requested projects ids are present in the response
         Assert.That(projects.Select(p => p.Id).All(ids.Contains), Is.True);
     }
-    
+
     // Get dependencies
     [Test]
     public async Task GetDependencies_WithValidId_ShouldReturnDependencies()
     {
         var dependencies = await _client.Project.GetDependenciesAsync("gravestones");
-        
+
         // Can be empty
         Assert.That(dependencies, Is.Not.Null);
     }

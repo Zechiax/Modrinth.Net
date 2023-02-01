@@ -6,7 +6,8 @@ namespace Modrinth.Endpoints.Version;
 public class VersionApi : IVersionApi
 {
     private const string VersionsPath = "version";
-    private FlurlClient _client;
+    private readonly FlurlClient _client;
+
     public VersionApi(FlurlClient client)
     {
         _client = client;

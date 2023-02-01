@@ -6,14 +6,14 @@ namespace Modrinth.Endpoints.Tag;
 /// <inheritdoc />
 public class TagApi : ITagApi
 {
+    private const string TagPathSegment = "tag";
     private readonly FlurlClient _client;
 
-    private const string TagPathSegment = "tag"; 
     public TagApi(FlurlClient client)
     {
         _client = client;
     }
-    
+
     public async Task<Category[]> GetCategoriesAsync()
     {
         return await _client.Request(TagPathSegment, "category")
