@@ -1,6 +1,7 @@
 ﻿using Flurl.Http;
 using Modrinth.Extensions;
 using Modrinth.Models;
+using Modrinth.Models.Facets;
 using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Endpoints.Project;
@@ -64,13 +65,16 @@ public class ProjectApi : IProjectApi
 
     /// <inheritdoc />
     public async Task<SearchResponse> SearchAsync(string query, Index index = Index.Downloads, ulong offset = 0,
-        ulong limit = 10)
+        ulong limit = 10, FacetCollection? facets = null)
     {
-        return await _client.Request("search")
+        var request = _client.Request("search")
             .SetQueryParam("query", query)
             .SetQueryParam("index", index.ToString().ToLower())
             .SetQueryParam("offset", offset)
-            .SetQueryParam("limit", limit)
-            .GetJsonAsync<SearchResponse>();
+            .SetQueryParam("limit", limit);
+
+        if (facets is {Count: > 0}) request = request.SetQueryParam("facets", facets.ToString());
+
+        return await request.GetJsonAsync<SearchResponse>();
     }
 }
