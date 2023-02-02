@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.Configuration;
+using Modrinth.Client;
 
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
@@ -26,8 +27,14 @@ public class EndpointTests
     public void SetUp()
     {
         var token = GetToken();
-        var userAgent = $"Zechiax/Modrinth.Net.Test/{Assembly.GetExecutingAssembly().GetName().Version}";
-        _client = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent, token: token);
-        _noAuthClient = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent);
+        var userAgent = new UserAgent
+        {
+            GitHubUsername = "Zechiax",
+            ProjectName = "Modrinth.Net.Test",
+            ProjectVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString(),
+        };
+        
+        _client = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent.ToString(), token: token);
+        _noAuthClient = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent.ToString());
     }
 }
