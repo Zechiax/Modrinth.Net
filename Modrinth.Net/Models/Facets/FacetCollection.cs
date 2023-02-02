@@ -2,9 +2,8 @@ namespace Modrinth.Models.Facets;
 
 public class FacetCollection
 {
-    public int Count => _facets.Count;
-    
     private readonly List<Facet[]> _facets = new();
+    public int Count => _facets.Count;
 
     /// <summary>
     ///     Adds a facets to the collection, it will be added as a new group
@@ -23,9 +22,9 @@ public class FacetCollection
     {
         // Serialize the facets into a Javascript array
         var serializedFacets = _facets.Select(
-            facets => 
+            facets =>
                 $"[{string.Join(',', facets.Select(facet => $"\"{facet}\""))}]");
-        
+
         return $"[{string.Join(',', serializedFacets)}]";
     }
 }

@@ -1,5 +1,4 @@
 using Modrinth.Models.Facets;
-using Newtonsoft.Json;
 
 namespace Modrinth.Net.Test;
 
@@ -13,7 +12,7 @@ public class FacetCollectionTests
         collection.Add(Facet.Category("test"));
         Assert.That(collection.ToString(), Is.EqualTo("[[\"categories:test\"]]"));
     }
-    
+
     [Test]
     public void CollectionWithMultipleFacets_OR()
     {
@@ -21,7 +20,7 @@ public class FacetCollectionTests
         collection.Add(Facet.Category("test"), Facet.Category("test2"));
         Assert.That(collection.ToString(), Is.EqualTo("[[\"categories:test\",\"categories:test2\"]]"));
     }
-    
+
     [Test]
     public void CollectionWithMultipleFacets_AND()
     {
@@ -30,13 +29,14 @@ public class FacetCollectionTests
         collection.Add(Facet.Category("test2"));
         Assert.That(collection.ToString(), Is.EqualTo("[[\"categories:test\"],[\"categories:test2\"]]"));
     }
-    
+
     [Test]
     public void CollectionWithMultipleFacets_AND_OR()
     {
         var collection = new FacetCollection();
         collection.Add(Facet.Category("test"));
         collection.Add(Facet.Category("test2"), Facet.Category("test3"));
-        Assert.That(collection.ToString(), Is.EqualTo("[[\"categories:test\"],[\"categories:test2\",\"categories:test3\"]]"));
+        Assert.That(collection.ToString(),
+            Is.EqualTo("[[\"categories:test\"],[\"categories:test2\",\"categories:test3\"]]"));
     }
 }

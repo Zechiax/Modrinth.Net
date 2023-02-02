@@ -13,7 +13,6 @@ public static class UrlCreatorHelper
     /// </summary>
     public const string ModrinthUrl = "https://modrinth.com";
 
-    
 
     /// <summary>
     ///     Return direct link to the user on Modrinth

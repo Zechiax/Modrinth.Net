@@ -126,17 +126,17 @@ public class SearchTests : EndpointTests
             search.Hits.Select(p => p.DateModified),
             Is.EqualTo(search.Hits.Select(p => p.DateModified).OrderByDescending(d => d)));
     }
-    
+
     // Search with facets
     [Test]
     public async Task Search_WithFacets_ShouldReturnFilteredResults()
     {
         var facets = new FacetCollection();
-        
+
         facets.Add(Facet.Category("adventure"));
-        
+
         var search = await _client.Project.SearchAsync("", facets: facets);
-        
+
         // Check that every search result has the adventure category
         Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure")));
     }

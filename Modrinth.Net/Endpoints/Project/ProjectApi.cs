@@ -72,12 +72,9 @@ public class ProjectApi : IProjectApi
             .SetQueryParam("index", index.ToString().ToLower())
             .SetQueryParam("offset", offset)
             .SetQueryParam("limit", limit);
-        
-        if (facets is {Count: > 0})
-        {
-            request = request.SetQueryParam("facets", facets.ToString());
-        }
-        
+
+        if (facets is {Count: > 0}) request = request.SetQueryParam("facets", facets.ToString());
+
         return await request.GetJsonAsync<SearchResponse>();
     }
 }
