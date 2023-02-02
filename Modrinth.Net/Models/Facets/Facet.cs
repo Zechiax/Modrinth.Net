@@ -1,23 +1,29 @@
+using Modrinth.Extensions;
+using Modrinth.Models.Enums;
+
 namespace Modrinth.Models.Facets;
 
-public class Facet
+public abstract class Facet
+{
+    public static Facet<string> Category(string value) => new (FacetType.Categories, value);
+    
+    public static Facet<string> Version(string value) => new(FacetType.Versions, value);
+    
+    public static Facet<string> License(string value) => new(FacetType.License, value);
+    
+    public static Facet<string> ProjectType(ProjectType projectType) => new(FacetType.ProjectType, projectType.ToModrinthString());
+}
+
+public class Facet<T> : Facet
 {
     public FacetType Type { get; }
-    public string Value { get; }
+    public T Value { get; }
     
-    private Facet(FacetType type, string value)
+    public Facet(FacetType type, T value)
     {
         Type = type;
         Value = value;
     }
-    
-    public static Facet Category(string value) => new(FacetType.Categories, value);
-    
-    public static Facet Version(string value) => new(FacetType.Versions, value);
-    
-    public static Facet License(string value) => new(FacetType.License, value);
-    
-    public static Facet ProjectType(string value) => new(FacetType.ProjectType, value);
 
     public override string ToString()
     {

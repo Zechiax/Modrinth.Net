@@ -1,5 +1,5 @@
-﻿using Modrinth.Models;
-using Modrinth.Models.Enums;
+﻿using Modrinth.Extensions;
+using Modrinth.Models;
 
 namespace Modrinth.Helpers;
 
@@ -13,23 +13,7 @@ public static class UrlCreatorHelper
     /// </summary>
     public const string ModrinthUrl = "https://modrinth.com";
 
-    /// <summary>
-    ///     Returns formatted type used in Modrinth links to specific project
-    /// </summary>
-    /// <param name="projectType"></param>
-    /// <returns></returns>
-    private static string GetProjectUrlType(ProjectType projectType)
-    {
-        return projectType switch
-        {
-            ProjectType.Mod => "mod",
-            ProjectType.Modpack => "modpack",
-            ProjectType.Resourcepack => "resourcepack",
-            ProjectType.Shader => "shader",
-            // Return lower string, this should work for all, but it is not guaranteed
-            _ => projectType.ToString().ToLower()
-        };
-    }
+    
 
     /// <summary>
     ///     Return direct link to the user on Modrinth
@@ -38,7 +22,7 @@ public static class UrlCreatorHelper
     /// <returns></returns>
     public static string GetDirectUrl(this Project project)
     {
-        return $"{ModrinthUrl}/{GetProjectUrlType(project.ProjectType)}/{project.Id}";
+        return $"{ModrinthUrl}/{project.ProjectType.ToModrinthString()}/{project.Id}";
     }
 
     /// <summary>
@@ -58,6 +42,6 @@ public static class UrlCreatorHelper
     /// <returns></returns>
     public static string GetDirectUrl(this SearchResult searchResult)
     {
-        return $"{ModrinthUrl}/{GetProjectUrlType(searchResult.ProjectType)}/{searchResult.ProjectId}";
+        return $"{ModrinthUrl}/{searchResult.ProjectType.ToModrinthString()}/{searchResult.ProjectId}";
     }
 }
