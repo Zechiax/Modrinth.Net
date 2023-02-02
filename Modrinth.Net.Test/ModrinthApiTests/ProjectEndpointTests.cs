@@ -1,3 +1,5 @@
+using NuGet.Frameworks;
+
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
