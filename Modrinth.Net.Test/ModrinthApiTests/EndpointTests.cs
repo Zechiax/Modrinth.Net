@@ -31,9 +31,9 @@ public class EndpointTests
         {
             GitHubUsername = "Zechiax",
             ProjectName = "Modrinth.Net.Test",
-            ProjectVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString(),
+            ProjectVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString()
         };
-        
+
         _client = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent.ToString(), token: token);
         _noAuthClient = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent.ToString());
     }

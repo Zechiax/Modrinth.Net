@@ -82,7 +82,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithDownloadsSort_ShouldReturnSortedByDownloadsList()
     {
-        var search = await _client.Project.SearchAsync("", Index.Downloads);
+        var search = await _client.Project.SearchAsync("");
 
         // Check that the list is sorted by downloads
         Assert.That(

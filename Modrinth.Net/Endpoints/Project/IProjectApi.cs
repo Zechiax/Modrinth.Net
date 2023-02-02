@@ -27,7 +27,7 @@ public interface IProjectApi
     Task<Models.Project> GetAsync(string slugOrId);
 
     /// <summary>
-    /// Deletes project by slug or ID
+    ///     Deletes project by slug or ID
     /// </summary>
     /// <param name="slugOrId">The slug or id of the project to be deleted</param>
     /// <returns></returns>
@@ -47,12 +47,12 @@ public interface IProjectApi
     Task<SlugIdValidity> CheckIdSlugValidityAsync(string slugOrId);
 
     /// <summary>
-    ///    Gets the dependencies of a project by slug or ID
+    ///     Gets the dependencies of a project by slug or ID
     /// </summary>
     /// <param name="slugOrId"> The ID or slug of the project</param>
     /// <returns></returns>
     Task<Dependencies> GetDependenciesAsync(string slugOrId);
-    
+
     Task FollowAsync(string slugOrId);
 
     Task UnfollowAsync(string slugOrId);

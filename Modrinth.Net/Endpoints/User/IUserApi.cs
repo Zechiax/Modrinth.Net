@@ -30,8 +30,8 @@ public interface IUserApi
     /// </summary>
     /// <returns></returns>
     Task<Models.User> GetCurrentAsync();
-    
+
     Task<Notification[]> GetNotificationsAsync(string usernameOrId);
-    
+
     Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId);
 }
