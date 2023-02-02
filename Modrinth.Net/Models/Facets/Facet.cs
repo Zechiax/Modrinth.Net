@@ -23,8 +23,8 @@ public class Facet
     {
         return Type switch
         {
-            FacetType.Categories => $"category:{Value}",
-            FacetType.Versions => $"version:{Value}",
+            FacetType.Categories => $"categories:{Value}",
+            FacetType.Versions => $"versions:{Value}",
             FacetType.License => $"license:{Value}",
             FacetType.ProjectType => $"project_type:{Value}",
             _ => string.Empty

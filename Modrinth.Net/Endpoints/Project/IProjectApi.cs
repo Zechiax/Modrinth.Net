@@ -1,4 +1,5 @@
 ﻿using Modrinth.Models;
+using Modrinth.Models.Facets;
 using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Endpoints.Project;
@@ -9,6 +10,7 @@ public interface IProjectApi
     ///     Search Modrinth for project by it's name
     /// </summary>
     /// <param name="query">The query to search for</param>
+    /// <param name="facets">Facets to filter the search by</param>
     /// <param name="index">The sorting method used for sorting search results</param>
     /// <param name="offset">The offset into the search. Skips this number of results</param>
     /// <param name="limit">The number of results returned by the search</param>
@@ -17,7 +19,8 @@ public interface IProjectApi
         string query,
         Index index = Index.Downloads,
         ulong offset = 0,
-        ulong limit = 10);
+        ulong limit = 10,
+        FacetCollection? facets = null);
 
     /// <summary>
     ///     Gets project by slug or ID

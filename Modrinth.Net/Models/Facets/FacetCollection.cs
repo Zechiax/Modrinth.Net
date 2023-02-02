@@ -2,6 +2,8 @@ namespace Modrinth.Models.Facets;
 
 public class FacetCollection
 {
+    public int Count => _facets.Count;
+    
     private readonly List<Facet[]> _facets = new();
 
     /// <summary>

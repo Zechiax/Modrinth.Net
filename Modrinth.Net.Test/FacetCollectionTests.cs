@@ -11,7 +11,7 @@ public class FacetCollectionTests
     {
         var collection = new FacetCollection();
         collection.Add(Facet.Category("test"));
-        Assert.That(collection.ToString(), Is.EqualTo("[[\"category:test\"]]"));
+        Assert.That(collection.ToString(), Is.EqualTo("[[\"categories:test\"]]"));
     }
     
     [Test]
@@ -19,7 +19,7 @@ public class FacetCollectionTests
     {
         var collection = new FacetCollection();
         collection.Add(Facet.Category("test"), Facet.Category("test2"));
-        Assert.That(collection.ToString(), Is.EqualTo("[[\"category:test\",\"category:test2\"]]"));
+        Assert.That(collection.ToString(), Is.EqualTo("[[\"categories:test\",\"categories:test2\"]]"));
     }
     
     [Test]
@@ -28,7 +28,7 @@ public class FacetCollectionTests
         var collection = new FacetCollection();
         collection.Add(Facet.Category("test"));
         collection.Add(Facet.Category("test2"));
-        Assert.That(collection.ToString(), Is.EqualTo("[[\"category:test\"],[\"category:test2\"]]"));
+        Assert.That(collection.ToString(), Is.EqualTo("[[\"categories:test\"],[\"categories:test2\"]]"));
     }
     
     [Test]
@@ -37,6 +37,6 @@ public class FacetCollectionTests
         var collection = new FacetCollection();
         collection.Add(Facet.Category("test"));
         collection.Add(Facet.Category("test2"), Facet.Category("test3"));
-        Assert.That(collection.ToString(), Is.EqualTo("[[\"category:test\"],[\"category:test2\",\"category:test3\"]]"));
+        Assert.That(collection.ToString(), Is.EqualTo("[[\"categories:test\"],[\"categories:test2\",\"categories:test3\"]]"));
     }
 }
