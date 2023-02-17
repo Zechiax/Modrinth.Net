@@ -1,4 +1,6 @@
-﻿using Index = Modrinth.Models.Enums.Index;
+﻿using Modrinth.Models.Enums;
+using Modrinth.Models.Facets;
+using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
@@ -82,7 +84,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithDownloadsSort_ShouldReturnSortedByDownloadsList()
     {
-        var search = await _client.Project.SearchAsync("", Index.Downloads);
+        var search = await _client.Project.SearchAsync("");
 
         // Check that the list is sorted by downloads
         Assert.That(
@@ -124,5 +126,48 @@ public class SearchTests : EndpointTests
         Assert.That(
             search.Hits.Select(p => p.DateModified),
             Is.EqualTo(search.Hits.Select(p => p.DateModified).OrderByDescending(d => d)));
+    }
+
+    // Search with facets
+    [Test]
+    public async Task Search_WithFacets_ShouldReturnFilteredResults()
+    {
+        var facets = new FacetCollection();
+
+        facets.Add(Facet.Category("adventure"));
+
+        var search = await _client.Project.SearchAsync("", facets: facets);
+
+        // Check that every search result has the adventure category
+        Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure")));
+    }
+    
+    // Search with facets - test project type
+    [Test]
+    public async Task Search_WithFacets_ShouldReturnFilteredResults_ProjectType()
+    {
+        var facets = new FacetCollection();
+
+        facets.Add(Facet.ProjectType(ProjectType.Modpack));
+
+        var search = await _client.Project.SearchAsync("", facets: facets);
+
+        // Check that every search result has the modpack project type
+        Assert.That(search.Hits.Select(p => p.ProjectType).All(c => c == ProjectType.Modpack));
+    }
+    
+    // Search with facets - multiple facets
+    [Test]
+    public async Task Search_WithFacets_ShouldReturnFilteredResults_MultipleFacets()
+    {
+        var facets = new FacetCollection();
+
+        facets.Add(Facet.Category("adventure"));
+        facets.Add(Facet.Category("cursed"));
+
+        var search = await _client.Project.SearchAsync("", facets: facets);
+
+        // Check that every search result has the adventure and cursed category
+        Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure") && c.Contains("cursed")));
     }
 }

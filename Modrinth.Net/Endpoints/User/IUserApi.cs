@@ -8,7 +8,7 @@ public interface IUserApi
     ///     Retrieves a user by their username or ID.
     /// </summary>
     /// <param name="usernameOrId">The username or ID of the user to retrieve.</param>
-    /// <returns>A task that, when awaited, returns a User object representing the requested user.</returns>
+    /// <returns>A User object representing the requested user.</returns>
     Task<Models.User> GetAsync(string usernameOrId);
 
     /// <summary>
