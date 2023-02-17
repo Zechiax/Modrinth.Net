@@ -1,0 +1,4 @@
+{
+  "_comment": "After you pass the API key, rename the file from 'appsettings.json.example' to only 'appsettings.json'",
+  "ModrinthApiKey": "<Here goes your api key>"
+} 
