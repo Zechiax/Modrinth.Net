@@ -41,7 +41,7 @@ public class User
     ///     The user's github id
     /// </summary>
     [JsonProperty("github_id")]
-    public int GithubId { get; set; }
+    public int? GithubId { get; set; }
 
     /// <summary>
     ///     The user's avatar url
@@ -58,4 +58,9 @@ public class User
     ///     The user's role
     /// </summary>
     public Role Role { get; set; }
+    
+    /// <summary>
+    /// Various data relating to the user's payouts status (you can only see your own)
+    /// </summary>
+    public PayoutData? PayoutData { get; set; }
 }
