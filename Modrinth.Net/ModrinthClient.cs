@@ -1,4 +1,5 @@
 ﻿using Flurl.Http;
+using Flurl.Http.Configuration;
 using Modrinth.Endpoints.Project;
 using Modrinth.Endpoints.Tag;
 using Modrinth.Endpoints.Team;
@@ -6,6 +7,8 @@ using Modrinth.Endpoints.User;
 using Modrinth.Endpoints.Version;
 using Modrinth.Endpoints.VersionFile;
 using Modrinth.Exceptions;
+using Modrinth.JsonConverters;
+using Newtonsoft.Json;
 
 namespace Modrinth;
 
@@ -47,7 +50,16 @@ public class ModrinthClient : IModrinthClient
             .WithHeader("Accept", "application/json")
             .WithHeader("Content-Type", "application/json");
 
-        Client.Configure(settings => { settings.OnErrorAsync = HandleFlurlErrorAsync; });
+        var serializerSettings = new JsonSerializerSettings
+        {
+            Converters = {new ColorConverter()}
+        };
+
+        Client.Configure(settings =>
+        {
+            settings.OnErrorAsync = HandleFlurlErrorAsync;
+            settings.JsonSerializer = new NewtonsoftJsonSerializer(serializerSettings);
+        });
 
         if (!string.IsNullOrEmpty(token)) Client.WithHeader("Authorization", token);
 
@@ -72,8 +84,10 @@ public class ModrinthClient : IModrinthClient
     {
         call.ExceptionHandled = true;
 
-        throw new ModrinthApiException(call.Exception.Message, call.Response.ResponseMessage.StatusCode,
-            call.Response.ResponseMessage.Content);
+        throw new ModrinthApiException(
+            "An error occurred while communicating with Modrinth API; See the inner exception for more details",
+            call.Response.ResponseMessage.StatusCode,
+            call.Response.ResponseMessage.Content, call.Exception);
     }
 
     #region Endpoints

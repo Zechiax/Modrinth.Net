@@ -7,11 +7,13 @@ namespace Modrinth.Net.Test.ModrinthApiTests;
 [SetUpFixture]
 public class EndpointTests
 {
-    protected static IConfigurationRoot Configuration =
+    protected static readonly IConfigurationRoot Configuration =
         new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
     protected IModrinthClient _client = null!;
     protected IModrinthClient _noAuthClient = null!;
+
+    protected const string TestProjectSlug = "gravestones";
 
     private static string GetToken()
     {
