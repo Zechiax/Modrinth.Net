@@ -71,9 +71,9 @@ public class ModrinthClient : IModrinthClient
     private static async Task HandleFlurlErrorAsync(FlurlCall call)
     {
         call.ExceptionHandled = true;
-
-        throw new ModrinthApiException(call.Exception.Message, call.Response.ResponseMessage.StatusCode,
-            call.Response.ResponseMessage.Content);
+        
+        throw new ModrinthApiException("An error occurred while communicating with Modrinth API; See the inner exception for more details", call.Response.ResponseMessage.StatusCode,
+            call.Response.ResponseMessage.Content, call.Exception);
     }
 
     #region Endpoints
