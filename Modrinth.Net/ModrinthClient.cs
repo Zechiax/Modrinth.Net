@@ -1,5 +1,6 @@
 ﻿using Flurl.Http;
 using Flurl.Http.Configuration;
+using Modrinth.Endpoints.Miscellaneous;
 using Modrinth.Endpoints.Project;
 using Modrinth.Endpoints.Tag;
 using Modrinth.Endpoints.Team;
@@ -69,6 +70,7 @@ public class ModrinthClient : IModrinthClient
         User = new UserApi(Client);
         Version = new VersionApi(Client);
         VersionFile = new VersionFileApi(Client);
+        Miscellaneous = new MiscellaneousApi(Client);
     }
 
     /// <inheritdoc />
@@ -112,6 +114,9 @@ public class ModrinthClient : IModrinthClient
 
     /// <inheritdoc />
     public IVersionFile VersionFile { get; }
+    
+    /// <inheritdoc />
+    public IMiscellaneousApi Miscellaneous { get; }
 
     #endregion
 }
