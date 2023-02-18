@@ -27,9 +27,9 @@ public class File
     ///     The size of the file in bytes
     /// </summary>
     public int Size { get; set; }
-    
+
     /// <summary>
-    /// The type of the additional file, used mainly for adding resource packs to datapacks
+    ///     The type of the additional file, used mainly for adding resource packs to datapacks
     /// </summary>
     [JsonProperty("file_type")]
     public FileType? FileType { get; set; }

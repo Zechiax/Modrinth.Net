@@ -6,6 +6,5 @@ public enum PayoutWalletType
 {
     Email,
     Phone,
-    [JsonProperty("user_handle")]
-    UserHandle
+    [JsonProperty("user_handle")] UserHandle
 }

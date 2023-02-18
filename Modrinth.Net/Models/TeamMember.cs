@@ -39,15 +39,16 @@ public class TeamMember
     ///     Whether or not the user has accepted to be on the team (requires authorization to view)
     /// </summary>
     public bool Accepted { get; set; }
-    
+
     /// <summary>
-    /// The split of payouts going to this user. The proportion of payouts they get is their split divided by the sum of the splits of all members.
+    ///     The split of payouts going to this user. The proportion of payouts they get is their split divided by the sum of
+    ///     the splits of all members.
     /// </summary>
     [JsonProperty("payouts_split")]
     public int? PayoutsSplit { get; set; }
-    
+
     /// <summary>
-    /// The order of the team member.
+    ///     The order of the team member.
     /// </summary>
     public int? Ordering { get; set; }
 }

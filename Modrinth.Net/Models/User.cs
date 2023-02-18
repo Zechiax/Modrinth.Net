@@ -58,9 +58,9 @@ public class User
     ///     The user's role
     /// </summary>
     public Role Role { get; set; }
-    
+
     /// <summary>
-    /// Various data relating to the user's payouts status (you can only see your own)
+    ///     Various data relating to the user's payouts status (you can only see your own)
     /// </summary>
     public PayoutData? PayoutData { get; set; }
 }

@@ -72,9 +72,8 @@ public class Version
     ///     A list of files available for download for this version
     /// </summary>
     public File[] Files { get; set; }
-    
+
     public VersionStatus Status { get; set; }
-    
-    [JsonProperty("requested_status")]
-    public VersionRequestedStatus? RequestedStatus { get; set; }
+
+    [JsonProperty("requested_status")] public VersionRequestedStatus? RequestedStatus { get; set; }
 }

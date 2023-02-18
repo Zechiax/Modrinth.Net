@@ -1,6 +1,4 @@
-﻿using NUnit.Framework;
-
-namespace Modrinth.Net.Test.ModrinthApiTests;
+﻿namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
 public class MiscellaneousTests : EndpointTests

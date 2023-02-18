@@ -35,7 +35,7 @@ public interface IModrinthClient : IDisposable
 
     /// <inheritdoc cref="IVersionFile" />
     IVersionFile VersionFile { get; }
-    
+
     /// <inheritdoc cref="IMiscellaneousApi" />
     IMiscellaneousApi Miscellaneous { get; }
 }

@@ -1,5 +1,3 @@
-using NUnit.Framework;
-
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
@@ -9,7 +7,7 @@ public class ProjectColorTests : EndpointTests
     public async Task ProjectColor()
     {
         var project = await _client.Project.GetAsync(TestProjectSlug);
-        
+
         // Check that the project color is not null
         Assert.That(project.Color, Is.Not.Null);
         Assert.Multiple(() =>
@@ -22,13 +20,13 @@ public class ProjectColorTests : EndpointTests
             Assert.That(project.Color.Value.B, Is.Not.EqualTo(0));
         });
     }
-    
+
     [Test]
     public async Task ProjectColor_WithNoColor()
     {
         // TODO: Don't use a hardcoded project slug
         var project = await _client.Project.GetAsync("test-project");
-        
+
         // Check that the project color is not null
         Assert.That(project.Color, Is.Null);
         Assert.That(project.Color.HasValue, Is.False);

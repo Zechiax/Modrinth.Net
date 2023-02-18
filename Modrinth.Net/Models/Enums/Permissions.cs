@@ -12,5 +12,5 @@ public enum Permissions
     EditMember = 6,
     DeleteProject = 7,
     ViewAnalytics = 8,
-    ViewPayouts = 9,
+    ViewPayouts = 9
 }

@@ -152,9 +152,9 @@ public class Project
     ///     A list of images that have been uploaded to the project's gallery
     /// </summary>
     public Gallery[]? Gallery { get; set; }
-    
+
     /// <summary>
-    /// The featured gallery image of the project
+    ///     The featured gallery image of the project
     /// </summary>
     [JsonProperty("featured_gallery")]
     public string? FeaturedGallery { get; set; }
@@ -163,15 +163,15 @@ public class Project
     ///     The RGB color of the project, automatically generated from the project icon
     /// </summary>
     public Color? Color { get; set; }
-    
+
     /// <summary>
-    /// A list of all of the game versions supported by the project
+    ///     A list of all of the game versions supported by the project
     /// </summary>
     [JsonProperty("game_versions")]
     public string[] GameVersions { get; set; }
-    
+
     /// <summary>
-    ///A list of all of the loaders supported by the project
+    ///     A list of all of the loaders supported by the project
     /// </summary>
     [JsonProperty("loaders")]
     public string[] Loaders { get; set; }

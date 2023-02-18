@@ -114,7 +114,7 @@ public class ModrinthClient : IModrinthClient
 
     /// <inheritdoc />
     public IVersionFile VersionFile { get; }
-    
+
     /// <inheritdoc />
     public IMiscellaneousApi Miscellaneous { get; }
 
