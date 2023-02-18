@@ -25,7 +25,7 @@ public class Version
     /// <summary>
     ///     A list of specific versions of projects that this version depends on
     /// </summary>
-    public Dependency[] Dependencies { get; set; }
+    public Dependency[]? Dependencies { get; set; }
 
     /// <summary>
     ///     A list of versions of Minecraft that this version supports
