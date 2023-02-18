@@ -6,15 +6,15 @@ public class TestProjectEndpoint : EndpointTests
     [Test]
     public async Task GetProject_WithValidId_ShouldReturnProject()
     {
-        var project = await _client.Project.GetAsync("gravestones");
+        var project = await _client.Project.GetAsync(TestProjectSlug);
 
-        Assert.That(project.Title, Is.EqualTo("Gravestones"));
+        Assert.That(project.Slug, Is.EqualTo(TestProjectSlug));
     }
 
     [Test]
     public async Task CheckIdSlugValidity_WithValidId_ShouldReturnId()
     {
-        var validity = await _client.Project.CheckIdSlugValidityAsync("gravestones");
+        var validity = await _client.Project.CheckIdSlugValidityAsync(TestProjectSlug);
 
         Assert.That(validity.Id, Is.Not.Empty);
     }
@@ -23,8 +23,8 @@ public class TestProjectEndpoint : EndpointTests
     public async Task FollowAndUnfollow_WithValidId_ShouldSuccessfullyFollowAndUnfollow()
     {
         // Will throw exception if not authorized / some other error
-        await _client.Project.FollowAsync("gravestones");
-        await _client.Project.UnfollowAsync("gravestones");
+        await _client.Project.FollowAsync(TestProjectSlug);
+        await _client.Project.UnfollowAsync(TestProjectSlug);
     }
 
     [Test]
@@ -68,7 +68,7 @@ public class TestProjectEndpoint : EndpointTests
     [Test]
     public async Task GetDependencies_WithValidId_ShouldReturnDependencies()
     {
-        var dependencies = await _client.Project.GetDependenciesAsync("gravestones");
+        var dependencies = await _client.Project.GetDependenciesAsync(TestProjectSlug);
 
         // Can be empty
         Assert.That(dependencies, Is.Not.Null);

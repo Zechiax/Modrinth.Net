@@ -6,7 +6,7 @@ public class TestTeamEndpoint : EndpointTests
     [Test]
     public async Task GetProjectTeamAsync_WithValidSlugOrId_ShouldReturnProjectTeam()
     {
-        var team = await _client.Team.GetProjectTeamAsync("gravestones");
+        var team = await _client.Team.GetProjectTeamAsync(TestProjectSlug);
 
         Assert.That(team, Is.Not.Null);
         Assert.That(team, Is.Not.Empty);
@@ -15,7 +15,7 @@ public class TestTeamEndpoint : EndpointTests
     [Test]
     public async Task GetTeamMembersAsync_WithValidSlugOrId_ShouldReturnTeamMembers()
     {
-        var project = await _client.Project.GetAsync("gravestones");
+        var project = await _client.Project.GetAsync(TestProjectSlug);
 
         var members = await _client.Team.GetAsync(project.Team);
 

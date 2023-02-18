@@ -6,7 +6,7 @@ public class TestVersionEndpoint : EndpointTests
     [Test]
     public async Task TestGetVersions()
     {
-        var project = await _client.Project.GetAsync("gravestones");
+        var project = await _client.Project.GetAsync(TestProjectSlug);
         var version = await _client.Version.GetAsync(project.Versions[0]);
         Assert.That(version, Is.Not.Null);
         Assert.That(version.ProjectId, Is.EqualTo(project.Id));
@@ -15,7 +15,7 @@ public class TestVersionEndpoint : EndpointTests
     [Test]
     public async Task TestGetProjectVersionList()
     {
-        var versions = await _client.Version.GetProjectVersionListAsync("gravestones");
+        var versions = await _client.Version.GetProjectVersionListAsync(TestProjectSlug);
         Assert.That(versions, Is.Not.Null);
         // BUG: Test versions should not be empty, but they are for now
         // Assert.That(versions, Is.Not.Empty);
