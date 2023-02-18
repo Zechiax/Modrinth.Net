@@ -141,7 +141,7 @@ public class SearchTests : EndpointTests
         // Check that every search result has the adventure category
         Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure")));
     }
-    
+
     // Search with facets - test project type
     [Test]
     public async Task Search_WithFacets_ShouldReturnFilteredResults_ProjectType()
@@ -155,7 +155,7 @@ public class SearchTests : EndpointTests
         // Check that every search result has the modpack project type
         Assert.That(search.Hits.Select(p => p.ProjectType).All(c => c == ProjectType.Modpack));
     }
-    
+
     // Search with facets - multiple facets
     [Test]
     public async Task Search_WithFacets_ShouldReturnFilteredResults_MultipleFacets()

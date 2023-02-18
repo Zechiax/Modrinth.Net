@@ -121,7 +121,7 @@ public class SearchResult
     public string[] Gallery { get; set; }
 
     /// <summary>
-    /// The RGB color of the project, automatically generated from the project icon
+    ///     The RGB color of the project, automatically generated from the project icon
     /// </summary>
     public Color? Color { get; set; }
 }

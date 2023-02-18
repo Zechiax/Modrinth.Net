@@ -152,9 +152,9 @@ public class Project
     ///     A list of images that have been uploaded to the project's gallery
     /// </summary>
     public Gallery[] Gallery { get; set; }
-    
+
     /// <summary>
-    /// The RGB color of the project, automatically generated from the project icon
+    ///     The RGB color of the project, automatically generated from the project icon
     /// </summary>
     public Color? Color { get; set; }
 }

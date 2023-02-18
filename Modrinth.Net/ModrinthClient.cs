@@ -52,12 +52,12 @@ public class ModrinthClient : IModrinthClient
 
         var serializerSettings = new JsonSerializerSettings
         {
-            Converters = { new ColorConverter() }
+            Converters = {new ColorConverter()}
         };
-        
+
         Client.Configure(settings =>
         {
-            settings.OnErrorAsync = HandleFlurlErrorAsync; 
+            settings.OnErrorAsync = HandleFlurlErrorAsync;
             settings.JsonSerializer = new NewtonsoftJsonSerializer(serializerSettings);
         });
 
@@ -83,8 +83,10 @@ public class ModrinthClient : IModrinthClient
     private static async Task HandleFlurlErrorAsync(FlurlCall call)
     {
         call.ExceptionHandled = true;
-        
-        throw new ModrinthApiException("An error occurred while communicating with Modrinth API; See the inner exception for more details", call.Response.ResponseMessage.StatusCode,
+
+        throw new ModrinthApiException(
+            "An error occurred while communicating with Modrinth API; See the inner exception for more details",
+            call.Response.ResponseMessage.StatusCode,
             call.Response.ResponseMessage.Content, call.Exception);
     }
 
