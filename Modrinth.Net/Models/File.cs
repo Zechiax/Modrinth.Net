@@ -1,4 +1,7 @@
-﻿#pragma warning disable CS8618
+﻿using Modrinth.Models.Enums.File;
+using Newtonsoft.Json;
+
+#pragma warning disable CS8618
 namespace Modrinth.Models;
 
 public class File
@@ -24,4 +27,10 @@ public class File
     ///     The size of the file in bytes
     /// </summary>
     public int Size { get; set; }
+    
+    /// <summary>
+    /// The type of the additional file, used mainly for adding resource packs to datapacks
+    /// </summary>
+    [JsonProperty("file_type")]
+    public FileType? FileType { get; set; }
 }

@@ -25,7 +25,7 @@ public class Version
     /// <summary>
     ///     A list of specific versions of projects that this version depends on
     /// </summary>
-    public Dependency[] Dependencies { get; set; }
+    public Dependency[]? Dependencies { get; set; }
 
     /// <summary>
     ///     A list of versions of Minecraft that this version supports
@@ -72,4 +72,9 @@ public class Version
     ///     A list of files available for download for this version
     /// </summary>
     public File[] Files { get; set; }
+    
+    public VersionStatus Status { get; set; }
+    
+    [JsonProperty("requested_status")]
+    public VersionRequestedStatus? RequestedStatus { get; set; }
 }

@@ -1,3 +1,4 @@
+using Modrinth.Endpoints.Miscellaneous;
 using Modrinth.Endpoints.Project;
 using Modrinth.Endpoints.Tag;
 using Modrinth.Endpoints.Team;
@@ -34,4 +35,7 @@ public interface IModrinthClient : IDisposable
 
     /// <inheritdoc cref="IVersionFile" />
     IVersionFile VersionFile { get; }
+    
+    /// <inheritdoc cref="IMiscellaneousApi" />
+    IMiscellaneousApi Miscellaneous { get; }
 }
