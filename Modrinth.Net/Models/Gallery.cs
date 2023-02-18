@@ -27,4 +27,9 @@ public class Gallery
     ///     The date and time the gallery image was created
     /// </summary>
     public DateTime Created { get; set; }
+    
+    /// <summary>
+    /// The order of the gallery image. Gallery images are sorted by this field and then alphabetically by title.
+    /// </summary>
+    public int Ordering { get; set; }
 }

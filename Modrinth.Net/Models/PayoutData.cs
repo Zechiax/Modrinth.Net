@@ -8,7 +8,7 @@ public class PayoutData
     /// <summary>
     /// The payout balance available for the user to withdraw (note, you cannot modify this in a PATCH request)
     /// </summary>
-    public int Balance { get; set; }
+    public double Balance { get; set; }
     
     /// <summary>
     /// The wallet that the user has selected

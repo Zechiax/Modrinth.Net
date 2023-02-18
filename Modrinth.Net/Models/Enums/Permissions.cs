@@ -10,5 +10,7 @@ public enum Permissions
     ManageInvites = 4,
     RemoveMember = 5,
     EditMember = 6,
-    DeleteProject = 7
+    DeleteProject = 7,
+    ViewAnalytics = 8,
+    ViewPayouts = 9,
 }
