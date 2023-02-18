@@ -153,5 +153,8 @@ public class Project
     /// </summary>
     public Gallery[] Gallery { get; set; }
     
+    /// <summary>
+    /// The RGB color of the project, automatically generated from the project icon
+    /// </summary>
     public Color? Color { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿#pragma warning disable CS8618
+using System.Drawing;
 using Modrinth.Helpers;
 using Modrinth.Models.Enums;
 using Newtonsoft.Json;
@@ -118,4 +119,9 @@ public class SearchResult
     ///     A list of images that have been uploaded to the project's gallery
     /// </summary>
     public string[] Gallery { get; set; }
+
+    /// <summary>
+    /// The RGB color of the project, automatically generated from the project icon
+    /// </summary>
+    public Color? Color { get; set; }
 }
