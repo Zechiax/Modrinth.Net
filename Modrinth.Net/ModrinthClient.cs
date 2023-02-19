@@ -9,7 +9,7 @@ using Modrinth.Endpoints.Version;
 using Modrinth.Endpoints.VersionFile;
 using Modrinth.Exceptions;
 using Modrinth.JsonConverters;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Modrinth;
 
@@ -51,15 +51,18 @@ public class ModrinthClient : IModrinthClient
             .WithHeader("Accept", "application/json")
             .WithHeader("Content-Type", "application/json");
 
-        var serializerSettings = new JsonSerializerSettings
+        var jsonSerializerOptions = new JsonSerializerOptions
         {
-            Converters = {new ColorConverter()}
+            Converters =
+            {
+                new ColorConverter(),
+            }
         };
 
         Client.Configure(settings =>
         {
             settings.OnErrorAsync = HandleFlurlErrorAsync;
-            settings.JsonSerializer = new NewtonsoftJsonSerializer(serializerSettings);
+            settings.JsonSerializer = new DefaultJsonSerializer(jsonSerializerOptions);
         });
 
         if (!string.IsNullOrEmpty(token)) Client.WithHeader("Authorization", token);

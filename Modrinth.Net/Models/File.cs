@@ -1,5 +1,5 @@
-﻿using Modrinth.Models.Enums.File;
-using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Modrinth.Models.Enums.File;
 
 #pragma warning disable CS8618
 namespace Modrinth.Models;
@@ -31,6 +31,6 @@ public class File
     /// <summary>
     ///     The type of the additional file, used mainly for adding resource packs to datapacks
     /// </summary>
-    [JsonProperty("file_type")]
+    [JsonPropertyName("file_type")]
     public FileType? FileType { get; set; }
 }

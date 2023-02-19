@@ -1,8 +1,8 @@
 ﻿#pragma warning disable CS8618
 using System.Drawing;
+using System.Text.Json.Serialization;
 using Modrinth.Helpers;
 using Modrinth.Models.Enums;
-using Newtonsoft.Json;
 
 namespace Modrinth.Models;
 
@@ -39,19 +39,19 @@ public class SearchResult
     /// <summary>
     ///     The client side support of the project
     /// </summary>
-    [JsonProperty("client_side")]
+    [JsonPropertyName("client_side")]
     public Side? ClientSide { get; set; }
 
     /// <summary>
     ///     The server side support of the project
     /// </summary>
-    [JsonProperty("server_side")]
+    [JsonPropertyName("server_side")]
     public Side? ServerSide { get; set; }
 
     /// <summary>
     ///     The project type of the project
     /// </summary>
-    [JsonProperty("project_type")]
+    [JsonPropertyName("project_type")]
     public ProjectType ProjectType { get; set; }
 
     /// <summary>
@@ -62,13 +62,13 @@ public class SearchResult
     /// <summary>
     ///     The URL of the project's icon
     /// </summary>
-    [JsonProperty("icon_url")]
+    [JsonPropertyName("icon_url")]
     public string? IconUrl { get; set; }
 
     /// <summary>
     ///     The ID of the project
     /// </summary>
-    [JsonProperty("project_id")]
+    [JsonPropertyName("project_id")]
     public string ProjectId { get; set; }
 
     /// <summary>
@@ -79,7 +79,7 @@ public class SearchResult
     /// <summary>
     ///     A list of the categories that the project has which are not secondary
     /// </summary>
-    [JsonProperty("display_categories")]
+    [JsonPropertyName("display_categories")]
     public string[] DisplayCategories { get; set; }
 
     /// <summary>
@@ -90,19 +90,19 @@ public class SearchResult
     /// <summary>
     ///     The date the project was last modified
     /// </summary>
-    [JsonProperty("date_modified")]
+    [JsonPropertyName("date_modified")]
     public DateTime DateModified { get; set; }
 
     /// <summary>
     ///     The total number of users following the project
     /// </summary>
-    [JsonProperty("follows")]
+    [JsonPropertyName("follows")]
     public int Followers { get; set; }
 
     /// <summary>
     ///     The latest version of minecraft that this project supports
     /// </summary>
-    [JsonProperty("latest_version")]
+    [JsonPropertyName("latest_version")]
     public string? LatestVersion { get; set; }
 
     /// <summary>

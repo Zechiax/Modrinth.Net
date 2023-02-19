@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 #pragma warning disable CS8618
 namespace Modrinth.Models;
@@ -23,6 +23,6 @@ public class SearchResponse
     /// <summary>
     ///     The total number of results that match the query
     /// </summary>
-    [JsonProperty("total_hits")]
+    [JsonPropertyName("total_hits")]
     public int TotalHits { get; set; }
 }

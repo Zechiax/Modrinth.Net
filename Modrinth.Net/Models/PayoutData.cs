@@ -1,5 +1,5 @@
-﻿using Modrinth.Models.Enums;
-using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Modrinth.Models.Enums;
 
 namespace Modrinth.Models;
 
@@ -13,18 +13,18 @@ public class PayoutData
     /// <summary>
     ///     The wallet that the user has selected
     /// </summary>
-    [JsonProperty("payout_wallet")]
+    [JsonPropertyName("payout_wallet")]
     public PayoutWallet PayoutWallet { get; set; }
 
     /// <summary>
     ///     The type of the user's wallet
     /// </summary>
-    [JsonProperty("payout_wallet_type")]
+    [JsonPropertyName("payout_wallet_type")]
     public PayoutWalletType PayoutWalletType { get; set; }
 
     /// <summary>
     ///     The user's payout address
     /// </summary>
-    [JsonProperty("payout_address")]
+    [JsonPropertyName("payout_address")]
     public string PayoutAddress { get; set; }
 }
