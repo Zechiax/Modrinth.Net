@@ -68,7 +68,7 @@ public class ProjectApi : IProjectApi
         ulong limit = 10, FacetCollection? facets = null)
     {
         var request = _client.Request("search")
-            .SetQueryParam("query", query)
+            .SetQueryParam("query", query.EscapeIfContains())
             .SetQueryParam("index", index.ToString().ToLower())
             .SetQueryParam("offset", offset)
             .SetQueryParam("limit", limit);

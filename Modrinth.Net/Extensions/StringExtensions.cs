@@ -10,6 +10,7 @@ public static class StringExtensions
     /// <returns></returns>
     public static string EscapeIfContains(this string text, char contains = ' ')
     {
-        return text.Contains(contains) ? $"\"{text}\"" : text;
+        return !string.IsNullOrEmpty(text) && text.Contains(contains) ? 
+            string.Concat('"', text, '"') : text;
     }
 }
