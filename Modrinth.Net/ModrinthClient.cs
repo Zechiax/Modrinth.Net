@@ -10,6 +10,7 @@ using Modrinth.Endpoints.VersionFile;
 using Modrinth.Exceptions;
 using Modrinth.JsonConverters;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Modrinth;
 
@@ -53,9 +54,11 @@ public class ModrinthClient : IModrinthClient
 
         var jsonSerializerOptions = new JsonSerializerOptions
         {
+            PropertyNameCaseInsensitive = true,
             Converters =
             {
                 new ColorConverter(),
+                new JsonStringEnumConverter()
             }
         };
 
