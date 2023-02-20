@@ -73,7 +73,7 @@ public class TestProjectEndpoint : EndpointTests
         // Can be empty
         Assert.That(dependencies, Is.Not.Null);
     }
-    
+
     // Random projects
     [Test]
     public async Task GetRandomProjects_WithValidCount_ShouldReturnProjects()

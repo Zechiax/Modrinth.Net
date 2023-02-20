@@ -43,7 +43,6 @@ public class ProjectApi : IProjectApi
         return await _client.Request("projects")
             .SetQueryParam("ids", ids.ToModrinthQueryString())
             .GetJsonAsync<Models.Project[]>();
-
     }
 
     /// <inheritdoc />
