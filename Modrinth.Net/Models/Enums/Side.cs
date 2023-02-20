@@ -4,5 +4,6 @@ public enum Side
 {
     Required,
     Optional,
-    Unsupported
+    Unsupported,
+    Unknown
 }
