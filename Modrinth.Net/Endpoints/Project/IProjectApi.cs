@@ -28,6 +28,13 @@ public interface IProjectApi
     /// <param name="slugOrId">The ID or slug of the project</param>
     /// <returns></returns>
     Task<Models.Project> GetAsync(string slugOrId);
+    
+    /// <summary>
+    ///    Get a list of random projects
+    /// </summary>
+    /// <param name="count">The number of projects to return</param>
+    /// <returns></returns>
+    Task<Models.Project[]> GetRandomAsync(ulong count = 10);
 
     /// <summary>
     ///     Deletes project by slug or ID
@@ -56,7 +63,17 @@ public interface IProjectApi
     /// <returns></returns>
     Task<Dependencies> GetDependenciesAsync(string slugOrId);
 
+    /// <summary>
+    ///    Follows a project by slug or ID
+    /// </summary>
+    /// <param name="slugOrId"></param>
+    /// <returns></returns>
     Task FollowAsync(string slugOrId);
 
+    /// <summary>
+    ///   Unfollows a project by slug or ID
+    /// </summary>
+    /// <param name="slugOrId"></param>
+    /// <returns></returns>
     Task UnfollowAsync(string slugOrId);
 }

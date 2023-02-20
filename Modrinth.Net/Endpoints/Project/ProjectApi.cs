@@ -24,6 +24,14 @@ public class ProjectApi : IProjectApi
     }
 
     /// <inheritdoc />
+    public async Task<Models.Project[]> GetRandomAsync(ulong count = 10)
+    {
+        return await _client.Request("projects_random")
+            .SetQueryParam("count", count)
+            .GetJsonAsync<Models.Project[]>();
+    }
+
+    /// <inheritdoc />
     public async Task DeleteAsync(string slugOrId)
     {
         await _client.Request(ProjectPathSegment, slugOrId).DeleteAsync();
@@ -32,11 +40,10 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids)
     {
-        var projects = _client.Request("projects")
+        return await _client.Request("projects")
             .SetQueryParam("ids", ids.ToModrinthQueryString())
             .GetJsonAsync<Models.Project[]>();
 
-        return await projects;
     }
 
     /// <inheritdoc />
