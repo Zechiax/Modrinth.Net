@@ -15,11 +15,29 @@
 using Modrinth;
 
 // You must provide a user-agent, and optionally an authentication token if you wish to access authenticated API endpoints
-var client = new ModrinthClient(userAgent: "My_Awesome_Project" , token: "Your_Authentication_Token");
+var client = new ModrinthClient(userAgent: "My_Awesome_Project", token: "Your_Authentication_Token");
 
 var project = await client.Project.GetAsync("sodium");
 
 Console.WriteLine(project.Description);
+```
+
+### User-Agent
+- You can also use the UserAgent class to help you create a valid user-agent
+- User-Agent current cannot be changed after the client has been created 
+```csharp
+using Modrinth;
+using Modrinth.Client;
+
+var userAgent = new UserAgent
+{
+    ProjectName = "ProjectName",
+    ProjectVersion = "1.0.0",
+    GitHubUsername = "Username",
+    Contact = "contact@contact.com"
+};
+
+var client = new ModrinthClient(userAgent: userAgent, token: "Your_Authentication_Token");
 ```
 
 ### Unsuccesful API calls
@@ -27,6 +45,28 @@ Console.WriteLine(project.Description);
 - If the API call was unsuccessful, the client will throw an `ModrinthApiException` exception
 - This will be thrown if the API call return non-200 status code, or if the response body is not valid JSON
 - This approach will be revisited in future versions
+
+```csharp
+using Modrinth;
+using Modrinth.Exceptions;
+
+var client = new ModrinthClient(userAgent: "My_Awesome_Project");
+
+try 
+{
+    var test = await _client.Project.GetAsync("non-existent-project");
+}
+// You can catch the exception and only handle the 404 status code
+catch (ModrinthApiException e) when (e.StatusCode == HttpStatusCode.NotFound) 
+{
+    Console.WriteLine("Project not found");
+}
+// Or you can catch the exception and handle all non-200 status codes
+catch (ModrinthApiException e)
+{
+    Console.WriteLine($"API call failed with status code {e.StatusCode}");
+}
+```
 
 ## Info
 
