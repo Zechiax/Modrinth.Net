@@ -57,7 +57,9 @@ var client = new ModrinthClient(userAgent: "My_Awesome_Project");
 
 try 
 {
-    var test = await _client.Project.GetAsync("non-existent-project");
+    var project = await _client.Project.GetAsync("non-existent-project");
+    
+    Console.WriteLine(project.Title);
 }
 // You can catch the exception and only handle the 404 status code
 catch (ModrinthApiException e) when (e.StatusCode == HttpStatusCode.NotFound) 
