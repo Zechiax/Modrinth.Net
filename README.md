@@ -23,8 +23,10 @@ Console.WriteLine(project.Description);
 ```
 
 ### User-Agent
+
 - You can also use the UserAgent class to help you create a valid user-agent
-- User-Agent current cannot be changed after the client has been created 
+- User-Agent current cannot be changed after the client has been created
+
 ```csharp
 using Modrinth;
 using Modrinth.Client;
