@@ -51,6 +51,7 @@ var client = new ModrinthClient(userAgent: userAgent, token: "Your_Authenticatio
 ```csharp
 using Modrinth;
 using Modrinth.Exceptions;
+using System.Net;
 
 var client = new ModrinthClient(userAgent: "My_Awesome_Project");
 
