@@ -26,11 +26,13 @@ Console.WriteLine(project.Description);
 
 - You can also use the UserAgent class to help you create a valid user-agent
 - User-Agent current cannot be changed after the client has been created
+- More info about the User-Agent can be found [here](https://docs.modrinth.com/api-spec/#section/User-Agents)
 
 ```csharp
 using Modrinth;
 using Modrinth.Client;
 
+// Note: All properties are optional, and will be ignored if they are null or empty
 var userAgent = new UserAgent
 {
     ProjectName = "ProjectName",
