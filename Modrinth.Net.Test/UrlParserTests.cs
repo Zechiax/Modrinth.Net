@@ -49,4 +49,20 @@ public class UrlParserTests
         var result = slug.ValidateModrinthSlug();
         Assert.That(result, Is.EqualTo(expectedResult));
     }
+    
+    [Test]
+    // Valid ids
+    [TestCase("P7dR8mSH", true)]
+    [TestCase("12345678", true)]
+    [TestCase("AANobbMI", true)]
+    [TestCase("gvQqBUqZ", true)]
+    [TestCase("YL57xq9U", true)]
+    // Invalid ids
+    [TestCase("12345 6789", false)]
+    [TestCase("12345-6789", false)]
+    public void TestId(string id, bool expectedResult)
+    {
+        var result = id.ValidateModrinthId();
+        Assert.That(result, Is.EqualTo(expectedResult));
+    }
 }
