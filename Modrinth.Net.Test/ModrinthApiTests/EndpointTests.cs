@@ -36,7 +36,7 @@ public class EndpointTests
             ProjectVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString()
         };
 
-        _client = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent.ToString(), token: token);
-        _noAuthClient = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent.ToString());
+        _client = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent, token: token);
+        _noAuthClient = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent);
     }
 }

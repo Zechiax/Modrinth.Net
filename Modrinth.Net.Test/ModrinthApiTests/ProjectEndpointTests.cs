@@ -73,4 +73,14 @@ public class TestProjectEndpoint : EndpointTests
         // Can be empty
         Assert.That(dependencies, Is.Not.Null);
     }
+
+    // Random projects
+    [Test]
+    public async Task GetRandomProjects_WithValidCount_ShouldReturnProjects()
+    {
+        var projects = await _client.Project.GetRandomAsync();
+
+        Assert.That(projects, Is.Not.Null);
+        Assert.That(projects, Is.Not.Empty);
+    }
 }
