@@ -74,9 +74,3 @@ catch (ModrinthApiException e)
     Console.WriteLine($"API call failed with status code {e.StatusCode}");
 }
 ```
-
-## Info
-
-- This package was previously called 'Modrinth.RestClient', while completely rewriting it, I've decided to rename it
-  to 'Modrinth.Net', continuing the versioning from the previous package
-    - The old package can be found [here](https://www.nuget.org/packages/Modrinth.RestClient/)
