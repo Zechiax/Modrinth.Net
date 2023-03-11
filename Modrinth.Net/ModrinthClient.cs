@@ -15,7 +15,7 @@ using Newtonsoft.Json;
 namespace Modrinth;
 
 /// <summary>
-///     Base for creating new clients using RestEase from <see cref="IModrinthClient" /> interface
+///     A client for the Modrinth API
 /// </summary>
 public class ModrinthClient : IModrinthClient
 {
