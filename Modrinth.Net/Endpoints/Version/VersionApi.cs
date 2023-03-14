@@ -34,6 +34,13 @@ public class VersionApi : IVersionApi
     }
 
     /// <inheritdoc />
+    public async Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber)
+    {
+        return await _client.Request("project", slugOrId, VersionsPath, versionNumber)
+            .GetJsonAsync<Models.Version>();
+    }
+
+    /// <inheritdoc />
     public async Task DeleteAsync(string versionId)
     {
         await _client.Request(VersionsPath, versionId).DeleteAsync();

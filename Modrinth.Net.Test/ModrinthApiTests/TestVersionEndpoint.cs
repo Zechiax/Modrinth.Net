@@ -49,4 +49,14 @@ public class TestVersionEndpoint : EndpointTests
         Assert.That(versions, Is.Not.Null);
         Assert.That(versions, Is.Not.Empty);
     }
+
+    [Test]
+    public async Task TestGetVersionByNumber()
+    {
+        // Actually we test by version id, but it's the same as using the version number
+        var project = await _client.Project.GetAsync(TestProjectSlug);
+        var version = await _client.Version.GetByVersionNumberAsync(TestProjectSlug, project.Versions[0]);
+        Assert.That(version, Is.Not.Null);
+        Assert.That(version.ProjectId, Is.EqualTo(project.Id));
+    }
 }
