@@ -24,6 +24,14 @@ public class ProjectApi : IProjectApi
     }
 
     /// <inheritdoc />
+    public async Task<Models.Project[]> GetRandomAsync(ulong count = 10)
+    {
+        return await _client.Request("projects_random")
+            .SetQueryParam("count", count)
+            .GetJsonAsync<Models.Project[]>();
+    }
+
+    /// <inheritdoc />
     public async Task DeleteAsync(string slugOrId)
     {
         await _client.Request(ProjectPathSegment, slugOrId).DeleteAsync();
@@ -32,11 +40,9 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids)
     {
-        var projects = _client.Request("projects")
+        return await _client.Request("projects")
             .SetQueryParam("ids", ids.ToModrinthQueryString())
             .GetJsonAsync<Models.Project[]>();
-
-        return await projects;
     }
 
     /// <inheritdoc />
@@ -68,7 +74,7 @@ public class ProjectApi : IProjectApi
         ulong limit = 10, FacetCollection? facets = null)
     {
         var request = _client.Request("search")
-            .SetQueryParam("query", query)
+            .SetQueryParam("query", query.EscapeIfContains())
             .SetQueryParam("index", index.ToString().ToLower())
             .SetQueryParam("offset", offset)
             .SetQueryParam("limit", limit);

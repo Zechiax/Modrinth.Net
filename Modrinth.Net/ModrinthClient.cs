@@ -1,5 +1,6 @@
 ﻿using Flurl.Http;
 using Flurl.Http.Configuration;
+using Modrinth.Client;
 using Modrinth.Endpoints.Miscellaneous;
 using Modrinth.Endpoints.Project;
 using Modrinth.Endpoints.Tag;
@@ -14,7 +15,7 @@ using Newtonsoft.Json;
 namespace Modrinth;
 
 /// <summary>
-///     Base for creating new clients using RestEase from <see cref="IModrinthClient" /> interface
+///     A client for the Modrinth API
 /// </summary>
 public class ModrinthClient : IModrinthClient
 {
@@ -30,6 +31,12 @@ public class ModrinthClient : IModrinthClient
     public const string StagingBaseUrl = "https://staging-api.modrinth.com/v2";
 
     protected readonly FlurlClient Client;
+
+    /// <inheritdoc />
+    public ModrinthClient(UserAgent userAgent, string? token = null, string url = BaseUrl)
+        : this(userAgent.ToString(), token, url)
+    {
+    }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ModrinthClient" /> class.
