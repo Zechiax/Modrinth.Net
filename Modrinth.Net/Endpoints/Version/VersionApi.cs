@@ -20,9 +20,23 @@ public class VersionApi : IVersionApi
     }
 
     /// <inheritdoc />
-    public async Task<Models.Version[]> GetProjectVersionListAsync(string slugOrId)
+    public async Task<Models.Version[]> GetProjectVersionListAsync(string slugOrId, string[]? loaders = null,
+        string[]? gameVersions = null, bool? featured = null)
     {
-        return await _client.Request("project", slugOrId, VersionsPath).GetJsonAsync<Models.Version[]>();
+        var request = _client.Request("project", slugOrId, VersionsPath);
+        
+        if (loaders != null)
+            request = request.SetQueryParam("loaders", loaders.ToModrinthQueryString());
+        
+        if (gameVersions != null)
+            request = request.SetQueryParam("game_versions", gameVersions.ToModrinthQueryString());
+        
+        if (featured != null)
+            request = request.SetQueryParam("featured", featured.Value.ToString().ToLower());
+
+        Console.WriteLine(request.Url);
+        
+        return await request.GetJsonAsync<Models.Version[]>();
     }
 
     /// <inheritdoc />

@@ -59,4 +59,27 @@ public class TestVersionEndpoint : EndpointTests
         Assert.That(version, Is.Not.Null);
         Assert.That(version.ProjectId, Is.EqualTo(project.Id));
     }
+
+    [Test]
+    [TestCase(new[] {"fabric"}, new[] {"1.19.2"}, false)]
+    //TODO: Somehow, the API endpoint returns versions with Featured = false, even if we request Featured = true
+    //[TestCase(new[] {"fabric"}, new[] {"1.19.2"}, true)]
+    public async Task TestGetProjectVersionListWithFilters(string[]? loaders = null, string[]? gameVersions = null, bool? featured = null)
+    {
+        var versions = await _client.Version.GetProjectVersionListAsync(TestProjectSlug, loaders, gameVersions, featured);
+        Assert.That(versions, Is.Not.Null);
+        Assert.That(versions, Is.Not.Empty);
+        foreach (var version in versions)
+        {
+            Assert.Multiple(() =>
+            {
+                if (loaders != null)
+                    Assert.That(version.Loaders, Is.SupersetOf(loaders));
+                if (gameVersions != null)
+                    Assert.That(version.GameVersions, Is.SupersetOf(gameVersions));
+                if (featured != null)
+                    Assert.That(version.Featured, Is.EqualTo(featured));
+            });
+        }
+    }
 }

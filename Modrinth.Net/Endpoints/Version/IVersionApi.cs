@@ -11,10 +11,15 @@ public interface IVersionApi
 
     /// <summary>
     ///     Gets version list of a project by its ID
+    ///     Optionally filters for loaders, game versions and featured versions
     /// </summary>
     /// <param name="slugOrId">The ID or slug of the project</param>
+    /// <param name="loaders">The types of loaders to filter for</param>
+    /// <param name="gameVersions">The game versions to filter for</param>
+    /// <param name="featured">Allows to filter for featured or non-featured versions only</param>
     /// <returns></returns>
-    Task<Models.Version[]> GetProjectVersionListAsync(string slugOrId);
+    Task<Models.Version[]> GetProjectVersionListAsync(string slugOrId, string[]? loaders = null,
+        string[]? gameVersions = null, bool? featured = null);
 
     /// <summary>
     ///     Gets multiple versions by their ids
