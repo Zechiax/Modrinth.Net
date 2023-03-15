@@ -1,4 +1,5 @@
-﻿using Flurl.Http;
+﻿using System.Net;
+using Flurl.Http;
 using Flurl.Http.Configuration;
 using Modrinth.Client;
 using Modrinth.Endpoints.Miscellaneous;
@@ -93,7 +94,7 @@ public class ModrinthClient : IModrinthClient
     private static async Task HandleFlurlErrorAsync(FlurlCall call)
     {
         call.ExceptionHandled = true;
-        
+
         // Try to parse Response error
         ResponseError? error = null!;
         try
@@ -102,12 +103,20 @@ public class ModrinthClient : IModrinthClient
         }
         catch (FlurlHttpException)
         {
-            
         }
 
+        string message = null!;
+        if (call.Response.ResponseMessage.StatusCode == HttpStatusCode.Unauthorized)
+            message =
+                "There was an authorization error while communicating with authorized Modrinth API endpoint, make sure that you've provided a valid token";
+        else
+            message =
+                $"An error occurred while communicating with Modrinth API: {call.Response.ResponseMessage.ReasonPhrase}";
+
+        message += $"\n{error?.Error}: {error?.Description}";
+
         throw new ModrinthApiException(
-            $"An error occurred while communicating with Modrinth API: {call.Response.ResponseMessage.ReasonPhrase}" +
-            $"\n{error?.Error}: {error?.Description}",
+            message,
             call.Response.ResponseMessage.StatusCode,
             call.Response.ResponseMessage.Content, call.Exception,
             error);
