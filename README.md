@@ -79,6 +79,7 @@ catch (ModrinthApiException e)
 
 | Name                                 | Method | Implemented |
 |--------------------------------------|--------|-------------|
+| **Project endpoints** | |
 | Search projects                      | GET    | ✅           |
 | Get a project                        | GET    |  ✅           |
 | Modify a project                     | PATCH  |             |
@@ -97,6 +98,7 @@ catch (ModrinthApiException e)
 | Follow a project                     | POST   |     ✅        |
 | Unfollow a project                   | DELETE |      ✅       |
 | Schedule a project                   | POST   |             |
+| **Version endpoints** | |
 | Get list of project's versions       | GET    |      ✅       |
 | Get a version                        | GET    |      ✅       |
 | Modify a version                     | PATCH  |             |
@@ -105,11 +107,13 @@ catch (ModrinthApiException e)
 | Schedule a version                   | POST   |             |
 | Get multiple versions                | GET    |         ✅    |
 | Add files to version                 | POST   |             |
+| **Version File endpoints** | |
 | Get version from hash                | GET    |           ✅  |
 | Delete a file from its hash          | DELETE |             |
 | Latest version of a project from a hash, loader(s), and game version(s) | POST |             |
 | Get versions from hashes             | POST   |             |
 | Latest versions of multiple projects from hashes, loader(s), and game version(s) | POST |             |
+| **User endpoints** | |
 | Get a user                           | GET    |✅             |
 | Modify a user                        | PATCH  |             |
 | Delete a user                        | DELETE |✅             |
@@ -121,6 +125,7 @@ catch (ModrinthApiException e)
 | Get user's followed projects         | GET    |             |
 | Get user's payout history            | GET    |✅             |
 | Withdraw payout balance to PayPal or Venmo | POST |             |
+| **Team endpoints** | |
 | Get a project's team members         | GET    |✅             |
 | Get a team's members                 | GET    |✅             |
 | Add a user to a team                 | POST   |             |
@@ -129,12 +134,14 @@ catch (ModrinthApiException e)
 | Modify a team member's information   | PATCH  |             |
 | Remove a member from a team          | DELETE |             |
 | Transfer team's ownership to another user | PATCH |             |
+| **Tag endpoints** | |
 | Get a list of categories             | GET    |✅             |
 | Get a list of loaders                | GET    |✅             |
 | Get a list of game versions          | GET    |✅             |
 | Get a list of licenses               | GET    |✅             |
 | Get a list of donation platforms     | GET    |✅             |
 | Get a list of report types           | GET    |✅             |
+| **Miscellaneous endpoints** | |
 | Report a project, user, or version   | POST   |✅             |
 | Various statistics about this Modrinth instance | GET    |✅             |
 
