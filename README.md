@@ -116,7 +116,7 @@ catch (ModrinthApiException e)
 | Name                                 | Method | Implemented |
 |--------------------------------------|--------|-------------|
 | Get version from hash                | GET    |           ✅  |
-| Delete a file from its hash          | DELETE |             |
+| Delete a file from its hash          | DELETE |   ✅          |
 | Latest version of a project from a hash, loader(s), and game version(s) | POST |             |
 | Get versions from hashes             | POST   |             |
 | Latest versions of multiple projects from hashes, loader(s), and game version(s) | POST |             |
@@ -127,14 +127,14 @@ catch (ModrinthApiException e)
 |--------------------------------------|--------|-------------|
 | Get a user                           | GET    |✅             |
 | Modify a user                        | PATCH  |             |
-| Delete a user                        | DELETE |✅             |
+| Delete a user                        | DELETE |             |
 | Get user from authorization header   | GET    |✅             |
 | Get multiple users                   | GET    |✅             |
 | Change user's avatar                 | PATCH  |             |
 | Get user's projects                  | GET    |✅             |
 | Get user's notifications             | GET    |✅             |
-| Get user's followed projects         | GET    |             |
-| Get user's payout history            | GET    |✅             |
+| Get user's followed projects         | GET    |  ✅           |
+| Get user's payout history            | GET    |             |
 | Withdraw payout balance to PayPal or Venmo | POST |             |
 
 ### Team endpoints
@@ -162,7 +162,7 @@ catch (ModrinthApiException e)
 ### Miscellaneous endpoints
 | Name                                 | Method | Implemented |
 |--------------------------------------|--------|-------------|
-| Report a project, user, or version   | POST   |✅             |
+| Report a project, user, or version   | POST   |             |
 | Various statistics about this Modrinth instance | GET    |✅             |
 
 
