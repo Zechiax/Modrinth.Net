@@ -76,8 +76,13 @@ public interface IProjectApi
     /// <param name="slugOrId"></param>
     /// <returns></returns>
     Task UnfollowAsync(string slugOrId);
-    
+
+    /// <summary>
+    ///     Deletes a project's icon by slug or ID
+    /// </summary>
+    /// <param name="slugOrId"> The ID or slug of the project</param>
+    /// <returns></returns>
     Task DeleteIconAsync(string slugOrId);
-    
+
     Task ChangeIconAsync(string slugOrId, string iconPath);
 }

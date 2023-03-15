@@ -15,6 +15,6 @@ public class ModrinthApiException : Exception
 
     public HttpStatusCode StatusCode { get; }
     public HttpContent Content { get; }
-    
+
     public ResponseError? Error { get; set; }
 }

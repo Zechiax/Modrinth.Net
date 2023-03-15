@@ -1,5 +1,4 @@
 using Modrinth.Helpers;
-using NUnit.Framework;
 
 namespace Modrinth.Net.Test;
 
@@ -22,14 +21,11 @@ public class UrlParserTests
     [TestCase("just a normal string because why not", false)]
     public void TestParse(string url, bool expectedResult, string? exceptedId = null)
     {
-        var result = Helpers.UrlParser.TryParseModrinthUrl(url, out var id);
+        var result = UrlParser.TryParseModrinthUrl(url, out var id);
         Assert.That(result, Is.EqualTo(expectedResult));
-        if (exceptedId != null)
-        {
-            Assert.That(id, Is.EqualTo(exceptedId));
-        }
+        if (exceptedId != null) Assert.That(id, Is.EqualTo(exceptedId));
     }
-    
+
     [Test]
     // Valid slugs
     [TestCase("valid-slug", true)]
@@ -49,7 +45,7 @@ public class UrlParserTests
         var result = slug.ValidateModrinthSlug();
         Assert.That(result, Is.EqualTo(expectedResult));
     }
-    
+
     [Test]
     // Valid ids
     [TestCase("P7dR8mSH", true)]

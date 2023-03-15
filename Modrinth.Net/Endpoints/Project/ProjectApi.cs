@@ -83,7 +83,7 @@ public class ProjectApi : IProjectApi
 
         await using var stream = File.OpenRead(iconPath);
         using var streamContent = new StreamContent(stream);
-        
+
         await _client.Request(ProjectPathSegment, slugOrId, "icon")
             .SetQueryParam("ext", extension)
             .PatchAsync(streamContent);

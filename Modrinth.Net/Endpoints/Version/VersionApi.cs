@@ -24,18 +24,18 @@ public class VersionApi : IVersionApi
         string[]? gameVersions = null, bool? featured = null)
     {
         var request = _client.Request("project", slugOrId, VersionsPath);
-        
+
         if (loaders != null)
             request = request.SetQueryParam("loaders", loaders.ToModrinthQueryString());
-        
+
         if (gameVersions != null)
             request = request.SetQueryParam("game_versions", gameVersions.ToModrinthQueryString());
-        
+
         if (featured != null)
             request = request.SetQueryParam("featured", featured.Value.ToString().ToLower());
 
         Console.WriteLine(request.Url);
-        
+
         return await request.GetJsonAsync<Models.Version[]>();
     }
 
