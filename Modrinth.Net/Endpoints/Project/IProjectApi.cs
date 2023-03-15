@@ -84,5 +84,11 @@ public interface IProjectApi
     /// <returns></returns>
     Task DeleteIconAsync(string slugOrId);
 
+    /// <summary>
+    ///    Changes a project's icon by slug or ID
+    /// </summary>
+    /// <param name="slugOrId"> The ID or slug of the project</param>
+    /// <param name="iconPath"> The local path to the icon</param>
+    /// <returns></returns>
     Task ChangeIconAsync(string slugOrId, string iconPath);
 }
