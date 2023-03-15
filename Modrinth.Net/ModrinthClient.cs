@@ -10,6 +10,7 @@ using Modrinth.Endpoints.Version;
 using Modrinth.Endpoints.VersionFile;
 using Modrinth.Exceptions;
 using Modrinth.JsonConverters;
+using Modrinth.Models.Errors;
 using Newtonsoft.Json;
 
 namespace Modrinth;
@@ -92,11 +93,24 @@ public class ModrinthClient : IModrinthClient
     private static async Task HandleFlurlErrorAsync(FlurlCall call)
     {
         call.ExceptionHandled = true;
+        
+        // Try to parse Response error
+        ResponseError? error = null!;
+        try
+        {
+            error = await call.Response.GetJsonAsync<ResponseError>();
+        }
+        catch (FlurlHttpException)
+        {
+            
+        }
 
         throw new ModrinthApiException(
-            "An error occurred while communicating with Modrinth API; See the inner exception for more details",
+            $"An error occurred while communicating with Modrinth API: {call.Response.ResponseMessage.ReasonPhrase}" +
+            $"\n{error?.Error}: {error?.Description}",
             call.Response.ResponseMessage.StatusCode,
-            call.Response.ResponseMessage.Content, call.Exception);
+            call.Response.ResponseMessage.Content, call.Exception,
+            error);
     }
 
     #region Endpoints

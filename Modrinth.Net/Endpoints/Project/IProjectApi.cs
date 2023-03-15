@@ -76,4 +76,8 @@ public interface IProjectApi
     /// <param name="slugOrId"></param>
     /// <returns></returns>
     Task UnfollowAsync(string slugOrId);
+    
+    Task DeleteIconAsync(string slugOrId);
+    
+    Task ChangeIconAsync(string slugOrId, string iconPath);
 }

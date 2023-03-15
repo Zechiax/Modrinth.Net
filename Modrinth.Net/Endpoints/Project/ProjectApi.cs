@@ -2,6 +2,7 @@
 using Modrinth.Extensions;
 using Modrinth.Models;
 using Modrinth.Models.Facets;
+using File = System.IO.File;
 using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Endpoints.Project;
@@ -67,6 +68,25 @@ public class ProjectApi : IProjectApi
     public async Task UnfollowAsync(string slugOrId)
     {
         await _client.Request(ProjectPathSegment, slugOrId, "follow").DeleteAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task DeleteIconAsync(string slugOrId)
+    {
+        await _client.Request(ProjectPathSegment, slugOrId, "icon").DeleteAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task ChangeIconAsync(string slugOrId, string iconPath)
+    {
+        var extension = Path.GetExtension(iconPath).TrimStart('.');
+
+        await using var stream = File.OpenRead(iconPath);
+        using var streamContent = new StreamContent(stream);
+        
+        await _client.Request(ProjectPathSegment, slugOrId, "icon")
+            .SetQueryParam("ext", extension)
+            .PatchAsync(streamContent);
     }
 
     /// <inheritdoc />

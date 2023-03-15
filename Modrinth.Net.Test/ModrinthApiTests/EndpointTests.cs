@@ -8,6 +8,7 @@ namespace Modrinth.Net.Test.ModrinthApiTests;
 public class EndpointTests
 {
     protected const string TestProjectSlug = "gravestones";
+    protected const string ModrinthNetTestProjectId = "8tXTnRfF";
 
     protected static readonly IConfigurationRoot Configuration =
         new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();

@@ -83,4 +83,23 @@ public class TestProjectEndpoint : EndpointTests
         Assert.That(projects, Is.Not.Null);
         Assert.That(projects, Is.Not.Empty);
     }
+    
+    [Test]
+    public async Task ChangeIcon()
+    {
+        var icon = new FileInfo("../../../../Modrinth.Net.Test/Assets/Icons/ModrinthNet.png");
+        
+        if (!icon.Exists)
+        {
+            Assert.Inconclusive("Icon file not found, path: " + icon.FullName);
+        }
+        
+        await _client.Project.ChangeIconAsync(ModrinthNetTestProjectId, icon.FullName);
+    }
+    
+    [Test]
+    public async Task DeleteIcon()
+    {
+        await _client.Project.DeleteIconAsync(ModrinthNetTestProjectId);
+    }
 }
