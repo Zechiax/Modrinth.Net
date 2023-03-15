@@ -4,7 +4,7 @@ namespace Modrinth.Models.Enums;
 public class License
 {
     /// <summary>
-    ///     The license id of a project, retrieved from the licenses get route
+    ///     The SPDX license ID of a project
     /// </summary>
     public string Id { get; set; }
 

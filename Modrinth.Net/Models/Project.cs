@@ -139,7 +139,7 @@ public class Project
     public ProjectStatus Status { get; set; }
 
     /// <summary>
-    ///     The SPDX license ID of a project
+    ///     The license of the project
     /// </summary>
     public License? License { get; set; }
 
