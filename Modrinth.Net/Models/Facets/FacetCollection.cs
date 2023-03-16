@@ -26,7 +26,7 @@ public class FacetCollection : ICollection<Facet[]>
     ///     Facets in a group are OR'd together
     ///     Facets in different groups are AND'd together
     /// </summary>
-    /// <param name="facets"></param>
+    /// <param name="facets"> The facets to add </param>
     public void Add(params Facet[] facets)
     {
         if (facets.Length == 0)
