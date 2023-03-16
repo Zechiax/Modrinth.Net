@@ -44,6 +44,52 @@ var userAgent = new UserAgent
 var client = new ModrinthClient(userAgent: userAgent, token: "Your_Authentication_Token");
 ```
 
+### Search
+
+- You can search for projects using the `SearchAsync` method, in the `Project` endpoint
+
+```csharp
+using Modrinth;
+using Modrinth.Client;
+
+var client = new ModrinthClient(userAgent: "My_Awesome_Project");
+
+var search = await client.Project.SearchAsync("sodium");
+
+foreach (var project in search.Projects)
+{
+    Console.WriteLine(project.Title);
+}
+```
+
+#### Search with facets/filtering
+
+- You can filter the search results by using facets, which are a way to filter the results by certain criteria
+- You can read more about facets [here](https://docs.modrinth.com/docs/tutorials/api_search/#facets)
+- You can create a `FacetCollection` and add facets to it, and then pass it to the `SearchAsync` method
+
+Example:
+
+```csharp
+// For search with facets, you first need to create a FacetCollection
+var facets = new FacetCollection();
+
+// Then you can add facets to it
+// You add a facet by calling the Add method on the FacetCollection
+// In one call, you can add multiple facets, they will be combined in an OR statement
+// If you call Add again, the new facets will be combined in an AND statement with the previous ones
+
+// Example:
+facets.Add(Facet.Category("adventure"), Facet.Version("1.19.3"));
+facets.Add(Facet.Category("magic"));
+
+// This will create a query that looks like this:
+// (category:adventure OR version:1.19.3) AND category:magic
+
+// Then you can pass the FacetCollection to the SearchAsync method
+var search = await _client.Project.SearchAsync("", facets: facets);
+```
+
 ### Unsuccesful API calls
 
 - If the API call was unsuccessful, the client will throw an `ModrinthApiException` exception

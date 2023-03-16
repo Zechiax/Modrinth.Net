@@ -5,21 +5,41 @@ namespace Modrinth.Models.Facets;
 
 public abstract class Facet
 {
+    /// <summary>
+    ///    Creates a new facet for the filtering by category or loader
+    /// </summary>
+    /// <param name="value"> The loader or category to filter the results from </param>
+    /// <returns> The created facet </returns>
     public static Facet<string> Category(string value)
     {
         return new Facet<string>(FacetType.Categories, value);
     }
 
+    /// <summary>
+    ///  Creates a new facet for the filtering by Minecraft version
+    /// </summary>
+    /// <param name="value"> The minecraft version to filter the results from </param>
+    /// <returns> The created facet </returns>
     public static Facet<string> Version(string value)
     {
         return new Facet<string>(FacetType.Versions, value);
     }
 
+    /// <summary>
+    ///     Creates a new facet for the filtering by license
+    /// </summary>
+    /// <param name="value"> The license ID to filter the results from </param>
+    /// <returns> The created facet </returns>
     public static Facet<string> License(string value)
     {
         return new Facet<string>(FacetType.License, value);
     }
 
+    /// <summary>
+    ///    Creates a new facet for the filtering by project type
+    /// </summary>
+    /// <param name="projectType">  The project type to filter the results from </param>
+    /// <returns> The created facet </returns>
     public static Facet<string> ProjectType(ProjectType projectType)
     {
         return new Facet<string>(FacetType.ProjectType, projectType.ToModrinthString());
