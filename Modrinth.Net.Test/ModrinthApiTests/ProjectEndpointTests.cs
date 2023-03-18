@@ -87,11 +87,9 @@ public class TestProjectEndpoint : EndpointTests
     [Test]
     public async Task ChangeIcon()
     {
-        var icon = new FileInfo("../../../../Modrinth.Net.Test/Assets/Icons/ModrinthNet.png");
+        if (!Icon.Exists) Assert.Inconclusive("Icon file not found, path: " + Icon.FullName);
 
-        if (!icon.Exists) Assert.Inconclusive("Icon file not found, path: " + icon.FullName);
-
-        await _client.Project.ChangeIconAsync(ModrinthNetTestProjectId, icon.FullName);
+        await _client.Project.ChangeIconAsync(ModrinthNetTestProjectId, Icon.FullName);
     }
 
     [Test]

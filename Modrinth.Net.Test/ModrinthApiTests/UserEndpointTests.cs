@@ -49,4 +49,13 @@ public class TestUserEndpoint : EndpointTests
     {
         Assert.ThrowsAsync<ModrinthApiException>(async () => await _noAuthClient.User.GetCurrentAsync());
     }
+
+    [Test]
+    public async Task ChangeIcon_WithValidId_ShouldSucceed()
+    {
+        if (!Icon.Exists) Assert.Inconclusive("Icon file not found, path: " + Icon.FullName);
+
+        var current = await _client.User.GetCurrentAsync();
+        await _client.User.ChangeIconAsync(current.Id, Icon.FullName);
+    }
 }
