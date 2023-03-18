@@ -13,6 +13,8 @@ public class EndpointTests
     protected static readonly IConfigurationRoot Configuration =
         new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
+    protected readonly FileInfo Icon = new("../../../../Modrinth.Net.Test/Assets/Icons/ModrinthNet.png");
+
     protected IModrinthClient _client = null!;
     protected IModrinthClient _noAuthClient = null!;
 

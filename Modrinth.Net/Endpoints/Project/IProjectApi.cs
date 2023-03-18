@@ -86,6 +86,7 @@ public interface IProjectApi
 
     /// <summary>
     ///     Changes a project's icon by slug or ID
+    ///     The new icon may be up to 256KiB in size.
     /// </summary>
     /// <param name="slugOrId"> The ID or slug of the project</param>
     /// <param name="iconPath"> The local path to the icon</param>
