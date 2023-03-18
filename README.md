@@ -178,7 +178,7 @@ catch (ModrinthApiException e)
 | Delete a user                              | DELETE |             |
 | Get user from authorization header         | GET    | ✅           |
 | Get multiple users                         | GET    | ✅           |
-| Change user's avatar                       | PATCH  |             |
+| Change user's avatar                       | PATCH  | ✅           |
 | Get user's projects                        | GET    | ✅           |
 | Get user's notifications                   | GET    | ✅           |
 | Get user's followed projects               | GET    | ✅           |
