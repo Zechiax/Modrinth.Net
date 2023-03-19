@@ -59,4 +59,15 @@ public class VersionApi : IVersionApi
     {
         await _client.Request(VersionsPath, versionId).DeleteAsync();
     }
+
+    /// <inheritdoc />
+    public async Task ScheduleAsync(string versionId, DateTime date, RequestedStatus requestedStatus)
+    {
+        await _client.Request(VersionsPath, versionId, "schedule")
+            .PostJsonAsync(new
+            {
+                time = date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+                requested_status = requestedStatus.ToString().ToLower()
+            });
+    }
 }

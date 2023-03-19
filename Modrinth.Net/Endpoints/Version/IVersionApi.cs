@@ -38,4 +38,6 @@ public interface IVersionApi
     Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber);
 
     Task DeleteAsync(string versionId);
+
+    Task ScheduleAsync(string versionId, DateTime date, RequestedStatus requestedStatus);
 }
