@@ -52,7 +52,7 @@ public class UserAgent
 
         if (ProjectVersion != null)
         {
-            if (before) sb.Append('/');
+            if (before) sb.Append('-');
             sb.Append(ProjectVersion);
             before = true;
         }
