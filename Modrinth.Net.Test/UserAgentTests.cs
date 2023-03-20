@@ -16,7 +16,7 @@ public class UserAgentTests
             Contact = "contact@contact.com"
         };
 
-        Assert.That(userAgent.ToString(), Is.EqualTo("Username/ProjectName/1.0.0 (contact@contact.com)"));
+        Assert.That(userAgent.ToString(), Is.EqualTo("Username/ProjectName-1.0.0 (contact@contact.com)"));
     }
 
     [Test]
@@ -28,7 +28,7 @@ public class UserAgentTests
             ProjectVersion = "1.0.0"
         };
 
-        Assert.That(userAgent.ToString(), Is.EqualTo("ProjectName/1.0.0"));
+        Assert.That(userAgent.ToString(), Is.EqualTo("ProjectName-1.0.0"));
     }
 
     [Test]

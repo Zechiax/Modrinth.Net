@@ -135,6 +135,11 @@ public class ProjectApi : IProjectApi
         {
             {"ext", extension}
         };
+        
+        var stream = File.OpenRead(iconPath);
+        using var streamContent = new StreamContent(stream);
+        
+        reqMsg.Content = streamContent;
 
         parameters.AddToRequest(reqMsg);
 

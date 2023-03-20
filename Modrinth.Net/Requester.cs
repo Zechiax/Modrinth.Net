@@ -1,12 +1,17 @@
+using System.Net;
+using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Modrinth.Exceptions;
 using Modrinth.JsonConverters;
+using Modrinth.Models.Errors;
 
 namespace Modrinth;
 
 public class Requester : IRequester
 {
+    private const int RetryLimit = 5;
+    
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -17,7 +22,7 @@ public class Requester : IRequester
         }
     };
 
-    public Requester(Uri baseUri, string? apiToken = null)
+    public Requester(Uri baseUri, string userAgent, string? apiToken = null)
     {
         BaseAddress = baseUri;
         HttpClient = new HttpClient
@@ -25,7 +30,7 @@ public class Requester : IRequester
             BaseAddress = baseUri,
             DefaultRequestHeaders =
             {
-                {"User-Agent", "Modrinth.Net"}
+                {"User-Agent", userAgent}
             }
         };
 
@@ -40,24 +45,60 @@ public class Requester : IRequester
     public async Task<T> GetJsonAsync<T>(HttpRequestMessage request, CancellationToken cancellationToken = default)
     {
         var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
-        // TODO: Add error handling, if the response is not successful and the content cannot be deserialized
-        if (!response.IsSuccessStatusCode)
-            throw new ModrinthApiException("Error: " + response.StatusCode + " " + response.ReasonPhrase + "" +
-                                           await response.Content.ReadAsStringAsync() + "" +
-                                           $"{response.RequestMessage.RequestUri} base url: {BaseAddress}"
-                , response.StatusCode, response.Content, null);
 
         return await JsonSerializer
-            .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), _jsonSerializerOptions, cancellationToken)
-            .ConfigureAwait(false);
+            .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions, cancellationToken)
+            .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized", response.StatusCode, response.Content, null);
     }
 
-    public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-        CancellationToken cancellationToken = default)
+    public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
     {
-        return await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        var retryCount = 0;
+        while (true)
+        {
+            var response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode) return response;
+
+            if (response.StatusCode == HttpStatusCode.TooManyRequests)
+            {
+                if (retryCount >= RetryLimit)
+                    throw new ModrinthApiException($"Request was rate limited and retry limit ({RetryLimit}) was reached", response.StatusCode, response.Content, null);
+                
+                if (response.Headers.TryGetValues("X-Ratelimit-Reset", out var resetValues))
+                {
+                    var resetInSeconds = int.Parse(resetValues.First());
+                    // Reset time + 1 seconds to be sure
+                    var resetTime = DateTimeOffset.Now.AddSeconds(resetInSeconds + 1);
+                    await Task.Delay(resetTime - DateTimeOffset.Now, cancellationToken).ConfigureAwait(false);
+
+                    retryCount++;
+                    // We need to create a new request message because the old one has already been sent
+                    request = CopyRequest(request);
+                    continue;
+                }
+            }
+
+            // Error handling
+            var error = await JsonSerializer.DeserializeAsync<ResponseError>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions, cancellationToken)
+                .ConfigureAwait(false);
+
+            throw new ModrinthApiException($"An error occurred while communicating with Modrinth API: {response.ReasonPhrase}: {error?.Error}: {error?.Description}", response.StatusCode, response.Content, null);
+        }
+    }
+    
+    private static HttpRequestMessage CopyRequest(HttpRequestMessage request)
+    {
+        var newRequest = new HttpRequestMessage(request.Method, request.RequestUri);
+        newRequest.Content = request.Content;
+        newRequest.Method = request.Method;
+        newRequest.Version = request.Version;
+        foreach (var header in request.Headers) newRequest.Headers.Add(header.Key, header.Value);
+        newRequest.VersionPolicy = request.VersionPolicy;
+        return newRequest;
     }
 
+    /// <inheritdoc />
     public void Dispose()
     {
         HttpClient.Dispose();

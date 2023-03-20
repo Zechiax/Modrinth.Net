@@ -43,12 +43,12 @@ public class ModrinthClient : IModrinthClient
     /// </param>
     /// <param name="url">Custom API url, default is <see cref="BaseUrl" /></param>
     /// <returns></returns>
-    public ModrinthClient(string? userAgent = null, string? token = null, string url = BaseUrl)
+    public ModrinthClient(string userAgent, string? token = null, string url = BaseUrl)
     {
         if (string.IsNullOrEmpty(userAgent))
             throw new ArgumentException("User-Agent cannot be empty", nameof(userAgent));
 
-        _requester = new Requester(new Uri(url, UriKind.Absolute), token);
+        _requester = new Requester(new Uri(url, UriKind.Absolute), userAgent, token);
 
         Project = new ProjectApi(_requester);
         Tag = new TagApi(_requester);
@@ -67,31 +67,6 @@ public class ModrinthClient : IModrinthClient
         IsDisposed = true;
         GC.SuppressFinalize(this);
     }
-
-    // private static async Task HandleFlurlErrorAsync(FlurlCall call)
-    // {
-    //     call.ExceptionHandled = true;
-    //
-    //     // Try to parse Response error
-    //     ResponseError? error = null!;
-    //     try
-    //     {
-    //         error = await call.Response.GetJsonAsync<ResponseError>();
-    //     }
-    //     catch (FlurlHttpException)
-    //     {
-    //     }
-    //     
-    //     var message =
-    //             $"An error occurred while communicating with Modrinth API: {call.Response.ResponseMessage.ReasonPhrase}";
-    //     message += $"\n{error?.Error}: {error?.Description}";
-    //
-    //     throw new ModrinthApiException(
-    //         message,
-    //         call.Response.ResponseMessage.StatusCode,
-    //         call.Response.ResponseMessage.Content, call.Exception,
-    //         error);
-    // }
 
     #region Endpoints
 
