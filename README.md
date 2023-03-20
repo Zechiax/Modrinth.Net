@@ -90,6 +90,18 @@ facets.Add(Facet.Category("magic"));
 var search = await _client.Project.SearchAsync("", facets: facets);
 ```
 
+As `FacetCollection` implements `ICollection<T>`, you can use collection initializers to add facets to it, like this:
+
+```csharp
+var facets = new FacetCollection
+{
+    { Facet.Category("adventure"), Facet.Version("1.19.3") },
+    { Facet.Category("magic") }
+};
+```
+
+Which will create the same query as the previous example.
+
 ### Unsuccesful API calls
 
 - If the API call was unsuccessful, the client will throw an `ModrinthApiException` exception
