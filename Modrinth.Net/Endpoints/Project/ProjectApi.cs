@@ -94,17 +94,17 @@ public class ProjectApi : IProjectApi
         string? description = null, ulong? ordering = null)
     {
         var extension = Path.GetExtension(imagePath).TrimStart('.');
-        
+
         var request = _client.Request(ProjectPathSegment, slugOrId, "gallery")
             .SetQueryParam("featured", featured.ToString().ToLower())
             .SetQueryParam("title", title)
             .SetQueryParam("description", description)
             .SetQueryParam("ordering", ordering)
             .SetQueryParam("ext", extension);
-        
+
         await using var stream = File.OpenRead(imagePath);
         using var streamContent = new StreamContent(stream);
-        
+
         await request.PostAsync(streamContent);
     }
 
