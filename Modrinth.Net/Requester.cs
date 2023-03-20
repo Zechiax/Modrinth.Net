@@ -1,5 +1,4 @@
 using System.Net;
-using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Modrinth.Exceptions;
@@ -11,7 +10,7 @@ namespace Modrinth;
 public class Requester : IRequester
 {
     private const int RetryLimit = 5;
-    
+
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -47,11 +46,14 @@ public class Requester : IRequester
         var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
 
         return await JsonSerializer
-            .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions, cancellationToken)
-            .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized", response.StatusCode, response.Content, null);
+            .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions,
+                cancellationToken)
+            .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized",
+            response.StatusCode, response.Content, null);
     }
 
-    public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
+    public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+        CancellationToken cancellationToken = default)
     {
         var retryCount = 0;
         while (true)
@@ -63,8 +65,10 @@ public class Requester : IRequester
             if (response.StatusCode == HttpStatusCode.TooManyRequests)
             {
                 if (retryCount >= RetryLimit)
-                    throw new ModrinthApiException($"Request was rate limited and retry limit ({RetryLimit}) was reached", response.StatusCode, response.Content, null);
-                
+                    throw new ModrinthApiException(
+                        $"Request was rate limited and retry limit ({RetryLimit}) was reached", response.StatusCode,
+                        response.Content, null);
+
                 if (response.Headers.TryGetValues("X-Ratelimit-Reset", out var resetValues))
                 {
                     var resetInSeconds = int.Parse(resetValues.First());
@@ -95,11 +99,18 @@ public class Requester : IRequester
 
             var message = "An error occurred while communicating with Modrinth API";
             if (error != null) message += $": {error.Error}: {error.Description}";
-            
+
             throw new ModrinthApiException(message, response.StatusCode, response.Content, null);
         }
     }
-    
+
+    /// <inheritdoc />
+    public void Dispose()
+    {
+        HttpClient.Dispose();
+        IsDisposed = true;
+    }
+
     private static HttpRequestMessage CopyRequest(HttpRequestMessage request)
     {
         var newRequest = new HttpRequestMessage(request.Method, request.RequestUri);
@@ -109,12 +120,5 @@ public class Requester : IRequester
         foreach (var header in request.Headers) newRequest.Headers.Add(header.Key, header.Value);
         newRequest.VersionPolicy = request.VersionPolicy;
         return newRequest;
-    }
-
-    /// <inheritdoc />
-    public void Dispose()
-    {
-        HttpClient.Dispose();
-        IsDisposed = true;
     }
 }

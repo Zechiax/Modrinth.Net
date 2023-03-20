@@ -101,7 +101,7 @@ public class ProjectEndpointTests : EndpointTests
     {
         await Client.Project.DeleteIconAsync(ModrinthNetTestProjectId);
     }
-    
+
     // Invalid id
     [Test]
     public async Task GetProject_WithInvalidId_ShouldThrowException()
