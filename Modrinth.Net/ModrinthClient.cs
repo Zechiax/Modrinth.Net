@@ -1,7 +1,4 @@
-﻿using System.Net;
-using Flurl.Http;
-using Flurl.Http.Configuration;
-using Modrinth.Client;
+﻿using Modrinth.Client;
 using Modrinth.Endpoints.Miscellaneous;
 using Modrinth.Endpoints.Project;
 using Modrinth.Endpoints.Tag;
@@ -9,10 +6,6 @@ using Modrinth.Endpoints.Team;
 using Modrinth.Endpoints.User;
 using Modrinth.Endpoints.Version;
 using Modrinth.Endpoints.VersionFile;
-using Modrinth.Exceptions;
-using Modrinth.JsonConverters;
-using Modrinth.Models.Errors;
-using Newtonsoft.Json;
 
 namespace Modrinth;
 
@@ -25,14 +18,14 @@ public class ModrinthClient : IModrinthClient
     ///     API Url of the production server
     /// </summary>
     // ReSharper disable once MemberCanBePrivate.Global
-    public const string BaseUrl = "https://api.modrinth.com/v2";
+    public const string BaseUrl = "https://api.modrinth.com/v2/";
 
     /// <summary>
     ///     API Url of the staging server
     /// </summary>
-    public const string StagingBaseUrl = "https://staging-api.modrinth.com/v2";
+    public const string StagingBaseUrl = "https://staging-api.modrinth.com/v2/";
 
-    private readonly FlurlClient _client;
+    private readonly IRequester _requester;
 
     /// <inheritdoc />
     public ModrinthClient(UserAgent userAgent, string? token = null, string url = BaseUrl)
@@ -55,66 +48,50 @@ public class ModrinthClient : IModrinthClient
         if (string.IsNullOrEmpty(userAgent))
             throw new ArgumentException("User-Agent cannot be empty", nameof(userAgent));
 
-        _client = new FlurlClient(url)
-            .WithHeader("User-Agent", userAgent)
-            .WithHeader("Accept", "application/json")
-            .WithHeader("Content-Type", "application/json");
+        _requester = new Requester(new Uri(url, UriKind.Absolute), token);
 
-        var serializerSettings = new JsonSerializerSettings
-        {
-            Converters = {new ColorConverter()}
-        };
-
-        _client.Configure(settings =>
-        {
-            settings.OnErrorAsync = HandleFlurlErrorAsync;
-            settings.JsonSerializer = new NewtonsoftJsonSerializer(serializerSettings);
-        });
-
-        if (!string.IsNullOrEmpty(token)) _client.WithHeader("Authorization", token);
-
-        Project = new ProjectApi(_client);
-        Tag = new TagApi(_client);
-        Team = new TeamApi(_client);
-        User = new UserApi(_client);
-        Version = new VersionApi(_client);
-        VersionFile = new VersionFileApi(_client);
-        Miscellaneous = new MiscellaneousApi(_client);
+        Project = new ProjectApi(_requester);
+        Tag = new TagApi(_requester);
+        Team = new TeamApi(_requester);
+        User = new UserApi(_requester);
+        Version = new VersionApi(_requester);
+        VersionFile = new VersionFileApi(_requester);
+        Miscellaneous = new MiscellaneousApi(_requester);
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        if (IsDisposed || _client.IsDisposed) return;
-        _client.Dispose();
+        if (IsDisposed || _requester.IsDisposed) return;
+        _requester.Dispose();
         IsDisposed = true;
         GC.SuppressFinalize(this);
     }
 
-    private static async Task HandleFlurlErrorAsync(FlurlCall call)
-    {
-        call.ExceptionHandled = true;
-
-        // Try to parse Response error
-        ResponseError? error = null!;
-        try
-        {
-            error = await call.Response.GetJsonAsync<ResponseError>();
-        }
-        catch (FlurlHttpException)
-        {
-        }
-        
-        var message =
-                $"An error occurred while communicating with Modrinth API: {call.Response.ResponseMessage.ReasonPhrase}";
-        message += $"\n{error?.Error}: {error?.Description}";
-
-        throw new ModrinthApiException(
-            message,
-            call.Response.ResponseMessage.StatusCode,
-            call.Response.ResponseMessage.Content, call.Exception,
-            error);
-    }
+    // private static async Task HandleFlurlErrorAsync(FlurlCall call)
+    // {
+    //     call.ExceptionHandled = true;
+    //
+    //     // Try to parse Response error
+    //     ResponseError? error = null!;
+    //     try
+    //     {
+    //         error = await call.Response.GetJsonAsync<ResponseError>();
+    //     }
+    //     catch (FlurlHttpException)
+    //     {
+    //     }
+    //     
+    //     var message =
+    //             $"An error occurred while communicating with Modrinth API: {call.Response.ResponseMessage.ReasonPhrase}";
+    //     message += $"\n{error?.Error}: {error?.Description}";
+    //
+    //     throw new ModrinthApiException(
+    //         message,
+    //         call.Response.ResponseMessage.StatusCode,
+    //         call.Response.ResponseMessage.Content, call.Exception,
+    //         error);
+    // }
 
     #region Endpoints
 

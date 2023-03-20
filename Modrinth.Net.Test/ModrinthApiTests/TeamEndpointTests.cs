@@ -1,7 +1,7 @@
 ﻿namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class TestTeamEndpoint : EndpointTests
+public class TeamEndpointTests : EndpointTests
 {
     [Test]
     public async Task GetProjectTeamAsync_WithValidSlugOrId_ShouldReturnProjectTeam()

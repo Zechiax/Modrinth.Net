@@ -1,5 +1,5 @@
-﻿using Modrinth.Models.Enums;
-using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
+using Modrinth.Models.Enums;
 
 namespace Modrinth.Models.Tags;
 
@@ -15,7 +15,7 @@ public class GameVersion
     /// <summary>
     ///     The type of the game version
     /// </summary>
-    [JsonProperty("version_type")]
+    [JsonPropertyName("version_type")]
     public GameVersionType VersionType { get; set; }
 
     /// <summary>

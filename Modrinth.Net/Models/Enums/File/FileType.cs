@@ -1,12 +1,12 @@
-﻿using Newtonsoft.Json;
+﻿using System.Text.Json.Serialization;
 
 namespace Modrinth.Models.Enums.File;
 
 public enum FileType
 {
-    [JsonProperty("required-resource-pack")]
+    [JsonPropertyName("required-resource-pack")]
     RequiredResourcePack,
 
-    [JsonProperty("optional-resource-pack")]
+    [JsonPropertyName("optional-resource-pack")]
     OptionalResourcePack
 }

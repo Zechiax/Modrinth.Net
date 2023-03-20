@@ -1,7 +1,7 @@
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class TestProjectEndpoint : EndpointTests
+public class ProjectEndpointTests : EndpointTests
 {
     [Test]
     public async Task GetProject_WithValidId_ShouldReturnProject()

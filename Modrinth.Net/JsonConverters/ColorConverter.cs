@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
-using Newtonsoft.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Modrinth.JsonConverters;
 
@@ -7,25 +8,24 @@ namespace Modrinth.JsonConverters;
 public class ColorConverter : JsonConverter<Color?>
 {
     /// <inheritdoc />
-    public override Color? ReadJson(JsonReader reader, Type objectType, Color? existingValue, bool hasExistingValue,
-        JsonSerializer serializer)
+    public override Color? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         switch (reader.TokenType)
         {
-            case JsonToken.Integer:
+            case JsonTokenType.Number:
             {
-                var intValue = (long) reader.Value!;
-                return Color.FromArgb((int) intValue);
+                var intValue = reader.GetInt32();
+                return Color.FromArgb(intValue);
             }
-            case JsonToken.Null:
+            case JsonTokenType.Null:
                 return null;
             default:
-                throw new JsonSerializationException("Unexpected token type: " + reader.TokenType);
+                throw new JsonException("Unexpected token type: " + reader.TokenType);
         }
     }
 
     /// <inheritdoc />
-    public override void WriteJson(JsonWriter writer, Color? value, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, Color? value, JsonSerializerOptions options)
     {
         throw new NotImplementedException();
     }

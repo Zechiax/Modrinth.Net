@@ -1,6 +1,6 @@
 ﻿#pragma warning disable CS8618
+using System.Text.Json.Serialization;
 using Modrinth.Models.Enums;
-using Newtonsoft.Json;
 
 namespace Modrinth.Models;
 
@@ -9,13 +9,13 @@ public class Dependency
     /// <summary>
     ///     The ID of the version that this version depends on
     /// </summary>
-    [JsonProperty("version_id")]
+    [JsonPropertyName("version_id")]
     public string? VersionId { get; set; }
 
     /// <summary>
     ///     The ID of the project that this version depends on
     /// </summary>
-    [JsonProperty("project_id")]
+    [JsonPropertyName("project_id")]
     public string? ProjectId { get; set; }
 
     /// <summary>
@@ -26,6 +26,6 @@ public class Dependency
     /// <summary>
     ///     The type of dependency that this version has
     /// </summary>
-    [JsonProperty("dependency_type")]
+    [JsonPropertyName("dependency_type")]
     public DependencyType DependencyType { get; set; }
 }

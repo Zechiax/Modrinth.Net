@@ -1,14 +1,13 @@
-﻿using Flurl.Http;
-using Modrinth.Models.Enums;
+﻿using Modrinth.Models.Enums;
 
 namespace Modrinth.Endpoints.VersionFile;
 
 public class VersionFileApi : IVersionFile
 {
     private const string VersionFilePathSegment = "version_file";
-    private readonly FlurlClient _client;
+    private readonly IRequester _client;
 
-    public VersionFileApi(FlurlClient client)
+    public VersionFileApi(IRequester client)
     {
         _client = client;
     }
@@ -17,14 +16,34 @@ public class VersionFileApi : IVersionFile
     public async Task<System.Version> GetVersionByHashAsync(string hash,
         HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
     {
-        return await _client.Request(VersionFilePathSegment, hash)
-            .SetQueryParam("algorithm", hashAlgorithm.ToString().ToLower()).GetJsonAsync<System.Version>();
+        var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Get;
+        reqMsg.RequestUri = new Uri(VersionFilePathSegment + '/' + hash, UriKind.Relative);
+
+        var parameters = new ParameterBuilder
+        {
+            {"algorithm", hashAlgorithm.ToString().ToLower()}
+        };
+
+        parameters.AddToRequest(reqMsg);
+
+        return await _client.GetJsonAsync<System.Version>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task DeleteVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
     {
-        await _client.Request(VersionFilePathSegment, hash)
-            .SetQueryParam("algorithm", hashAlgorithm.ToString().ToLower()).DeleteAsync();
+        var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Delete;
+        reqMsg.RequestUri = new Uri(VersionFilePathSegment + '/' + hash, UriKind.Relative);
+
+        var parameters = new ParameterBuilder
+        {
+            {"algorithm", hashAlgorithm.ToString().ToLower()}
+        };
+
+        parameters.AddToRequest(reqMsg);
+
+        await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 }

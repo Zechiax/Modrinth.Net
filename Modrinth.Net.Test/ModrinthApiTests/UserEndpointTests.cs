@@ -3,7 +3,7 @@
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class TestUserEndpoint : EndpointTests
+public class UserEndpointTests : EndpointTests
 {
     [Test]
     public async Task TestGetCurrentUser()
