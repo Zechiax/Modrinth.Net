@@ -150,7 +150,7 @@ catch (ModrinthApiException e)
 | Get all of a project's dependencies | GET    | ✅           |
 | Follow a project                    | POST   | ✅           |
 | Unfollow a project                  | DELETE | ✅           |
-| Schedule a project                  | POST   |             |
+| Schedule a project                  | POST   | ❌           |
 
 ### Version endpoints
 
