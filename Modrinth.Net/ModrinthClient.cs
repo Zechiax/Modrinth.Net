@@ -68,31 +68,6 @@ public class ModrinthClient : IModrinthClient
         GC.SuppressFinalize(this);
     }
 
-    // private static async Task HandleFlurlErrorAsync(FlurlCall call)
-    // {
-    //     call.ExceptionHandled = true;
-    //
-    //     // Try to parse Response error
-    //     ResponseError? error = null!;
-    //     try
-    //     {
-    //         error = await call.Response.GetJsonAsync<ResponseError>();
-    //     }
-    //     catch (FlurlHttpException)
-    //     {
-    //     }
-    //     
-    //     var message =
-    //             $"An error occurred while communicating with Modrinth API: {call.Response.ResponseMessage.ReasonPhrase}";
-    //     message += $"\n{error?.Error}: {error?.Description}";
-    //
-    //     throw new ModrinthApiException(
-    //         message,
-    //         call.Response.ResponseMessage.StatusCode,
-    //         call.Response.ResponseMessage.Content, call.Exception,
-    //         error);
-    // }
-
     #region Endpoints
 
     /// <inheritdoc />

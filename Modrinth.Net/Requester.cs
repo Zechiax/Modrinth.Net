@@ -1,12 +1,18 @@
+using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Modrinth.Exceptions;
 using Modrinth.JsonConverters;
+using Modrinth.Models.Errors;
 
 namespace Modrinth;
 
 public class Requester : IRequester
 {
+    private int _requestLimit;
+    private int _requestCount;
+    private int _timeLeft;
+    
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -40,24 +46,60 @@ public class Requester : IRequester
     public async Task<T> GetJsonAsync<T>(HttpRequestMessage request, CancellationToken cancellationToken = default)
     {
         var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
-        // TODO: Add error handling, if the response is not successful and the content cannot be deserialized
-        if (!response.IsSuccessStatusCode)
-            throw new ModrinthApiException("Error: " + response.StatusCode + " " + response.ReasonPhrase + "" +
-                                           await response.Content.ReadAsStringAsync() + "" +
-                                           $"{response.RequestMessage.RequestUri} base url: {BaseAddress}"
-                , response.StatusCode, response.Content, null);
 
         return await JsonSerializer
             .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), _jsonSerializerOptions, cancellationToken)
-            .ConfigureAwait(false);
+            .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized", response.StatusCode, response.Content, null);
     }
 
     public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
         CancellationToken cancellationToken = default)
     {
-        return await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+        // We need to atomically check if the number of requests we have left is greater than 0
+        // and if it is, decrement it. If it is not, we need to wait until it is.
+        
+        if (_requestLimit <= 0)
+        {
+            await Task.Delay(_timeLeft, cancellationToken).ConfigureAwait(false);
+        }
+
+        Interlocked.Decrement(ref _requestCount);
+        var response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+        SetRateLimitFromHeaders(response.Headers);
+
+        if (response.IsSuccessStatusCode) return response;
+        
+        // Error handling
+        var error = await JsonSerializer
+            .DeserializeAsync<ResponseError>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions, cancellationToken)
+            .ConfigureAwait(false);
+
+        throw new ModrinthApiException(
+            $"An error occurred while communicating with Modrinth API: {response.ReasonPhrase}: {error?.Error}: {error?.Description}",
+            response.StatusCode,
+            response.Content, null);
+    }
+    
+    private void SetRateLimitFromHeaders(HttpHeaders headers)
+    {
+        if (headers.TryGetValues("X-RateLimit-Limit", out var limit))
+        {
+            _requestLimit = int.Parse(limit.First());
+        }
+
+        if (headers.TryGetValues("X-RateLimit-Remaining", out var remaining))
+        {
+            _requestCount = int.Parse(remaining.First());
+        }
+
+        if (headers.TryGetValues("X-RateLimit-Reset", out var reset))
+        {
+            _timeLeft = int.Parse(reset.First());
+        }
     }
 
+    /// <inheritdoc />
     public void Dispose()
     {
         HttpClient.Dispose();
