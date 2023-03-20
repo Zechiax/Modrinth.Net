@@ -159,7 +159,7 @@ catch (ModrinthApiException e)
 | Get list of project's versions | GET    | ✅           |
 | Get a version                  | GET    | ✅           |
 | Modify a version               | PATCH  | ❌           |
-| Delete a version               | DELETE | ✅           |
+| Delete a version               | DELETE | ⚠️           |
 | Create a version               | POST   | ❌           |
 | Schedule a version             | POST   | ⚠️          |
 | Get multiple versions          | GET    | ✅           |
