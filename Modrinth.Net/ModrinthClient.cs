@@ -32,7 +32,7 @@ public class ModrinthClient : IModrinthClient
     /// </summary>
     public const string StagingBaseUrl = "https://staging-api.modrinth.com/v2";
 
-    protected readonly FlurlClient Client;
+    private readonly FlurlClient _client;
 
     /// <inheritdoc />
     public ModrinthClient(UserAgent userAgent, string? token = null, string url = BaseUrl)
@@ -55,7 +55,7 @@ public class ModrinthClient : IModrinthClient
         if (string.IsNullOrEmpty(userAgent))
             throw new ArgumentException("User-Agent cannot be empty", nameof(userAgent));
 
-        Client = new FlurlClient(url)
+        _client = new FlurlClient(url)
             .WithHeader("User-Agent", userAgent)
             .WithHeader("Accept", "application/json")
             .WithHeader("Content-Type", "application/json");
@@ -65,28 +65,28 @@ public class ModrinthClient : IModrinthClient
             Converters = {new ColorConverter()}
         };
 
-        Client.Configure(settings =>
+        _client.Configure(settings =>
         {
             settings.OnErrorAsync = HandleFlurlErrorAsync;
             settings.JsonSerializer = new NewtonsoftJsonSerializer(serializerSettings);
         });
 
-        if (!string.IsNullOrEmpty(token)) Client.WithHeader("Authorization", token);
+        if (!string.IsNullOrEmpty(token)) _client.WithHeader("Authorization", token);
 
-        Project = new ProjectApi(Client);
-        Tag = new TagApi(Client);
-        Team = new TeamApi(Client);
-        User = new UserApi(Client);
-        Version = new VersionApi(Client);
-        VersionFile = new VersionFileApi(Client);
-        Miscellaneous = new MiscellaneousApi(Client);
+        Project = new ProjectApi(_client);
+        Tag = new TagApi(_client);
+        Team = new TeamApi(_client);
+        User = new UserApi(_client);
+        Version = new VersionApi(_client);
+        VersionFile = new VersionFileApi(_client);
+        Miscellaneous = new MiscellaneousApi(_client);
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        if (IsDisposed || Client.IsDisposed) return;
-        Client.Dispose();
+        if (IsDisposed || _client.IsDisposed) return;
+        _client.Dispose();
         IsDisposed = true;
         GC.SuppressFinalize(this);
     }
@@ -104,15 +104,9 @@ public class ModrinthClient : IModrinthClient
         catch (FlurlHttpException)
         {
         }
-
-        string message = null!;
-        if (call.Response.ResponseMessage.StatusCode == HttpStatusCode.Unauthorized)
-            message =
-                "There was an authorization error while communicating with authorized Modrinth API endpoint, make sure that you've provided a valid token";
-        else
-            message =
+        
+        var message =
                 $"An error occurred while communicating with Modrinth API: {call.Response.ResponseMessage.ReasonPhrase}";
-
         message += $"\n{error?.Error}: {error?.Description}";
 
         throw new ModrinthApiException(
