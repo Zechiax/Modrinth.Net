@@ -82,4 +82,27 @@ public class TestVersionEndpoint : EndpointTests
                     Assert.That(version.Featured, Is.EqualTo(featured));
             });
     }
+
+    [Test]
+    public async Task TestGetProjectVersionListWithInvalidFilters()
+    {
+        var versions =
+            await Client.Version.GetProjectVersionListAsync(TestProjectSlug, new[] {"invalid_loader"},
+                new[] {"invalid_game_version"});
+        Assert.That(versions, Is.Not.Null);
+        Assert.That(versions, Is.Empty);
+    }
+
+    // [Test]
+    // TODO: Currently can't test this, as I probably have to have a published version
+    // public async Task ScheduleVersion()
+    // {
+    //     var date = DateTime.Now.AddMinutes(1);
+    //     await Client.Version.ScheduleAsync(ModrinthNetTestUploadedVersionId, date, VersionRequestedStatus.Unlisted);
+    //     
+    //     // Check that the version is scheduled
+    //     var version = await Client.Version.GetAsync(ModrinthNetTestUploadedVersionId);
+    //     Assert.That(version, Is.Not.Null);
+    //     Assert.That(version.RequestedStatus, Is.EqualTo(VersionRequestedStatus.Unlisted));
+    // }
 }

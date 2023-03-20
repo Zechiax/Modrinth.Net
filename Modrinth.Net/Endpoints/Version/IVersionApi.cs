@@ -1,4 +1,6 @@
-﻿namespace Modrinth.Endpoints.Version;
+﻿using Modrinth.Models.Enums;
+
+namespace Modrinth.Endpoints.Version;
 
 public interface IVersionApi
 {
@@ -39,5 +41,5 @@ public interface IVersionApi
 
     Task DeleteAsync(string versionId);
 
-    Task ScheduleAsync(string versionId, DateTime date, RequestedStatus requestedStatus);
+    Task ScheduleAsync(string versionId, DateTime date, VersionRequestedStatus requestedStatus);
 }
