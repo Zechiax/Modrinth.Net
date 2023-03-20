@@ -80,10 +80,23 @@ public class Requester : IRequester
             }
 
             // Error handling
-            var error = await JsonSerializer.DeserializeAsync<ResponseError>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions, cancellationToken)
-                .ConfigureAwait(false);
+            ResponseError? error = null;
+            try
+            {
+                error = await JsonSerializer.DeserializeAsync<ResponseError>(
+                        await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions,
+                        cancellationToken)
+                    .ConfigureAwait(false);
+            }
+            catch (JsonException)
+            {
+                // Ignore
+            }
 
-            throw new ModrinthApiException($"An error occurred while communicating with Modrinth API: {response.ReasonPhrase}: {error?.Error}: {error?.Description}", response.StatusCode, response.Content, null);
+            var message = "An error occurred while communicating with Modrinth API";
+            if (error != null) message += $": {error.Error}: {error.Description}";
+            
+            throw new ModrinthApiException(message, response.StatusCode, response.Content, null);
         }
     }
     

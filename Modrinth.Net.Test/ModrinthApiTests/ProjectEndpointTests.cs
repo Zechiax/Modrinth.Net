@@ -1,3 +1,5 @@
+using Modrinth.Exceptions;
+
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
@@ -98,5 +100,12 @@ public class ProjectEndpointTests : EndpointTests
     public async Task DeleteIcon()
     {
         await Client.Project.DeleteIconAsync(ModrinthNetTestProjectId);
+    }
+    
+    // Invalid id
+    [Test]
+    public async Task GetProject_WithInvalidId_ShouldThrowException()
+    {
+        Assert.ThrowsAsync<ModrinthApiException>(async () => await Client.Project.GetAsync("invalid-slug"));
     }
 }
