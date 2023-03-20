@@ -8,7 +8,7 @@ namespace Modrinth.Net.Test.ModrinthApiTests;
 public class EndpointTests
 {
     protected const string TestProjectSlug = "gravestones";
-    protected const string ModrinthNetTestProjectId = "8tXTnRfF";
+    protected const string ModrinthNetTestProjectId = "jKePI2WR";
     protected const string ModrinthNetTestUploadedVersionId = "dJIVHDfy";
 
     protected static readonly IConfigurationRoot Configuration =
