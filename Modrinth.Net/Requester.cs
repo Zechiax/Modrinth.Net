@@ -1,5 +1,6 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Modrinth.Exceptions;
 using Modrinth.JsonConverters;
 
 namespace Modrinth;
@@ -42,8 +43,10 @@ public class Requester : IRequester
         // TODO: Add error handling, if the response is not successful and the content cannot be deserialized
         if (!response.IsSuccessStatusCode)
         {
-            throw new Exception("Error: " + response.StatusCode + " " + response.ReasonPhrase + "" +
-                                await response.Content.ReadAsStringAsync() + "" + $"{response.RequestMessage.RequestUri} base url: {BaseAddress}");
+            throw new ModrinthApiException("Error: " + response.StatusCode + " " + response.ReasonPhrase + "" +
+                                           await response.Content.ReadAsStringAsync() + "" +
+                                           $"{response.RequestMessage.RequestUri} base url: {BaseAddress}"
+                , response.StatusCode, response.Content, null);
         }
 
         return await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), _jsonSerializerOptions, cancellationToken).ConfigureAwait(false);
