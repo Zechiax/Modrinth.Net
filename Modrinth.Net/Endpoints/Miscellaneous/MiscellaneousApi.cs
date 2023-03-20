@@ -16,6 +16,6 @@ public class MiscellaneousApi : IMiscellaneousApi
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("statistics", UriKind.Relative);
 
-        return await _client.GetJsonAsync<ModrinthStatistics>(reqMsg);
+        return await _client.GetJsonAsync<ModrinthStatistics>(reqMsg).ConfigureAwait(false);
     }
 }

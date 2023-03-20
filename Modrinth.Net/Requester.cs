@@ -38,7 +38,7 @@ public class Requester : IRequester
     
     public async Task<T> GetJsonAsync<T>(HttpRequestMessage request, CancellationToken cancellationToken = default)
     {
-        var response = await SendAsync(request, cancellationToken);
+        var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
         // TODO: Add error handling, if the response is not successful and the content cannot be deserialized
         if (!response.IsSuccessStatusCode)
         {
@@ -46,12 +46,12 @@ public class Requester : IRequester
                                 await response.Content.ReadAsStringAsync() + "" + $"{response.RequestMessage.RequestUri} base url: {BaseAddress}");
         }
 
-        return await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), _jsonSerializerOptions, cancellationToken);
+        return await JsonSerializer.DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), _jsonSerializerOptions, cancellationToken).ConfigureAwait(false);
     }
 
     public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
     {
-        return await HttpClient.SendAsync(request, cancellationToken);
+        return await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
     }
 
     public void Dispose()
