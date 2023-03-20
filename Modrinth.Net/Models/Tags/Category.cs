@@ -1,4 +1,5 @@
 ﻿#pragma warning disable CS8618
+using System.Text.Json.Serialization;
 using Modrinth.Models.Enums;
 using Newtonsoft.Json;
 
@@ -19,7 +20,7 @@ public class Category
     /// <summary>
     ///     The project type this category is applicable to
     /// </summary>
-    [JsonProperty("project_type")]
+    [JsonPropertyName("project_type")]
     public ProjectType ProjectType { get; set; }
 
     /// <summary>

@@ -1,4 +1,5 @@
-﻿using Modrinth.Models.Enums;
+﻿using System.Text.Json.Serialization;
+using Modrinth.Models.Enums;
 using Newtonsoft.Json;
 
 namespace Modrinth.Models;
@@ -13,7 +14,7 @@ public class Notification
     /// <summary>
     ///     The ID of the user who received the notification
     /// </summary>
-    [JsonProperty("user_id")]
+    [JsonPropertyName("user_id")]
     public string UserId { get; set; }
 
     /// <summary>

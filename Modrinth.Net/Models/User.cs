@@ -1,4 +1,5 @@
 ﻿#pragma warning disable CS8618
+using System.Text.Json.Serialization;
 using Modrinth.Helpers;
 using Modrinth.Models.Enums;
 using Newtonsoft.Json;
@@ -40,13 +41,13 @@ public class User
     /// <summary>
     ///     The user's github id
     /// </summary>
-    [JsonProperty("github_id")]
+    [JsonPropertyName("github_id")]
     public int? GithubId { get; set; }
 
     /// <summary>
     ///     The user's avatar url
     /// </summary>
-    [JsonProperty("avatar_url")]
+    [JsonPropertyName("avatar_url")]
     public string AvatarUrl { get; set; }
 
     /// <summary>
