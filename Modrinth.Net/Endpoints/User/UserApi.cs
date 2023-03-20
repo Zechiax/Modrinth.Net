@@ -19,7 +19,7 @@ public class UserApi : IUserApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(UserPathSegment+ '/' + usernameOrId, UriKind.Relative);
+        reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId, UriKind.Relative);
 
         return await _client.GetJsonAsync<Models.User>(reqMsg).ConfigureAwait(false);
     }
@@ -29,7 +29,7 @@ public class UserApi : IUserApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(UserPathSegment+ '/' + usernameOrId + '/' + "projects", UriKind.Relative);
+        reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "projects", UriKind.Relative);
 
         return await _client.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
     }
@@ -41,20 +41,20 @@ public class UserApi : IUserApi
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("users", UriKind.Relative);
 
-        var parameters = new ParameterBuilder()
+        var parameters = new ParameterBuilder
         {
             {"ids", ids.ToModrinthQueryString()}
         };
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         return await _client.GetJsonAsync<Models.User[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task<Models.User> GetCurrentAsync()
     {
-                   var reqMsg = new HttpRequestMessage();
+        var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment, UriKind.Relative);
 
@@ -66,7 +66,7 @@ public class UserApi : IUserApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(UserPathSegment+ '/' + usernameOrId + '/' + "notifications", UriKind.Relative);
+        reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "notifications", UriKind.Relative);
 
         return await _client.GetJsonAsync<Notification[]>(reqMsg).ConfigureAwait(false);
     }
@@ -76,7 +76,7 @@ public class UserApi : IUserApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(UserPathSegment+ '/' + usernameOrId + '/' + "follows", UriKind.Relative);
+        reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "follows", UriKind.Relative);
 
         return await _client.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
     }
@@ -86,21 +86,21 @@ public class UserApi : IUserApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Patch;
-        reqMsg.RequestUri = new Uri(UserPathSegment+ '/' + usernameOrId + '/' + "icon", UriKind.Relative);
+        reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "icon", UriKind.Relative);
         var extension = Path.GetExtension(iconPath).TrimStart('.');
-        
-        var parameters = new ParameterBuilder()
+
+        var parameters = new ParameterBuilder
         {
             {"ext", extension}
         };
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         var stream = File.OpenRead(iconPath);
         var streamContent = new StreamContent(stream);
 
         reqMsg.Content = streamContent;
-        
+
         await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 }

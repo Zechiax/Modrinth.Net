@@ -49,7 +49,7 @@ public class ModrinthClient : IModrinthClient
             throw new ArgumentException("User-Agent cannot be empty", nameof(userAgent));
 
         _requester = new Requester(new Uri(url, UriKind.Absolute), token);
-        
+
         Project = new ProjectApi(_requester);
         Tag = new TagApi(_requester);
         Team = new TeamApi(_requester);

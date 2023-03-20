@@ -18,15 +18,15 @@ public class VersionFileApi : IVersionFile
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(VersionFilePathSegment+ '/' + hash, UriKind.Relative);
+        reqMsg.RequestUri = new Uri(VersionFilePathSegment + '/' + hash, UriKind.Relative);
 
-        var parameters = new ParameterBuilder()
+        var parameters = new ParameterBuilder
         {
             {"algorithm", hashAlgorithm.ToString().ToLower()}
         };
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         return await _client.GetJsonAsync<System.Version>(reqMsg).ConfigureAwait(false);
     }
 
@@ -35,15 +35,15 @@ public class VersionFileApi : IVersionFile
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
-        reqMsg.RequestUri = new Uri(VersionFilePathSegment+ '/' + hash, UriKind.Relative);
+        reqMsg.RequestUri = new Uri(VersionFilePathSegment + '/' + hash, UriKind.Relative);
 
-        var parameters = new ParameterBuilder()
+        var parameters = new ParameterBuilder
         {
             {"algorithm", hashAlgorithm.ToString().ToLower()}
         };
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 }

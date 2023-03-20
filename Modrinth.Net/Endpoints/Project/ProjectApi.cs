@@ -1,5 +1,4 @@
-﻿using System.Web;
-using Modrinth.Extensions;
+﻿using Modrinth.Extensions;
 using Modrinth.Models;
 using Modrinth.Models.Facets;
 using File = System.IO.File;
@@ -24,7 +23,7 @@ public class ProjectApi : IProjectApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
-        
+
         return await _client.GetJsonAsync<Models.Project>(reqMsg).ConfigureAwait(false);
     }
 
@@ -34,7 +33,7 @@ public class ProjectApi : IProjectApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("projects_random", UriKind.Relative);
-        
+
         var parameters = new ParameterBuilder
         {
             {"count", count.ToString()}
@@ -51,7 +50,7 @@ public class ProjectApi : IProjectApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
-        
+
         await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
@@ -61,14 +60,14 @@ public class ProjectApi : IProjectApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("projects", UriKind.Relative);
-        
+
         var parameters = new ParameterBuilder
         {
             {"ids", ids.ToModrinthQueryString()}
         };
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         return await _client.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
     }
 
@@ -78,7 +77,7 @@ public class ProjectApi : IProjectApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/check", UriKind.Relative);
-        
+
         return await _client.GetJsonAsync<SlugIdValidity>(reqMsg).ConfigureAwait(false);
     }
 
@@ -88,7 +87,7 @@ public class ProjectApi : IProjectApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/dependencies", UriKind.Relative);
-        
+
         return await _client.GetJsonAsync<Dependencies>(reqMsg).ConfigureAwait(false);
     }
 
@@ -98,7 +97,7 @@ public class ProjectApi : IProjectApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
-        
+
         await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
@@ -108,7 +107,7 @@ public class ProjectApi : IProjectApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
-        
+
         await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
@@ -118,7 +117,7 @@ public class ProjectApi : IProjectApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/icon", UriKind.Relative);
-        
+
         await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
@@ -126,19 +125,19 @@ public class ProjectApi : IProjectApi
     public async Task ChangeIconAsync(string slugOrId, string iconPath)
     {
         var extension = Path.GetExtension(iconPath).TrimStart('.');
-        
+
         var reqMsg = new HttpRequestMessage();
-        
+
         reqMsg.Method = HttpMethod.Patch;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/icon", UriKind.Relative);
-        
+
         var parameters = new ParameterBuilder
         {
             {"ext", extension}
         };
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
@@ -147,12 +146,12 @@ public class ProjectApi : IProjectApi
         string? description = null, ulong? ordering = null)
     {
         var extension = Path.GetExtension(imagePath).TrimStart('.');
-        
+
         var reqMsg = new HttpRequestMessage();
-        
+
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/gallery", UriKind.Relative);
-        
+
         var parameters = new ParameterBuilder
         {
             {"featured", featured.ToString().ToLower()},
@@ -161,14 +160,14 @@ public class ProjectApi : IProjectApi
             {"ordering", ordering},
             {"ext", extension}
         };
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         await using var stream = File.OpenRead(imagePath);
         using var streamContent = new StreamContent(stream);
-        
+
         reqMsg.Content = streamContent;
-        
+
         await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
@@ -177,10 +176,10 @@ public class ProjectApi : IProjectApi
         string? description = null, ulong? ordering = null)
     {
         var reqMsg = new HttpRequestMessage();
-        
+
         reqMsg.Method = HttpMethod.Patch;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/gallery", UriKind.Relative);
-        
+
         var parameters = new ParameterBuilder
         {
             {"url", url},
@@ -189,9 +188,9 @@ public class ProjectApi : IProjectApi
             {"description", description},
             {"ordering", ordering}
         };
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
@@ -199,17 +198,17 @@ public class ProjectApi : IProjectApi
     public async Task DeleteGalleryImageAsync(string slugOrId, string url)
     {
         var reqMsg = new HttpRequestMessage();
-        
+
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/gallery", UriKind.Relative);
-        
+
         var parameters = new ParameterBuilder
         {
             {"url", url}
         };
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         await _client.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
@@ -220,7 +219,7 @@ public class ProjectApi : IProjectApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("search", UriKind.Relative);
-        
+
         var parameters = new ParameterBuilder
         {
             {"query", query.EscapeIfContains()},
@@ -228,11 +227,11 @@ public class ProjectApi : IProjectApi
             {"offset", offset},
             {"limit", limit}
         };
-        
+
         if (facets is {Count: > 0}) parameters.Add("facets", facets.ToString());
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         return await _client.GetJsonAsync<SearchResponse>(reqMsg).ConfigureAwait(false);
     }
 }

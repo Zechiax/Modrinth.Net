@@ -39,7 +39,8 @@ public class ModifiedProject
 
     [JsonPropertyName("status")] public ProjectStatus Status { get; set; }
 
-    [JsonPropertyName("moderation_message")] public string ModerationMessage { get; set; }
+    [JsonPropertyName("moderation_message")]
+    public string ModerationMessage { get; set; }
 
     [JsonPropertyName("moderation_message_body")]
     public string ModerationMessageBody { get; set; }

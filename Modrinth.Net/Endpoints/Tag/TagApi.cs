@@ -15,11 +15,11 @@ public class TagApi : ITagApi
 
     /// <inheritdoc />
     public async Task<Category[]> GetCategoriesAsync()
-    { 
+    {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(TagPathSegment+ '/' + "category", UriKind.Relative);
-        
+        reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "category", UriKind.Relative);
+
         return await _client.GetJsonAsync<Category[]>(reqMsg).ConfigureAwait(false);
     }
 
@@ -28,8 +28,8 @@ public class TagApi : ITagApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(TagPathSegment+ '/' + "loader", UriKind.Relative);
-        
+        reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "loader", UriKind.Relative);
+
         return await _client.GetJsonAsync<Loader[]>(reqMsg).ConfigureAwait(false);
     }
 
@@ -38,8 +38,8 @@ public class TagApi : ITagApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(TagPathSegment + '/'+ "game_version", UriKind.Relative);
-        
+        reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "game_version", UriKind.Relative);
+
         return await _client.GetJsonAsync<GameVersion[]>(reqMsg).ConfigureAwait(false);
     }
 
@@ -48,8 +48,8 @@ public class TagApi : ITagApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(TagPathSegment+ '/' + "license", UriKind.Relative);
-        
+        reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "license", UriKind.Relative);
+
         return await _client.GetJsonAsync<License[]>(reqMsg).ConfigureAwait(false);
     }
 
@@ -59,7 +59,7 @@ public class TagApi : ITagApi
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "donation_platform", UriKind.Relative);
-        
+
         return await _client.GetJsonAsync<DonationPlatform[]>(reqMsg).ConfigureAwait(false);
     }
 
@@ -68,8 +68,8 @@ public class TagApi : ITagApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(TagPathSegment+ '/' + "report_type", UriKind.Relative);
-        
+        reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "report_type", UriKind.Relative);
+
         return await _client.GetJsonAsync<string[]>(reqMsg).ConfigureAwait(false);
     }
 }

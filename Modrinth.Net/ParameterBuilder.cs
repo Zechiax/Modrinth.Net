@@ -6,27 +6,32 @@ namespace Modrinth;
 
 public class ParameterBuilder : IEnumerable
 {
-    NameValueCollection Parameters { get; }
-    
     public ParameterBuilder()
     {
         Parameters = new NameValueCollection();
     }
-    
+
+    private NameValueCollection Parameters { get; }
+
+    public IEnumerator GetEnumerator()
+    {
+        return Parameters.GetEnumerator();
+    }
+
     public ParameterBuilder Add(string key, string? value, bool ignoreNull = true)
     {
         if (value is null && ignoreNull) return this;
         Parameters.Add(key, value ?? string.Empty);
         return this;
     }
-    
+
     public ParameterBuilder Add(string key, object? value, bool ignoreNull = true)
     {
         if (value is null && ignoreNull) return this;
         Parameters.Add(key, value?.ToString() ?? string.Empty);
         return this;
     }
-    
+
     public override string ToString()
     {
         StringBuilder sb = new();
@@ -44,16 +49,11 @@ public class ParameterBuilder : IEnumerable
 
         return sb.ToString();
     }
-    
+
     public void AddToRequest(HttpRequestMessage request)
     {
         var query = ToString();
         if (query == string.Empty) return;
         request.RequestUri = new Uri(request.RequestUri + "?" + query, UriKind.RelativeOrAbsolute);
-    }
-
-    public IEnumerator GetEnumerator()
-    {
-        return Parameters.GetEnumerator();
     }
 }

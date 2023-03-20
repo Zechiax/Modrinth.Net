@@ -19,7 +19,7 @@ public class TeamApi : ITeamApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri("project"+ '/' + slugOrId + '/' + "members", UriKind.Relative);
+        reqMsg.RequestUri = new Uri("project" + '/' + slugOrId + '/' + "members", UriKind.Relative);
 
         return await _client.GetJsonAsync<TeamMember[]>(reqMsg).ConfigureAwait(false);
     }
@@ -29,7 +29,7 @@ public class TeamApi : ITeamApi
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(TeamsPathSegment+ '/' + teamId + '/' + "members", UriKind.Relative);
+        reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members", UriKind.Relative);
 
         return await _client.GetJsonAsync<TeamMember[]>(reqMsg).ConfigureAwait(false);
     }
@@ -41,13 +41,13 @@ public class TeamApi : ITeamApi
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("teams", UriKind.Relative);
 
-        var parameters = new ParameterBuilder()
+        var parameters = new ParameterBuilder
         {
             {"ids", ids.ToModrinthQueryString()}
         };
-        
+
         parameters.AddToRequest(reqMsg);
-        
+
         return await _client.GetJsonAsync<TeamMember[][]>(reqMsg).ConfigureAwait(false);
     }
 }
