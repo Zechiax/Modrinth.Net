@@ -14,7 +14,7 @@ namespace Modrinth;
 public interface IModrinthClient : IDisposable
 {
     /// <summary>
-    ///     If the client has been disposed
+    ///     Whether the client has been disposed
     /// </summary>
     bool IsDisposed { get; }
 
