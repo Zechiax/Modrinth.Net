@@ -48,7 +48,7 @@ public class Requester : IRequester
         var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
 
         return await JsonSerializer
-            .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(), _jsonSerializerOptions, cancellationToken)
+            .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions, cancellationToken)
             .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized", response.StatusCode, response.Content, null);
     }
 
@@ -65,7 +65,7 @@ public class Requester : IRequester
 
         Interlocked.Decrement(ref _requestCount);
         var response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
-
+        
         SetRateLimitFromHeaders(response.Headers);
 
         if (response.IsSuccessStatusCode) return response;
