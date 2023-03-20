@@ -90,6 +90,47 @@ public class ProjectApi : IProjectApi
     }
 
     /// <inheritdoc />
+    public async Task AddGalleryImageAsync(string slugOrId, string imagePath, bool featured, string? title = null,
+        string? description = null, ulong? ordering = null)
+    {
+        var extension = Path.GetExtension(imagePath).TrimStart('.');
+
+        var request = _client.Request(ProjectPathSegment, slugOrId, "gallery")
+            .SetQueryParam("featured", featured.ToString().ToLower())
+            .SetQueryParam("title", title)
+            .SetQueryParam("description", description)
+            .SetQueryParam("ordering", ordering)
+            .SetQueryParam("ext", extension);
+
+        await using var stream = File.OpenRead(imagePath);
+        using var streamContent = new StreamContent(stream);
+
+        await request.PostAsync(streamContent);
+    }
+
+    /// <inheritdoc />
+    public async Task ModifyGalleryImageAsync(string slugOrId, string url, bool? featured = null, string? title = null,
+        string? description = null, ulong? ordering = null)
+    {
+        var request = _client.Request(ProjectPathSegment, slugOrId, "gallery")
+            .SetQueryParam("url", url)
+            .SetQueryParam("featured", featured?.ToString().ToLower())
+            .SetQueryParam("title", title)
+            .SetQueryParam("description", description)
+            .SetQueryParam("ordering", ordering);
+
+        await request.PatchAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task DeleteGalleryImageAsync(string slugOrId, string url)
+    {
+        await _client.Request(ProjectPathSegment, slugOrId, "gallery")
+            .SetQueryParam("url", url)
+            .DeleteAsync();
+    }
+
+    /// <inheritdoc />
     public async Task<SearchResponse> SearchAsync(string query, Index index = Index.Downloads, ulong offset = 0,
         ulong limit = 10, FacetCollection? facets = null)
     {

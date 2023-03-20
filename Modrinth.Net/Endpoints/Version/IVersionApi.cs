@@ -40,14 +40,14 @@ public interface IVersionApi
     Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber);
 
     /// <summary>
-    ///    Deletes a version by its ID
+    ///     Deletes a version by its ID
     /// </summary>
     /// <param name="versionId"> The ID of the version </param>
     /// <returns></returns>
     Task DeleteAsync(string versionId);
 
     /// <summary>
-    ///    Schedules a version with a requested status for a specific date
+    ///     Schedules a version with a requested status for a specific date
     /// </summary>
     /// <param name="versionId"> The ID of the version </param>
     /// <param name="date"> The date the version should be scheduled for </param>

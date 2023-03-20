@@ -92,4 +92,38 @@ public interface IProjectApi
     /// <param name="iconPath"> The local path to the icon</param>
     /// <returns></returns>
     Task ChangeIconAsync(string slugOrId, string iconPath);
+
+    /// <summary>
+    ///     Adds a new gallery image to a project
+    /// </summary>
+    /// <param name="slugOrId"> The ID or slug of the project</param>
+    /// <param name="imagePath"> The local path to the image</param>
+    /// <param name="featured"> Whether the image should be featured</param>
+    /// <param name="title"> Optional title for the image</param>
+    /// <param name="description"> Optional description for the image</param>
+    /// <param name="ordering"> Optional ordering for the image</param>
+    /// <returns></returns>
+    Task AddGalleryImageAsync(string slugOrId, string imagePath, bool featured, string? title = null,
+        string? description = null, ulong? ordering = null);
+
+    /// <summary>
+    ///     Modifies an existing gallery image
+    /// </summary>
+    /// <param name="slugOrId"> The ID or slug of the project</param>
+    /// <param name="url"> URL link of the image to modify</param>
+    /// <param name="featured"> Whether the image should be featured</param>
+    /// <param name="title"> Optional new title for the image</param>
+    /// <param name="description"> Optional new description for the image</param>
+    /// <param name="ordering"> Optional new ordering for the image</param>
+    /// <returns></returns>
+    Task ModifyGalleryImageAsync(string slugOrId, string url, bool? featured = null, string? title = null,
+        string? description = null, ulong? ordering = null);
+
+    /// <summary>
+    ///     Deletes an existing gallery image
+    /// </summary>
+    /// <param name="slugOrId"> The ID or slug of the project</param>
+    /// <param name="url"> URL link of the image to delete</param>
+    /// <returns></returns>
+    Task DeleteGalleryImageAsync(string slugOrId, string url);
 }

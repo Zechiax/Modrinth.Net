@@ -144,9 +144,9 @@ catch (ModrinthApiException e)
 | Change project's icon               | PATCH  | ✅           |
 | Delete project's icon               | DELETE | ✅           |
 | Check project slug/ID validity      | GET    | ✅           |
-| Add a gallery image                 | POST   | ❌           |
-| Modify a gallery image              | PATCH  | ❌           |
-| Delete a gallery image              | DELETE | ❌           |
+| Add a gallery image                 | POST   | ✅           |
+| Modify a gallery image              | PATCH  | ✅           |
+| Delete a gallery image              | DELETE | ✅           |
 | Get all of a project's dependencies | GET    | ✅           |
 | Follow a project                    | POST   | ✅           |
 | Unfollow a project                  | DELETE | ✅           |
@@ -159,7 +159,7 @@ catch (ModrinthApiException e)
 | Get list of project's versions | GET    | ✅           |
 | Get a version                  | GET    | ✅           |
 | Modify a version               | PATCH  | ❌           |
-| Delete a version               | DELETE | ⚠️           |
+| Delete a version               | DELETE | ⚠️          |
 | Create a version               | POST   | ❌           |
 | Schedule a version             | POST   | ⚠️          |
 | Get multiple versions          | GET    | ✅           |
