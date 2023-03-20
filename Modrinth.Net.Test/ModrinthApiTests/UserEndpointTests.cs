@@ -8,7 +8,7 @@ public class TestUserEndpoint : EndpointTests
     [Test]
     public async Task TestGetCurrentUser()
     {
-        var user = await _client.User.GetCurrentAsync();
+        var user = await Client.User.GetCurrentAsync();
 
         Assert.That(user, Is.Not.Null);
     }
@@ -16,9 +16,9 @@ public class TestUserEndpoint : EndpointTests
     [Test]
     public async Task TestGetNotifications()
     {
-        var current = await _client.User.GetCurrentAsync();
+        var current = await Client.User.GetCurrentAsync();
 
-        var notifications = await _client.User.GetNotificationsAsync(current.Id);
+        var notifications = await Client.User.GetNotificationsAsync(current.Id);
 
         Assert.That(notifications, Is.Not.Null);
     }
@@ -26,8 +26,8 @@ public class TestUserEndpoint : EndpointTests
     [Test]
     public async Task TestGetFollowedProjects()
     {
-        var current = await _client.User.GetCurrentAsync();
-        var projects = await _client.User.GetFollowedProjectsAsync(current.Id);
+        var current = await Client.User.GetCurrentAsync();
+        var projects = await Client.User.GetFollowedProjectsAsync(current.Id);
 
         Assert.That(projects, Is.Not.Null);
     }
@@ -35,9 +35,9 @@ public class TestUserEndpoint : EndpointTests
     [Test]
     public async Task GetUserAsync_WithValidId_ShouldReturnUser()
     {
-        var currentUser = await _client.User.GetCurrentAsync();
+        var currentUser = await Client.User.GetCurrentAsync();
 
-        var user = await _client.User.GetAsync(currentUser.Id);
+        var user = await Client.User.GetAsync(currentUser.Id);
 
         Assert.That(user, Is.Not.Null);
         Assert.That(user.Id, Is.EqualTo(currentUser.Id));
@@ -47,7 +47,7 @@ public class TestUserEndpoint : EndpointTests
     [Test]
     public void TestGetCurrentUser_Unauthenticated()
     {
-        Assert.ThrowsAsync<ModrinthApiException>(async () => await _noAuthClient.User.GetCurrentAsync());
+        Assert.ThrowsAsync<ModrinthApiException>(async () => await NoAuthClient.User.GetCurrentAsync());
     }
 
     [Test]
@@ -55,7 +55,7 @@ public class TestUserEndpoint : EndpointTests
     {
         if (!Icon.Exists) Assert.Inconclusive("Icon file not found, path: " + Icon.FullName);
 
-        var current = await _client.User.GetCurrentAsync();
-        await _client.User.ChangeIconAsync(current.Id, Icon.FullName);
+        var current = await Client.User.GetCurrentAsync();
+        await Client.User.ChangeIconAsync(current.Id, Icon.FullName);
     }
 }

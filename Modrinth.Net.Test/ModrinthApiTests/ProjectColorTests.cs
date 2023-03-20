@@ -6,7 +6,7 @@ public class ProjectColorTests : EndpointTests
     [Test]
     public async Task ProjectColor()
     {
-        var project = await _client.Project.GetAsync(TestProjectSlug);
+        var project = await Client.Project.GetAsync(TestProjectSlug);
 
         // Check that the project color is not null
         Assert.That(project.Color, Is.Not.Null);
@@ -25,7 +25,7 @@ public class ProjectColorTests : EndpointTests
     public async Task ProjectColor_WithNoColor()
     {
         // TODO: Don't use a hardcoded project slug
-        var project = await _client.Project.GetAsync("test-project");
+        var project = await Client.Project.GetAsync("test-project");
 
         // Check that the project color is not null
         Assert.That(project.Color, Is.Null);

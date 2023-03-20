@@ -10,7 +10,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithEmptySearchTerm_ShouldReturnNonEmptyList()
     {
-        var search = await _client.Project.SearchAsync("");
+        var search = await Client.Project.SearchAsync("");
         Assert.Multiple(() =>
         {
             Assert.That(search.TotalHits, Is.GreaterThan(0));
@@ -22,7 +22,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithFabricSearchTerm_ShouldReturnNonEmptyList()
     {
-        var search = await _client.Project.SearchAsync("fabric");
+        var search = await Client.Project.SearchAsync("fabric");
 
         Assert.Multiple(() =>
         {
@@ -41,7 +41,7 @@ public class SearchTests : EndpointTests
     [TestCase((ulong) 20)]
     public async Task Search_WithLimit_ShouldReturnLimitedList(ulong limit)
     {
-        var search = await _client.Project.SearchAsync("", limit: limit);
+        var search = await Client.Project.SearchAsync("", limit: limit);
 
         Assert.Multiple(() =>
         {
@@ -67,8 +67,8 @@ public class SearchTests : EndpointTests
     [TestCase((ulong) 20)]
     public async Task Search_WithOffset_ShouldReturnOffsetList(ulong offset)
     {
-        var search = await _client.Project.SearchAsync("", limit: offset + 5);
-        var searchWithOffset = await _client.Project.SearchAsync("", offset: offset, limit: offset + 5);
+        var search = await Client.Project.SearchAsync("", limit: offset + 5);
+        var searchWithOffset = await Client.Project.SearchAsync("", offset: offset, limit: offset + 5);
 
         // Check that the offset list is not the same as the original list
         Assert.That(searchWithOffset.Hits, Is.Not.EqualTo(search.Hits));
@@ -84,7 +84,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithDownloadsSort_ShouldReturnSortedByDownloadsList()
     {
-        var search = await _client.Project.SearchAsync("");
+        var search = await Client.Project.SearchAsync("");
 
         // Check that the list is sorted by downloads
         Assert.That(
@@ -96,7 +96,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithFollowersSort_ShouldReturnSortedByFollowersList()
     {
-        var search = await _client.Project.SearchAsync("", Index.Follows);
+        var search = await Client.Project.SearchAsync("", Index.Follows);
 
         // Check that the list is sorted by followers
         Assert.That(
@@ -108,7 +108,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithNewestSort_ShouldReturnSortedByNewestList()
     {
-        var search = await _client.Project.SearchAsync("", Index.Newest);
+        var search = await Client.Project.SearchAsync("", Index.Newest);
 
         // Check that the list is sorted by newest
         Assert.That(
@@ -120,7 +120,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithUpdatedSort_ShouldReturnSortedByUpdatedList()
     {
-        var search = await _client.Project.SearchAsync("", Index.Updated);
+        var search = await Client.Project.SearchAsync("", Index.Updated);
 
         // Check that the list is sorted by updated
         Assert.That(
@@ -136,7 +136,7 @@ public class SearchTests : EndpointTests
 
         facets.Add(Facet.Category("adventure"));
 
-        var search = await _client.Project.SearchAsync("", facets: facets);
+        var search = await Client.Project.SearchAsync("", facets: facets);
 
         // Check that every search result has the adventure category
         Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure")));
@@ -150,7 +150,7 @@ public class SearchTests : EndpointTests
 
         facets.Add(Facet.ProjectType(ProjectType.Modpack));
 
-        var search = await _client.Project.SearchAsync("", facets: facets);
+        var search = await Client.Project.SearchAsync("", facets: facets);
 
         // Check that every search result has the modpack project type
         Assert.That(search.Hits.Select(p => p.ProjectType).All(c => c == ProjectType.Modpack));
@@ -165,7 +165,7 @@ public class SearchTests : EndpointTests
         facets.Add(Facet.Category("adventure"));
         facets.Add(Facet.Category("cursed"));
 
-        var search = await _client.Project.SearchAsync("", facets: facets);
+        var search = await Client.Project.SearchAsync("", facets: facets);
 
         // Check that every search result has the adventure and cursed category
         Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure") && c.Contains("cursed")));
