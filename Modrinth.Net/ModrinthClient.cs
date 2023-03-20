@@ -1,4 +1,6 @@
 ﻿using System.Net;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Flurl.Http;
 using Flurl.Http.Configuration;
 using Modrinth.Client;
@@ -32,7 +34,7 @@ public class ModrinthClient : IModrinthClient
     /// </summary>
     public const string StagingBaseUrl = "https://staging-api.modrinth.com/v2";
 
-    private readonly FlurlClient _client;
+    private readonly IRequester _requester;
 
     /// <inheritdoc />
     public ModrinthClient(UserAgent userAgent, string? token = null, string url = BaseUrl)
@@ -55,38 +57,22 @@ public class ModrinthClient : IModrinthClient
         if (string.IsNullOrEmpty(userAgent))
             throw new ArgumentException("User-Agent cannot be empty", nameof(userAgent));
 
-        _client = new FlurlClient(url)
-            .WithHeader("User-Agent", userAgent)
-            .WithHeader("Accept", "application/json")
-            .WithHeader("Content-Type", "application/json");
-
-        var serializerSettings = new JsonSerializerSettings
-        {
-            Converters = {new ColorConverter()}
-        };
-
-        _client.Configure(settings =>
-        {
-            settings.OnErrorAsync = HandleFlurlErrorAsync;
-            settings.JsonSerializer = new NewtonsoftJsonSerializer(serializerSettings);
-        });
-
-        if (!string.IsNullOrEmpty(token)) _client.WithHeader("Authorization", token);
-
-        Project = new ProjectApi(_client);
-        Tag = new TagApi(_client);
-        Team = new TeamApi(_client);
-        User = new UserApi(_client);
-        Version = new VersionApi(_client);
-        VersionFile = new VersionFileApi(_client);
-        Miscellaneous = new MiscellaneousApi(_client);
+        _requester = new Requester(new Uri(url), token);
+        
+        Project = new ProjectApi(_requester);
+        Tag = new TagApi(_requester);
+        Team = new TeamApi(_requester);
+        User = new UserApi(_requester);
+        Version = new VersionApi(_requester);
+        VersionFile = new VersionFileApi(_requester);
+        Miscellaneous = new MiscellaneousApi(_requester);
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        if (IsDisposed || _client.IsDisposed) return;
-        _client.Dispose();
+        if (IsDisposed || _requester.IsDisposed) return;
+        _requester.Dispose();
         IsDisposed = true;
         GC.SuppressFinalize(this);
     }

@@ -7,9 +7,9 @@ namespace Modrinth.Endpoints.Tag;
 public class TagApi : ITagApi
 {
     private const string TagPathSegment = "tag";
-    private readonly FlurlClient _client;
+    private readonly IRequester _client;
 
-    public TagApi(FlurlClient client)
+    public TagApi(IRequester client)
     {
         _client = client;
     }

@@ -6,9 +6,9 @@ namespace Modrinth.Endpoints.VersionFile;
 public class VersionFileApi : IVersionFile
 {
     private const string VersionFilePathSegment = "version_file";
-    private readonly FlurlClient _client;
+    private readonly IRequester _client;
 
-    public VersionFileApi(FlurlClient client)
+    public VersionFileApi(IRequester client)
     {
         _client = client;
     }

@@ -11,9 +11,9 @@ public class ProjectApi : IProjectApi
 {
     private const string ProjectPathSegment = "project";
 
-    private readonly FlurlClient _client;
+    private readonly IRequester _client;
 
-    public ProjectApi(FlurlClient client)
+    public ProjectApi(IRequester client)
     {
         _client = client;
     }

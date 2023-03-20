@@ -8,9 +8,9 @@ namespace Modrinth.Endpoints.Team;
 public class TeamApi : ITeamApi
 {
     private const string TeamsPathSegment = "team";
-    private readonly FlurlClient _client;
+    private readonly IRequester _client;
 
-    public TeamApi(FlurlClient client)
+    public TeamApi(IRequester client)
     {
         _client = client;
     }

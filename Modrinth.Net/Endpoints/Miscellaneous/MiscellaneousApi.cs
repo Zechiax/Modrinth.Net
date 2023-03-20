@@ -4,9 +4,9 @@ namespace Modrinth.Endpoints.Miscellaneous;
 
 public class MiscellaneousApi : IMiscellaneousApi
 {
-    private readonly FlurlClient _client;
+    private readonly IRequester _client;
 
-    public MiscellaneousApi(FlurlClient client)
+    public MiscellaneousApi(IRequester client)
     {
         _client = client;
     }

@@ -8,9 +8,9 @@ namespace Modrinth.Endpoints.User;
 public class UserApi : IUserApi
 {
     private const string UserPathSegment = "user";
-    private readonly FlurlClient _client;
+    private readonly IRequester _client;
 
-    public UserApi(FlurlClient client)
+    public UserApi(IRequester client)
     {
         _client = client;
     }

@@ -7,9 +7,9 @@ namespace Modrinth.Endpoints.Version;
 public class VersionApi : IVersionApi
 {
     private const string VersionsPath = "version";
-    private readonly FlurlClient _client;
+    private readonly IRequester _client;
 
-    public VersionApi(FlurlClient client)
+    public VersionApi(IRequester client)
     {
         _client = client;
     }
