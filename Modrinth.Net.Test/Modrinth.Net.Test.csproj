@@ -9,13 +9,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Flurl" Version="3.0.7"/>
-        <PackageReference Include="Flurl.Http" Version="3.2.4"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0"/>
-        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0"/>
-        <PackageReference Include="NUnit" Version="3.13.3"/>
-        <PackageReference Include="NUnit3TestAdapter" Version="4.4.2"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="7.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="7.0.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+        <PackageReference Include="NUnit" Version="3.13.3" />
+        <PackageReference Include="NUnit3TestAdapter" Version="4.4.2" />
         <PackageReference Include="NUnit.Analyzers" Version="3.6.1">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -27,11 +26,11 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Modrinth.Net\Modrinth.Net.csproj"/>
+        <ProjectReference Include="..\Modrinth.Net\Modrinth.Net.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <None Include="appsettings.json" CopyToOutputDirectory="Always"/>
+        <None Include="appsettings.json" CopyToOutputDirectory="Always" />
     </ItemGroup>
 
 </Project>

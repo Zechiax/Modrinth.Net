@@ -1,6 +1,4 @@
-﻿using Flurl.Http;
-
-namespace Modrinth.Endpoints.Miscellaneous;
+﻿namespace Modrinth.Endpoints.Miscellaneous;
 
 public class MiscellaneousApi : IMiscellaneousApi
 {
@@ -14,7 +12,10 @@ public class MiscellaneousApi : IMiscellaneousApi
     /// <inheritdoc />
     public async Task<ModrinthStatistics> GetStatisticsAsync()
     {
-        return await _client.Request("statistics")
-            .GetJsonAsync<ModrinthStatistics>();
+        var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Get;
+        reqMsg.RequestUri = new Uri("statistics", UriKind.Relative);
+
+        return await _client.GetJsonAsync<ModrinthStatistics>(reqMsg);
     }
 }

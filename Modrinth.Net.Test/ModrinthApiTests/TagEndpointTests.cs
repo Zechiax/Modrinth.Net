@@ -1,7 +1,7 @@
 ﻿namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class TestTagEndpoint : EndpointTests
+public class TagEndpointTests : EndpointTests
 {
     [Test]
     public async Task GetCategories_ShouldReturnCategories()
