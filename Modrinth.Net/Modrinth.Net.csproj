@@ -12,7 +12,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>3.0.9</PackageVersion>
+        <PackageVersion>3.0.10</PackageVersion>
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>Modrinth</RootNamespace>
     </PropertyGroup>
@@ -25,8 +25,8 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Flurl" Version="3.0.7"/>
-        <PackageReference Include="Flurl.Http" Version="3.2.4"/>
+        <PackageReference Include="Flurl" Version="3.0.7" />
+        <PackageReference Include="Flurl.Http" Version="3.2.4" />
     </ItemGroup>
 
 </Project>
