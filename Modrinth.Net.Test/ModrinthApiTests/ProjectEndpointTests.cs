@@ -78,7 +78,9 @@ public class TestProjectEndpoint : EndpointTests
     [Test]
     public async Task GetRandomProjects_WithValidCount_ShouldReturnProjects()
     {
-        var projects = await Client.Project.GetRandomAsync();
+        // BUG: Currently Modrinth less than the count of projects requested; relevant issue https://github.com/modrinth/labrinth/issues/548
+        // TODO: Change count to default value when issue is fixed, currently making it 70 to have a higher chance of getting more than 10 projects
+        var projects = await Client.Project.GetRandomAsync(70);
 
         Assert.That(projects, Is.Not.Null);
         Assert.That(projects, Is.Not.Empty);
