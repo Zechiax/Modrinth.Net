@@ -1,3 +1,4 @@
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -9,9 +10,7 @@ namespace Modrinth;
 
 public class Requester : IRequester
 {
-    private int _requestLimit;
-    private int _requestCount;
-    private int _timeLeft;
+    private const int RetryLimit = 5;
     
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
@@ -23,7 +22,7 @@ public class Requester : IRequester
         }
     };
 
-    public Requester(Uri baseUri, string? apiToken = null)
+    public Requester(Uri baseUri, string userAgent, string? apiToken = null)
     {
         BaseAddress = baseUri;
         HttpClient = new HttpClient
@@ -31,7 +30,7 @@ public class Requester : IRequester
             BaseAddress = baseUri,
             DefaultRequestHeaders =
             {
-                {"User-Agent", "Modrinth.Net"}
+                {"User-Agent", userAgent}
             }
         };
 
@@ -52,51 +51,51 @@ public class Requester : IRequester
             .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized", response.StatusCode, response.Content, null);
     }
 
-    public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
-        CancellationToken cancellationToken = default)
+    public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default)
     {
-        // We need to atomically check if the number of requests we have left is greater than 0
-        // and if it is, decrement it. If it is not, we need to wait until it is.
-        
-        if (_requestLimit <= 0)
+        var retryCount = 0;
+        while (true)
         {
-            await Task.Delay(_timeLeft, cancellationToken).ConfigureAwait(false);
+            var response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode) return response;
+
+            if (response.StatusCode == HttpStatusCode.TooManyRequests)
+            {
+                if (retryCount >= RetryLimit)
+                    throw new ModrinthApiException($"Request was rate limited and retry limit ({RetryLimit}) was reached", response.StatusCode, response.Content, null);
+                
+                if (response.Headers.TryGetValues("X-Ratelimit-Reset", out var resetValues))
+                {
+                    var resetInSeconds = int.Parse(resetValues.First());
+                    // Reset time + 1 seconds to be sure
+                    var resetTime = DateTimeOffset.Now.AddSeconds(resetInSeconds + 1);
+                    await Task.Delay(resetTime - DateTimeOffset.Now, cancellationToken).ConfigureAwait(false);
+
+                    retryCount++;
+                    // We need to create a new request message because the old one has already been sent
+                    request = CopyRequest(request);
+                    continue;
+                }
+            }
+
+            // Error handling
+            var error = await JsonSerializer.DeserializeAsync<ResponseError>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions, cancellationToken)
+                .ConfigureAwait(false);
+
+            throw new ModrinthApiException($"An error occurred while communicating with Modrinth API: {response.ReasonPhrase}: {error?.Error}: {error?.Description}", response.StatusCode, response.Content, null);
         }
-
-        Interlocked.Decrement(ref _requestCount);
-        var response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
-        
-        SetRateLimitFromHeaders(response.Headers);
-
-        if (response.IsSuccessStatusCode) return response;
-        
-        // Error handling
-        var error = await JsonSerializer
-            .DeserializeAsync<ResponseError>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions, cancellationToken)
-            .ConfigureAwait(false);
-
-        throw new ModrinthApiException(
-            $"An error occurred while communicating with Modrinth API: {response.ReasonPhrase}: {error?.Error}: {error?.Description}",
-            response.StatusCode,
-            response.Content, null);
     }
     
-    private void SetRateLimitFromHeaders(HttpHeaders headers)
+    private static HttpRequestMessage CopyRequest(HttpRequestMessage request)
     {
-        if (headers.TryGetValues("X-RateLimit-Limit", out var limit))
-        {
-            _requestLimit = int.Parse(limit.First());
-        }
-
-        if (headers.TryGetValues("X-RateLimit-Remaining", out var remaining))
-        {
-            _requestCount = int.Parse(remaining.First());
-        }
-
-        if (headers.TryGetValues("X-RateLimit-Reset", out var reset))
-        {
-            _timeLeft = int.Parse(reset.First());
-        }
+        var newRequest = new HttpRequestMessage(request.Method, request.RequestUri);
+        newRequest.Content = request.Content;
+        newRequest.Method = request.Method;
+        newRequest.Version = request.Version;
+        foreach (var header in request.Headers) newRequest.Headers.Add(header.Key, header.Value);
+        newRequest.VersionPolicy = request.VersionPolicy;
+        return newRequest;
     }
 
     /// <inheritdoc />
