@@ -1,7 +1,6 @@
 using System.Text.Json.Serialization;
 using Modrinth.Models;
 using Modrinth.Models.Enums;
-using Newtonsoft.Json;
 
 namespace Modrinth.Endpoints.Project;
 

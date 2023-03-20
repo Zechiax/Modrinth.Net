@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Text.Json.Serialization;
 using Modrinth.Helpers;
 using Modrinth.Models.Enums;
-using Newtonsoft.Json;
 
 namespace Modrinth.Models;
 

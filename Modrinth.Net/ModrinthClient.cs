@@ -6,8 +6,6 @@ using Modrinth.Endpoints.Team;
 using Modrinth.Endpoints.User;
 using Modrinth.Endpoints.Version;
 using Modrinth.Endpoints.VersionFile;
-using Modrinth.Exceptions;
-using Modrinth.Models.Errors;
 
 namespace Modrinth;
 

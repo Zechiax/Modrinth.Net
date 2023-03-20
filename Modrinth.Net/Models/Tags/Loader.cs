@@ -1,6 +1,5 @@
 ﻿using System.Text.Json.Serialization;
 using Modrinth.Models.Enums;
-using Newtonsoft.Json;
 
 #pragma warning disable CS8618
 namespace Modrinth.Models.Tags;
