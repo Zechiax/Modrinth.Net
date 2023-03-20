@@ -21,8 +21,6 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task<Models.Project> GetAsync(string slugOrId)
     {
-        // return await _client.Request(ProjectPathSegment, slugOrId).GetJsonAsync<Models.Project>();
-        
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
@@ -50,8 +48,6 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task DeleteAsync(string slugOrId)
     {
-        // await _client.Request(ProjectPathSegment, slugOrId).DeleteAsync();
-        
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
@@ -79,8 +75,6 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task<SlugIdValidity> CheckIdSlugValidityAsync(string slugOrId)
     {
-        // return await _client.Request(ProjectPathSegment, slugOrId, "check").GetJsonAsync<SlugIdValidity>();
-        
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/check", UriKind.Relative);
@@ -91,8 +85,6 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task<Dependencies> GetDependenciesAsync(string slugOrId)
     {
-        // return await _client.Request(ProjectPathSegment, slugOrId, "dependencies").GetJsonAsync<Dependencies>();
-        
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/dependencies", UriKind.Relative);
@@ -103,8 +95,6 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task FollowAsync(string slugOrId)
     {
-        // await _client.Request(ProjectPathSegment, slugOrId, "follow").PostAsync();
-        
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
@@ -115,8 +105,6 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task UnfollowAsync(string slugOrId)
     {
-        // await _client.Request(ProjectPathSegment, slugOrId, "follow").DeleteAsync();
-        
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
@@ -127,8 +115,6 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task DeleteIconAsync(string slugOrId)
     {
-        // await _client.Request(ProjectPathSegment, slugOrId, "icon").DeleteAsync();
-        
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/icon", UriKind.Relative);
@@ -139,15 +125,6 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task ChangeIconAsync(string slugOrId, string iconPath)
     {
-        // var extension = Path.GetExtension(iconPath).TrimStart('.');
-        //
-        // await using var stream = File.OpenRead(iconPath);
-        // using var streamContent = new StreamContent(stream);
-        //
-        // await _client.Request(ProjectPathSegment, slugOrId, "icon")
-        //     .SetQueryParam("ext", extension)
-        //     .PatchAsync(streamContent);
-        
         var extension = Path.GetExtension(iconPath).TrimStart('.');
         
         var reqMsg = new HttpRequestMessage();
@@ -169,20 +146,6 @@ public class ProjectApi : IProjectApi
     public async Task AddGalleryImageAsync(string slugOrId, string imagePath, bool featured, string? title = null,
         string? description = null, ulong? ordering = null)
     {
-        // var extension = Path.GetExtension(imagePath).TrimStart('.');
-        //
-        // var request = _client.Request(ProjectPathSegment, slugOrId, "gallery")
-        //     .SetQueryParam("featured", featured.ToString().ToLower())
-        //     .SetQueryParam("title", title)
-        //     .SetQueryParam("description", description)
-        //     .SetQueryParam("ordering", ordering)
-        //     .SetQueryParam("ext", extension);
-        //
-        // await using var stream = File.OpenRead(imagePath);
-        // using var streamContent = new StreamContent(stream);
-        //
-        // await request.PostAsync(streamContent);
-        
         var extension = Path.GetExtension(imagePath).TrimStart('.');
         
         var reqMsg = new HttpRequestMessage();
@@ -213,15 +176,6 @@ public class ProjectApi : IProjectApi
     public async Task ModifyGalleryImageAsync(string slugOrId, string url, bool? featured = null, string? title = null,
         string? description = null, ulong? ordering = null)
     {
-        // var request = _client.Request(ProjectPathSegment, slugOrId, "gallery")
-        //     .SetQueryParam("url", url)
-        //     .SetQueryParam("featured", featured?.ToString().ToLower())
-        //     .SetQueryParam("title", title)
-        //     .SetQueryParam("description", description)
-        //     .SetQueryParam("ordering", ordering);
-        //
-        // await request.PatchAsync();
-        
         var reqMsg = new HttpRequestMessage();
         
         reqMsg.Method = HttpMethod.Patch;
@@ -244,10 +198,6 @@ public class ProjectApi : IProjectApi
     /// <inheritdoc />
     public async Task DeleteGalleryImageAsync(string slugOrId, string url)
     {
-        // await _client.Request(ProjectPathSegment, slugOrId, "gallery")
-        //     .SetQueryParam("url", url)
-        //     .DeleteAsync();
-        
         var reqMsg = new HttpRequestMessage();
         
         reqMsg.Method = HttpMethod.Delete;

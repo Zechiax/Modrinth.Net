@@ -16,9 +16,6 @@ public class VersionFileApi : IVersionFile
     public async Task<System.Version> GetVersionByHashAsync(string hash,
         HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
     {
-        // return await _client.Request(VersionFilePathSegment, hash)
-        //     .SetQueryParam("algorithm", hashAlgorithm.ToString().ToLower()).GetJsonAsync<System.Version>();
-        
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(VersionFilePathSegment+ '/' + hash, UriKind.Relative);
@@ -36,9 +33,6 @@ public class VersionFileApi : IVersionFile
     /// <inheritdoc />
     public async Task DeleteVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
     {
-        // await _client.Request(VersionFilePathSegment, hash)
-        //     .SetQueryParam("algorithm", hashAlgorithm.ToString().ToLower()).DeleteAsync();
-        
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(VersionFilePathSegment+ '/' + hash, UriKind.Relative);
