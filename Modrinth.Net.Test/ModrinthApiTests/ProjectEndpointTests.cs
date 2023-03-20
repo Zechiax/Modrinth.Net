@@ -6,7 +6,7 @@ public class TestProjectEndpoint : EndpointTests
     [Test]
     public async Task GetProject_WithValidId_ShouldReturnProject()
     {
-        var project = await _client.Project.GetAsync(TestProjectSlug);
+        var project = await Client.Project.GetAsync(TestProjectSlug);
 
         Assert.That(project.Slug, Is.EqualTo(TestProjectSlug));
     }
@@ -14,7 +14,7 @@ public class TestProjectEndpoint : EndpointTests
     [Test]
     public async Task CheckIdSlugValidity_WithValidId_ShouldReturnId()
     {
-        var validity = await _client.Project.CheckIdSlugValidityAsync(TestProjectSlug);
+        var validity = await Client.Project.CheckIdSlugValidityAsync(TestProjectSlug);
 
         Assert.That(validity.Id, Is.Not.Empty);
     }
@@ -23,16 +23,16 @@ public class TestProjectEndpoint : EndpointTests
     public async Task FollowAndUnfollow_WithValidId_ShouldSuccessfullyFollowAndUnfollow()
     {
         // Will throw exception if not authorized / some other error
-        await _client.Project.FollowAsync(TestProjectSlug);
-        await _client.Project.UnfollowAsync(TestProjectSlug);
+        await Client.Project.FollowAsync(TestProjectSlug);
+        await Client.Project.UnfollowAsync(TestProjectSlug);
     }
 
     [Test]
     public async Task GetMultiple_WithValidIdList_ShouldReturnAllRequestedProjects()
     {
-        var search = await _client.Project.SearchAsync("");
+        var search = await Client.Project.SearchAsync("");
         var ids = search.Hits.Select(p => p.ProjectId).Take(5).ToList();
-        var projects = await _client.Project.GetMultipleAsync(ids);
+        var projects = await Client.Project.GetMultipleAsync(ids);
 
         Assert.That(projects, Is.Not.Null);
         // Check that all requested projects ids are present in the response
@@ -43,9 +43,9 @@ public class TestProjectEndpoint : EndpointTests
     [Test]
     public async Task GetMultiple_WithSingleId_ShouldReturnRequestedProject()
     {
-        var search = await _client.Project.SearchAsync("");
+        var search = await Client.Project.SearchAsync("");
         var ids = search.Hits.Select(p => p.ProjectId).Take(1).ToList();
-        var projects = await _client.Project.GetMultipleAsync(ids);
+        var projects = await Client.Project.GetMultipleAsync(ids);
 
         Assert.That(projects, Is.Not.Null);
         // Check that all requested projects ids are present in the response
@@ -57,7 +57,7 @@ public class TestProjectEndpoint : EndpointTests
     public async Task GetMultiple_WithNoId_ShouldSuccessfullyReturn()
     {
         var ids = new List<string>();
-        var projects = await _client.Project.GetMultipleAsync(ids);
+        var projects = await Client.Project.GetMultipleAsync(ids);
 
         Assert.That(projects, Is.Not.Null);
         // Check that all requested projects ids are present in the response
@@ -68,7 +68,7 @@ public class TestProjectEndpoint : EndpointTests
     [Test]
     public async Task GetDependencies_WithValidId_ShouldReturnDependencies()
     {
-        var dependencies = await _client.Project.GetDependenciesAsync(TestProjectSlug);
+        var dependencies = await Client.Project.GetDependenciesAsync(TestProjectSlug);
 
         // Can be empty
         Assert.That(dependencies, Is.Not.Null);
@@ -78,7 +78,9 @@ public class TestProjectEndpoint : EndpointTests
     [Test]
     public async Task GetRandomProjects_WithValidCount_ShouldReturnProjects()
     {
-        var projects = await _client.Project.GetRandomAsync();
+        // BUG: Currently Modrinth less than the count of projects requested; relevant issue https://github.com/modrinth/labrinth/issues/548
+        // TODO: Change count to default value when issue is fixed, currently making it 70 to have a higher chance of getting more than 10 projects
+        var projects = await Client.Project.GetRandomAsync(70);
 
         Assert.That(projects, Is.Not.Null);
         Assert.That(projects, Is.Not.Empty);
@@ -89,12 +91,12 @@ public class TestProjectEndpoint : EndpointTests
     {
         if (!Icon.Exists) Assert.Inconclusive("Icon file not found, path: " + Icon.FullName);
 
-        await _client.Project.ChangeIconAsync(ModrinthNetTestProjectId, Icon.FullName);
+        await Client.Project.ChangeIconAsync(ModrinthNetTestProjectId, Icon.FullName);
     }
 
     [Test]
     public async Task DeleteIcon()
     {
-        await _client.Project.DeleteIconAsync(ModrinthNetTestProjectId);
+        await Client.Project.DeleteIconAsync(ModrinthNetTestProjectId);
     }
 }

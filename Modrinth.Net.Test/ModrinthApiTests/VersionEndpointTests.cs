@@ -6,8 +6,8 @@ public class TestVersionEndpoint : EndpointTests
     [Test]
     public async Task TestGetVersions()
     {
-        var project = await _client.Project.GetAsync(TestProjectSlug);
-        var version = await _client.Version.GetAsync(project.Versions[0]);
+        var project = await Client.Project.GetAsync(TestProjectSlug);
+        var version = await Client.Version.GetAsync(project.Versions[0]);
         Assert.That(version, Is.Not.Null);
         Assert.That(version.ProjectId, Is.EqualTo(project.Id));
     }
@@ -15,7 +15,7 @@ public class TestVersionEndpoint : EndpointTests
     [Test]
     public async Task TestGetProjectVersionList()
     {
-        var versions = await _client.Version.GetProjectVersionListAsync(TestProjectSlug);
+        var versions = await Client.Version.GetProjectVersionListAsync(TestProjectSlug);
         Assert.That(versions, Is.Not.Null);
         // BUG: Test versions should not be empty, but they are for now
         // Assert.That(versions, Is.Not.Empty);
@@ -25,7 +25,7 @@ public class TestVersionEndpoint : EndpointTests
     public async Task TestGetMultipleVersions()
     {
         // Not really a 'unit' test, but we need to find a project with more than one version
-        var search = await _client.Project.SearchAsync("");
+        var search = await Client.Project.SearchAsync("");
 
         // We will find the first project that has more than one version
         var projectWithMoreVersions = search.Hits.FirstOrDefault(p => p.DateCreated != p.DateModified);
@@ -36,7 +36,7 @@ public class TestVersionEndpoint : EndpointTests
             return;
         }
 
-        var project = await _client.Project.GetAsync(projectWithMoreVersions.ProjectId);
+        var project = await Client.Project.GetAsync(projectWithMoreVersions.ProjectId);
 
         if (project.Versions.Length < 2)
         {
@@ -44,7 +44,7 @@ public class TestVersionEndpoint : EndpointTests
             return;
         }
 
-        var versions = await _client.Version.GetMultipleAsync(project.Versions);
+        var versions = await Client.Version.GetMultipleAsync(project.Versions);
 
         Assert.That(versions, Is.Not.Null);
         Assert.That(versions, Is.Not.Empty);
@@ -54,8 +54,8 @@ public class TestVersionEndpoint : EndpointTests
     public async Task TestGetVersionByNumber()
     {
         // Actually we test by version id, but it's the same as using the version number
-        var project = await _client.Project.GetAsync(TestProjectSlug);
-        var version = await _client.Version.GetByVersionNumberAsync(TestProjectSlug, project.Versions[0]);
+        var project = await Client.Project.GetAsync(TestProjectSlug);
+        var version = await Client.Version.GetByVersionNumberAsync(TestProjectSlug, project.Versions[0]);
         Assert.That(version, Is.Not.Null);
         Assert.That(version.ProjectId, Is.EqualTo(project.Id));
     }
@@ -68,7 +68,7 @@ public class TestVersionEndpoint : EndpointTests
         bool? featured = null)
     {
         var versions =
-            await _client.Version.GetProjectVersionListAsync(TestProjectSlug, loaders, gameVersions, featured);
+            await Client.Version.GetProjectVersionListAsync(TestProjectSlug, loaders, gameVersions, featured);
         Assert.That(versions, Is.Not.Null);
         Assert.That(versions, Is.Not.Empty);
         foreach (var version in versions)
@@ -82,4 +82,27 @@ public class TestVersionEndpoint : EndpointTests
                     Assert.That(version.Featured, Is.EqualTo(featured));
             });
     }
+
+    [Test]
+    public async Task TestGetProjectVersionListWithInvalidFilters()
+    {
+        var versions =
+            await Client.Version.GetProjectVersionListAsync(TestProjectSlug, new[] {"invalid_loader"},
+                new[] {"invalid_game_version"});
+        Assert.That(versions, Is.Not.Null);
+        Assert.That(versions, Is.Empty);
+    }
+
+    // [Test]
+    // TODO: Currently can't test this, as I probably have to have a published version
+    // public async Task ScheduleVersion()
+    // {
+    //     var date = DateTime.Now.AddMinutes(1);
+    //     await Client.Version.ScheduleAsync(ModrinthNetTestUploadedVersionId, date, VersionRequestedStatus.Unlisted);
+    //     
+    //     // Check that the version is scheduled
+    //     var version = await Client.Version.GetAsync(ModrinthNetTestUploadedVersionId);
+    //     Assert.That(version, Is.Not.Null);
+    //     Assert.That(version.RequestedStatus, Is.EqualTo(VersionRequestedStatus.Unlisted));
+    // }
 }

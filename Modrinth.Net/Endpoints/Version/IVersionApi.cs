@@ -1,4 +1,6 @@
-﻿namespace Modrinth.Endpoints.Version;
+﻿using Modrinth.Models.Enums;
+
+namespace Modrinth.Endpoints.Version;
 
 public interface IVersionApi
 {
@@ -38,4 +40,6 @@ public interface IVersionApi
     Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber);
 
     Task DeleteAsync(string versionId);
+
+    Task ScheduleAsync(string versionId, DateTime date, VersionRequestedStatus requestedStatus);
 }

@@ -1,5 +1,6 @@
 ﻿using Flurl.Http;
 using Modrinth.Extensions;
+using Modrinth.Models.Enums;
 
 namespace Modrinth.Endpoints.Version;
 
@@ -58,5 +59,16 @@ public class VersionApi : IVersionApi
     public async Task DeleteAsync(string versionId)
     {
         await _client.Request(VersionsPath, versionId).DeleteAsync();
+    }
+
+    /// <inheritdoc />
+    public async Task ScheduleAsync(string versionId, DateTime date, VersionRequestedStatus requestedStatus)
+    {
+        await _client.Request(VersionsPath, versionId, "schedule")
+            .PostJsonAsync(new
+            {
+                time = date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ"),
+                requested_status = requestedStatus.ToString().ToLower()
+            });
     }
 }

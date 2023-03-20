@@ -73,7 +73,14 @@ public class Version
     /// </summary>
     public File[] Files { get; set; }
 
+    /// <summary>
+    ///     The current status of this version
+    /// </summary>
     public VersionStatus Status { get; set; }
 
-    [JsonProperty("requested_status")] public VersionRequestedStatus? RequestedStatus { get; set; }
+    /// <summary>
+    ///     The requested status of this version, used when scheduling a version
+    /// </summary>
+    [JsonProperty("requested_status")]
+    public VersionRequestedStatus? RequestedStatus { get; set; }
 }
