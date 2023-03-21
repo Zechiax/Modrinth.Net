@@ -10,8 +10,6 @@ namespace Modrinth.Http;
 /// <inheritdoc />
 public class Requester : IRequester
 {
-    private const int RetryLimit = 5;
-
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -22,19 +20,29 @@ public class Requester : IRequester
         }
     };
 
-    public Requester(Uri baseUri, string userAgent, string? apiToken = null)
+    private readonly ModrinthClientConfiguration _configuration;
+
+    public Requester(ModrinthClientConfiguration configuration, HttpClient? httpClient = null)
     {
-        BaseAddress = baseUri;
+        _configuration = configuration;
+        if (httpClient is not null)
+        {
+            HttpClient = httpClient;
+            return;
+        }
+
+        BaseAddress = new Uri(configuration.BaseUrl);
         HttpClient = new HttpClient
         {
-            BaseAddress = baseUri,
+            BaseAddress = BaseAddress,
             DefaultRequestHeaders =
             {
-                {"User-Agent", userAgent}
+                {"User-Agent", configuration.UserAgent}
             }
         };
 
-        if (!string.IsNullOrEmpty(apiToken)) HttpClient.DefaultRequestHeaders.Add("Authorization", apiToken);
+        if (!string.IsNullOrEmpty(configuration.ModrinthToken))
+            HttpClient.DefaultRequestHeaders.Add("Authorization", configuration.ModrinthToken);
     }
 
     /// <summary>
@@ -90,9 +98,10 @@ public class Requester : IRequester
 
             if (response.StatusCode == HttpStatusCode.TooManyRequests)
             {
-                if (retryCount >= RetryLimit)
+                if (retryCount >= _configuration.RateLimitRetryCount)
                     throw new ModrinthApiException(
-                        $"Request was rate limited and retry limit ({RetryLimit}) was reached", response.StatusCode,
+                        $"Request was rate limited and retry limit ({_configuration.RateLimitRetryCount}) was reached",
+                        response.StatusCode,
                         response.Content, null);
 
                 if (response.Headers.TryGetValues("X-Ratelimit-Reset", out var resetValues))

@@ -13,6 +13,7 @@
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageVersion>3.1.0-alpha2</PackageVersion>
+        <Version>$(PackageVersion)</Version>
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>Modrinth</RootNamespace>
     </PropertyGroup>
