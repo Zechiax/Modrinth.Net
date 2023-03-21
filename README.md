@@ -159,7 +159,7 @@ catch (ModrinthApiException e)
 | Search projects                     | GET    | ✅           |
 | Get a project                       | GET    | ✅           |
 | Modify a project                    | PATCH  | ❌           |
-| Delete a project                    | DELETE | ✅           |
+| Delete a project                    | DELETE | ⚠️           |
 | Get multiple projects               | GET    | ✅           |
 | Edit multiple projects              | PATCH  | ❌           |
 | Get a list of random projects       | GET    | ✅           |
