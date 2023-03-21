@@ -30,7 +30,6 @@ Console.WriteLine(project.Description);
 
 ```csharp
 using Modrinth;
-using Modrinth.Client;
 
 // Note: All properties are optional, and will be ignored if they are null or empty
 var userAgent = new UserAgent
@@ -50,7 +49,6 @@ var client = new ModrinthClient(userAgent: userAgent, token: "Your_Authenticatio
 
 ```csharp
 using Modrinth;
-using Modrinth.Client;
 
 var client = new ModrinthClient(userAgent: "My_Awesome_Project");
 

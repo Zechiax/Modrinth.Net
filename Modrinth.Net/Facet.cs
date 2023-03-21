@@ -1,7 +1,7 @@
 using Modrinth.Extensions;
-using Modrinth.Models.Enums;
+using Modrinth.Models.Enums.Project;
 
-namespace Modrinth.Models.Facets;
+namespace Modrinth;
 
 public abstract class Facet
 {

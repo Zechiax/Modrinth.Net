@@ -1,5 +1,3 @@
-using Modrinth.Models.Facets;
-
 namespace Modrinth.Net.Test;
 
 [TestFixture]

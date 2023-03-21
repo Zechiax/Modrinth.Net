@@ -1,6 +1,6 @@
 using System.Collections;
 
-namespace Modrinth.Models.Facets;
+namespace Modrinth;
 
 /// <summary>
 ///     A collection of facets
