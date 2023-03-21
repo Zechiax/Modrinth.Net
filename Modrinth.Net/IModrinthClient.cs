@@ -4,8 +4,6 @@ using Modrinth.Endpoints.Tag;
 using Modrinth.Endpoints.Team;
 using Modrinth.Endpoints.User;
 using Modrinth.Endpoints.Version;
-using Modrinth.Endpoints.VersionFile;
-using IVersionFileEndpoint = Modrinth.Endpoints.Version.IVersionFileEndpoint;
 
 namespace Modrinth;
 

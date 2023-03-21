@@ -38,7 +38,7 @@ public class Requester : IRequester
     }
 
     /// <summary>
-    ///    The <see cref="HttpClient" /> used to send requests
+    ///     The <see cref="HttpClient" /> used to send requests
     /// </summary>
     public HttpClient HttpClient { get; }
 
@@ -49,13 +49,16 @@ public class Requester : IRequester
     public bool IsDisposed { get; private set; }
 
     /// <summary>
-    ///   Sends a request to the API and deserializes the response to the specified type
+    ///     Sends a request to the API and deserializes the response to the specified type
     /// </summary>
     /// <param name="request"> The request to send </param>
     /// <param name="cancellationToken"> The cancellation token </param>
     /// <typeparam name="T"> The type to deserialize the response to </typeparam>
     /// <returns> The deserialized response </returns>
-    /// <exception cref="ModrinthApiException"> Thrown when the response could not be deserialized, or the response was not successful </exception>
+    /// <exception cref="ModrinthApiException">
+    ///     Thrown when the response could not be deserialized, or the response was not
+    ///     successful
+    /// </exception>
     public async Task<T> GetJsonAsync<T>(HttpRequestMessage request, CancellationToken cancellationToken = default)
     {
         var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
@@ -67,9 +70,9 @@ public class Requester : IRequester
             response.StatusCode, response.Content, null);
     }
 
-    
+
     /// <summary>
-    ///   For sending HTTP requests to the API, it returns the HTTP response
+    ///     For sending HTTP requests to the API, it returns the HTTP response
     /// </summary>
     /// <param name="request"> The HTTP request to send </param>
     /// <param name="cancellationToken"> The cancellation token </param>

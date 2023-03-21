@@ -1,5 +1,4 @@
 ﻿using System.Text.Json.Serialization;
-using Modrinth.Models.Enums;
 using Modrinth.Models.Enums.Project;
 
 #pragma warning disable CS8618
