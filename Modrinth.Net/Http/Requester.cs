@@ -20,29 +20,29 @@ public class Requester : IRequester
         }
     };
 
-    private readonly ModrinthClientConfiguration _configuration;
+    private readonly ModrinthClientOptions _options;
 
-    public Requester(ModrinthClientConfiguration configuration, HttpClient? httpClient = null)
+    public Requester(ModrinthClientOptions options, HttpClient? httpClient = null)
     {
-        _configuration = configuration;
+        _options = options;
         if (httpClient is not null)
         {
             HttpClient = httpClient;
             return;
         }
 
-        BaseAddress = new Uri(configuration.BaseUrl);
+        BaseAddress = new Uri(options.BaseUrl);
         HttpClient = new HttpClient
         {
             BaseAddress = BaseAddress,
             DefaultRequestHeaders =
             {
-                {"User-Agent", configuration.UserAgent}
+                {"User-Agent", options.UserAgent}
             }
         };
 
-        if (!string.IsNullOrEmpty(configuration.ModrinthToken))
-            HttpClient.DefaultRequestHeaders.Add("Authorization", configuration.ModrinthToken);
+        if (!string.IsNullOrEmpty(options.ModrinthToken))
+            HttpClient.DefaultRequestHeaders.Add("Authorization", options.ModrinthToken);
     }
 
     /// <summary>
@@ -98,9 +98,9 @@ public class Requester : IRequester
 
             if (response.StatusCode == HttpStatusCode.TooManyRequests)
             {
-                if (retryCount >= _configuration.RateLimitRetryCount)
+                if (retryCount >= _options.RateLimitRetryCount)
                     throw new ModrinthApiException(
-                        $"Request was rate limited and retry limit ({_configuration.RateLimitRetryCount}) was reached",
+                        $"Request was rate limited and retry limit ({_options.RateLimitRetryCount}) was reached",
                         response.StatusCode,
                         response.Content, null);
 

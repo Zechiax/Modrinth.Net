@@ -39,14 +39,14 @@ public class EndpointTests
             ProjectVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString()
         };
 
-        var configAuth = new ModrinthClientConfiguration
+        var configAuth = new ModrinthClientOptions
         {
             ModrinthToken = token,
             BaseUrl = ModrinthClient.StagingBaseUrl,
             UserAgent = userAgent.ToString()
         };
 
-        var configNoAuth = new ModrinthClientConfiguration
+        var configNoAuth = new ModrinthClientOptions
         {
             BaseUrl = ModrinthClient.StagingBaseUrl,
             UserAgent = userAgent.ToString()

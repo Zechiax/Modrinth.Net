@@ -14,8 +14,16 @@
 ```csharp
 using Modrinth;
 
-// You must provide a user-agent, and optionally an authentication token if you wish to access authenticated API endpoints
-var client = new ModrinthClient(userAgent: "My_Awesome_Project", token: "Your_Authentication_Token");
+var options = new ModrinthClientOptions 
+{
+    // Optional, if you want to access authenticated API endpoints
+    ModrinthToken = "Youre_Authentication_Token,
+    // For Modrinth API, you must specify a user-agent
+    // There is a default library user-agent, but it is recommended to specify your own
+    UserAgent = "MyAwesomeProject"
+}
+
+var client = new ModrinthClient(options);
 
 var project = await client.Project.GetAsync("sodium");
 
@@ -40,7 +48,12 @@ var userAgent = new UserAgent
     Contact = "contact@contact.com"
 };
 
-var client = new ModrinthClient(userAgent: userAgent, token: "Your_Authentication_Token");
+var options = new ModrinthClientOptions
+{
+    UserAgent = userAgent.ToString()
+};
+
+var client = new ModrinthClient(options);
 ```
 
 ### Search

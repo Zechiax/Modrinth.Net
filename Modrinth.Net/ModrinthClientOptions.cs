@@ -1,9 +1,9 @@
 ﻿namespace Modrinth;
 
 /// <summary>
-///     Object containing configuration for <see cref="ModrinthClient" />
+///     Object containing options for <see cref="ModrinthClient" />
 /// </summary>
-public class ModrinthClientConfiguration
+public class ModrinthClientOptions
 {
     /// <summary>
     ///     The token to use for requests that require authentication

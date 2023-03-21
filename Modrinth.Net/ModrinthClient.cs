@@ -24,7 +24,7 @@ public class ModrinthClient : IModrinthClient
     /// </summary>
     public const string StagingBaseUrl = "https://staging-api.modrinth.com/v2/";
 
-    private readonly ModrinthClientConfiguration _configuration;
+    private readonly ModrinthClientOptions _options;
 
     private readonly IRequester _requester;
 
@@ -47,7 +47,7 @@ public class ModrinthClient : IModrinthClient
     /// <returns></returns>
     [Obsolete("Use the constructor that takes a ModrinthClientConfiguration instead")]
     public ModrinthClient(string userAgent, string? token = null, string url = BaseUrl) : this(
-        new ModrinthClientConfiguration
+        new ModrinthClientOptions
         {
             ModrinthToken = token,
             BaseUrl = url,
@@ -60,23 +60,23 @@ public class ModrinthClient : IModrinthClient
     ///     Initializes a new instance of the <see cref="ModrinthClient" /> class.
     ///     Uses the default configuration.
     /// </summary>
-    public ModrinthClient() : this(new ModrinthClientConfiguration())
+    public ModrinthClient() : this(new ModrinthClientOptions())
     {
     }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ModrinthClient" /> class.
     /// </summary>
-    /// <param name="configuration"> Configuration for the client </param>
+    /// <param name="options"> Configuration for the client </param>
     /// <param name="httpClient"> Custom <see cref="HttpClient" /> to use for requests, if null a new one will be created </param>
     /// <exception cref="ArgumentException"> Thrown when the User-Agent is empty </exception>
-    public ModrinthClient(ModrinthClientConfiguration configuration, HttpClient? httpClient = null)
+    public ModrinthClient(ModrinthClientOptions options, HttpClient? httpClient = null)
     {
-        if (string.IsNullOrEmpty(configuration.UserAgent))
-            throw new ArgumentException("User-Agent cannot be empty", nameof(configuration.UserAgent));
+        if (string.IsNullOrEmpty(options.UserAgent))
+            throw new ArgumentException("User-Agent cannot be empty", nameof(options.UserAgent));
 
-        _configuration = configuration;
-        _requester = new Requester(configuration, httpClient);
+        _options = options;
+        _requester = new Requester(options, httpClient);
 
         Project = new ProjectEndpoint(_requester);
         Tag = new TagEndpoint(_requester);
