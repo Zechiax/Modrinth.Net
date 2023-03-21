@@ -10,12 +10,12 @@ internal static class PackageVersion
 
         if (assembly == null)
             return "";
-        
+
         var assemblyName = AssemblyName.GetAssemblyName(assembly.Location);
-        
+
         if (assemblyName.Version == null)
             return "";
-        
+
         return assemblyName.Version.ToString();
     }
 }
