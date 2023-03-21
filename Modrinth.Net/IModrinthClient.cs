@@ -5,6 +5,7 @@ using Modrinth.Endpoints.Team;
 using Modrinth.Endpoints.User;
 using Modrinth.Endpoints.Version;
 using Modrinth.Endpoints.VersionFile;
+using IVersionFileEndpoint = Modrinth.Endpoints.Version.IVersionFileEndpoint;
 
 namespace Modrinth;
 
@@ -18,24 +19,24 @@ public interface IModrinthClient : IDisposable
     /// </summary>
     bool IsDisposed { get; }
 
-    /// <inheritdoc cref="IProjectApi" />
-    IProjectApi Project { get; }
+    /// <inheritdoc cref="IProjectEndpoint" />
+    IProjectEndpoint Project { get; }
 
-    /// <inheritdoc cref="ITeamApi" />
-    ITeamApi Team { get; }
+    /// <inheritdoc cref="ITeamEndpoint" />
+    ITeamEndpoint Team { get; }
 
-    /// <inheritdoc cref="IUserApi" />
-    IUserApi User { get; }
+    /// <inheritdoc cref="IUserEndpoint" />
+    IUserEndpoint User { get; }
 
-    /// <inheritdoc cref="IVersionApi" />
-    IVersionApi Version { get; }
+    /// <inheritdoc cref="Endpoints.Version.IVersionFileEndpoint" />
+    IVersionFileEndpoint Version { get; }
 
-    /// <inheritdoc cref="ITagApi" />
-    ITagApi Tag { get; }
+    /// <inheritdoc cref="ITagEndpoint" />
+    ITagEndpoint Tag { get; }
 
-    /// <inheritdoc cref="IVersionFile" />
-    IVersionFile VersionFile { get; }
+    /// <inheritdoc cref="Endpoints.VersionFile.IVersionFileEndpoint" />
+    Endpoints.VersionFile.IVersionFileEndpoint VersionFileEndpoint { get; }
 
-    /// <inheritdoc cref="IMiscellaneousApi" />
-    IMiscellaneousApi Miscellaneous { get; }
+    /// <inheritdoc cref="IMiscellaneousEndpoint" />
+    IMiscellaneousEndpoint Miscellaneous { get; }
 }

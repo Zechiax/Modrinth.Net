@@ -7,7 +7,7 @@ namespace Modrinth.Endpoints.Tag;
 ///     Tags are common and reusable lists of metadata types such as categories or versions. Some can be applied to
 ///     projects and/or versions.
 /// </summary>
-public interface ITagApi
+public interface ITagEndpoint
 {
     /// <summary>
     ///     Gets an array of categories, their icons, and applicable project types

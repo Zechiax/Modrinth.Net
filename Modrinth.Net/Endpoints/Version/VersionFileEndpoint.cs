@@ -3,12 +3,12 @@ using Modrinth.Models.Enums;
 
 namespace Modrinth.Endpoints.Version;
 
-public class VersionApi : IVersionApi
+public class VersionFileEndpoint : IVersionFileEndpoint
 {
     private const string VersionsPath = "version";
     private readonly IRequester _client;
 
-    public VersionApi(IRequester client)
+    public VersionFileEndpoint(IRequester client)
     {
         _client = client;
     }

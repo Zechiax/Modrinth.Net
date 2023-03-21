@@ -2,7 +2,7 @@
 
 namespace Modrinth.Endpoints.Team;
 
-public interface ITeamApi
+public interface ITeamEndpoint
 {
     /// <summary>
     ///     Gets project's team members by project's slug or ID

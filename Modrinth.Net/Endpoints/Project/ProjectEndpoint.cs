@@ -6,13 +6,13 @@ using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Endpoints.Project;
 
-public class ProjectApi : IProjectApi
+public class ProjectEndpoint : IProjectEndpoint
 {
     private const string ProjectPathSegment = "project";
 
     private readonly IRequester _client;
 
-    public ProjectApi(IRequester client)
+    public ProjectEndpoint(IRequester client)
     {
         _client = client;
     }

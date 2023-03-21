@@ -4,12 +4,12 @@ using Modrinth.Models;
 namespace Modrinth.Endpoints.Team;
 
 /// <inheritdoc />
-public class TeamApi : ITeamApi
+public class TeamEndpoint : ITeamEndpoint
 {
     private const string TeamsPathSegment = "team";
     private readonly IRequester _client;
 
-    public TeamApi(IRequester client)
+    public TeamEndpoint(IRequester client)
     {
         _client = client;
     }

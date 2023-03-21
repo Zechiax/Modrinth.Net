@@ -6,6 +6,8 @@ using Modrinth.Endpoints.Team;
 using Modrinth.Endpoints.User;
 using Modrinth.Endpoints.Version;
 using Modrinth.Endpoints.VersionFile;
+using IVersionFileEndpoint = Modrinth.Endpoints.Version.IVersionFileEndpoint;
+using VersionFileEndpoint = Modrinth.Endpoints.Version.VersionFileEndpoint;
 
 namespace Modrinth;
 
@@ -50,13 +52,13 @@ public class ModrinthClient : IModrinthClient
 
         _requester = new Requester(new Uri(url, UriKind.Absolute), userAgent, token);
 
-        Project = new ProjectApi(_requester);
-        Tag = new TagApi(_requester);
-        Team = new TeamApi(_requester);
-        User = new UserApi(_requester);
-        Version = new VersionApi(_requester);
-        VersionFile = new VersionFileApi(_requester);
-        Miscellaneous = new MiscellaneousApi(_requester);
+        Project = new ProjectEndpoint(_requester);
+        Tag = new TagEndpoint(_requester);
+        Team = new TeamEndpoint(_requester);
+        User = new UserEndpoint(_requester);
+        Version = new VersionFileEndpoint(_requester);
+        VersionFileEndpoint = new Endpoints.VersionFile.VersionFileEndpoint(_requester);
+        Miscellaneous = new MiscellaneousEndpoint(_requester);
     }
 
     /// <inheritdoc />
@@ -74,25 +76,25 @@ public class ModrinthClient : IModrinthClient
     public bool IsDisposed { get; private set; }
 
     /// <inheritdoc />
-    public IProjectApi Project { get; }
+    public IProjectEndpoint Project { get; }
 
     /// <inheritdoc />
-    public ITeamApi Team { get; }
+    public ITeamEndpoint Team { get; }
 
     /// <inheritdoc />
-    public IUserApi User { get; }
+    public IUserEndpoint User { get; }
 
     /// <inheritdoc />
-    public IVersionApi Version { get; }
+    public IVersionFileEndpoint Version { get; }
 
     /// <inheritdoc />
-    public ITagApi Tag { get; }
+    public ITagEndpoint Tag { get; }
 
     /// <inheritdoc />
-    public IVersionFile VersionFile { get; }
+    public Endpoints.VersionFile.IVersionFileEndpoint VersionFileEndpoint { get; }
 
     /// <inheritdoc />
-    public IMiscellaneousApi Miscellaneous { get; }
+    public IMiscellaneousEndpoint Miscellaneous { get; }
 
     #endregion
 }

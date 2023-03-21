@@ -4,12 +4,12 @@ using File = System.IO.File;
 
 namespace Modrinth.Endpoints.User;
 
-public class UserApi : IUserApi
+public class UserEndpoint : IUserEndpoint
 {
     private const string UserPathSegment = "user";
     private readonly IRequester _client;
 
-    public UserApi(IRequester client)
+    public UserEndpoint(IRequester client)
     {
         _client = client;
     }

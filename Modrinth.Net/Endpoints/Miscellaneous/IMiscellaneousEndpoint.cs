@@ -1,6 +1,6 @@
 ﻿namespace Modrinth.Endpoints.Miscellaneous;
 
-public interface IMiscellaneousApi
+public interface IMiscellaneousEndpoint
 {
     /// <summary>
     ///     Various statistics about this Modrinth instance

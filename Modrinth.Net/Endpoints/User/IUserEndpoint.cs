@@ -2,7 +2,7 @@
 
 namespace Modrinth.Endpoints.User;
 
-public interface IUserApi
+public interface IUserEndpoint
 {
     /// <summary>
     ///     Retrieves a user by their username or ID.

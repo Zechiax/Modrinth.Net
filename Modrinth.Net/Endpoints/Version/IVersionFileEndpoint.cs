@@ -2,7 +2,7 @@
 
 namespace Modrinth.Endpoints.Version;
 
-public interface IVersionApi
+public interface IVersionFileEndpoint
 {
     /// <summary>
     ///     Get specific version by ID

@@ -4,7 +4,7 @@ using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Endpoints.Project;
 
-public interface IProjectApi
+public interface IProjectEndpoint
 {
     /// <summary>
     ///     Search Modrinth for project by it's name

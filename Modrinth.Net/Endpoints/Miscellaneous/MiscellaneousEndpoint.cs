@@ -1,10 +1,10 @@
 ﻿namespace Modrinth.Endpoints.Miscellaneous;
 
-public class MiscellaneousApi : IMiscellaneousApi
+public class MiscellaneousEndpoint : IMiscellaneousEndpoint
 {
     private readonly IRequester _client;
 
-    public MiscellaneousApi(IRequester client)
+    public MiscellaneousEndpoint(IRequester client)
     {
         _client = client;
     }

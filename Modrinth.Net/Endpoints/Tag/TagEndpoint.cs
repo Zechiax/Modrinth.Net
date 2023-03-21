@@ -3,12 +3,12 @@
 namespace Modrinth.Endpoints.Tag;
 
 /// <inheritdoc />
-public class TagApi : ITagApi
+public class TagEndpoint : ITagEndpoint
 {
     private const string TagPathSegment = "tag";
     private readonly IRequester _client;
 
-    public TagApi(IRequester client)
+    public TagEndpoint(IRequester client)
     {
         _client = client;
     }

@@ -2,12 +2,12 @@
 
 namespace Modrinth.Endpoints.VersionFile;
 
-public class VersionFileApi : IVersionFile
+public class VersionFileEndpoint : IVersionFileEndpoint
 {
     private const string VersionFilePathSegment = "version_file";
     private readonly IRequester _client;
 
-    public VersionFileApi(IRequester client)
+    public VersionFileEndpoint(IRequester client)
     {
         _client = client;
     }

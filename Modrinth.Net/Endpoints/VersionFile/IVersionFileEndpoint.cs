@@ -2,7 +2,7 @@
 
 namespace Modrinth.Endpoints.VersionFile;
 
-public interface IVersionFile
+public interface IVersionFileEndpoint
 {
     /// <summary>
     ///     Get specific version by file hash
