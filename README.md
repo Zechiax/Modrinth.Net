@@ -246,6 +246,6 @@ catch (ModrinthApiException e)
 | Various statistics about this Modrinth instance | GET    | ✅           |
 
 
-# Disclaimer
+## Disclaimer
 
 This is not an official Modrinth project. This is a third-party project that is not affiliated with Modrinth in any way.
