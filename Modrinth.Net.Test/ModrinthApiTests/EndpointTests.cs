@@ -38,8 +38,21 @@ public class EndpointTests
             ProjectName = "Modrinth.Net.Test",
             ProjectVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString()
         };
+        
+        var configAuth = new ModrinthClientConfiguration
+        {
+            ModrinthToken = token,
+            BaseUrl = ModrinthClient.StagingBaseUrl,
+            UserAgent = userAgent.ToString()
+        };
+        
+        var configNoAuth = new ModrinthClientConfiguration
+        {
+            BaseUrl = ModrinthClient.StagingBaseUrl,
+            UserAgent = userAgent.ToString()
+        };
 
-        Client = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent, token: token);
-        NoAuthClient = new ModrinthClient(url: ModrinthClient.StagingBaseUrl, userAgent: userAgent);
+        Client = new ModrinthClient(configAuth);
+        NoAuthClient = new ModrinthClient(configNoAuth);
     }
 }

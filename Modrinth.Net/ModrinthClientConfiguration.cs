@@ -21,12 +21,10 @@ public class ModrinthClientConfiguration
     /// User-Agent you want to use while communicating with Modrinth API, it's recommended to
     /// set a uniquely-identifying one (<a href="https://docs.modrinth.com/api-spec/#section/User-Agents">see the docs</a>)
     /// </summary>
-    public string UserAgent { get; set; } = $"Modrinth.Net/{Assembly.GetExecutingAssembly().GetName().Version}";
+    public string UserAgent { get; set; } = $"Modrinth.Net/{ PackageVersion.GetVersion() }";
 
     /// <summary>
     ///   The number of times to retry a request if the rate limit is hit
     /// </summary>
     public int RateLimitRetryCount { get; set; } = 5;
-    
-    
 }
