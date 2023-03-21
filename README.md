@@ -21,7 +21,7 @@ var options = new ModrinthClientOptions
     // For Modrinth API, you must specify a user-agent
     // There is a default library user-agent, but it is recommended to specify your own
     UserAgent = "MyAwesomeProject"
-}
+};
 
 var client = new ModrinthClient(options);
 
