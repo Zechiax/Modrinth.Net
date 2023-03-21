@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Modrinth.Client;
+namespace Modrinth;
 
 /// <summary>
 ///     Helper class for creating a user agent string for the Modrinth API client

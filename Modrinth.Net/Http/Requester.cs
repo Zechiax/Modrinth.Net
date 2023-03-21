@@ -5,7 +5,7 @@ using Modrinth.Exceptions;
 using Modrinth.JsonConverters;
 using Modrinth.Models.Errors;
 
-namespace Modrinth;
+namespace Modrinth.Http;
 
 /// <inheritdoc />
 public class Requester : IRequester

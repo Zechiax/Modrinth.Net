@@ -1,6 +1,6 @@
 ﻿using Modrinth.Extensions;
+using Modrinth.Http;
 using Modrinth.Models;
-using Modrinth.Models.Facets;
 using File = System.IO.File;
 using Index = Modrinth.Models.Enums.Index;
 

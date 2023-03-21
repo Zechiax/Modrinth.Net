@@ -1,4 +1,5 @@
-﻿using Modrinth.Models.Enums;
+﻿using Modrinth.Http;
+using Modrinth.Models.Enums;
 
 namespace Modrinth.Endpoints.VersionFile;
 

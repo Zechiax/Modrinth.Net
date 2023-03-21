@@ -1,4 +1,5 @@
 using Modrinth.Models.Enums;
+using Modrinth.Models.Enums.Project;
 
 namespace Modrinth.Extensions;
 

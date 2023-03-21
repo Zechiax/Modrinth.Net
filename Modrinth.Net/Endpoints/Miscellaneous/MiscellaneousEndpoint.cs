@@ -1,4 +1,6 @@
-﻿namespace Modrinth.Endpoints.Miscellaneous;
+﻿using Modrinth.Http;
+
+namespace Modrinth.Endpoints.Miscellaneous;
 
 public class MiscellaneousEndpoint : IMiscellaneousEndpoint
 {

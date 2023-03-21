@@ -1,4 +1,5 @@
 ﻿using Modrinth.Extensions;
+using Modrinth.Http;
 using Modrinth.Models;
 
 namespace Modrinth.Endpoints.Team;

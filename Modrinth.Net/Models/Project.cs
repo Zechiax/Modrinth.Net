@@ -3,6 +3,7 @@ using System.Drawing;
 using System.Text.Json.Serialization;
 using Modrinth.Helpers;
 using Modrinth.Models.Enums;
+using Modrinth.Models.Enums.Project;
 
 namespace Modrinth.Models;
 

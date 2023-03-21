@@ -1,5 +1,4 @@
 ﻿using Modrinth.Models;
-using Modrinth.Models.Facets;
 using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Endpoints.Project;

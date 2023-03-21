@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using Microsoft.Extensions.Configuration;
-using Modrinth.Client;
 
 namespace Modrinth.Net.Test.ModrinthApiTests;
 

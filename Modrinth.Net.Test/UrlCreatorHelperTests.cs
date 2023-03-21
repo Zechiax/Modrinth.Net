@@ -2,6 +2,7 @@ using Modrinth.Extensions;
 using Modrinth.Helpers;
 using Modrinth.Models;
 using Modrinth.Models.Enums;
+using Modrinth.Models.Enums.Project;
 using Version = Modrinth.Models.Version;
 
 namespace Modrinth.Net.Test;

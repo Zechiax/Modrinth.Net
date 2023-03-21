@@ -1,4 +1,4 @@
-namespace Modrinth;
+namespace Modrinth.Http;
 
 /// <summary>
 ///   Class that handles HTTP requests to the API

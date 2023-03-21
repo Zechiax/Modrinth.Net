@@ -1,6 +1,4 @@
-﻿using Modrinth.Client;
-
-namespace Modrinth.Net.Test;
+﻿namespace Modrinth.Net.Test;
 
 [TestFixture]
 public class UserAgentTests

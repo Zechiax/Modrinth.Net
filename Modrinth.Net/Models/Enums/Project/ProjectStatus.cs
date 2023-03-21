@@ -1,4 +1,4 @@
-﻿namespace Modrinth.Models.Enums;
+﻿namespace Modrinth.Models.Enums.Project;
 
 public enum ProjectStatus
 {

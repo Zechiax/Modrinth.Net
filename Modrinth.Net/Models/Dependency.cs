@@ -1,6 +1,7 @@
 ﻿#pragma warning disable CS8618
 using System.Text.Json.Serialization;
 using Modrinth.Models.Enums;
+using Modrinth.Models.Enums.Version;
 
 namespace Modrinth.Models;
 

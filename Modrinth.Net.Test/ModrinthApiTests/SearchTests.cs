@@ -1,5 +1,5 @@
 ﻿using Modrinth.Models.Enums;
-using Modrinth.Models.Facets;
+using Modrinth.Models.Enums.Project;
 using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Net.Test.ModrinthApiTests;
