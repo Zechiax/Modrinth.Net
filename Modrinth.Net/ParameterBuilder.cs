@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Modrinth;
 
-public class ParameterBuilder : IEnumerable
+internal class ParameterBuilder : IEnumerable
 {
     public ParameterBuilder()
     {
@@ -37,7 +37,7 @@ public class ParameterBuilder : IEnumerable
         StringBuilder sb = new();
         foreach (var key in Parameters.AllKeys)
         {
-            if (key is null || key == string.Empty) continue;
+            if (string.IsNullOrEmpty(key)) continue;
             var values = Parameters.GetValues(key);
             if (values is null) continue;
             foreach (var value in values)
