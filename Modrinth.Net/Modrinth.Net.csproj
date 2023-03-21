@@ -24,8 +24,4 @@
         </None>
     </ItemGroup>
 
-    <ItemGroup>
-        <Folder Include="Models\Facets"/>
-    </ItemGroup>
-
 </Project>
