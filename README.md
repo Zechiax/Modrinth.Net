@@ -192,8 +192,8 @@ catch (ModrinthApiException e)
 
 | Name                                                                             | Method | Implemented |
 |----------------------------------------------------------------------------------|--------|-------------|
-| Get version from hash                                                            | GET    | ✅           |
-| Delete a file from its hash                                                      | DELETE | ✅           |
+| Get version from hash                                                            | GET    | ⚠️           |
+| Delete a file from its hash                                                      | DELETE | ⚠️           |
 | Latest version of a project from a hash, loader(s), and game version(s)          | POST   | ❌           |
 | Get versions from hashes                                                         | POST   | ❌           |
 | Latest versions of multiple projects from hashes, loader(s), and game version(s) | POST   | ❌           |
