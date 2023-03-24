@@ -10,6 +10,8 @@ namespace Modrinth.Http;
 /// <inheritdoc />
 public class Requester : IRequester
 {
+    private readonly ModrinthClientConfig _config;
+
     private readonly JsonSerializerOptions _jsonSerializerOptions = new()
     {
         PropertyNameCaseInsensitive = true,
@@ -19,8 +21,6 @@ public class Requester : IRequester
             new JsonStringEnumConverter()
         }
     };
-
-    private readonly ModrinthClientConfig _config;
 
     public Requester(ModrinthClientConfig config, HttpClient? httpClient = null)
     {

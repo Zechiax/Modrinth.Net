@@ -159,7 +159,7 @@ catch (ModrinthApiException e)
 | Search projects                     | GET    | ✅           |
 | Get a project                       | GET    | ✅           |
 | Modify a project                    | PATCH  | ❌           |
-| Delete a project                    | DELETE | ⚠️           |
+| Delete a project                    | DELETE | ⚠️          |
 | Get multiple projects               | GET    | ✅           |
 | Edit multiple projects              | PATCH  | ❌           |
 | Get a list of random projects       | GET    | ✅           |
@@ -192,8 +192,8 @@ catch (ModrinthApiException e)
 
 | Name                                                                             | Method | Implemented |
 |----------------------------------------------------------------------------------|--------|-------------|
-| Get version from hash                                                            | GET    | ⚠️           |
-| Delete a file from its hash                                                      | DELETE | ⚠️           |
+| Get version from hash                                                            | GET    | ⚠️          |
+| Delete a file from its hash                                                      | DELETE | ⚠️          |
 | Latest version of a project from a hash, loader(s), and game version(s)          | POST   | ❌           |
 | Get versions from hashes                                                         | POST   | ❌           |
 | Latest versions of multiple projects from hashes, loader(s), and game version(s) | POST   | ❌           |
@@ -244,7 +244,6 @@ catch (ModrinthApiException e)
 |-------------------------------------------------|--------|-------------|
 | Report a project, user, or version              | POST   | ❌           |
 | Various statistics about this Modrinth instance | GET    | ✅           |
-
 
 ## Disclaimer
 
