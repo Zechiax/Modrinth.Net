@@ -25,21 +25,12 @@ public class Requester : IRequester
     public Requester(ModrinthClientConfig config, HttpClient? httpClient = null)
     {
         _config = config;
-        if (httpClient is not null)
-        {
-            HttpClient = httpClient;
-            return;
-        }
+        HttpClient = httpClient ?? new HttpClient();
 
         BaseAddress = new Uri(config.BaseUrl);
-        HttpClient = new HttpClient
-        {
-            BaseAddress = BaseAddress,
-            DefaultRequestHeaders =
-            {
-                {"User-Agent", config.UserAgent}
-            }
-        };
+
+        HttpClient.BaseAddress = BaseAddress;
+        HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(config.UserAgent);
 
         if (!string.IsNullOrEmpty(config.ModrinthToken))
             HttpClient.DefaultRequestHeaders.Add("Authorization", config.ModrinthToken);

@@ -68,14 +68,18 @@ public class ModrinthClient : IModrinthClient
     ///     Initializes a new instance of the <see cref="ModrinthClient" /> class.
     /// </summary>
     /// <param name="config"> Configuration for the client </param>
+    /// <param name="httpClient">
+    ///     Custom <see cref="HttpClient" /> to use for requests, if null a new one will be created, some
+    ///     options like user-agent or base url will be overwritten by the config
+    /// </param>
     /// <exception cref="ArgumentException"> Thrown when the User-Agent is empty </exception>
-    public ModrinthClient(ModrinthClientConfig config)
+    public ModrinthClient(ModrinthClientConfig config, HttpClient? httpClient = null)
     {
         if (string.IsNullOrEmpty(config.UserAgent))
             throw new ArgumentException("User-Agent cannot be empty", nameof(config.UserAgent));
 
         _config = config;
-        _requester = new Requester(config);
+        _requester = new Requester(config, httpClient);
 
         Project = new ProjectEndpoint(_requester);
         Tag = new TagEndpoint(_requester);
