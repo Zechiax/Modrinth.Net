@@ -5,12 +5,12 @@ using System.Text;
 namespace Modrinth.Http;
 
 /// <summary>
-/// A class used to build a collection of parameters
+///     A class used to build a collection of parameters
 /// </summary>
 public class ParameterBuilder : IEnumerable
 {
     /// <summary>
-    ///  Initializes a new instance of the <see cref="ParameterBuilder" /> class
+    ///     Initializes a new instance of the <see cref="ParameterBuilder" /> class
     /// </summary>
     public ParameterBuilder()
     {
@@ -26,7 +26,7 @@ public class ParameterBuilder : IEnumerable
     }
 
     /// <summary>
-    ///  Adds a string parameter to the collection
+    ///     Adds a string parameter to the collection
     /// </summary>
     /// <param name="key"> The key of the parameter </param>
     /// <param name="value"> The value of the parameter </param>
@@ -40,7 +40,7 @@ public class ParameterBuilder : IEnumerable
     }
 
     /// <summary>
-    ///   Adds a parameter to the collection, ToString() is called on the value
+    ///     Adds a parameter to the collection, ToString() is called on the value
     /// </summary>
     /// <param name="key"> The key of the parameter </param>
     /// <param name="value"> The value of the parameter </param>
@@ -54,7 +54,7 @@ public class ParameterBuilder : IEnumerable
     }
 
     /// <summary>
-    ///    Returns a string representation of the parameters, empty or null values are ignored
+    ///     Returns a string representation of the parameters, empty or null values are ignored
     /// </summary>
     /// <returns> A string representation of the parameters </returns>
     public override string ToString()
@@ -76,7 +76,7 @@ public class ParameterBuilder : IEnumerable
     }
 
     /// <summary>
-    ///    Adds the parameters to the request URI of the specified <see cref="HttpRequestMessage" /> as a query string
+    ///     Adds the parameters to the request URI of the specified <see cref="HttpRequestMessage" /> as a query string
     /// </summary>
     /// <param name="request"></param>
     public void AddToRequest(HttpRequestMessage request)

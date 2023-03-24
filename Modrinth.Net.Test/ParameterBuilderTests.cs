@@ -27,7 +27,7 @@ public class ParameterBuilderTests
 
         // Act
         builder.Add("key1", null);
-        builder.Add("key2", "value2", ignoreNull: true);
+        builder.Add("key2", "value2", true);
 
         // Assert
         Assert.That(builder.ToString(), Is.EqualTo("key2=value2&"));
