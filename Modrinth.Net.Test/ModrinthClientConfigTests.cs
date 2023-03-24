@@ -36,4 +36,19 @@ public class ModrinthClientConfigTests
 
         Assert.That(httpClient.DefaultRequestHeaders.UserAgent.ToString(), Is.EqualTo("Test"));
     }
+    
+    [Test]
+    public void ConfigCorrectlySetsBaseAddress()
+    {
+        using var httpClient = new HttpClient();
+
+        var config = new ModrinthClientConfig
+        {
+            BaseUrl = "https://example.com"
+        };
+
+        using var client = new ModrinthClient(config, httpClient);
+
+        Assert.That(httpClient.BaseAddress, Is.EqualTo(new Uri("https://example.com")));
+    }
 }
