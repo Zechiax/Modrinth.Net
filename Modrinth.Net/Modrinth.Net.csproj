@@ -18,6 +18,13 @@
         <RootNamespace>Modrinth</RootNamespace>
         <RepositoryType>git</RepositoryType>
     </PropertyGroup>
+	
+	  <PropertyGroup>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+
 
     <ItemGroup>
         <None Include="..\README.md">
