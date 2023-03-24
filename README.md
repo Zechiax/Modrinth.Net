@@ -245,7 +245,6 @@ catch (ModrinthApiException e)
 | Report a project, user, or version              | POST   | ❌           |
 | Various statistics about this Modrinth instance | GET    | ✅           |
 
-
 # Disclaimer
 
 This is not an official Modrinth project. This is a third-party project that is not affiliated with Modrinth in any way.

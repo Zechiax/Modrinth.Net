@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.Text;
 
-namespace Modrinth;
+namespace Modrinth.Http;
 
 internal class ParameterBuilder : IEnumerable
 {
