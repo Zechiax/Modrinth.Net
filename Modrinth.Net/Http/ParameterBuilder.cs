@@ -4,8 +4,14 @@ using System.Text;
 
 namespace Modrinth.Http;
 
-internal class ParameterBuilder : IEnumerable
+/// <summary>
+/// A class used to build a collection of parameters
+/// </summary>
+public class ParameterBuilder : IEnumerable
 {
+    /// <summary>
+    ///  Initializes a new instance of the <see cref="ParameterBuilder" /> class
+    /// </summary>
     public ParameterBuilder()
     {
         Parameters = new NameValueCollection();
@@ -13,11 +19,19 @@ internal class ParameterBuilder : IEnumerable
 
     private NameValueCollection Parameters { get; }
 
+    /// <inheritdoc />
     public IEnumerator GetEnumerator()
     {
         return Parameters.GetEnumerator();
     }
 
+    /// <summary>
+    ///  Adds a string parameter to the collection
+    /// </summary>
+    /// <param name="key"> The key of the parameter </param>
+    /// <param name="value"> The value of the parameter </param>
+    /// <param name="ignoreNull"> Whether or not to ignore null values </param>
+    /// <returns> The current instance of <see cref="ParameterBuilder" /> </returns>
     public ParameterBuilder Add(string key, string? value, bool ignoreNull = true)
     {
         if (value is null && ignoreNull) return this;
@@ -25,6 +39,13 @@ internal class ParameterBuilder : IEnumerable
         return this;
     }
 
+    /// <summary>
+    ///   Adds a parameter to the collection, ToString() is called on the value
+    /// </summary>
+    /// <param name="key"> The key of the parameter </param>
+    /// <param name="value"> The value of the parameter </param>
+    /// <param name="ignoreNull"> Whether or not to ignore null values </param>
+    /// <returns> The current instance of <see cref="ParameterBuilder" /> </returns>
     public ParameterBuilder Add(string key, object? value, bool ignoreNull = true)
     {
         if (value is null && ignoreNull) return this;
@@ -32,6 +53,10 @@ internal class ParameterBuilder : IEnumerable
         return this;
     }
 
+    /// <summary>
+    ///    Returns a string representation of the parameters, empty or null values are ignored
+    /// </summary>
+    /// <returns> A string representation of the parameters </returns>
     public override string ToString()
     {
         StringBuilder sb = new();
@@ -50,6 +75,10 @@ internal class ParameterBuilder : IEnumerable
         return sb.ToString();
     }
 
+    /// <summary>
+    ///    Adds the parameters to the request URI of the specified <see cref="HttpRequestMessage" /> as a query string
+    /// </summary>
+    /// <param name="request"></param>
     public void AddToRequest(HttpRequestMessage request)
     {
         var query = ToString();
