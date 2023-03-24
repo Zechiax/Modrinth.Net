@@ -3,7 +3,7 @@
 /// <summary>
 ///     Object containing options for <see cref="ModrinthClient" />
 /// </summary>
-public class ModrinthClientOptions
+public class ModrinthClientConfig
 {
     /// <summary>
     ///     The token to use for requests that require authentication

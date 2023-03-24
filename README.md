@@ -14,7 +14,7 @@
 ```csharp
 using Modrinth;
 
-var options = new ModrinthClientOptions 
+var options = new ModrinthClientConfig 
 {
     // Optional, if you want to access authenticated API endpoints
     ModrinthToken = "Youre_Authentication_Token",

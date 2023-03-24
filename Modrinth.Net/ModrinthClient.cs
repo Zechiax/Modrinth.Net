@@ -24,12 +24,12 @@ public class ModrinthClient : IModrinthClient
     /// </summary>
     public const string StagingBaseUrl = "https://staging-api.modrinth.com/v2/";
 
-    private readonly ModrinthClientOptions _options;
+    private readonly ModrinthClientConfig _config;
 
     private readonly IRequester _requester;
 
     /// <inheritdoc />
-    [Obsolete("Use the constructor that takes a ModrinthClientConfiguration instead")]
+    [Obsolete("Use the constructor that takes a ModrinthClientConfig instead")]
     public ModrinthClient(UserAgent userAgent, string? token = null, string url = BaseUrl)
         : this(userAgent.ToString(), token, url)
     {
@@ -45,9 +45,9 @@ public class ModrinthClient : IModrinthClient
     /// </param>
     /// <param name="url">Custom API url, default is <see cref="BaseUrl" /></param>
     /// <returns></returns>
-    [Obsolete("Use the constructor that takes a ModrinthClientConfiguration instead")]
+    [Obsolete("Use the constructor that takes a ModrinthClientConfig instead")]
     public ModrinthClient(string userAgent, string? token = null, string url = BaseUrl) : this(
-        new ModrinthClientOptions
+        new ModrinthClientConfig
         {
             ModrinthToken = token,
             BaseUrl = url,
@@ -60,22 +60,22 @@ public class ModrinthClient : IModrinthClient
     ///     Initializes a new instance of the <see cref="ModrinthClient" /> class.
     ///     Uses the default configuration.
     /// </summary>
-    public ModrinthClient() : this(new ModrinthClientOptions())
+    public ModrinthClient() : this(new ModrinthClientConfig())
     {
     }
 
     /// <summary>
     ///     Initializes a new instance of the <see cref="ModrinthClient" /> class.
     /// </summary>
-    /// <param name="options"> Configuration for the client </param>
+    /// <param name="config"> Configuration for the client </param>
     /// <exception cref="ArgumentException"> Thrown when the User-Agent is empty </exception>
-    public ModrinthClient(ModrinthClientOptions options)
+    public ModrinthClient(ModrinthClientConfig config)
     {
-        if (string.IsNullOrEmpty(options.UserAgent))
-            throw new ArgumentException("User-Agent cannot be empty", nameof(options.UserAgent));
+        if (string.IsNullOrEmpty(config.UserAgent))
+            throw new ArgumentException("User-Agent cannot be empty", nameof(config.UserAgent));
 
-        _options = options;
-        _requester = new Requester(options);
+        _config = config;
+        _requester = new Requester(config);
 
         Project = new ProjectEndpoint(_requester);
         Tag = new TagEndpoint(_requester);
