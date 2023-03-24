@@ -146,11 +146,11 @@ catch (ModrinthApiException e)
 
 ## List of endpoints and their support in this library
 
-| Icon | Meaning         |
-|------|-----------------|
-| ✅    | Implemented     |
-| ❌    | Not implemented |
-| ⚠️   | Untested        |
+| Icon | Meaning         | Comment                                                                                 |
+|------|-----------------|-----------------------------------------------------------------------------------------|
+| ✅    | Implemented     |                                                                                         |
+| ❌    | Not implemented |                                                                                         |
+| ⚠️   | Untested        | Means that the endpoint is implemented, but there currently are no tests written for it |
 
 ### Project endpoints
 
