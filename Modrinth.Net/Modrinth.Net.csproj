@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <Description>An asynchronous Modrinth API wrapper</Description>
-        <RepositoryUrl>https://github.com/Zechiax/Modrinth.Net</RepositoryUrl>
+        <RepositoryUrl>https://github.com/Zechiax/Modrinth.Net.git</RepositoryUrl>
         <PackageTags>modrinth;api;labrinth;restease</PackageTags>
         <Authors>Zechiax</Authors>
         <PackageReleaseNotes>https://github.com/Zechiax/Modrinth.Net/releases</PackageReleaseNotes>
@@ -16,6 +16,7 @@
         <Version>$(PackageVersion)</Version>
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>Modrinth</RootNamespace>
+        <RepositoryType>git</RepositoryType>
     </PropertyGroup>
 
     <ItemGroup>
