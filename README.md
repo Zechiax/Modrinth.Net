@@ -133,14 +133,14 @@ try
     Console.WriteLine(project.Title);
 }
 // You can catch the exception and only handle the 404 status code
-catch (ModrinthApiException e) when (e.StatusCode == HttpStatusCode.NotFound) 
+catch (ModrinthApiException e) when (e.Response.StatusCode == HttpStatusCode.NotFound) 
 {
     Console.WriteLine("Project not found");
 }
 // Or you can catch the exception and handle all non-200 status codes
 catch (ModrinthApiException e)
 {
-    Console.WriteLine($"API call failed with status code {e.StatusCode}");
+    Console.WriteLine($"API call failed with status code {e.Response.StatusCode}");
 }
 ```
 
