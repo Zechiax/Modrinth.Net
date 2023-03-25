@@ -17,7 +17,7 @@ using Modrinth;
 var options = new ModrinthClientConfig 
 {
     // Optional, if you want to access authenticated API endpoints
-    ModrinthToken = "Youre_Authentication_Token",
+    ModrinthToken = "Your_Authentication_Token",
     // For Modrinth API, you must specify a user-agent
     // There is a default library user-agent, but it is recommended to specify your own
     UserAgent = "MyAwesomeProject"
