@@ -66,7 +66,7 @@ public class Requester : IRequester
             .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions,
                 cancellationToken)
             .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized",
-            response.StatusCode, response.Content, null);
+            response);
     }
 
 
@@ -92,8 +92,7 @@ public class Requester : IRequester
                 if (retryCount >= _config.RateLimitRetryCount)
                     throw new ModrinthApiException(
                         $"Request was rate limited and retry limit ({_config.RateLimitRetryCount}) was reached",
-                        response.StatusCode,
-                        response.Content, null);
+                        response);
 
                 if (response.Headers.TryGetValues("X-Ratelimit-Reset", out var resetValues))
                 {
@@ -126,7 +125,10 @@ public class Requester : IRequester
             var message = "An error occurred while communicating with Modrinth API";
             if (error != null) message += $": {error.Error}: {error.Description}";
 
-            throw new ModrinthApiException(message, response.StatusCode, response.Content, null);
+            // Add request information to the exception
+            message += $"{Environment.NewLine}Request: {request.Method} {request.RequestUri}";
+
+            throw new ModrinthApiException(message, response);
         }
     }
 
