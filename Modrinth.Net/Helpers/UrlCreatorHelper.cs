@@ -15,9 +15,9 @@ public static class UrlCreatorHelper
 
 
     /// <summary>
-    ///     Return direct link to the user on Modrinth
+    ///     Returns direct link to the project on Modrinth
     /// </summary>
-    /// <param name="project"></param>
+    /// <param name="project"> The project to get the link for </param>
     /// <returns></returns>
     public static string GetDirectUrl(this Project project)
     {
@@ -25,9 +25,9 @@ public static class UrlCreatorHelper
     }
 
     /// <summary>
-    ///     Return direct link to the user on Modrinth
+    ///     Returns direct link to the user on Modrinth
     /// </summary>
-    /// <param name="user"></param>
+    /// <param name="user"> The user to get the link for </param>
     /// <returns></returns>
     public static string GetDirectUrl(this User user)
     {
@@ -35,9 +35,9 @@ public static class UrlCreatorHelper
     }
 
     /// <summary>
-    ///     Return direct link to the project of this search result on Modrinth
+    ///     Returns direct link to the project of this search result on Modrinth
     /// </summary>
-    /// <param name="searchResult"></param>
+    /// <param name="searchResult"> The search result to get the link for </param>
     /// <returns></returns>
     public static string GetDirectUrl(this SearchResult searchResult)
     {
