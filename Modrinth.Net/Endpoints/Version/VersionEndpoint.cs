@@ -4,12 +4,12 @@ using Modrinth.Models.Enums.Version;
 
 namespace Modrinth.Endpoints.Version;
 
-public class VersionFileEndpoint : IVersionFileEndpoint
+public class VersionEndpoint : IVersionEndpoint
 {
     private const string VersionsPath = "version";
     private readonly IRequester _client;
 
-    public VersionFileEndpoint(IRequester client)
+    public VersionEndpoint(IRequester client)
     {
         _client = client;
     }
