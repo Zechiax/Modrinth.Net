@@ -4,6 +4,7 @@ using Modrinth.Endpoints.Tag;
 using Modrinth.Endpoints.Team;
 using Modrinth.Endpoints.User;
 using Modrinth.Endpoints.Version;
+using Modrinth.Endpoints.VersionFile;
 using Modrinth.Http;
 
 namespace Modrinth;
@@ -86,7 +87,7 @@ public class ModrinthClient : IModrinthClient
         Team = new TeamEndpoint(_requester);
         User = new UserEndpoint(_requester);
         Version = new VersionEndpoint(_requester);
-        VersionFileEndpoint = new Endpoints.VersionFile.VersionFileEndpoint(_requester);
+        VersionFileEndpoint = new VersionFileEndpoint(_requester);
         Miscellaneous = new MiscellaneousEndpoint(_requester);
     }
 
@@ -120,7 +121,7 @@ public class ModrinthClient : IModrinthClient
     public ITagEndpoint Tag { get; }
 
     /// <inheritdoc />
-    public Endpoints.VersionFile.IVersionFileEndpoint VersionFileEndpoint { get; }
+    public IVersionFileEndpoint VersionFileEndpoint { get; }
 
     /// <inheritdoc />
     public IMiscellaneousEndpoint Miscellaneous { get; }

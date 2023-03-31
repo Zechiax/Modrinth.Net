@@ -1,7 +1,7 @@
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class TestVersionEndpoint : EndpointTests
+public class VersionEndpointTests : EndpointTests
 {
     [Test]
     public async Task TestGetVersions()

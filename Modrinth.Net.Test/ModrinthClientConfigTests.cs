@@ -36,7 +36,7 @@ public class ModrinthClientConfigTests
 
         Assert.That(httpClient.DefaultRequestHeaders.UserAgent.ToString(), Is.EqualTo("Test"));
     }
-    
+
     [Test]
     public void ConfigCorrectlySetsBaseAddress()
     {

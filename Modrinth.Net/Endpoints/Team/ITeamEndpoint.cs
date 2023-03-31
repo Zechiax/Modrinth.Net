@@ -1,4 +1,5 @@
-﻿using Modrinth.Models;
+﻿using Modrinth.Exceptions;
+using Modrinth.Models;
 
 namespace Modrinth.Endpoints.Team;
 
@@ -9,6 +10,7 @@ public interface ITeamEndpoint
     /// </summary>
     /// <param name="slugOrId"></param>
     /// <returns></returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<TeamMember[]> GetProjectTeamAsync(string slugOrId);
 
     /// <summary>
@@ -16,6 +18,7 @@ public interface ITeamEndpoint
     /// </summary>
     /// <param name="teamId"></param>
     /// <returns></returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<TeamMember[]> GetAsync(string teamId);
 
     /// <summary>
@@ -23,5 +26,6 @@ public interface ITeamEndpoint
     /// </summary>
     /// <param name="ids">The IDs of the teams</param>
     /// <returns></returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<TeamMember[][]> GetMultipleAsync(IEnumerable<string> ids);
 }

@@ -1,4 +1,5 @@
-﻿using Modrinth.Models;
+﻿using Modrinth.Exceptions;
+using Modrinth.Models;
 
 namespace Modrinth.Endpoints.User;
 
@@ -9,6 +10,7 @@ public interface IUserEndpoint
     /// </summary>
     /// <param name="usernameOrId">The username or ID of the user to retrieve.</param>
     /// <returns>A User object representing the requested user.</returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<Models.User> GetAsync(string usernameOrId);
 
     /// <summary>
@@ -16,6 +18,7 @@ public interface IUserEndpoint
     /// </summary>
     /// <param name="usernameOrId"></param>
     /// <returns></returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<Models.Project[]> GetProjectsAsync(string usernameOrId);
 
     /// <summary>
@@ -23,6 +26,7 @@ public interface IUserEndpoint
     /// </summary>
     /// <param name="ids">The IDs of the projects</param>
     /// <returns></returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<Models.User[]> GetMultipleAsync(IEnumerable<string> ids);
 
     /// <summary>
@@ -30,6 +34,7 @@ public interface IUserEndpoint
     ///     Requires authentication
     /// </summary>
     /// <returns></returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<Models.User> GetCurrentAsync();
 
     /// <summary>
@@ -38,6 +43,7 @@ public interface IUserEndpoint
     /// </summary>
     /// <param name="usernameOrId"> The username or ID of the user to retrieve notifications from </param>
     /// <returns> An array of notifications </returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<Notification[]> GetNotificationsAsync(string usernameOrId);
 
     /// <summary>
@@ -46,6 +52,7 @@ public interface IUserEndpoint
     /// </summary>
     /// <param name="usernameOrId"> The username or ID of the user to retrieve followed projects from </param>
     /// <returns> An array of followed projects </returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId);
 
     /// <summary>
@@ -55,5 +62,6 @@ public interface IUserEndpoint
     /// <param name="usernameOrId"> The username or ID of the user to change the icon of </param>
     /// <param name="iconPath"> The local path to the icon</param>
     /// <returns></returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task ChangeIconAsync(string usernameOrId, string iconPath);
 }

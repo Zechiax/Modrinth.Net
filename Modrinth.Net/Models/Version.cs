@@ -68,9 +68,9 @@ public class Version
     public string AuthorId { get; set; }
 
     [JsonPropertyName("date_published")] public DateTime DatePublished { get; set; }
-    
+
     /// <summary>
-    ///   The number of times this version has been downloaded
+    ///     The number of times this version has been downloaded
     /// </summary>
     public int Downloads { get; set; }
 
