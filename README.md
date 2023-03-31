@@ -30,6 +30,13 @@ var project = await client.Project.GetAsync("sodium");
 Console.WriteLine(project.Description);
 ```
 
+But you don't have to provide options at all, you can just create a client with the default options:
+
+```csharp
+var client = new ModrinthClient();
+```
+
+
 ### User-Agent
 
 - You can also use the UserAgent class to help you create a valid user-agent
