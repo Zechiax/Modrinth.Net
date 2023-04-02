@@ -58,4 +58,28 @@ public class UserEndpointTests : EndpointTests
         var current = await Client.User.GetCurrentAsync();
         await Client.User.ChangeIconAsync(current.Id, Icon.FullName);
     }
+
+    [Test]
+    public async Task GetUsersProjects()
+    {
+        var projects = await Client.User.GetProjectsAsync(TestUserId);
+        
+        Assert.That(projects, Is.Not.Null);
+        Assert.That(projects, Is.Not.Empty);
+    }
+
+    [Test]
+    public async Task GetMultipleUsers()
+    {
+        var users = await Client.User.GetMultipleAsync(TestUserIds);
+        
+        Assert.That(users, Is.Not.Null);
+        Assert.That(users, Is.Not.Empty);
+        
+        foreach (var user in users)
+        {
+            Assert.That(user, Is.Not.Null);
+            Assert.That(user.Id, Is.Not.Null);
+        }
+    }
 }
