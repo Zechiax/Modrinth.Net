@@ -11,6 +11,7 @@ public class EndpointTests
     
     /// <summary>
     /// Must be users that have at least one project
+    /// The first ID should be the ID of the user that will be authenticated
     /// </summary>
     protected readonly string[] TestUserIds = {"MaovZxtD", "5XoMa0C4"};
 
