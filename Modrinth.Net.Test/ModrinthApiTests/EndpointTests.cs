@@ -6,11 +6,20 @@ namespace Modrinth.Net.Test.ModrinthApiTests;
 [SetUpFixture]
 public class EndpointTests
 {
-    protected const string TestProjectSlug = "gravestones";
     protected const string ModrinthNetTestProjectId = "jKePI2WR";
     protected const string ModrinthNetTestUploadedVersionId = "dJIVHDfy";
+    
+    /// <summary>
+    /// Must be users that have at least one project
+    /// The first ID should be the ID of the user that will be authenticated
+    /// </summary>
+    protected readonly string[] TestUserIds = {"MaovZxtD", "5XoMa0C4"};
 
-    protected static readonly IConfigurationRoot Configuration =
+    protected string TestUserId => TestUserIds[0];
+
+    protected const string TestProjectSlug = "gravestones";
+
+    private static readonly IConfigurationRoot Configuration =
         new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 
     protected readonly FileInfo Icon = new("../../../../Modrinth.Net.Test/Assets/Icons/ModrinthNet.png");
