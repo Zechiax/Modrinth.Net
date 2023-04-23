@@ -12,7 +12,7 @@ public interface IVersionFileEndpoint
     /// <param name="hashAlgorithm"> The hash algorithm used to generate the hash </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    Task<System.Version> GetVersionByHashAsync(string hash,
+    Task<Models.Version> GetVersionByHashAsync(string hash,
         HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1);
 
     /// <summary>

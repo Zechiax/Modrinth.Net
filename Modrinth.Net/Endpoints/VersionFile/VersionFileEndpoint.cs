@@ -1,4 +1,7 @@
-﻿using Modrinth.Http;
+﻿using System.Text;
+using System.Text.Json;
+using Modrinth.Extensions;
+using Modrinth.Http;
 using Modrinth.Models.Enums;
 
 namespace Modrinth.Endpoints.VersionFile;
@@ -14,7 +17,7 @@ public class VersionFileEndpoint : IVersionFileEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<System.Version> GetVersionByHashAsync(string hash,
+    public async Task<Models.Version> GetVersionByHashAsync(string hash,
         HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
     {
         var reqMsg = new HttpRequestMessage();
@@ -28,7 +31,7 @@ public class VersionFileEndpoint : IVersionFileEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await _client.GetJsonAsync<System.Version>(reqMsg).ConfigureAwait(false);
+        return await _client.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
