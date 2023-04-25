@@ -87,7 +87,7 @@ public class ModrinthClient : IModrinthClient
         Team = new TeamEndpoint(_requester);
         User = new UserEndpoint(_requester);
         Version = new VersionEndpoint(_requester);
-        VersionFileEndpoint = new VersionFileEndpoint(_requester);
+        VersionFile = new VersionFileEndpoint(_requester);
         Miscellaneous = new MiscellaneousEndpoint(_requester);
     }
 
@@ -121,7 +121,7 @@ public class ModrinthClient : IModrinthClient
     public ITagEndpoint Tag { get; }
 
     /// <inheritdoc />
-    public IVersionFileEndpoint VersionFileEndpoint { get; }
+    public IVersionFileEndpoint VersionFile { get; }
 
     /// <inheritdoc />
     public IMiscellaneousEndpoint Miscellaneous { get; }

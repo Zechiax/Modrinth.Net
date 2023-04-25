@@ -12,7 +12,7 @@ public class TestVersionFile : EndpointTests
     {
         var hash = ValidSha512Hashes[index];
         
-        var version = await Client.VersionFileEndpoint.GetVersionByHashAsync(hash, HashAlgorithm.Sha512);
+        var version = await Client.VersionFile.GetVersionByHashAsync(hash, HashAlgorithm.Sha512);
         
         Assert.That(version, Is.Not.Null);
         // Check that one of the files has the correct hash
@@ -29,7 +29,7 @@ public class TestVersionFile : EndpointTests
     {
         var hash = ValidSha1Hashes[index];
         
-        var version = await Client.VersionFileEndpoint.GetVersionByHashAsync(hash, HashAlgorithm.Sha1);
+        var version = await Client.VersionFile.GetVersionByHashAsync(hash, HashAlgorithm.Sha1);
         
         Assert.That(version, Is.Not.Null);
         // Check that one of the files has the correct hash
