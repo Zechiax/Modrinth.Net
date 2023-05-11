@@ -6,6 +6,8 @@
 [![Modrinth API](https://img.shields.io/badge/Modrinth%20API-v2.7.0-449C59?style=for-the-badge)](https://docs.modrinth.com/api-spec/)
 
 - C# Wrapper for the [Modrinth API](https://docs.modrinth.com/api-spec/)
+- For list of supported endpoints, see [List of endpoints and their support in this library](#list-of-endpoints-and-their-support-in-this-library)
+  - The plan is to eventually cover all endpoints
 
 ## Usage
 
