@@ -1,20 +1,22 @@
 ﻿namespace Modrinth.Models.Enums.Project;
 
 /// <summary>
-/// Type of a project version
+///     Type of a project version
 /// </summary>
 public enum ProjectVersionType
 {
     /// <summary>
-    /// Release version
+    ///     Release version
     /// </summary>
     Release,
+
     /// <summary>
-    /// Beta version
+    ///     Beta version
     /// </summary>
     Beta,
+
     /// <summary>
-    /// Alpha version
+    ///     Alpha version
     /// </summary>
     Alpha
 }

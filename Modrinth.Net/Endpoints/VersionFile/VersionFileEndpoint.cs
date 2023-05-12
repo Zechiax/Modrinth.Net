@@ -1,7 +1,4 @@
-﻿using System.Text;
-using System.Text.Json;
-using Modrinth.Extensions;
-using Modrinth.Http;
+﻿using Modrinth.Http;
 using Modrinth.Models.Enums;
 
 namespace Modrinth.Endpoints.VersionFile;

@@ -5,7 +5,7 @@ using Modrinth.Models.Enums.Project;
 namespace Modrinth.Models.Tags;
 
 /// <summary>
-///    A mod loader
+///     A mod loader
 /// </summary>
 public class Loader
 {

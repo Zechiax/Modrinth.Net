@@ -63,7 +63,7 @@ public class UserEndpointTests : EndpointTests
     public async Task GetUsersProjects()
     {
         var projects = await Client.User.GetProjectsAsync(TestUserId);
-        
+
         Assert.That(projects, Is.Not.Null);
         Assert.That(projects, Is.Not.Empty);
     }
@@ -72,10 +72,10 @@ public class UserEndpointTests : EndpointTests
     public async Task GetMultipleUsers()
     {
         var users = await Client.User.GetMultipleAsync(TestUserIds);
-        
+
         Assert.That(users, Is.Not.Null);
         Assert.That(users, Is.Not.Empty);
-        
+
         foreach (var user in users)
         {
             Assert.That(user, Is.Not.Null);

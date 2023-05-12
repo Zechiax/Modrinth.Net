@@ -8,7 +8,7 @@ using Modrinth.Models.Enums.Project;
 namespace Modrinth.Models;
 
 /// <summary>
-///    A project on Modrinth
+///     A project on Modrinth
 /// </summary>
 public class Project
 {

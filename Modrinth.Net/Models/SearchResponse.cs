@@ -4,7 +4,7 @@
 namespace Modrinth.Models;
 
 /// <summary>
-///   A search result
+///     A search result
 /// </summary>
 public class SearchResponse
 {

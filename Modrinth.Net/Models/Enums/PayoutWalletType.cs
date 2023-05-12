@@ -3,20 +3,22 @@
 namespace Modrinth.Models.Enums;
 
 /// <summary>
-/// The type of user's wallet
+///     The type of user's wallet
 /// </summary>
 public enum PayoutWalletType
 {
     /// <summary>
-    ///   Email
+    ///     Email
     /// </summary>
     Email,
+
     /// <summary>
-    ///  Phone
+    ///     Phone
     /// </summary>
     Phone,
+
     /// <summary>
-    /// User handle
+    ///     User handle
     /// </summary>
     [JsonPropertyName("user_handle")] UserHandle
 }

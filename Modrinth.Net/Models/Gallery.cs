@@ -2,7 +2,7 @@
 namespace Modrinth.Models;
 
 /// <summary>
-///  A gallery image
+///     A gallery image
 /// </summary>
 public class Gallery
 {

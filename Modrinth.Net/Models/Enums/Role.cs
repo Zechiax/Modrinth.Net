@@ -1,20 +1,22 @@
 ﻿namespace Modrinth.Models.Enums;
 
 /// <summary>
-///  Role of a user
+///     Role of a user
 /// </summary>
 public enum Role
 {
     /// <summary>
-    /// Administrator
+    ///     Administrator
     /// </summary>
     Admin,
+
     /// <summary>
-    /// Moderator
+    ///     Moderator
     /// </summary>
     Moderator,
+
     /// <summary>
-    /// Developer (normal user)
+    ///     Developer (normal user)
     /// </summary>
     Developer
 }

@@ -2,7 +2,7 @@
 namespace Modrinth.Models;
 
 /// <summary>
-///   A donation link of a project
+///     A donation link of a project
 /// </summary>
 public class DonationUrl
 {

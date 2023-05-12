@@ -1,7 +1,7 @@
 ﻿namespace Modrinth.Models.Enums;
 
 /// <summary>
-///    The type of a game version
+///     The type of a game version
 /// </summary>
 public enum GameVersionType
 {

@@ -3,7 +3,7 @@
 #pragma warning disable CS8618
 
 /// <summary>
-/// A license
+///     A license
 /// </summary>
 public class License
 {

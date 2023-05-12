@@ -6,6 +6,11 @@ namespace Modrinth.Endpoints.Miscellaneous;
 public class MiscellaneousEndpoint : Endpoint, IMiscellaneousEndpoint
 {
     /// <inheritdoc />
+    public MiscellaneousEndpoint(IRequester requester) : base(requester)
+    {
+    }
+
+    /// <inheritdoc />
     public async Task<ModrinthStatistics> GetStatisticsAsync()
     {
         var reqMsg = new HttpRequestMessage();
@@ -13,10 +18,5 @@ public class MiscellaneousEndpoint : Endpoint, IMiscellaneousEndpoint
         reqMsg.RequestUri = new Uri("statistics", UriKind.Relative);
 
         return await Requester.GetJsonAsync<ModrinthStatistics>(reqMsg).ConfigureAwait(false);
-    }
-
-    /// <inheritdoc />
-    public MiscellaneousEndpoint(IRequester requester) : base(requester)
-    {
     }
 }

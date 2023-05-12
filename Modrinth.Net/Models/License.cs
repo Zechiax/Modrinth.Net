@@ -2,7 +2,7 @@
 namespace Modrinth.Models;
 
 /// <summary>
-///    A license that a project is under
+///     A license that a project is under
 /// </summary>
 public class License
 {

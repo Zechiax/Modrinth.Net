@@ -3,7 +3,7 @@
 namespace Modrinth.Endpoints.Miscellaneous;
 
 /// <summary>
-///    Miscellaneous endpoints
+///     Miscellaneous endpoints
 /// </summary>
 public interface IMiscellaneousEndpoint
 {

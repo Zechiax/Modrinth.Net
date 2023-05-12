@@ -4,7 +4,7 @@ using Modrinth.Models.Enums;
 namespace Modrinth.Endpoints.VersionFile;
 
 /// <summary>
-///    Version file endpoints
+///     Version file endpoints
 /// </summary>
 public interface IVersionFileEndpoint
 {
@@ -19,7 +19,7 @@ public interface IVersionFileEndpoint
         HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1);
 
     /// <summary>
-    ///    Deletes a version by its file hash
+    ///     Deletes a version by its file hash
     /// </summary>
     /// <param name="hash"> The hash of the file, considering its byte content, and encoded in hexadecimal </param>
     /// <param name="hashAlgorithm"> The hash algorithm used to generate the hash </param>

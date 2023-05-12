@@ -1,16 +1,17 @@
 ﻿namespace Modrinth.Models.Enums;
 
 /// <summary>
-/// The wallet that the user has selected to receive payouts
+///     The wallet that the user has selected to receive payouts
 /// </summary>
 public enum PayoutWallet
 {
     /// <summary>
-    ///    Paypal
+    ///     Paypal
     /// </summary>
     Paypal,
+
     /// <summary>
-    ///   Venmo
+    ///     Venmo
     /// </summary>
     Venmo
 }

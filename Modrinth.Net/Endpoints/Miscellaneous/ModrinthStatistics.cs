@@ -1,7 +1,7 @@
 ﻿namespace Modrinth.Endpoints.Miscellaneous;
 
 /// <summary>
-///  Statistics about a Modrinth instance
+///     Statistics about a Modrinth instance
 /// </summary>
 public class ModrinthStatistics
 {

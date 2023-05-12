@@ -4,7 +4,7 @@ using Modrinth.Models;
 namespace Modrinth.Endpoints.User;
 
 /// <summary>
-///   User endpoints
+///     User endpoints
 /// </summary>
 public interface IUserEndpoint
 {

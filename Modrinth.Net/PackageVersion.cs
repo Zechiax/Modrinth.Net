@@ -19,7 +19,7 @@ internal static class PackageVersion
                 return "";
 
             return assemblyName.Version.ToString();
-        } 
+        }
         catch
         {
             return "0.0.0";

@@ -6,7 +6,7 @@ using Modrinth.Models.Enums.Version;
 namespace Modrinth.Models;
 
 /// <summary>
-///    A version of a project
+///     A version of a project
 /// </summary>
 public class Version
 {

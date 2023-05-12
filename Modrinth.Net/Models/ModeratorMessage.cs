@@ -2,7 +2,7 @@
 namespace Modrinth.Models;
 
 /// <summary>
-///    A message that a moderator has left for the project
+///     A message that a moderator has left for the project
 /// </summary>
 public class ModeratorMessage
 {
