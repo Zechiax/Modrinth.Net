@@ -2,6 +2,9 @@ using Modrinth.Models.Enums.Project;
 
 namespace Modrinth.Extensions;
 
+/// <summary>
+///     Extensions for <see cref="ProjectType" />
+/// </summary>
 public static class ProjectTypeExtensions
 {
     /// <summary>

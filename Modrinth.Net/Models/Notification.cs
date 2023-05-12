@@ -1,6 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 using Modrinth.Models.Enums;
 
+#pragma warning disable CS8618
 namespace Modrinth.Models;
 
 /// <summary>

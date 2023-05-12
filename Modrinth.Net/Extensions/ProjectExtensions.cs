@@ -3,6 +3,9 @@ using Version = Modrinth.Models.Version;
 
 namespace Modrinth.Extensions;
 
+/// <summary>
+///     Extensions for <see cref="Project" />
+/// </summary>
 public static class ProjectExtensions
 {
     /// <summary>

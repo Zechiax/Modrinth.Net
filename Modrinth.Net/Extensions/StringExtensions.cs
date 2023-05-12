@@ -1,13 +1,19 @@
 namespace Modrinth.Extensions;
 
+/// <summary>
+///     Extensions for <see cref="string" />
+/// </summary>
 public static class StringExtensions
 {
     /// <summary>
-    ///     Add text in quotes if text contains specific char
+    ///     Escapes the specified input string with double quotes if it contains the specified character.
     /// </summary>
-    /// <param name="text"></param>
-    /// <param name="contains">The char to check if the text contains</param>
-    /// <returns></returns>
+    /// <param name="text">The input string to check for the specified character.</param>
+    /// <param name="contains">The character to check if it is contained in the input string. Defaults to a space character.</param>
+    /// <returns>
+    ///     The input string enclosed within double quotes if it contains the specified character;
+    ///     otherwise, the input string as is.
+    /// </returns>
     public static string EscapeIfContains(this string text, char contains = ' ')
     {
         return !string.IsNullOrEmpty(text) && text.Contains(contains) ? string.Concat('"', text, '"') : text;

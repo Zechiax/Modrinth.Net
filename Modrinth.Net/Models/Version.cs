@@ -70,7 +70,11 @@ public class Version
     [JsonPropertyName("author_id")]
     public string AuthorId { get; set; }
 
-    [JsonPropertyName("date_published")] public DateTime DatePublished { get; set; }
+    /// <summary>
+    ///     The time at which this version was created
+    /// </summary>
+    [JsonPropertyName("date_published")]
+    public DateTime DatePublished { get; set; }
 
     /// <summary>
     ///     The number of times this version has been downloaded

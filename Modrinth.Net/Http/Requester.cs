@@ -22,6 +22,11 @@ public class Requester : IRequester
         }
     };
 
+    /// <summary>
+    ///     Creates a new <see cref="Requester" /> with the specified <see cref="ModrinthClientConfig" />
+    /// </summary>
+    /// <param name="config"> The config to use </param>
+    /// <param name="httpClient"> The <see cref="HttpClient" /> to use, if null a new one will be created </param>
     public Requester(ModrinthClientConfig config, HttpClient? httpClient = null)
     {
         _config = config;

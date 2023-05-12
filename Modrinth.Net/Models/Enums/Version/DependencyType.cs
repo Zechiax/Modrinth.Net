@@ -1,5 +1,8 @@
 ﻿namespace Modrinth.Models.Enums.Version;
 
+/// <summary>
+///     The type of a dependency
+/// </summary>
 public enum DependencyType
 {
     /// <summary>

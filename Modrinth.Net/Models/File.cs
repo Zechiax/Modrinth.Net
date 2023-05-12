@@ -4,6 +4,9 @@ using Modrinth.Models.Enums.File;
 #pragma warning disable CS8618
 namespace Modrinth.Models;
 
+/// <summary>
+///     A file of a project version
+/// </summary>
 public class File
 {
     /// <summary>
@@ -21,6 +24,9 @@ public class File
     /// </summary>
     public string FileName { get; set; }
 
+    /// <summary>
+    ///     Whether the file is the primary file of the version
+    /// </summary>
     public bool Primary { get; set; }
 
     /// <summary>

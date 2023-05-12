@@ -3,6 +3,9 @@ using Modrinth.Models.Enums.Project;
 
 namespace Modrinth;
 
+/// <summary>
+///     A facet for the filtering of results
+/// </summary>
 public abstract class Facet
 {
     /// <summary>
@@ -46,17 +49,32 @@ public abstract class Facet
     }
 }
 
+/// <summary>
+///     A facet for the filtering of results, with a specific type
+/// </summary>
+/// <typeparam name="T"></typeparam>
 public class Facet<T> : Facet
 {
-    public Facet(FacetType type, T value)
+    internal Facet(FacetType type, T value)
     {
         Type = type;
         Value = value;
     }
 
+    /// <summary>
+    ///     The type of the facet
+    /// </summary>
     public FacetType Type { get; }
+
+    /// <summary>
+    ///     The value of the facet
+    /// </summary>
     public T Value { get; }
 
+    /// <summary>
+    ///     Returns a string representation of the facet, so that it is usable in API requests
+    /// </summary>
+    /// <returns></returns>
     public override string ToString()
     {
         return Type switch
@@ -70,10 +88,28 @@ public class Facet<T> : Facet
     }
 }
 
+/// <summary>
+///     The type of a facet
+/// </summary>
 public enum FacetType
 {
+    /// <summary>
+    ///     The facet is for filtering by category
+    /// </summary>
     Categories,
+
+    /// <summary>
+    ///     The facet is for filtering by Minecraft version
+    /// </summary>
     Versions,
+
+    /// <summary>
+    ///     The facet is for filtering by license
+    /// </summary>
     License,
+
+    /// <summary>
+    ///     The facet is for filtering by project type
+    /// </summary>
     ProjectType
 }
