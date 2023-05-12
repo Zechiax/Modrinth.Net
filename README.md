@@ -105,6 +105,7 @@ facets.Add(Facet.Version("1.19.4"));
 
 // This will create a query that looks like this:
 // (category:adventure OR category:magic) AND version:1.19.4
+// Basically it will search for projects that have the category "adventure" or "magic" on Minecraft version 1.19.4
 
 // Then you can pass the FacetCollection to the SearchAsync method
 var search = await _client.Project.SearchAsync("", facets: facets);
