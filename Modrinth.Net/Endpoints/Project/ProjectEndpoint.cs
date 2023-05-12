@@ -6,15 +6,14 @@ using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Endpoints.Project;
 
-public class ProjectEndpoint : IProjectEndpoint
+/// <inheritdoc cref="Modrinth.Endpoints.Project.IProjectEndpoint" />
+public class ProjectEndpoint : Endpoint, IProjectEndpoint
 {
     private const string ProjectPathSegment = "project";
 
-    private readonly IRequester _client;
-
-    public ProjectEndpoint(IRequester client)
+    /// <inheritdoc />
+    public ProjectEndpoint(IRequester requester) : base(requester)
     {
-        _client = client;
     }
 
     /// <inheritdoc />
@@ -24,7 +23,7 @@ public class ProjectEndpoint : IProjectEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
 
-        return await _client.GetJsonAsync<Models.Project>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -41,7 +40,7 @@ public class ProjectEndpoint : IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await _client.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -51,7 +50,7 @@ public class ProjectEndpoint : IProjectEndpoint
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -68,7 +67,7 @@ public class ProjectEndpoint : IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await _client.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -78,7 +77,7 @@ public class ProjectEndpoint : IProjectEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/check", UriKind.Relative);
 
-        return await _client.GetJsonAsync<SlugIdValidity>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<SlugIdValidity>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -88,7 +87,7 @@ public class ProjectEndpoint : IProjectEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/dependencies", UriKind.Relative);
 
-        return await _client.GetJsonAsync<Dependencies>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Dependencies>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -98,7 +97,7 @@ public class ProjectEndpoint : IProjectEndpoint
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -108,7 +107,7 @@ public class ProjectEndpoint : IProjectEndpoint
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -118,7 +117,7 @@ public class ProjectEndpoint : IProjectEndpoint
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/icon", UriKind.Relative);
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -143,7 +142,7 @@ public class ProjectEndpoint : IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -173,7 +172,7 @@ public class ProjectEndpoint : IProjectEndpoint
 
         reqMsg.Content = streamContent;
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -196,7 +195,7 @@ public class ProjectEndpoint : IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -214,7 +213,7 @@ public class ProjectEndpoint : IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -237,6 +236,6 @@ public class ProjectEndpoint : IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await _client.GetJsonAsync<SearchResponse>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<SearchResponse>(reqMsg).ConfigureAwait(false);
     }
 }

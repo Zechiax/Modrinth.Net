@@ -4,6 +4,9 @@ using Index = Modrinth.Models.Enums.Index;
 
 namespace Modrinth.Endpoints.Project;
 
+/// <summary>
+///   Project endpoints
+/// </summary>
 public interface IProjectEndpoint
 {
     /// <summary>

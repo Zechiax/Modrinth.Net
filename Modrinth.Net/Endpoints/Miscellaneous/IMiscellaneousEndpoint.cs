@@ -2,6 +2,9 @@
 
 namespace Modrinth.Endpoints.Miscellaneous;
 
+/// <summary>
+///    Miscellaneous endpoints
+/// </summary>
 public interface IMiscellaneousEndpoint
 {
     /// <summary>

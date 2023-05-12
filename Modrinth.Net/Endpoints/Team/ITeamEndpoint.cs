@@ -3,6 +3,9 @@ using Modrinth.Models;
 
 namespace Modrinth.Endpoints.Team;
 
+/// <summary>
+///   Team endpoints
+/// </summary>
 public interface ITeamEndpoint
 {
     /// <summary>

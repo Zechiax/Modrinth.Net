@@ -3,15 +3,14 @@ using Modrinth.Models.Tags;
 
 namespace Modrinth.Endpoints.Tag;
 
-/// <inheritdoc />
-public class TagEndpoint : ITagEndpoint
+/// <inheritdoc cref="Modrinth.Endpoints.Tag.ITagEndpoint" />
+public class TagEndpoint : Endpoint, ITagEndpoint
 {
     private const string TagPathSegment = "tag";
-    private readonly IRequester _client;
 
-    public TagEndpoint(IRequester client)
+    /// <inheritdoc />
+    public TagEndpoint(IRequester requester) : base(requester)
     {
-        _client = client;
     }
 
     /// <inheritdoc />
@@ -21,7 +20,7 @@ public class TagEndpoint : ITagEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "category", UriKind.Relative);
 
-        return await _client.GetJsonAsync<Category[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Category[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -31,7 +30,7 @@ public class TagEndpoint : ITagEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "loader", UriKind.Relative);
 
-        return await _client.GetJsonAsync<Loader[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Loader[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -41,7 +40,7 @@ public class TagEndpoint : ITagEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "game_version", UriKind.Relative);
 
-        return await _client.GetJsonAsync<GameVersion[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<GameVersion[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -51,7 +50,7 @@ public class TagEndpoint : ITagEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "license", UriKind.Relative);
 
-        return await _client.GetJsonAsync<License[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<License[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -61,7 +60,7 @@ public class TagEndpoint : ITagEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "donation_platform", UriKind.Relative);
 
-        return await _client.GetJsonAsync<DonationPlatform[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<DonationPlatform[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -71,6 +70,6 @@ public class TagEndpoint : ITagEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "report_type", UriKind.Relative);
 
-        return await _client.GetJsonAsync<string[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<string[]>(reqMsg).ConfigureAwait(false);
     }
 }
