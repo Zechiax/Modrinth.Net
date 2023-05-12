@@ -5,6 +5,9 @@ using Modrinth.Models.Enums;
 
 namespace Modrinth.Models;
 
+/// <summary>
+///   A user on Modrinth
+/// </summary>
 public class User
 {
     /// <summary>

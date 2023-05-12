@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿
+using System.Reflection;
 using Microsoft.Extensions.Configuration;
 
 namespace Modrinth.Net.Test.ModrinthApiTests;

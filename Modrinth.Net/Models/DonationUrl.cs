@@ -1,6 +1,9 @@
 ﻿#pragma warning disable CS8618
 namespace Modrinth.Models;
 
+/// <summary>
+///   A donation link of a project
+/// </summary>
 public class DonationUrl
 {
     /// <summary>

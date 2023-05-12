@@ -1,5 +1,8 @@
 ﻿namespace Modrinth.Models.Errors;
 
+/// <summary>
+/// An error response returned by the API
+/// </summary>
 public class ResponseError
 {
     /// <summary>

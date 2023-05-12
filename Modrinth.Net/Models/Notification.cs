@@ -3,6 +3,9 @@ using Modrinth.Models.Enums;
 
 namespace Modrinth.Models;
 
+/// <summary>
+///    A user's notification
+/// </summary>
 public class Notification
 {
     /// <summary>

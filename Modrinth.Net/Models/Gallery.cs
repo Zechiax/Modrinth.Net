@@ -1,6 +1,9 @@
 ﻿#pragma warning disable CS8618
 namespace Modrinth.Models;
 
+/// <summary>
+///  A gallery image
+/// </summary>
 public class Gallery
 {
     /// <summary>

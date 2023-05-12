@@ -4,6 +4,9 @@ using Modrinth.Models.Enums.Project;
 
 namespace Modrinth.Models.Tags;
 
+/// <summary>
+///  A category of a project
+/// </summary>
 public class Category
 {
     /// <summary>

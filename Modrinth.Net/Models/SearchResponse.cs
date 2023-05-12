@@ -3,6 +3,9 @@
 #pragma warning disable CS8618
 namespace Modrinth.Models;
 
+/// <summary>
+///   A search result
+/// </summary>
 public class SearchResponse
 {
     /// <summary>

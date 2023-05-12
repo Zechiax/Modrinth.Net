@@ -3,6 +3,9 @@ using Modrinth.Models.Enums;
 
 namespace Modrinth.Models;
 
+/// <summary>
+///    The data for a user's payout
+/// </summary>
 public class PayoutData
 {
     /// <summary>
