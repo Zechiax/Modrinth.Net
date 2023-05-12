@@ -31,7 +31,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await _client.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
