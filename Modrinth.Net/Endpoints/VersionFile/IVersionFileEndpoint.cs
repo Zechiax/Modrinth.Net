@@ -12,19 +12,18 @@ public interface IVersionFileEndpoint
     ///     Get specific version by file hash
     /// </summary>
     /// <param name="hash">The hash of the file, considering its byte content, and encoded in hexadecimal</param>
-    /// <param name="hashAlgorithm"></param>
+    /// <param name="hashAlgorithm"> The hash algorithm used to generate the hash </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    Task<System.Version> GetVersionByHashAsync(string hash,
+    Task<Models.Version> GetVersionByHashAsync(string hash,
         HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1);
 
     /// <summary>
-    ///    Deletes specific version by file hash
+    ///    Deletes a version by its file hash
     /// </summary>
     /// <param name="hash"> The hash of the file, considering its byte content, and encoded in hexadecimal </param>
-    /// <param name="hashAlgorithm"> The hash algorithm used to hash the file </param>
+    /// <param name="hashAlgorithm"> The hash algorithm used to generate the hash </param>
     /// <returns></returns>
-    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task DeleteVersionByHashAsync(string hash,
         HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1);
 }

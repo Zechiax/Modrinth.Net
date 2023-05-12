@@ -12,7 +12,7 @@ public static class UrlParser
     /// </summary>
     public static Regex ModrinthUrlRegex { get; } =
         new(
-            @"(?:https:\/\/(?:www.)?modrinth.com\/(mod|modpack|resourcepack|plugin|shader|datapack)\/([\w!@$()`.+,""\-']{3,64}))",
+            @"(?:https:\/\/(?:www.)?modrinth.com\/(?:mod|modpack|resourcepack|plugin|shader|datapack)\/([\w!@$()`.+,""\-']{3,64}))",
             RegexOptions.Compiled);
 
     /// <summary>
@@ -36,7 +36,7 @@ public static class UrlParser
         var match = ModrinthUrlRegex.Match(url);
         if (match.Success)
         {
-            id = match.Groups[2].Value;
+            id = match.Groups[1].Value;
             return true;
         }
 

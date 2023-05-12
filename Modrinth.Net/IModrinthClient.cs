@@ -34,7 +34,7 @@ public interface IModrinthClient : IDisposable
     ITagEndpoint Tag { get; }
 
     /// <inheritdoc cref="IVersionFileEndpoint" />
-    IVersionFileEndpoint VersionFileEndpoint { get; }
+    IVersionFileEndpoint VersionFile { get; }
 
     /// <inheritdoc cref="IMiscellaneousEndpoint" />
     IMiscellaneousEndpoint Miscellaneous { get; }
