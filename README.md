@@ -100,11 +100,11 @@ var facets = new FacetCollection();
 // If you call Add again, the new facets will be combined in an AND statement with the previous ones
 
 // Example:
-facets.Add(Facet.Category("adventure"), Facet.Version("1.19.3"));
-facets.Add(Facet.Category("magic"));
+facets.Add(Facet.Category("adventure"), Facet.Category("magic"));
+facets.Add(Facet.Version("1.19.4"));
 
 // This will create a query that looks like this:
-// (category:adventure OR version:1.19.3) AND category:magic
+// (category:adventure OR category:magic) AND version:1.19.4
 
 // Then you can pass the FacetCollection to the SearchAsync method
 var search = await _client.Project.SearchAsync("", facets: facets);
@@ -115,8 +115,8 @@ As `FacetCollection` implements `ICollection<T>`, you can use collection initial
 ```csharp
 var facets = new FacetCollection
 {
-    { Facet.Category("adventure"), Facet.Version("1.19.3") },
-    { Facet.Category("magic") }
+    { Facet.Category("adventure"), Facet.Category("magic") },
+    { Facet.Version("1.19.4") }
 };
 ```
 
