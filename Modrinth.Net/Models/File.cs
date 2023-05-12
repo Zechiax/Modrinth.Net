@@ -7,7 +7,7 @@ namespace Modrinth.Models;
 public class File
 {
     /// <summary>
-    ///     A map of hashes of the file. The key is the hashing algorithm and the value is the string version of the hash.
+    ///     Hashes of the file
     /// </summary>
     public Hashes Hashes { get; set; }
 

@@ -4,6 +4,9 @@ using Modrinth.Models.Enums.Version;
 
 namespace Modrinth.Models;
 
+/// <summary>
+///     A dependency of a version
+/// </summary>
 public class Dependency
 {
     /// <summary>

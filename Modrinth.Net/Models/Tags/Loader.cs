@@ -4,6 +4,9 @@ using Modrinth.Models.Enums.Project;
 #pragma warning disable CS8618
 namespace Modrinth.Models.Tags;
 
+/// <summary>
+///     A mod loader
+/// </summary>
 public class Loader
 {
     /// <summary>

@@ -2,13 +2,12 @@
 
 namespace Modrinth.Endpoints.Miscellaneous;
 
-public class MiscellaneousEndpoint : IMiscellaneousEndpoint
+/// <inheritdoc cref="Modrinth.Endpoints.Miscellaneous.IMiscellaneousEndpoint" />
+public class MiscellaneousEndpoint : Endpoint, IMiscellaneousEndpoint
 {
-    private readonly IRequester _client;
-
-    public MiscellaneousEndpoint(IRequester client)
+    /// <inheritdoc />
+    public MiscellaneousEndpoint(IRequester requester) : base(requester)
     {
-        _client = client;
     }
 
     /// <inheritdoc />
@@ -18,6 +17,6 @@ public class MiscellaneousEndpoint : IMiscellaneousEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("statistics", UriKind.Relative);
 
-        return await _client.GetJsonAsync<ModrinthStatistics>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<ModrinthStatistics>(reqMsg).ConfigureAwait(false);
     }
 }

@@ -5,6 +5,9 @@ namespace Modrinth.Models.Tags;
 
 #pragma warning disable CS8618
 
+/// <summary>
+///     A Minecraft game version
+/// </summary>
 public class GameVersion
 {
     /// <summary>

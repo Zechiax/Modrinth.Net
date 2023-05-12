@@ -1,7 +1,11 @@
-﻿using Modrinth.Models.Enums.Version;
+﻿using Modrinth.Exceptions;
+using Modrinth.Models.Enums.Version;
 
 namespace Modrinth.Endpoints.Version;
 
+/// <summary>
+///     Version endpoints
+/// </summary>
 public interface IVersionEndpoint
 {
     /// <summary>

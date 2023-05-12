@@ -4,14 +4,14 @@ using Modrinth.Models.Enums.Version;
 
 namespace Modrinth.Endpoints.Version;
 
-public class VersionEndpoint : IVersionEndpoint
+/// <inheritdoc cref="Modrinth.Endpoints.Version.IVersionEndpoint" />
+public class VersionEndpoint : Endpoint, IVersionEndpoint
 {
     private const string VersionsPath = "version";
-    private readonly IRequester _client;
 
-    public VersionEndpoint(IRequester client)
+    /// <inheritdoc />
+    public VersionEndpoint(IRequester requester) : base(requester)
     {
-        _client = client;
     }
 
     /// <inheritdoc />
@@ -21,7 +21,7 @@ public class VersionEndpoint : IVersionEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(VersionsPath + '/' + versionId, UriKind.Relative);
 
-        return await _client.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -45,7 +45,7 @@ public class VersionEndpoint : IVersionEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await _client.GetJsonAsync<Models.Version[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -62,7 +62,7 @@ public class VersionEndpoint : IVersionEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await _client.GetJsonAsync<Models.Version[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -72,7 +72,7 @@ public class VersionEndpoint : IVersionEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("project/" + slugOrId + '/' + VersionsPath + '/' + versionNumber, UriKind.Relative);
 
-        return await _client.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -82,7 +82,7 @@ public class VersionEndpoint : IVersionEndpoint
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(VersionsPath + '/' + versionId, UriKind.Relative);
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -100,6 +100,6 @@ public class VersionEndpoint : IVersionEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 }

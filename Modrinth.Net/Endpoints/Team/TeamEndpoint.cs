@@ -4,15 +4,14 @@ using Modrinth.Models;
 
 namespace Modrinth.Endpoints.Team;
 
-/// <inheritdoc />
-public class TeamEndpoint : ITeamEndpoint
+/// <inheritdoc cref="Modrinth.Endpoints.Team.ITeamEndpoint" />
+public class TeamEndpoint : Endpoint, ITeamEndpoint
 {
     private const string TeamsPathSegment = "team";
-    private readonly IRequester _client;
 
-    public TeamEndpoint(IRequester client)
+    /// <inheritdoc />
+    public TeamEndpoint(IRequester requester) : base(requester)
     {
-        _client = client;
     }
 
     /// <inheritdoc />
@@ -22,7 +21,7 @@ public class TeamEndpoint : ITeamEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("project" + '/' + slugOrId + '/' + "members", UriKind.Relative);
 
-        return await _client.GetJsonAsync<TeamMember[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<TeamMember[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -32,7 +31,7 @@ public class TeamEndpoint : ITeamEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members", UriKind.Relative);
 
-        return await _client.GetJsonAsync<TeamMember[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<TeamMember[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -49,6 +48,6 @@ public class TeamEndpoint : ITeamEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await _client.GetJsonAsync<TeamMember[][]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<TeamMember[][]>(reqMsg).ConfigureAwait(false);
     }
 }

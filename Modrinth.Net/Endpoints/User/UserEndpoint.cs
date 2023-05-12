@@ -5,14 +5,14 @@ using File = System.IO.File;
 
 namespace Modrinth.Endpoints.User;
 
-public class UserEndpoint : IUserEndpoint
+/// <inheritdoc cref="Modrinth.Endpoints.User.IUserEndpoint" />
+public class UserEndpoint : Endpoint, IUserEndpoint
 {
     private const string UserPathSegment = "user";
-    private readonly IRequester _client;
 
-    public UserEndpoint(IRequester client)
+    /// <inheritdoc />
+    public UserEndpoint(IRequester requester) : base(requester)
     {
-        _client = client;
     }
 
     /// <inheritdoc />
@@ -22,7 +22,7 @@ public class UserEndpoint : IUserEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId, UriKind.Relative);
 
-        return await _client.GetJsonAsync<Models.User>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.User>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -32,7 +32,7 @@ public class UserEndpoint : IUserEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "projects", UriKind.Relative);
 
-        return await _client.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -49,7 +49,7 @@ public class UserEndpoint : IUserEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await _client.GetJsonAsync<Models.User[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.User[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -59,7 +59,7 @@ public class UserEndpoint : IUserEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment, UriKind.Relative);
 
-        return await _client.GetJsonAsync<Models.User>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.User>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -69,7 +69,7 @@ public class UserEndpoint : IUserEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "notifications", UriKind.Relative);
 
-        return await _client.GetJsonAsync<Notification[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Notification[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -79,7 +79,7 @@ public class UserEndpoint : IUserEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "follows", UriKind.Relative);
 
-        return await _client.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -102,6 +102,6 @@ public class UserEndpoint : IUserEndpoint
 
         reqMsg.Content = streamContent;
 
-        await _client.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
     }
 }

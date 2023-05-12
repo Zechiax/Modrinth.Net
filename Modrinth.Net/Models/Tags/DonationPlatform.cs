@@ -2,6 +2,9 @@
 
 #pragma warning disable CS8618
 
+/// <summary>
+///     A donation platform
+/// </summary>
 public class DonationPlatform
 {
     /// <summary>
