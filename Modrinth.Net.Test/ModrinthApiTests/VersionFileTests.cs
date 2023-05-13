@@ -64,4 +64,21 @@ public class TestVersionFile : EndpointTests
 
         foreach (var hash in hashes) Assert.That(versions.ContainsKey(hash), Is.True);
     }
+    
+    [Test]
+    [TestCase(0)]
+    [TestCase(1)]
+    public async Task GetLatestVersionFromHashSha1(int index)
+    {
+        var hash = ValidSha1Hashes[index];
+
+        var version = await Client.VersionFile.GetLatestVersionByHashAsync(hash);
+
+        Assert.That(version, Is.Not.Null);
+        // Check that one of the files has the correct hash
+
+        var file = version.Files.FirstOrDefault(f => f.Hashes.Sha1 == hash);
+
+        Assert.That(file, Is.Not.Null);
+    }
 }

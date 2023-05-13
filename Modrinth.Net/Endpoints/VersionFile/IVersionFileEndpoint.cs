@@ -35,4 +35,15 @@ public interface IVersionFileEndpoint
     /// <returns> A dictionary of hashes and their respective versions </returns>
     Task<IDictionary<string, Models.Version>> GetMultipleVersionsByHashAsync(string[] hashes,
         HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1);
+    
+    /// <summary>
+    ///   Gets the latest version of a projects by a file hash
+    /// </summary>
+    /// <param name="hash"> The hash of the file, considering its byte content, and encoded in hexadecimal </param>
+    /// <param name="hashAlgorithm"> The hash algorithm used to generate the hash </param>
+    /// <param name="loaders"> The loaders to filter by </param>
+    /// <param name="gameVersions"> The game versions to filter by </param>
+    /// <returns> The latest version of a project, that matches the filters </returns>
+    Task<Models.Version> GetLatestVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1, 
+        string[]? loaders = null, string[]? gameVersions = null);
 }
