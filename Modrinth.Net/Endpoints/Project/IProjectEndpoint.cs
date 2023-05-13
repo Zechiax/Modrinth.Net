@@ -61,9 +61,9 @@ public interface IProjectEndpoint
     /// <summary>
     ///     Check project slug/ID validity
     /// </summary>
-    /// <returns></returns>
+    /// <returns> The ID of the project if it exists, otherwise exception is thrown </returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    Task<SlugIdValidity> CheckIdSlugValidityAsync(string slugOrId);
+    Task<string> CheckIdSlugValidityAsync(string slugOrId);
 
     /// <summary>
     ///     Gets the dependencies of a project by slug or ID
