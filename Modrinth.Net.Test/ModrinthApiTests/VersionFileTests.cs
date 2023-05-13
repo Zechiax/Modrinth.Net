@@ -38,4 +38,30 @@ public class TestVersionFile : EndpointTests
 
         Assert.That(file, Is.Not.Null);
     }
+
+    [Test]
+    public async Task GetMultipleVersionsFromHashesSha1()
+    {
+        var hashes = ValidSha1Hashes;
+
+        var versions = await Client.VersionFile.GetMultipleVersionsByHashAsync(hashes);
+
+        Assert.That(versions, Is.Not.Null);
+        Assert.That(versions, Is.Not.Empty);
+
+        foreach (var hash in hashes) Assert.That(versions.ContainsKey(hash), Is.True);
+    }
+
+    [Test]
+    public async Task GetMultipleVersionsFromHashesSha512()
+    {
+        var hashes = ValidSha512Hashes;
+
+        var versions = await Client.VersionFile.GetMultipleVersionsByHashAsync(hashes, HashAlgorithm.Sha512);
+
+        Assert.That(versions, Is.Not.Null);
+        Assert.That(versions, Is.Not.Empty);
+
+        foreach (var hash in hashes) Assert.That(versions.ContainsKey(hash), Is.True);
+    }
 }

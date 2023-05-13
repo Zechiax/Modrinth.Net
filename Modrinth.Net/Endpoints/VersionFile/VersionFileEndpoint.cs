@@ -1,4 +1,6 @@
-﻿using Modrinth.Http;
+﻿using System.Text;
+using System.Text.Json;
+using Modrinth.Http;
 using Modrinth.Models.Enums;
 
 namespace Modrinth.Endpoints.VersionFile;
@@ -46,5 +48,25 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
         parameters.AddToRequest(reqMsg);
 
         await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    public async Task<IDictionary<string, Models.Version>> GetMultipleVersionsByHashAsync(string[] hashes,
+        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
+    {
+        var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Post;
+        reqMsg.RequestUri = new Uri("version_files", UriKind.Relative);
+
+        // Info in request body application/json
+        var requestBody = new
+        {
+            hashes,
+            algorithm = hashAlgorithm.ToString().ToLower()
+        };
+
+        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+
+        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg).ConfigureAwait(false);
     }
 }
