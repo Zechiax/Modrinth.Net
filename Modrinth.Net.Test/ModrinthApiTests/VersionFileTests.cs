@@ -75,10 +75,62 @@ public class TestVersionFile : EndpointTests
         var version = await Client.VersionFile.GetLatestVersionByHashAsync(hash);
 
         Assert.That(version, Is.Not.Null);
-        // Check that one of the files has the correct hash
+        
+        var versions = await Client.Version.GetProjectVersionListAsync(version.ProjectId);
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(versions, Is.Not.Null);
+            Assert.That(versions, Is.Not.Empty);
 
-        var file = version.Files.FirstOrDefault(f => f.Hashes.Sha1 == hash);
-
-        Assert.That(file, Is.Not.Null);
+            // We check that the version is the latest version
+            Assert.That(version.Id, Is.EqualTo(versions[0].Id));
+        });
     }
+    
+    [Test]
+    [TestCase(0)]
+    [TestCase(1)]
+    public async Task GetLatestVersionFromHashSha512(int index)
+    {
+        var hash = ValidSha512Hashes[index];
+
+        var version = await Client.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha512);
+
+        Assert.That(version, Is.Not.Null);
+        
+        var versions = await Client.Version.GetProjectVersionListAsync(version.ProjectId);
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(versions, Is.Not.Null);
+            Assert.That(versions, Is.Not.Empty);
+
+            // We check that the version is the latest version
+            Assert.That(version.Id, Is.EqualTo(versions[0].Id));
+        });
+    }
+    
+    [Test]
+    [TestCase(0)]
+    public async Task GetLatestVersionFromHashSha1WithFilters(int index, string[] loaders, string[] gameVersions)
+    {
+        var hash = ValidSha1Hashes[index];
+
+        var version = await Client.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha1, loaders, gameVersions);
+
+        Assert.That(version, Is.Not.Null);
+        
+        var versions = await Client.Version.GetProjectVersionListAsync(version.ProjectId);
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(versions, Is.Not.Null);
+            Assert.That(versions, Is.Not.Empty);
+
+            // We check that the version is the latest version
+            Assert.That(version.Id, Is.EqualTo(versions[0].Id));
+        });
+    }
+    
 }
