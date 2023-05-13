@@ -69,4 +69,61 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg).ConfigureAwait(false);
     }
+
+    /// <inheritdoc />
+    public async Task<Models.Version> GetLatestVersionByHashAsync(string hash,
+        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1,
+        string[]? loaders = null, string[]? gameVersions = null)
+    {
+        loaders = loaders ?? Array.Empty<string>();
+        gameVersions = gameVersions ?? Array.Empty<string>();
+
+        var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Post;
+        reqMsg.RequestUri = new Uri(VersionFilePathSegment + '/' + hash + "/update", UriKind.Relative);
+
+        var parameters = new ParameterBuilder
+        {
+            {"algorithm", hashAlgorithm.ToString().ToLower()}
+        };
+
+        parameters.AddToRequest(reqMsg);
+
+        // Info in request body application/json
+        var requestBody = new
+        {
+            loaders,
+            game_versions = gameVersions
+        };
+
+        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+
+        return await Requester.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    public async Task<IDictionary<string, Models.Version>> GetMultipleLatestVersionsByHashAsync(string[] hashes,
+        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1,
+        string[]? loaders = null, string[]? gameVersions = null)
+    {
+        loaders = loaders ?? Array.Empty<string>();
+        gameVersions = gameVersions ?? Array.Empty<string>();
+
+        var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Post;
+        reqMsg.RequestUri = new Uri("version_files/update", UriKind.Relative);
+
+        // Info in request body application/json
+        var requestBody = new
+        {
+            algorithm = hashAlgorithm.ToString().ToLower(),
+            hashes,
+            loaders,
+            game_versions = gameVersions
+        };
+
+        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+
+        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg).ConfigureAwait(false);
+    }
 }
