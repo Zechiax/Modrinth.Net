@@ -71,13 +71,15 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<SlugIdValidity> CheckIdSlugValidityAsync(string slugOrId)
+    public async Task<string> CheckIdSlugValidityAsync(string slugOrId)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/check", UriKind.Relative);
 
-        return await Requester.GetJsonAsync<SlugIdValidity>(reqMsg).ConfigureAwait(false);
+        var validity = await Requester.GetJsonAsync<SlugIdValidity>(reqMsg).ConfigureAwait(false);
+
+        return validity.Id;
     }
 
     /// <inheritdoc />

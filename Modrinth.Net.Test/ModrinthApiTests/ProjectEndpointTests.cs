@@ -18,7 +18,11 @@ public class ProjectEndpointTests : EndpointTests
     {
         var validity = await Client.Project.CheckIdSlugValidityAsync(TestProjectSlug);
 
-        Assert.That(validity.Id, Is.Not.Empty);
+        Assert.That(validity, Is.Not.Empty);
+        
+        var project = await Client.Project.GetAsync(validity);
+        
+        Assert.That(project.Slug, Is.EqualTo(TestProjectSlug));
     }
 
     [Test]
