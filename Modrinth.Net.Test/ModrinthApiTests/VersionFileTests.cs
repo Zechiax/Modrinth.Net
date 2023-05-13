@@ -64,7 +64,7 @@ public class TestVersionFile : EndpointTests
 
         foreach (var hash in hashes) Assert.That(versions.ContainsKey(hash), Is.True);
     }
-    
+
     [Test]
     [TestCase(0)]
     [TestCase(1)]
@@ -75,9 +75,9 @@ public class TestVersionFile : EndpointTests
         var version = await Client.VersionFile.GetLatestVersionByHashAsync(hash);
 
         Assert.That(version, Is.Not.Null);
-        
+
         var versions = await Client.Version.GetProjectVersionListAsync(version.ProjectId);
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(versions, Is.Not.Null);
@@ -87,7 +87,7 @@ public class TestVersionFile : EndpointTests
             Assert.That(version.Id, Is.EqualTo(versions[0].Id));
         });
     }
-    
+
     [Test]
     [TestCase(0)]
     [TestCase(1)]
@@ -98,9 +98,9 @@ public class TestVersionFile : EndpointTests
         var version = await Client.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha512);
 
         Assert.That(version, Is.Not.Null);
-        
+
         var versions = await Client.Version.GetProjectVersionListAsync(version.ProjectId);
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(versions, Is.Not.Null);
@@ -110,27 +110,46 @@ public class TestVersionFile : EndpointTests
             Assert.That(version.Id, Is.EqualTo(versions[0].Id));
         });
     }
-    
+
     [Test]
-    [TestCase(0)]
+    [TestCase(0, new string[] { }, new string[] { })]
+    [TestCase(0, new[] {"forge"}, new string[] { })]
+    [TestCase(0, new string[] { }, new[] {"1.18.1"})]
+    [TestCase(0, new[] {"quilt"}, new[] {"1.19"})]
+    [TestCase(0, new[] {"fabric"}, new[] {"1.17.1"})]
     public async Task GetLatestVersionFromHashSha1WithFilters(int index, string[] loaders, string[] gameVersions)
     {
         var hash = ValidSha1Hashes[index];
 
-        var version = await Client.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha1, loaders, gameVersions);
+        var version =
+            await Client.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha1, loaders, gameVersions);
 
-        Assert.That(version, Is.Not.Null);
-        
-        var versions = await Client.Version.GetProjectVersionListAsync(version.ProjectId);
-        
         Assert.Multiple(() =>
         {
-            Assert.That(versions, Is.Not.Null);
-            Assert.That(versions, Is.Not.Empty);
-
-            // We check that the version is the latest version
-            Assert.That(version.Id, Is.EqualTo(versions[0].Id));
+            Assert.That(version, Is.Not.Null);
+            Assert.That(version.Loaders, Is.SupersetOf(loaders));
+            Assert.That(version.GameVersions, Is.SupersetOf(gameVersions));
         });
     }
-    
+
+    [Test]
+    [TestCase(0, new string[] { }, new string[] { })]
+    [TestCase(0, new[] {"forge"}, new string[] { })]
+    [TestCase(0, new string[] { }, new[] {"1.18.1"})]
+    [TestCase(0, new[] {"quilt"}, new[] {"1.19"})]
+    [TestCase(0, new[] {"fabric"}, new[] {"1.17.1"})]
+    public async Task GetLatestVersionFromHashSha512WithFilters(int index, string[] loaders, string[] gameVersions)
+    {
+        var hash = ValidSha512Hashes[index];
+
+        var version =
+            await Client.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha512, loaders, gameVersions);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(version, Is.Not.Null);
+            Assert.That(version.Loaders, Is.SupersetOf(loaders));
+            Assert.That(version.GameVersions, Is.SupersetOf(gameVersions));
+        });   
+    }
 }
