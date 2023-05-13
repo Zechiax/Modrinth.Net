@@ -152,4 +152,87 @@ public class TestVersionFile : EndpointTests
             Assert.That(version.GameVersions, Is.SupersetOf(gameVersions));
         });   
     }
+
+    [Test]
+    public async Task GetMultipleLatestVersionsFromHashSha1()
+    {
+        var hashes = ValidSha1Hashes;
+        
+        var versions = await Client.VersionFile.GetMultipleLatestVersionsByHashAsync(hashes);
+        
+        // We currently don't check if the versions are the latest versions
+        Assert.Multiple(() =>
+        {
+            Assert.That(versions, Is.Not.Null);
+            Assert.That(versions, Is.Not.Empty);
+        });
+    }
+    
+    [Test]
+    public async Task GetMultipleLatestVersionsFromHashSha512()
+    {
+        var hashes = ValidSha512Hashes;
+        
+        var versions = await Client.VersionFile.GetMultipleLatestVersionsByHashAsync(hashes, HashAlgorithm.Sha512);
+
+        // We currently don't check if the versions are the latest versions
+        Assert.Multiple(() =>
+        {
+            Assert.That(versions, Is.Not.Null);
+            Assert.That(versions, Is.Not.Empty);
+        });
+    }
+    
+    [Test]
+    [TestCase(0, new string[] { }, new string[] { })]
+    [TestCase(0, new[] {"forge"}, new string[] { })]
+    [TestCase(0, new string[] { }, new[] {"1.18.1"})]
+    [TestCase(0, new[] {"quilt"}, new[] {"1.19"})]
+    [TestCase(0, new[] {"fabric"}, new[] {"1.17.1"})]
+    public async Task GetMultipleLatestVersionsFromHashSha1WithFilters(int index, string[] loaders, string[] gameVersions)
+    {
+        var hashes = ValidSha1Hashes;
+        
+        var versions = await Client.VersionFile.GetMultipleLatestVersionsByHashAsync(hashes, HashAlgorithm.Sha1, loaders, gameVersions);
+        
+        Assert.Multiple(() =>
+        {
+            Assert.That(versions, Is.Not.Null);
+            Assert.That(versions, Is.Not.Empty);
+            
+            foreach (var version in versions.Values)
+            {
+                Assert.That(version.Loaders, Is.SupersetOf(loaders));
+                Assert.That(version.GameVersions, Is.SupersetOf(gameVersions));
+            }    
+        });
+    }
+
+    [Test]
+    [TestCase(0, new string[] { }, new string[] { })]
+    [TestCase(0, new[] {"forge"}, new string[] { })]
+    [TestCase(0, new string[] { }, new[] {"1.18.1"})]
+    [TestCase(0, new[] {"quilt"}, new[] {"1.19"})]
+    [TestCase(0, new[] {"fabric"}, new[] {"1.17.1"})]
+    public async Task GetMultipleLatestVersionsFromHashSha512WithFilters(int index, string[] loaders,
+        string[] gameVersions)
+    {
+        var hashes = ValidSha512Hashes;
+
+        var versions =
+            await Client.VersionFile.GetMultipleLatestVersionsByHashAsync(hashes, HashAlgorithm.Sha512, loaders,
+                gameVersions);
+
+        Assert.Multiple(() =>
+        {
+            Assert.That(versions, Is.Not.Null);
+            Assert.That(versions, Is.Not.Empty);
+
+            foreach (var version in versions.Values)
+            {
+                Assert.That(version.Loaders, Is.SupersetOf(loaders));
+                Assert.That(version.GameVersions, Is.SupersetOf(gameVersions));
+            }
+        });
+    }
 }
