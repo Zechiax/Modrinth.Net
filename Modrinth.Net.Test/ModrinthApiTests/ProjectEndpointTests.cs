@@ -104,7 +104,7 @@ public class ProjectEndpointTests : EndpointTests
 
     // Invalid id
     [Test]
-    public async Task GetProject_WithInvalidId_ShouldThrowException()
+    public void GetProject_WithInvalidId_ShouldThrowException()
     {
         Assert.ThrowsAsync<ModrinthApiException>(async () => await Client.Project.GetAsync("invalid-slug"));
     }
