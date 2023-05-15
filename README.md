@@ -76,7 +76,7 @@ var client = new ModrinthClient(userAgent: "My_Awesome_Project");
 
 var search = await client.Project.SearchAsync("sodium");
 
-foreach (var project in search.Projects)
+foreach (var project in search.Hits)
 {
     Console.WriteLine(project.Title);
 }
