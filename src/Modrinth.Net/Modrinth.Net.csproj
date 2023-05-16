@@ -18,6 +18,7 @@
         <RootNamespace>Modrinth</RootNamespace>
         <RepositoryType>git</RepositoryType>
 		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <PropertyGroup>
