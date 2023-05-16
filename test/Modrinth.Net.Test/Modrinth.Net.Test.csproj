@@ -25,6 +25,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\src\Modrinth.Net\Modrinth.Net.csproj" />
         <ProjectReference Include="..\Modrinth.Net\Modrinth.Net.csproj" />
         <ProjectReference Include="..\src\Modrinth.Net\Modrinth.Net.csproj" />
     </ItemGroup>
