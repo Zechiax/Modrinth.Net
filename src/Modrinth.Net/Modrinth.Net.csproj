@@ -17,6 +17,7 @@
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>Modrinth</RootNamespace>
         <RepositoryType>git</RepositoryType>
+		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
 
     <PropertyGroup>
