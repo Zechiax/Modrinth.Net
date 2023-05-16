@@ -21,7 +21,7 @@ jobs:
         uses: alirezanet/publish-nuget@v3.0.4
         with:
           # Filepath of the project to be packaged, relative to root of repository
-          PROJECT_FILE_PATH: Modrinth.Net/Modrinth.Net.csproj
+          PROJECT_FILE_PATH: src/Modrinth.Net/Modrinth.Net.csproj
           
           # API key to authenticate with NuGet server
           NUGET_KEY: ${{secrets.NUGET_API_KEY}}
