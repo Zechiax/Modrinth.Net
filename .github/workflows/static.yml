@@ -38,6 +38,7 @@ jobs:
         with:
           dotnet-version: '6.x'
       - run: dotnet tool update -g docfx
+      - run: dotnet build
       - run: docfx docfx.json
         working-directory: docs
         
