@@ -16,7 +16,10 @@
       "noRestore": false,
       "namespaceLayout": "flattened",
       "memberLayout": "samePage",
-      "allowCompilationErrors": false
+      "allowCompilationErrors": false,
+      "properties": {
+        "TargetFramework": "net6.0"
+      }
     }
   ],
   "build": {
