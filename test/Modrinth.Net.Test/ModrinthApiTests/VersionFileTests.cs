@@ -3,7 +3,7 @@ using Modrinth.Models.Enums;
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class TestVersionFile : EndpointTests
+public class VersionFileTests : EndpointTests
 {
     [Test]
     [TestCase(0)]
