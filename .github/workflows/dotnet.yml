@@ -25,8 +25,6 @@ jobs:
       env:
         MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
       run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover /p:CoverletOutput=./coverage/coverage.opencover.xml
-    - name: List coverage directory
-      run: ls -al ./test/Modrinth.Net.Test/coverage
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
       with:
