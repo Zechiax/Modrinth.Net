@@ -65,6 +65,9 @@ public class Requester : IRequester
     /// </exception>
     public async Task<T> GetJsonAsync<T>(HttpRequestMessage request, CancellationToken cancellationToken = default)
     {
+        if (IsDisposed)
+            throw new ObjectDisposedException(nameof(Requester));
+        
         var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
 
         return await JsonSerializer
@@ -85,6 +88,9 @@ public class Requester : IRequester
     public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
         CancellationToken cancellationToken = default)
     {
+        if (IsDisposed)
+            throw new ObjectDisposedException(nameof(Requester));
+        
         var retryCount = 0;
         while (true)
         {
