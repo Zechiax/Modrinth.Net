@@ -3,9 +3,25 @@ namespace Modrinth.Net.Test.ModrinthApiTests;
 [TestFixture]
 public class ProjectGalleryTests : EndpointTests
 {
+    private async Task RemoveAllGalleryImages(string projectId)
+    {
+        var project = await Client.Project.GetAsync(projectId);
+        
+        if (project.Gallery == null)
+            return;
+
+        foreach (var image in project.Gallery)
+        {
+            await Client.Project.DeleteGalleryImageAsync(projectId, image.Url);
+        }
+    }
+
     [Test]
     public async Task UploadModifyAndDeleteGalleryImage_WithValidId_ShouldSuccessfullyUploadModifyAndDelete()
     {
+        // As Modrinth disallows uploading duplicate images, we need to remove all images first
+        await RemoveAllGalleryImages(ModrinthNetTestProjectId);
+        
         // Not a unit test, but I can't think of a better way to test this now
         var guid = Guid.NewGuid().ToString();
         var imageTitle = $"TestImage{guid}";
