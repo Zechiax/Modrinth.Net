@@ -70,11 +70,21 @@ public class Requester : IRequester
         
         var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-        return await JsonSerializer
-            .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions,
-                cancellationToken)
-            .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized",
-            response);
+        try
+        {
+            var deserializedT = await JsonSerializer
+                .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(cancellationToken),
+                    _jsonSerializerOptions,
+                    cancellationToken)
+                .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized",
+                response);
+            
+            return deserializedT;
+        }
+        catch (JsonException e)
+        {
+            throw new ModrinthApiException("Response could not be deserialized", response, innerException: e);
+        }
     }
 
 
