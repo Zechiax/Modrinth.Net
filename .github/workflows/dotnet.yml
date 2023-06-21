@@ -5,10 +5,11 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: "0 4 * * 0" # Runs every Sunday at midnight UTC
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -24,8 +25,4 @@ jobs:
     - name: Test
       env:
         MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-      run: dotnet test --no-build --verbosity normal /p:CollectCoverage=true /p:CoverletOutputFormat=opencover
-    - name: Upload coverage reports to Codecov
-      uses: codecov/codecov-action@v3
-      env: 
-        CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      run: dotnet test --no-build --verbosity normal
