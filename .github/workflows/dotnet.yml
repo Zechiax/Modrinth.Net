@@ -5,10 +5,11 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  schedule:
+    - cron: "0 4 * * 0" # Runs every Sunday at midnight UTC
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
