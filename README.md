@@ -210,19 +210,44 @@ catch (ModrinthApiException e)
 
 ### User endpoints
 
-| Name                                       | Method | Implemented |
-|--------------------------------------------|--------|-------------|
-| Get a user                                 | GET    | ✅           |
-| Modify a user                              | PATCH  | ❌           |
-| Delete a user                              | DELETE | ❌           |
-| Get user from authorization header         | GET    | ✅           |
-| Get multiple users                         | GET    | ✅           |
-| Change user's avatar                       | PATCH  | ✅           |
-| Get user's projects                        | GET    | ✅           |
-| Get user's notifications                   | GET    | ✅           |
-| Get user's followed projects               | GET    | ✅           |
-| Get user's payout history                  | GET    | ❌           |
-| Withdraw payout balance to PayPal or Venmo | POST   | ❌           |
+| Name                               | Method | Implemented |
+|------------------------------------|--------|-------------|
+| Get a user                         | GET    | ✅           |
+| Modify a user                      | PATCH  | ❌           |
+| Get user from authorization header | GET    | ✅           |
+| Get multiple users                 | GET    | ✅           |
+| Change user's avatar               | PATCH  | ✅           |
+| Get user's projects                | GET    | ✅           |
+
+| Get user's followed projects | GET | ✅ |
+| Get user's payout history | GET | ❌ |
+| Withdraw payout balance to PayPal or Venmo | POST | ❌ |
+
+### Threads endpoints
+
+| Name                               | Method | Implemented |
+|------------------------------------|--------|-------------|
+| Report a project, user, or version | POST   | ❌           |
+| Get your open reports              | GET    | ❌           |
+| Get report from ID                 | GET    | ❌           |
+| Modify a report                    | PATCH  | ❌           |
+| Get multiple reports               | GET    | ❌           |
+| Get a thread                       | GET    | ❌           |
+| Send a text message to a thread    | POST   | ❌           |
+| Get multiple threads               | GET    | ❌           |
+| Delete a thread                    | DELETE | ❌           |
+
+### Notifications endpoints
+
+| Name                                | Method | Implemented |
+|-------------------------------------|--------|-------------|
+| Get user's notifications            | GET    | ✅           |
+| Get notification from ID            | GET    | ❌           |
+| Mark notification as read           | PATCH  | ❌           |
+| Delete a notification               | DELETE | ❌           |
+| Get multiple notifications          | GET    | ❌           |
+| Mark multiple notifications as read | PATCH  | ❌           |
+| Delete multiple notifications       | DELETE | ❌           |
 
 ### Team endpoints
 
@@ -252,7 +277,7 @@ catch (ModrinthApiException e)
 
 | Name                                            | Method | Implemented |
 |-------------------------------------------------|--------|-------------|
-| Report a project, user, or version              | POST   | ❌           |
+| Forge Updates JSON file                         | GET    | ❌           |
 | Various statistics about this Modrinth instance | GET    | ✅           |
 
 ## Disclaimer
