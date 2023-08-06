@@ -225,6 +225,8 @@ catch (ModrinthApiException e)
 
 ### Threads endpoints
 
+🔐 All of the endpoints in this section require authentication.
+
 | Name                               | Method | Implemented |
 |------------------------------------|--------|-------------|
 | Report a project, user, or version | POST   | ❌           |
@@ -238,6 +240,8 @@ catch (ModrinthApiException e)
 | Delete a thread                    | DELETE | ❌           |
 
 ### Notifications endpoints
+
+🔐 All of the endpoints in this section require authentication.
 
 | Name                                | Method | Implemented |
 |-------------------------------------|--------|-------------|
