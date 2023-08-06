@@ -245,7 +245,7 @@ catch (ModrinthApiException e)
 
 | Name                                | Method | Implemented |
 |-------------------------------------|--------|-------------|
-| Get user's notifications            | GET    | ✅           |
+| Get user's notifications            | GET    | ⚠           |
 | Get notification from ID            | GET    | ❌           |
 | Mark notification as read           | PATCH  | ❌           |
 | Delete a notification               | DELETE | ❌           |
