@@ -1,4 +1,5 @@
 using Modrinth.Endpoints.Miscellaneous;
+using Modrinth.Endpoints.Notifications;
 using Modrinth.Endpoints.Project;
 using Modrinth.Endpoints.Tag;
 using Modrinth.Endpoints.Team;
@@ -38,4 +39,7 @@ public interface IModrinthClient : IDisposable
 
     /// <inheritdoc cref="IMiscellaneousEndpoint" />
     IMiscellaneousEndpoint Miscellaneous { get; }
+    
+    /// <inheritdoc cref="INotificationsEndpoint" />
+    INotificationsEndpoint Notification { get; }
 }

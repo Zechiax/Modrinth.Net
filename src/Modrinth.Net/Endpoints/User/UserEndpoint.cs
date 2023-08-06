@@ -63,16 +63,6 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Notification[]> GetNotificationsAsync(string usernameOrId)
-    {
-        var reqMsg = new HttpRequestMessage();
-        reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "notifications", UriKind.Relative);
-
-        return await Requester.GetJsonAsync<Notification[]>(reqMsg).ConfigureAwait(false);
-    }
-
-    /// <inheritdoc />
     public async Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId)
     {
         var reqMsg = new HttpRequestMessage();
