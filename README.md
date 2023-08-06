@@ -273,12 +273,11 @@ catch (ModrinthApiException e)
 | Get a list of categories            | GET    | ✅           |                                                                                                                  |
 | Get a list of loaders               | GET    | ✅           |                                                                                                                  |
 | Get a list of game versions         | GET    | ✅           |                                                                                                                  |
-| Get a list of licenses              | GET    | ✅           | This endpoint has been deprecated [see here](https://docs.modrinth.com/api-spec/#tag/tags/operation/licenseList) |
-| Get the text and title of a license | GET    | ❌           |                                                                                                                  |
+| Get the text and title of a license | GET    | ✅           |                                                                                                                  |
 | Get a list of donation platforms    | GET    | ✅           |                                                                                                                  |
 | Get a list of report types          | GET    | ✅           |                                                                                                                  |
-| Get a list of project types         | GET    | ❌           |                                                                                                                  |
-| Get a list of side types            | GET    | ❌           |                                                                                                                  |
+| Get a list of project types         | GET    | ✅           |                                                                                                                  |
+| Get a list of side types            | GET    | ✅           |                                                                                                                  |
 
 ### Miscellaneous endpoints
 
