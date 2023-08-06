@@ -30,14 +30,14 @@ public interface ITagEndpoint
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<GameVersion[]> GetGameVersionsAsync();
-
+    
     /// <summary>
-    ///     Gets an array of licenses and information about them
+    ///   Gets the text and title of a license
     /// </summary>
+    /// <param name="id"> The ID of the license </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    /// <deprecated> Use SPDX IDs instead, this endpoint will probably be removed in the next version of Modrinth API </deprecated>
-    Task<License[]> GetLicensesAsync();
+    Task<LicenseTag> GetLicenseAsync(string id);
 
     /// <summary>
     ///     Gets an array of donation platforms and information about them
@@ -52,4 +52,18 @@ public interface ITagEndpoint
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<string[]> GetReportTypesAsync();
+
+    /// <summary>
+    /// Gets an array of valid project types
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
+    Task<string[]> GetProjectTypesAsync();
+    
+    /// <summary>
+    /// Gets an array of valid side types
+    /// </summary>
+    /// <returns></returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
+    Task<string[]> GetSideTypesAsync();
 }
