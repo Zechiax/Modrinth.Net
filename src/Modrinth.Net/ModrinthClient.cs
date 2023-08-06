@@ -1,4 +1,5 @@
 ﻿using Modrinth.Endpoints.Miscellaneous;
+using Modrinth.Endpoints.Notifications;
 using Modrinth.Endpoints.Project;
 using Modrinth.Endpoints.Tag;
 using Modrinth.Endpoints.Team;
@@ -89,6 +90,7 @@ public class ModrinthClient : IModrinthClient
         Version = new VersionEndpoint(_requester);
         VersionFile = new VersionFileEndpoint(_requester);
         Miscellaneous = new MiscellaneousEndpoint(_requester);
+        Notification = new NotificationsEndpoint(_requester);
     }
 
     /// <inheritdoc />
@@ -125,6 +127,9 @@ public class ModrinthClient : IModrinthClient
 
     /// <inheritdoc />
     public IMiscellaneousEndpoint Miscellaneous { get; }
+
+    /// <inheritdoc />
+    public INotificationsEndpoint Notification { get; }
 
     #endregion
 }

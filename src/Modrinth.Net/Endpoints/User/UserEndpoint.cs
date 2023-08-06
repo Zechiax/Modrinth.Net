@@ -1,7 +1,5 @@
 ﻿using Modrinth.Extensions;
 using Modrinth.Http;
-using Modrinth.Models;
-using File = System.IO.File;
 
 namespace Modrinth.Endpoints.User;
 
@@ -60,16 +58,6 @@ public class UserEndpoint : Endpoint, IUserEndpoint
         reqMsg.RequestUri = new Uri(UserPathSegment, UriKind.Relative);
 
         return await Requester.GetJsonAsync<Models.User>(reqMsg).ConfigureAwait(false);
-    }
-
-    /// <inheritdoc />
-    public async Task<Notification[]> GetNotificationsAsync(string usernameOrId)
-    {
-        var reqMsg = new HttpRequestMessage();
-        reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "notifications", UriKind.Relative);
-
-        return await Requester.GetJsonAsync<Notification[]>(reqMsg).ConfigureAwait(false);
     }
 
     /// <inheritdoc />

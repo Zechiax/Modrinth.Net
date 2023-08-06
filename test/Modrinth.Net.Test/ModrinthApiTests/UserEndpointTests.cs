@@ -14,16 +14,6 @@ public class UserEndpointTests : EndpointTests
     }
 
     [Test]
-    public async Task TestGetNotifications()
-    {
-        var current = await Client.User.GetCurrentAsync();
-
-        var notifications = await Client.User.GetNotificationsAsync(current.Id);
-
-        Assert.That(notifications, Is.Not.Null);
-    }
-
-    [Test]
     public async Task TestGetFollowedProjects()
     {
         var current = await Client.User.GetCurrentAsync();
