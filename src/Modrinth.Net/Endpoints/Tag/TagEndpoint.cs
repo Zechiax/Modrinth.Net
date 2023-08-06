@@ -44,14 +44,19 @@ public class TagEndpoint : Endpoint, ITagEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<License[]> GetLicensesAsync()
+    public async Task<LicenseTag> GetLicenseAsync(string id)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "license", UriKind.Relative);
-
-        return await Requester.GetJsonAsync<License[]>(reqMsg).ConfigureAwait(false);
+        reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "license" + '/' + id, UriKind.Relative);
+        
+        var license = await Requester.GetJsonAsync<LicenseTag>(reqMsg).ConfigureAwait(false);
+        
+        license.Id = id;
+        
+        return license;
     }
+
 
     /// <inheritdoc />
     public async Task<DonationPlatform[]> GetDonationPlatformsAsync()
@@ -69,6 +74,26 @@ public class TagEndpoint : Endpoint, ITagEndpoint
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "report_type", UriKind.Relative);
+
+        return await Requester.GetJsonAsync<string[]>(reqMsg).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    public async Task<string[]> GetProjectTypesAsync()
+    {
+        var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Get;
+        reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "project_type", UriKind.Relative);
+
+        return await Requester.GetJsonAsync<string[]>(reqMsg).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    public async Task<string[]> GetSideTypesAsync()
+    {
+        var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Get;
+        reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "side_type", UriKind.Relative);
 
         return await Requester.GetJsonAsync<string[]>(reqMsg).ConfigureAwait(false);
     }
