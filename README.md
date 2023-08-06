@@ -171,7 +171,7 @@ catch (ModrinthApiException e)
 | Modify a project                    | PATCH  | ❌           |
 | Delete a project                    | DELETE | ⚠️          |
 | Get multiple projects               | GET    | ✅           |
-| Edit multiple projects              | PATCH  | ❌           |
+| Bulk-edit multiple projects         | PATCH  | ❌           |
 | Get a list of random projects       | GET    | ✅           |
 | Create a project                    | POST   | ❌           |
 | Change project's icon               | PATCH  | ✅           |
@@ -187,16 +187,17 @@ catch (ModrinthApiException e)
 
 ### Version endpoints
 
-| Name                           | Method | Implemented |
-|--------------------------------|--------|-------------|
-| Get list of project's versions | GET    | ✅           |
-| Get a version                  | GET    | ✅           |
-| Modify a version               | PATCH  | ❌           |
-| Delete a version               | DELETE | ⚠️          |
-| Create a version               | POST   | ❌           |
-| Schedule a version             | POST   | ⚠️          |
-| Get multiple versions          | GET    | ✅           |
-| Add files to version           | POST   | ❌           |
+| Name                                       | Method | Implemented |
+|--------------------------------------------|--------|-------------|
+| List project's versions                    | GET    | ✅           |
+| Get a version                              | GET    | ✅           |
+| Modify a version                           | PATCH  | ❌           |
+| Delete a version                           | DELETE | ⚠️          |
+| Get a version given a version number or ID | GET    | ❌           |
+| Create a version                           | POST   | ❌           |
+| Schedule a version                         | POST   | ⚠️          |
+| Get multiple versions                      | GET    | ✅           |
+| Add files to version                       | POST   | ❌           |
 
 ### Version file endpoints
 
@@ -210,18 +211,17 @@ catch (ModrinthApiException e)
 
 ### User endpoints
 
-| Name                               | Method | Implemented |
-|------------------------------------|--------|-------------|
-| Get a user                         | GET    | ✅           |
-| Modify a user                      | PATCH  | ❌           |
-| Get user from authorization header | GET    | ✅           |
-| Get multiple users                 | GET    | ✅           |
-| Change user's avatar               | PATCH  | ✅           |
-| Get user's projects                | GET    | ✅           |
-
-| Get user's followed projects | GET | ✅ |
-| Get user's payout history | GET | ❌ |
-| Withdraw payout balance to PayPal or Venmo | POST | ❌ |
+| Name                                       | Method | Implemented |
+|--------------------------------------------|--------|-------------|
+| Get a user                                 | GET    | ✅           |
+| Modify a user                              | PATCH  | ❌           |
+| Get user from authorization header         | GET    | ✅           |
+| Get multiple users                         | GET    | ✅           |
+| Change user's avatar                       | PATCH  | ✅           |
+| Get user's projects                        | GET    | ✅           |
+| Get user's followed projects               | GET    | ✅           |
+| Get user's payout history                  | GET    | ❌           |
+| Withdraw payout balance to PayPal or Venmo | POST   | ❌           |
 
 ### Threads endpoints
 
@@ -264,14 +264,17 @@ catch (ModrinthApiException e)
 
 ### Tag endpoints
 
-| Name                             | Method | Implemented |
-|----------------------------------|--------|-------------|
-| Get a list of categories         | GET    | ✅           |
-| Get a list of loaders            | GET    | ✅           |
-| Get a list of game versions      | GET    | ✅           |
-| Get a list of licenses           | GET    | ✅           |
-| Get a list of donation platforms | GET    | ✅           |
-| Get a list of report types       | GET    | ✅           |
+| Name                                | Method | Implemented | Comment                                                                                                          |
+|-------------------------------------|--------|-------------|------------------------------------------------------------------------------------------------------------------|
+| Get a list of categories            | GET    | ✅           |                                                                                                                  |
+| Get a list of loaders               | GET    | ✅           |                                                                                                                  |
+| Get a list of game versions         | GET    | ✅           |                                                                                                                  |
+| Get a list of licenses              | GET    | ✅           | This endpoint has been deprecated [see here](https://docs.modrinth.com/api-spec/#tag/tags/operation/licenseList) |
+| Get the text and title of a license | GET    | ❌           |                                                                                                                  |
+| Get a list of donation platforms    | GET    | ✅           |                                                                                                                  |
+| Get a list of report types          | GET    | ✅           |                                                                                                                  |
+| Get a list of project types         | GET    | ❌           |                                                                                                                  |
+| Get a list of side types            | GET    | ❌           |                                                                                                                  |
 
 ### Miscellaneous endpoints
 
