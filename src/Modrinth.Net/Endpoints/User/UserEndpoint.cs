@@ -1,7 +1,5 @@
 ﻿using Modrinth.Extensions;
 using Modrinth.Http;
-using Modrinth.Models;
-using File = System.IO.File;
 
 namespace Modrinth.Endpoints.User;
 

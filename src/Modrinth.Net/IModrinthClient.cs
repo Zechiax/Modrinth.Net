@@ -39,7 +39,7 @@ public interface IModrinthClient : IDisposable
 
     /// <inheritdoc cref="IMiscellaneousEndpoint" />
     IMiscellaneousEndpoint Miscellaneous { get; }
-    
+
     /// <inheritdoc cref="INotificationsEndpoint" />
     INotificationsEndpoint Notification { get; }
 }

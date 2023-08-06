@@ -1,5 +1,4 @@
 ﻿using Modrinth.Exceptions;
-using Modrinth.Models;
 
 namespace Modrinth.Endpoints.User;
 
@@ -39,7 +38,7 @@ public interface IUserEndpoint
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<Models.User> GetCurrentAsync();
-    
+
     /// <summary>
     ///     Gets all followed projects of a user by their username or ID
     ///     Requires authentication

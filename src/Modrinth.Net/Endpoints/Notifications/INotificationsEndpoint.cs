@@ -4,7 +4,7 @@ using Modrinth.Models;
 namespace Modrinth.Endpoints.Notifications;
 
 /// <summary>
-///   Notifications endpoints
+///     Notifications endpoints
 /// </summary>
 public interface INotificationsEndpoint
 {

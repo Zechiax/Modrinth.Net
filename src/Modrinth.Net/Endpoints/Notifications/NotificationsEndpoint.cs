@@ -2,7 +2,7 @@
 using Modrinth.Models;
 
 namespace Modrinth.Endpoints.Notifications;
- 
+
 /// <inheritdoc cref="Modrinth.Endpoints.Notifications.INotificationsEndpoint" />
 public class NotificationsEndpoint : Endpoint, INotificationsEndpoint
 {
