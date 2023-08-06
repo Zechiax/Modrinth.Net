@@ -167,6 +167,12 @@ public class Project
     ///     The RGB color of the project, automatically generated from the project icon
     /// </summary>
     public Color? Color { get; set; }
+    
+    /// <summary>
+    ///   The ID of the moderation thread associated with this project
+    /// </summary>
+    [JsonPropertyName("thread_id")]
+    public string? ThreadId { get; set; }
 
     /// <summary>
     ///     A list of all of the game versions supported by the project
