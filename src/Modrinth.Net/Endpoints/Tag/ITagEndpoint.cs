@@ -36,6 +36,7 @@ public interface ITagEndpoint
     /// </summary>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
+    /// <deprecated> Use SPDX IDs instead, this endpoint will probably be removed in the next version of Modrinth API </deprecated>
     Task<License[]> GetLicensesAsync();
 
     /// <summary>
