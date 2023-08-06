@@ -72,12 +72,9 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
     /// <inheritdoc />
     public async Task<Models.Version> GetLatestVersionByHashAsync(string hash,
-        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1,
-        string[]? loaders = null, string[]? gameVersions = null)
+        HashAlgorithm hashAlgorithm,
+        string[] loaders, string[] gameVersions)
     {
-        loaders = loaders ?? Array.Empty<string>();
-        gameVersions = gameVersions ?? Array.Empty<string>();
-
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(VersionFilePathSegment + '/' + hash + "/update", UriKind.Relative);
@@ -103,12 +100,9 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
     /// <inheritdoc />
     public async Task<IDictionary<string, Models.Version>> GetMultipleLatestVersionsByHashAsync(string[] hashes,
-        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1,
-        string[]? loaders = null, string[]? gameVersions = null)
+        HashAlgorithm hashAlgorithm,
+        string[] loaders, string[] gameVersions)
     {
-        loaders = loaders ?? Array.Empty<string>();
-        gameVersions = gameVersions ?? Array.Empty<string>();
-
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri("version_files/update", UriKind.Relative);

@@ -44,8 +44,8 @@ public interface IVersionFileEndpoint
     /// <param name="loaders"> The loaders to filter by </param>
     /// <param name="gameVersions"> The game versions to filter by </param>
     /// <returns> The latest version of a project, that matches the filters </returns>
-    Task<Models.Version> GetLatestVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1,
-        string[]? loaders = null, string[]? gameVersions = null);
+    Task<Models.Version> GetLatestVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm,
+        string[] loaders, string[] gameVersions);
 
     /// <summary>
     ///     Gets the latest version of multiple projects by a file hash
@@ -56,6 +56,6 @@ public interface IVersionFileEndpoint
     /// <param name="gameVersions"> The game versions to filter by </param>
     /// <returns> A dictionary of hashes and their respective latest versions that match the filters </returns>
     Task<IDictionary<string, Models.Version>> GetMultipleLatestVersionsByHashAsync(string[] hashes,
-        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1,
-        string[]? loaders = null, string[]? gameVersions = null);
+        HashAlgorithm hashAlgorithm,
+        string[] loaders, string[] gameVersions);
 }
