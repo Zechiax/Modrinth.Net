@@ -21,9 +21,10 @@ public enum NotificationType
     ///     Project status update
     /// </summary>
     [JsonPropertyName("status_update")] StatusChange,
-    
+
     /// <summary>
-    ///   Moderator message
+    ///     Moderator message
     /// </summary>
-    [JsonPropertyName("moderator_message")] ModeratorMessage,
+    [JsonPropertyName("moderator_message")]
+    ModeratorMessage
 }

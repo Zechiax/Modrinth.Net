@@ -67,7 +67,7 @@ public class Requester : IRequester
     {
         if (IsDisposed)
             throw new ObjectDisposedException(nameof(Requester));
-        
+
         var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
 
         try
@@ -78,7 +78,7 @@ public class Requester : IRequester
                     cancellationToken)
                 .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized",
                 response);
-            
+
             return deserializedT;
         }
         catch (JsonException e)
@@ -100,7 +100,7 @@ public class Requester : IRequester
     {
         if (IsDisposed)
             throw new ObjectDisposedException(nameof(Requester));
-        
+
         var retryCount = 0;
         while (true)
         {

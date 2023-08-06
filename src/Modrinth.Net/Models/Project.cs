@@ -132,9 +132,9 @@ public class Project
     ///     The date the project's status was set to approved or unlisted
     /// </summary>
     public DateTime? Approved { get; set; }
-    
+
     /// <summary>
-    /// The date the project's status was submitted to moderators for review
+    ///     The date the project's status was submitted to moderators for review
     /// </summary>
     public DateTime? Queued { get; set; }
 
@@ -173,9 +173,9 @@ public class Project
     ///     The RGB color of the project, automatically generated from the project icon
     /// </summary>
     public Color? Color { get; set; }
-    
+
     /// <summary>
-    ///   The ID of the moderation thread associated with this project
+    ///     The ID of the moderation thread associated with this project
     /// </summary>
     [JsonPropertyName("thread_id")]
     public string? ThreadId { get; set; }

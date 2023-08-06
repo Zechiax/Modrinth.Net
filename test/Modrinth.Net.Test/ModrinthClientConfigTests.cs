@@ -59,7 +59,7 @@ public class ModrinthClientConfigTests
         {
             UserAgent = ""
         };
-        
+
         Assert.Throws<ArgumentException>(() =>
         {
             var modrinthClient = new ModrinthClient(config);

@@ -125,15 +125,15 @@ public class SearchResult
     ///     The RGB color of the project, automatically generated from the project icon
     /// </summary>
     public Color? Color { get; set; }
-    
+
     /// <summary>
-    ///   The featured gallery image of the project
+    ///     The featured gallery image of the project
     /// </summary>
     [JsonPropertyName("featured_gallery")]
     public string? FeaturedGallery { get; set; }
-    
+
     /// <summary>
-    /// A list of this project's dependencies, in the format of <c>{project_id}-{dep_type}</c>
+    ///     A list of this project's dependencies, in the format of <c>{project_id}-{dep_type}</c>
     /// </summary>
     public string[] Dependencies { get; set; }
 }

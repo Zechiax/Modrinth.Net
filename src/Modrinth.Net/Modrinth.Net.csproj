@@ -17,8 +17,8 @@
         <TargetFramework>net6.0</TargetFramework>
         <RootNamespace>Modrinth</RootNamespace>
         <RepositoryType>git</RepositoryType>
-		<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     </PropertyGroup>
 
     <PropertyGroup>

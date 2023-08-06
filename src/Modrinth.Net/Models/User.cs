@@ -29,7 +29,7 @@ public class User
     ///     The user's email (only displayed if requesting your own account).
     /// </summary>
     /// <remarks>
-    /// Requires <c>USER_READ_EMAIL</c> PAT scope.
+    ///     Requires <c>USER_READ_EMAIL</c> PAT scope.
     /// </remarks>
     public string? Email { get; set; }
 
@@ -60,33 +60,34 @@ public class User
     public Role Role { get; set; }
 
     /// <summary>
-    ///     Various data relating to the user's payouts status (only displayed if requesting your own account). 
+    ///     Various data relating to the user's payouts status (only displayed if requesting your own account).
     /// </summary>
     /// <remarks>
-    /// Requires <c>PAYOUTS_READ</c> PAT scope.
+    ///     Requires <c>PAYOUTS_READ</c> PAT scope.
     /// </remarks>
     public PayoutData? PayoutData { get; set; }
-    
+
     /// <summary>
-    /// A list of authentication providers you have signed up for (only displayed if requesting your own account)
+    ///     A list of authentication providers you have signed up for (only displayed if requesting your own account)
     /// </summary>
     [JsonPropertyName("auth_providers")]
     public string[]? AuthProviders { get; set; }
-    
+
     /// <summary>
-    /// Whether your email is verified (only displayed if requesting your own account)
+    ///     Whether your email is verified (only displayed if requesting your own account)
     /// </summary>
     [JsonPropertyName("email_verified")]
     public bool? EmailVerified { get; set; }
-    
+
     /// <summary>
-    /// Whether you have a password associated with your account (only displayed if requesting your own account)
+    ///     Whether you have a password associated with your account (only displayed if requesting your own account)
     /// </summary>
     [JsonPropertyName("has_password")]
     public bool? HasPassword { get; set; }
-    
+
     /// <summary>
-    /// Whether you have TOTP two-factor authentication connected to your account (only displayed if requesting your own account)
+    ///     Whether you have TOTP two-factor authentication connected to your account (only displayed if requesting your own
+    ///     account)
     /// </summary>
     [JsonPropertyName("has_totp")]
     public bool? HasTotp { get; set; }
