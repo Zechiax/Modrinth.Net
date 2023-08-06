@@ -44,12 +44,6 @@ public class User
     public string Id { get; set; }
 
     /// <summary>
-    ///     The user's github id
-    /// </summary>
-    [JsonPropertyName("github_id")]
-    public int? GithubId { get; set; }
-
-    /// <summary>
     ///     The user's avatar url
     /// </summary>
     [JsonPropertyName("avatar_url")]
