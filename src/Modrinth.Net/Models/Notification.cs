@@ -50,5 +50,5 @@ public class Notification
     /// </summary>
     public DateTime Created { get; set; }
 
-    // TODO: Actions - haven't found model for this in the API docs
+    // TODO: Add actions
 }
