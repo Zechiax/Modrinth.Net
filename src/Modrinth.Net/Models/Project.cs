@@ -114,6 +114,7 @@ public class Project
     /// <summary>
     ///     A message that a moderator sent regarding the project
     /// </summary>
+    /// <deprecated> This property is deprecated and will be removed in a future version of the API. </deprecated>
     [JsonPropertyName("moderator_message")]
     public ModeratorMessage? ModeratorMessage { get; set; }
 
@@ -131,6 +132,11 @@ public class Project
     ///     The date the project's status was set to approved or unlisted
     /// </summary>
     public DateTime? Approved { get; set; }
+    
+    /// <summary>
+    /// The date the project's status was submitted to moderators for review
+    /// </summary>
+    public DateTime? Queued { get; set; }
 
     /// <summary>
     ///     The total number of users following the project
