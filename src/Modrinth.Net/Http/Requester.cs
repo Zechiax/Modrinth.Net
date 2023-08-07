@@ -7,7 +7,7 @@ using Modrinth.Models.Errors;
 
 namespace Modrinth.Http;
 
-/// <inheritdoc />
+/// <inheritdoc cref="IRequester" />
 public class Requester : IRequester
 {
     private readonly ModrinthClientConfig _config;
