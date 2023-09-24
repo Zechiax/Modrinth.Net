@@ -34,6 +34,8 @@ public class EndpointTests
     protected IModrinthClient Client = null!;
     protected IModrinthClient NoAuthClient = null!;
 
+    protected IModrinthClient ProductionClientNoAuth = null!;
+
     protected string TestUserId => TestUserIds[0];
 
     private static string GetToken()
@@ -69,8 +71,16 @@ public class EndpointTests
             BaseUrl = ModrinthClient.StagingBaseUrl,
             UserAgent = userAgent.ToString()
         };
+        
+        var productionConfig = new ModrinthClientConfig
+        {
+            BaseUrl = ModrinthClient.BaseUrl,
+            UserAgent = userAgent.ToString()
+        };
 
         Client = new ModrinthClient(configAuth);
         NoAuthClient = new ModrinthClient(configNoAuth);
+        
+        ProductionClientNoAuth = new ModrinthClient(productionConfig);
     }
 }

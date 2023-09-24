@@ -3,6 +3,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Modrinth.Exceptions;
 using Modrinth.JsonConverters;
+using Modrinth.Models.Enums.File;
 using Modrinth.Models.Errors;
 
 namespace Modrinth.Http;
@@ -18,7 +19,7 @@ public class Requester : IRequester
         Converters =
         {
             new ColorConverter(),
-            new JsonStringEnumConverter()
+            new JsonStringEnumConverter(),
         }
     };
 

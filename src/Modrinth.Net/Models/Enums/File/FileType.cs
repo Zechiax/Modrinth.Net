@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Runtime.Serialization;
+using System.Text.Json.Serialization;
 
 namespace Modrinth.Models.Enums.File;
 
@@ -10,12 +11,12 @@ public enum FileType
     /// <summary>
     ///     Required resource pack
     /// </summary>
-    [JsonPropertyName("required-resource-pack")]
+    [EnumMember(Value = "required-resource-pack")]
     RequiredResourcePack,
 
     /// <summary>
     ///     Optional resource pack
     /// </summary>
-    [JsonPropertyName("optional-resource-pack")]
+    [EnumMember(Value = "optional-resource-pack")]
     OptionalResourcePack
 }
