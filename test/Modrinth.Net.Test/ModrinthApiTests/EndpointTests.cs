@@ -89,5 +89,6 @@ public class EndpointTests
     {
         Client.Dispose();
         NoAuthClient.Dispose();
+        ProductionClientNoAuth.Dispose();
     }
 }
