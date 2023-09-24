@@ -11,12 +11,12 @@ public class MiscellaneousEndpoint : Endpoint, IMiscellaneousEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<ModrinthStatistics> GetStatisticsAsync()
+    public async Task<ModrinthStatistics> GetStatisticsAsync(CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("statistics", UriKind.Relative);
 
-        return await Requester.GetJsonAsync<ModrinthStatistics>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<ModrinthStatistics>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }

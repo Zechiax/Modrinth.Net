@@ -17,17 +17,17 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project> GetAsync(string slugOrId)
+    public async Task<Models.Project> GetAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.Project>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetRandomAsync(ulong count = 10)
+    public async Task<Models.Project[]> GetRandomAsync(ulong count = 10, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -40,21 +40,21 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task DeleteAsync(string slugOrId)
+    public async Task DeleteAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids)
+    public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -67,63 +67,63 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<string> CheckIdSlugValidityAsync(string slugOrId)
+    public async Task<string> CheckIdSlugValidityAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/check", UriKind.Relative);
 
-        var validity = await Requester.GetJsonAsync<SlugIdValidity>(reqMsg).ConfigureAwait(false);
+        var validity = await Requester.GetJsonAsync<SlugIdValidity>(reqMsg, cancellationToken).ConfigureAwait(false);
 
         return validity.Id;
     }
 
     /// <inheritdoc />
-    public async Task<Dependencies> GetDependenciesAsync(string slugOrId)
+    public async Task<Dependencies> GetDependenciesAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/dependencies", UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Dependencies>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Dependencies>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task FollowAsync(string slugOrId)
+    public async Task FollowAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task UnfollowAsync(string slugOrId)
+    public async Task UnfollowAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task DeleteIconAsync(string slugOrId)
+    public async Task DeleteIconAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/icon", UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task ChangeIconAsync(string slugOrId, string iconPath)
+    public async Task ChangeIconAsync(string slugOrId, string iconPath, CancellationToken cancellationToken = default)
     {
         var extension = Path.GetExtension(iconPath).TrimStart('.');
 
@@ -144,12 +144,12 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task AddGalleryImageAsync(string slugOrId, string imagePath, bool featured, string? title = null,
-        string? description = null, ulong? ordering = null)
+        string? description = null, ulong? ordering = null, CancellationToken cancellationToken = default)
     {
         var extension = Path.GetExtension(imagePath).TrimStart('.');
 
@@ -174,12 +174,12 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         reqMsg.Content = streamContent;
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task ModifyGalleryImageAsync(string slugOrId, string url, bool? featured = null, string? title = null,
-        string? description = null, ulong? ordering = null)
+        string? description = null, ulong? ordering = null, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
 
@@ -197,11 +197,11 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task DeleteGalleryImageAsync(string slugOrId, string url)
+    public async Task DeleteGalleryImageAsync(string slugOrId, string url, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
 
@@ -215,12 +215,12 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task<SearchResponse> SearchAsync(string query, Index index = Index.Downloads, ulong offset = 0,
-        ulong limit = 10, FacetCollection? facets = null)
+        ulong limit = 10, FacetCollection? facets = null, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -238,6 +238,6 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await Requester.GetJsonAsync<SearchResponse>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<SearchResponse>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }

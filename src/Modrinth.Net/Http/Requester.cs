@@ -111,6 +111,13 @@ public class Requester : IRequester
 
             if (response.StatusCode == HttpStatusCode.TooManyRequests)
             {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    throw new OperationCanceledException(
+                        "The operation was canceled",
+                        cancellationToken);
+                }
+
                 if (retryCount >= _config.RateLimitRetryCount)
                     throw new ModrinthApiException(
                         $"Request was rate limited and retry limit ({_config.RateLimitRetryCount}) was reached",
