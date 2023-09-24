@@ -83,4 +83,11 @@ public class EndpointTests
         
         ProductionClientNoAuth = new ModrinthClient(productionConfig);
     }
+    
+    [OneTimeTearDown]
+    public void TearDown()
+    {
+        Client.Dispose();
+        NoAuthClient.Dispose();
+    }
 }
