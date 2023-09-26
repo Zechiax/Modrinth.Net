@@ -20,7 +20,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId, UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.User>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.User>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -30,7 +30,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "projects", UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -47,7 +47,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await Requester.GetJsonAsync<Models.User[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.User[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -57,7 +57,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment, UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.User>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.User>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -67,7 +67,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "follows", UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -90,6 +90,6 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         reqMsg.Content = streamContent;
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }
