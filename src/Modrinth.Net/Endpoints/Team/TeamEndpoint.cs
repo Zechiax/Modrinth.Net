@@ -3,6 +3,7 @@ using System.Text.Json;
 using Modrinth.Extensions;
 using Modrinth.Http;
 using Modrinth.Models;
+using Modrinth.Models.Enums;
 
 namespace Modrinth.Endpoints.Team;
 
@@ -100,6 +101,27 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
         var requestBody = new
         {
             user_id = userId
+        };
+        
+        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+        
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    public async Task ModifyMemberAsync(string teamId, string userId, string role, Permissions permissions, int payoutsSplit,
+        int ordering, CancellationToken cancellationToken = default)
+    {
+        var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Patch;
+        reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members" + '/' + userId, UriKind.Relative);
+        
+        var requestBody = new
+        {
+            role,
+            permissions,
+            payouts_split = payoutsSplit,
+            ordering
         };
         
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
