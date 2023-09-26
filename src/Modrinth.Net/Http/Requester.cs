@@ -3,7 +3,6 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using Modrinth.Exceptions;
 using Modrinth.JsonConverters;
-using Modrinth.Models.Enums.File;
 using Modrinth.Models.Errors;
 
 namespace Modrinth.Http;
@@ -19,7 +18,7 @@ public class Requester : IRequester
         Converters =
         {
             new ColorConverter(),
-            new JsonStringEnumConverter(),
+            new JsonStringEnumConverter()
         }
     };
 
@@ -112,11 +111,9 @@ public class Requester : IRequester
             if (response.StatusCode == HttpStatusCode.TooManyRequests)
             {
                 if (cancellationToken.IsCancellationRequested)
-                {
                     throw new OperationCanceledException(
                         "The operation was canceled",
                         cancellationToken);
-                }
 
                 if (retryCount >= _config.RateLimitRetryCount)
                     throw new ModrinthApiException(
@@ -152,7 +149,7 @@ public class Requester : IRequester
             }
 
             var message = "An error occurred while communicating with Modrinth API (HTTP " +
-                          $"{(int) response.StatusCode} {response.StatusCode})";
+                          $"{(int)response.StatusCode} {response.StatusCode})";
             if (error != null) message += $": {error.Error}: {error.Description}";
 
             // Add request information to the exception

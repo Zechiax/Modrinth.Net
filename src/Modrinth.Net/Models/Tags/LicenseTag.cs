@@ -8,12 +8,12 @@
 public class LicenseTag
 {
     /// <summary>
-    ///    The ID of the license
+    ///     The ID of the license
     /// </summary>
     public string Id { get; set; }
-    
+
     /// <summary>
-    /// The full name of the license
+    ///     The full name of the license
     /// </summary>
     public string Title { get; set; }
 

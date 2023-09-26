@@ -18,7 +18,7 @@ public class EndpointTests
     };
 
     protected static readonly string[] ValidSha1Hashes =
-        {"8b0a4139d9e82300b7aac82f2402ec3497991c52", "429eb439f0835e31fbbfd00234ef2daa8ecc8a87"};
+        { "8b0a4139d9e82300b7aac82f2402ec3497991c52", "429eb439f0835e31fbbfd00234ef2daa8ecc8a87" };
 
     private static readonly IConfigurationRoot Configuration =
         new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
@@ -29,7 +29,7 @@ public class EndpointTests
     ///     Must be users that have at least one project
     ///     The first ID should be the ID of the user that will be authenticated
     /// </summary>
-    protected readonly string[] TestUserIds = {"MaovZxtD", "5XoMa0C4"};
+    protected readonly string[] TestUserIds = { "MaovZxtD", "5XoMa0C4" };
 
     protected IModrinthClient Client = null!;
     protected IModrinthClient NoAuthClient = null!;
@@ -71,7 +71,7 @@ public class EndpointTests
             BaseUrl = ModrinthClient.StagingBaseUrl,
             UserAgent = userAgent.ToString()
         };
-        
+
         var productionConfig = new ModrinthClientConfig
         {
             BaseUrl = ModrinthClient.BaseUrl,
@@ -80,10 +80,10 @@ public class EndpointTests
 
         Client = new ModrinthClient(configAuth);
         NoAuthClient = new ModrinthClient(configNoAuth);
-        
+
         ProductionClientNoAuth = new ModrinthClient(productionConfig);
     }
-    
+
     [OneTimeTearDown]
     public void TearDown()
     {

@@ -49,11 +49,11 @@ public class TagEndpoint : Endpoint, ITagEndpoint
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "license" + '/' + id, UriKind.Relative);
-        
+
         var license = await Requester.GetJsonAsync<LicenseTag>(reqMsg, cancellationToken).ConfigureAwait(false);
-        
+
         license.Id = id;
-        
+
         return license;
     }
 

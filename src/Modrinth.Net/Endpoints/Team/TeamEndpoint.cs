@@ -38,7 +38,8 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<TeamMember[][]> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
+    public async Task<TeamMember[][]> GetMultipleAsync(IEnumerable<string> ids,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -46,7 +47,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"ids", ids.ToModrinthQueryString()}
+            { "ids", ids.ToModrinthQueryString() }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -60,14 +61,14 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members", UriKind.Relative);
-        
+
         var requestBody = new
         {
             user_id = userId
         };
-        
+
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
-        
+
         await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
@@ -92,30 +93,32 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     }
 
     /// <inheritdoc />
-    public async Task TransferOwnershipAsync(string teamId, string userId, CancellationToken cancellationToken = default)
+    public async Task TransferOwnershipAsync(string teamId, string userId,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "owner", UriKind.Relative);
-        
+
         var requestBody = new
         {
             user_id = userId
         };
-        
+
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
-        
+
         await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task ModifyMemberAsync(string teamId, string userId, string role, Permissions permissions, int payoutsSplit,
+    public async Task ModifyMemberAsync(string teamId, string userId, string role, Permissions permissions,
+        int payoutsSplit,
         int ordering, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Patch;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members" + '/' + userId, UriKind.Relative);
-        
+
         var requestBody = new
         {
             role,
@@ -123,9 +126,9 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
             payouts_split = payoutsSplit,
             ordering
         };
-        
+
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
-        
+
         await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }

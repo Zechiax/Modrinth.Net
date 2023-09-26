@@ -5,19 +5,19 @@ using System.Text.Json.Serialization;
 namespace Modrinth.JsonConverters;
 
 /// <inheritdoc />
-public class JsonStringEnumConverterEx<TEnum> : JsonConverter<TEnum> where TEnum : struct, System.Enum
+public class JsonStringEnumConverterEx<TEnum> : JsonConverter<TEnum> where TEnum : struct, Enum
 {
     // Credit to:
     // https://github.com/dotnet/runtime/issues/31081#issuecomment-848697673
 
-    private readonly Dictionary<TEnum, string> _enumToString = new Dictionary<TEnum, string>();
-    private readonly Dictionary<string, TEnum> _stringToEnum = new Dictionary<string, TEnum>();
+    private readonly Dictionary<TEnum, string> _enumToString = new();
+    private readonly Dictionary<string, TEnum> _stringToEnum = new();
 
     /// <inheritdoc />
     public JsonStringEnumConverterEx()
     {
         var type = typeof(TEnum);
-        var values = System.Enum.GetValues<TEnum>();
+        var values = Enum.GetValues<TEnum>();
 
         foreach (var value in values)
         {
@@ -32,7 +32,8 @@ public class JsonStringEnumConverterEx<TEnum> : JsonConverter<TEnum> where TEnum
             {
                 _enumToString.Add(value, attr.Value);
                 _stringToEnum.Add(attr.Value, value);
-            } else
+            }
+            else
             {
                 _enumToString.Add(value, value.ToString());
             }
@@ -44,10 +45,7 @@ public class JsonStringEnumConverterEx<TEnum> : JsonConverter<TEnum> where TEnum
     {
         var stringValue = reader.GetString();
 
-        if (_stringToEnum.TryGetValue(stringValue!, out var enumValue))
-        {
-            return enumValue;
-        }
+        if (_stringToEnum.TryGetValue(stringValue!, out var enumValue)) return enumValue;
 
         return default;
     }
