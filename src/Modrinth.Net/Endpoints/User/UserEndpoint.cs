@@ -14,7 +14,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.User> GetAsync(string usernameOrId)
+    public async Task<Models.User> GetAsync(string usernameOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -24,7 +24,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetProjectsAsync(string usernameOrId)
+    public async Task<Models.Project[]> GetProjectsAsync(string usernameOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -34,7 +34,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.User[]> GetMultipleAsync(IEnumerable<string> ids)
+    public async Task<Models.User[]> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -51,7 +51,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.User> GetCurrentAsync()
+    public async Task<Models.User> GetCurrentAsync(CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -61,7 +61,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId)
+    public async Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -71,7 +71,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task ChangeIconAsync(string usernameOrId, string iconPath)
+    public async Task ChangeIconAsync(string usernameOrId, string iconPath, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Patch;
