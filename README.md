@@ -265,15 +265,15 @@ catch (ModrinthApiException e)
 ### Team endpoints
 
 | Name                                      | Method | Implemented |
-|-------------------------------------------|--------|-------------|
-| Get a project's team members              | GET    | ✅           |
-| Get a team's members                      | GET    | ✅           |
-| Add a user to a team                      | POST   | ❌           |
-| Get the members of multiple teams         | GET    | ✅           |
-| Join a team                               | POST   | ❌           |
-| Modify a team member's information        | PATCH  | ❌           |
-| Remove a member from a team               | DELETE | ❌           |
-| Transfer team's ownership to another user | PATCH  | ❌           |
+|-------------------------------------------|--------|----|
+| Get a project's team members              | GET    | ✅  |
+| Get a team's members                      | GET    | ✅  |
+| Add a user to a team                      | POST   | ⚠️   |
+| Get the members of multiple teams         | GET    | ✅  |
+| Join a team                               | POST   | ⚠️   |
+| Modify a team member's information        | PATCH  | ⚠️   |
+| Remove a member from a team               | DELETE | ⚠️   |
+| Transfer team's ownership to another user | PATCH  | ⚠️   |
 
 ### Tag endpoints
 
