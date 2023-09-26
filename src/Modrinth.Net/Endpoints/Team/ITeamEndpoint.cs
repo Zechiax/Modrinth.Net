@@ -12,23 +12,26 @@ public interface ITeamEndpoint
     ///     Gets project's team members by project's slug or ID
     /// </summary>
     /// <param name="slugOrId"></param>
+    /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    Task<TeamMember[]> GetProjectTeamAsync(string slugOrId);
+    Task<TeamMember[]> GetProjectTeamAsync(string slugOrId, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Gets team members by team ID
     /// </summary>
     /// <param name="teamId"></param>
+    /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    Task<TeamMember[]> GetAsync(string teamId);
+    Task<TeamMember[]> GetAsync(string teamId, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Gets the members of multiple teams
     /// </summary>
     /// <param name="ids">The IDs of the teams</param>
+    /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    Task<TeamMember[][]> GetMultipleAsync(IEnumerable<string> ids);
+    Task<TeamMember[][]> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default);
 }

@@ -14,27 +14,27 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.User> GetAsync(string usernameOrId)
+    public async Task<Models.User> GetAsync(string usernameOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId, UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.User>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.User>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetProjectsAsync(string usernameOrId)
+    public async Task<Models.Project[]> GetProjectsAsync(string usernameOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "projects", UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<Models.User[]> GetMultipleAsync(IEnumerable<string> ids)
+    public async Task<Models.User[]> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -47,31 +47,31 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await Requester.GetJsonAsync<Models.User[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.User[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<Models.User> GetCurrentAsync()
+    public async Task<Models.User> GetCurrentAsync(CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment, UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.User>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.User>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId)
+    public async Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "follows", UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task ChangeIconAsync(string usernameOrId, string iconPath)
+    public async Task ChangeIconAsync(string usernameOrId, string iconPath, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Patch;
@@ -90,6 +90,6 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         reqMsg.Content = streamContent;
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }

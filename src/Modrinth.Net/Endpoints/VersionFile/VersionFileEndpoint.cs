@@ -17,7 +17,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
     /// <inheritdoc />
     public async Task<Models.Version> GetVersionByHashAsync(string hash,
-        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
+        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -30,11 +30,11 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await Requester.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task DeleteVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
+    public async Task DeleteVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
@@ -47,12 +47,12 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task<IDictionary<string, Models.Version>> GetMultipleVersionsByHashAsync(string[] hashes,
-        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1)
+        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
@@ -67,13 +67,13 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task<Models.Version> GetLatestVersionByHashAsync(string hash,
         HashAlgorithm hashAlgorithm,
-        string[] loaders, string[] gameVersions)
+        string[] loaders, string[] gameVersions, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
@@ -95,13 +95,13 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-        return await Requester.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task<IDictionary<string, Models.Version>> GetMultipleLatestVersionsByHashAsync(string[] hashes,
         HashAlgorithm hashAlgorithm,
-        string[] loaders, string[] gameVersions)
+        string[] loaders, string[] gameVersions, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
@@ -118,6 +118,6 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }

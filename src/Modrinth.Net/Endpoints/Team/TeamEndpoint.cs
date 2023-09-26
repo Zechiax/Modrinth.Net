@@ -15,27 +15,27 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<TeamMember[]> GetProjectTeamAsync(string slugOrId)
+    public async Task<TeamMember[]> GetProjectTeamAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("project" + '/' + slugOrId + '/' + "members", UriKind.Relative);
 
-        return await Requester.GetJsonAsync<TeamMember[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<TeamMember[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<TeamMember[]> GetAsync(string teamId)
+    public async Task<TeamMember[]> GetAsync(string teamId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members", UriKind.Relative);
 
-        return await Requester.GetJsonAsync<TeamMember[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<TeamMember[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<TeamMember[][]> GetMultipleAsync(IEnumerable<string> ids)
+    public async Task<TeamMember[][]> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -48,6 +48,6 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await Requester.GetJsonAsync<TeamMember[][]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<TeamMember[][]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }

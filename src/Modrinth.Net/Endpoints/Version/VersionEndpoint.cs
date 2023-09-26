@@ -15,18 +15,18 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Version> GetAsync(string versionId)
+    public async Task<Models.Version> GetAsync(string versionId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(VersionsPath + '/' + versionId, UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
     public async Task<Models.Version[]> GetProjectVersionListAsync(string slugOrId, string[]? loaders = null,
-        string[]? gameVersions = null, bool? featured = null)
+        string[]? gameVersions = null, bool? featured = null, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -45,11 +45,11 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await Requester.GetJsonAsync<Models.Version[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<Models.Version[]> GetMultipleAsync(IEnumerable<string> ids)
+    public async Task<Models.Version[]> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -62,31 +62,31 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        return await Requester.GetJsonAsync<Models.Version[]>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version[]>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber)
+    public async Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("project/" + slugOrId + '/' + VersionsPath + '/' + versionNumber, UriKind.Relative);
 
-        return await Requester.GetJsonAsync<Models.Version>(reqMsg).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<Models.Version>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task DeleteAsync(string versionId)
+    public async Task DeleteAsync(string versionId, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(VersionsPath + '/' + versionId, UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
-    public async Task ScheduleAsync(string versionId, DateTime date, VersionRequestedStatus requestedStatus)
+    public async Task ScheduleAsync(string versionId, DateTime date, VersionRequestedStatus requestedStatus, CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
@@ -100,6 +100,6 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg).ConfigureAwait(false);
+        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }
