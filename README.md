@@ -14,7 +14,7 @@ C# Wrapper for the [Modrinth API](https://docs.modrinth.com/api-spec/)
 ## Main attributes
 
 - Automatic rate limiting
-  - Retry count is configurable
+    - Retry count is configurable
 - No dependencies
 - Fully documented
 - Support for .NET 6.0 and newer
@@ -268,25 +268,25 @@ catch (ModrinthApiException e)
 |-------------------------------------------|--------|-------------|
 | Get a project's team members              | GET    | ✅           |
 | Get a team's members                      | GET    | ✅           |
-| Add a user to a team                      | POST   | ❌           |
+| Add a user to a team                      | POST   | ⚠️          |
 | Get the members of multiple teams         | GET    | ✅           |
-| Join a team                               | POST   | ❌           |
-| Modify a team member's information        | PATCH  | ❌           |
-| Remove a member from a team               | DELETE | ❌           |
-| Transfer team's ownership to another user | PATCH  | ❌           |
+| Join a team                               | POST   | ⚠️          |
+| Modify a team member's information        | PATCH  | ⚠️          |
+| Remove a member from a team               | DELETE | ⚠️          |
+| Transfer team's ownership to another user | PATCH  | ⚠️          |
 
 ### Tag endpoints
 
-| Name                                | Method | Implemented | Comment                                                                                                          |
-|-------------------------------------|--------|-------------|------------------------------------------------------------------------------------------------------------------|
-| Get a list of categories            | GET    | ✅           |                                                                                                                  |
-| Get a list of loaders               | GET    | ✅           |                                                                                                                  |
-| Get a list of game versions         | GET    | ✅           |                                                                                                                  |
-| Get the text and title of a license | GET    | ✅           |                                                                                                                  |
-| Get a list of donation platforms    | GET    | ✅           |                                                                                                                  |
-| Get a list of report types          | GET    | ✅           |                                                                                                                  |
-| Get a list of project types         | GET    | ✅           |                                                                                                                  |
-| Get a list of side types            | GET    | ✅           |                                                                                                                  |
+| Name                                | Method | Implemented | Comment |
+|-------------------------------------|--------|-------------|---------|
+| Get a list of categories            | GET    | ✅           |         |
+| Get a list of loaders               | GET    | ✅           |         |
+| Get a list of game versions         | GET    | ✅           |         |
+| Get the text and title of a license | GET    | ✅           |         |
+| Get a list of donation platforms    | GET    | ✅           |         |
+| Get a list of report types          | GET    | ✅           |         |
+| Get a list of project types         | GET    | ✅           |         |
+| Get a list of side types            | GET    | ✅           |         |
 
 ### Miscellaneous endpoints
 

@@ -35,7 +35,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"count", count.ToString()}
+            { "count", count.ToString() }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -54,7 +54,8 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
+    public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -62,7 +63,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"ids", ids.ToModrinthQueryString()}
+            { "ids", ids.ToModrinthQueryString() }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -134,7 +135,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"ext", extension}
+            { "ext", extension }
         };
 
         var stream = File.OpenRead(iconPath);
@@ -160,11 +161,11 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"featured", featured.ToString().ToLower()},
-            {"title", title},
-            {"description", description},
-            {"ordering", ordering},
-            {"ext", extension}
+            { "featured", featured.ToString().ToLower() },
+            { "title", title },
+            { "description", description },
+            { "ordering", ordering },
+            { "ext", extension }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -188,11 +189,11 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"url", url},
-            {"featured", featured?.ToString().ToLower()},
-            {"title", title},
-            {"description", description},
-            {"ordering", ordering}
+            { "url", url },
+            { "featured", featured?.ToString().ToLower() },
+            { "title", title },
+            { "description", description },
+            { "ordering", ordering }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -201,7 +202,8 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     }
 
     /// <inheritdoc />
-    public async Task DeleteGalleryImageAsync(string slugOrId, string url, CancellationToken cancellationToken = default)
+    public async Task DeleteGalleryImageAsync(string slugOrId, string url,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
 
@@ -210,7 +212,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"url", url}
+            { "url", url }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -228,13 +230,13 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"query", query.EscapeIfContains()},
-            {"index", index.ToString().ToLower()},
-            {"offset", offset},
-            {"limit", limit}
+            { "query", query.EscapeIfContains() },
+            { "index", index.ToString().ToLower() },
+            { "offset", offset },
+            { "limit", limit }
         };
 
-        if (facets is {Count: > 0}) parameters.Add("facets", facets.ToString());
+        if (facets is { Count: > 0 }) parameters.Add("facets", facets.ToString());
 
         parameters.AddToRequest(reqMsg);
 

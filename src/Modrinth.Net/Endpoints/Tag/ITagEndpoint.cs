@@ -33,9 +33,9 @@ public interface ITagEndpoint
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<GameVersion[]> GetGameVersionsAsync(CancellationToken cancellationToken = default);
-    
+
     /// <summary>
-    ///   Gets the text and title of a license
+    ///     Gets the text and title of a license
     /// </summary>
     /// <param name="id"> The ID of the license </param>
     /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
@@ -60,15 +60,15 @@ public interface ITagEndpoint
     Task<string[]> GetReportTypesAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
-    /// Gets an array of valid project types
+    ///     Gets an array of valid project types
     /// </summary>
-    /// <param name="cancellationToken"> The cancellation token to cancel operation </param> 
+    /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<string[]> GetProjectTypesAsync(CancellationToken cancellationToken = default);
-    
+
     /// <summary>
-    /// Gets an array of valid side types
+    ///     Gets an array of valid side types
     /// </summary>
     /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
     /// <returns></returns>

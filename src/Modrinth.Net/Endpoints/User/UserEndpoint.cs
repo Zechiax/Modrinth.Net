@@ -24,7 +24,8 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetProjectsAsync(string usernameOrId, CancellationToken cancellationToken = default)
+    public async Task<Models.Project[]> GetProjectsAsync(string usernameOrId,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -34,7 +35,8 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.User[]> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
+    public async Task<Models.User[]> GetMultipleAsync(IEnumerable<string> ids,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -42,7 +44,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"ids", ids.ToModrinthQueryString()}
+            { "ids", ids.ToModrinthQueryString() }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -61,7 +63,8 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId, CancellationToken cancellationToken = default)
+    public async Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -71,7 +74,8 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task ChangeIconAsync(string usernameOrId, string iconPath, CancellationToken cancellationToken = default)
+    public async Task ChangeIconAsync(string usernameOrId, string iconPath,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Patch;
@@ -80,7 +84,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"ext", extension}
+            { "ext", extension }
         };
 
         parameters.AddToRequest(reqMsg);

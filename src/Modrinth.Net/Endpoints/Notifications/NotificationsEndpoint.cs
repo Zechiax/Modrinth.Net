@@ -12,7 +12,8 @@ public class NotificationsEndpoint : Endpoint, INotificationsEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Notification[]> GetNotificationsAsync(string usernameOrId, CancellationToken cancellationToken = default)
+    public async Task<Notification[]> GetNotificationsAsync(string usernameOrId,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;

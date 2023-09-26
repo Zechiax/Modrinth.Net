@@ -31,7 +31,7 @@ public class TagEndpointTests : EndpointTests
     public async Task GetLicenseById_ShouldReturnLicense()
     {
         var licenseTag = await Client.Tag.GetLicenseAsync("MIT");
-        
+
         Assert.Multiple(() =>
         {
             Assert.That(licenseTag, Is.Not.Null);
@@ -56,7 +56,7 @@ public class TagEndpointTests : EndpointTests
         Assert.That(reportTypes, Is.Not.Null);
         Assert.That(reportTypes, Is.Not.Empty);
     }
-    
+
     [Test]
     public async Task GetProjectTypes_ShouldReturnProjectTypes()
     {
@@ -64,7 +64,7 @@ public class TagEndpointTests : EndpointTests
         Assert.That(projectTypes, Is.Not.Null);
         Assert.That(projectTypes, Is.Not.Empty);
     }
-    
+
     [Test]
     public async Task GetSideTypes_ShouldReturnSideTypes()
     {

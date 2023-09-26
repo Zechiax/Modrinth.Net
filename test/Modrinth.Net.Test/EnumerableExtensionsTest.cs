@@ -8,7 +8,7 @@ public class StringExtensionsTest
     [Test]
     public void TestToModrinthQueryString_TwoItems()
     {
-        var items = new[] {"AABBCCDD", "EEFFGGHH"};
+        var items = new[] { "AABBCCDD", "EEFFGGHH" };
         const string expected = "[\"AABBCCDD\",\"EEFFGGHH\"]";
         var actual = items.ToModrinthQueryString();
         Assert.That(actual, Is.EqualTo(expected));
@@ -17,7 +17,7 @@ public class StringExtensionsTest
     [Test]
     public void TestToModrinthQueryString_OneItem()
     {
-        var items = new[] {"AABBCCDD"};
+        var items = new[] { "AABBCCDD" };
         const string expected = "[\"AABBCCDD\"]";
         var actual = items.ToModrinthQueryString();
         Assert.That(actual, Is.EqualTo(expected));

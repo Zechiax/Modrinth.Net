@@ -49,7 +49,8 @@ public interface IVersionEndpoint
     /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber, CancellationToken cancellationToken = default);
+    Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber,
+        CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Deletes a version by its ID
@@ -69,5 +70,6 @@ public interface IVersionEndpoint
     /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    Task ScheduleAsync(string versionId, DateTime date, VersionRequestedStatus requestedStatus, CancellationToken cancellationToken = default);
+    Task ScheduleAsync(string versionId, DateTime date, VersionRequestedStatus requestedStatus,
+        CancellationToken cancellationToken = default);
 }

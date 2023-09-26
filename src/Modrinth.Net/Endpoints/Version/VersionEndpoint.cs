@@ -49,7 +49,8 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Version[]> GetMultipleAsync(IEnumerable<string> ids, CancellationToken cancellationToken = default)
+    public async Task<Models.Version[]> GetMultipleAsync(IEnumerable<string> ids,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -57,7 +58,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"ids", ids.ToModrinthQueryString()}
+            { "ids", ids.ToModrinthQueryString() }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -66,7 +67,8 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber, CancellationToken cancellationToken = default)
+    public async Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -86,7 +88,8 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     }
 
     /// <inheritdoc />
-    public async Task ScheduleAsync(string versionId, DateTime date, VersionRequestedStatus requestedStatus, CancellationToken cancellationToken = default)
+    public async Task ScheduleAsync(string versionId, DateTime date, VersionRequestedStatus requestedStatus,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
@@ -94,8 +97,8 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"time", date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")},
-            {"requested_status", requestedStatus.ToString().ToLower()}
+            { "time", date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") },
+            { "requested_status", requestedStatus.ToString().ToLower() }
         };
 
         parameters.AddToRequest(reqMsg);

@@ -66,7 +66,7 @@ public class VersionFileTests : EndpointTests
     }
 
     [Test]
-    [TestCase(0, new[] {"fabric"}, new[] {"1.17.1"})]
+    [TestCase(0, new[] { "fabric" }, new[] { "1.17.1" })]
     public async Task GetLatestVersionFromHashSha1WithFilters(int index, string[] loaders, string[] gameVersions)
     {
         var hash = ValidSha1Hashes[index];
@@ -83,7 +83,7 @@ public class VersionFileTests : EndpointTests
     }
 
     [Test]
-    [TestCase(0, new[] {"fabric"}, new[] {"1.17.1"})]
+    [TestCase(0, new[] { "fabric" }, new[] { "1.17.1" })]
     public async Task GetLatestVersionFromHashSha512WithFilters(int index, string[] loaders, string[] gameVersions)
     {
         var hash = ValidSha512Hashes[index];
@@ -100,7 +100,7 @@ public class VersionFileTests : EndpointTests
     }
 
     [Test]
-    [TestCase(0, new[] {"fabric"}, new[] {"1.17.1"})]
+    [TestCase(0, new[] { "fabric" }, new[] { "1.17.1" })]
     public async Task GetMultipleLatestVersionsFromHashSha1WithFilters(int index, string[] loaders,
         string[] gameVersions)
     {
@@ -124,7 +124,7 @@ public class VersionFileTests : EndpointTests
     }
 
     [Test]
-    [TestCase(0, new[] {"fabric"}, new[] {"1.17.1"})]
+    [TestCase(0, new[] { "fabric" }, new[] { "1.17.1" })]
     public async Task GetMultipleLatestVersionsFromHashSha512WithFilters(int index, string[] loaders,
         string[] gameVersions)
     {

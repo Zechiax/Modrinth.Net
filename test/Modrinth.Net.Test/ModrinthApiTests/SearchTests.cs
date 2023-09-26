@@ -33,11 +33,11 @@ public class SearchTests : EndpointTests
 
     // Test different limit values
     [Test]
-    [TestCase((ulong) 0)]
-    [TestCase((ulong) 1)]
-    [TestCase((ulong) 5)]
-    [TestCase((ulong) 10)]
-    [TestCase((ulong) 20)]
+    [TestCase((ulong)0)]
+    [TestCase((ulong)1)]
+    [TestCase((ulong)5)]
+    [TestCase((ulong)10)]
+    [TestCase((ulong)20)]
     public async Task Search_WithLimit_ShouldReturnLimitedList(ulong limit)
     {
         var search = await Client.Project.SearchAsync("", limit: limit);
@@ -59,11 +59,11 @@ public class SearchTests : EndpointTests
 
     // Test different offset values
     [Test]
-    [TestCase((ulong) 0)]
-    [TestCase((ulong) 5)]
-    [TestCase((ulong) 10)]
-    [TestCase((ulong) 15)]
-    [TestCase((ulong) 20)]
+    [TestCase((ulong)0)]
+    [TestCase((ulong)5)]
+    [TestCase((ulong)10)]
+    [TestCase((ulong)15)]
+    [TestCase((ulong)20)]
     public async Task Search_WithOffset_ShouldReturnOffsetList(ulong offset)
     {
         var search = await Client.Project.SearchAsync("", limit: offset + 5);
@@ -76,7 +76,7 @@ public class SearchTests : EndpointTests
         // Check the ids of the first 5 elements
         Assert.That(
             searchWithOffset.Hits.Select(p => p.ProjectId).Take(5),
-            Is.EqualTo(search.Hits.Select(p => p.ProjectId).Skip((int) offset).Take(5)));
+            Is.EqualTo(search.Hits.Select(p => p.ProjectId).Skip((int)offset).Take(5)));
     }
 
     // Test download sorting

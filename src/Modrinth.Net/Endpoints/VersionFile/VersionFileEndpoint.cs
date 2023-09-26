@@ -25,7 +25,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"algorithm", hashAlgorithm.ToString().ToLower()}
+            { "algorithm", hashAlgorithm.ToString().ToLower() }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -34,7 +34,8 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
     }
 
     /// <inheritdoc />
-    public async Task DeleteVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1, CancellationToken cancellationToken = default)
+    public async Task DeleteVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
@@ -42,7 +43,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"algorithm", hashAlgorithm.ToString().ToLower()}
+            { "algorithm", hashAlgorithm.ToString().ToLower() }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -67,7 +68,8 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken)
+            .ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -81,7 +83,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"algorithm", hashAlgorithm.ToString().ToLower()}
+            { "algorithm", hashAlgorithm.ToString().ToLower() }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -118,6 +120,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken).ConfigureAwait(false);
+        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken)
+            .ConfigureAwait(false);
     }
 }
