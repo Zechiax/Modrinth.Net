@@ -149,7 +149,7 @@ public class Requester : IRequester
             }
 
             var message = "An error occurred while communicating with Modrinth API (HTTP " +
-                          $"{(int)response.StatusCode} {response.StatusCode})";
+                          $"{(int) response.StatusCode} {response.StatusCode})";
             if (error != null) message += $": {error.Error}: {error.Description}";
 
             // Add request information to the exception

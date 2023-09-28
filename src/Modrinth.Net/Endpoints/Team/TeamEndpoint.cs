@@ -47,7 +47,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "ids", ids.ToModrinthQueryString() }
+            {"ids", ids.ToModrinthQueryString()}
         };
 
         parameters.AddToRequest(reqMsg);

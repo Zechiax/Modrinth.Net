@@ -78,8 +78,7 @@ public class UserEndpointTests : EndpointTests
     {
         var curUser = await Client.User.GetCurrentAsync();
         var history = await Client.User.GetPayoutHistoryAsync(curUser.Id);
-        
+
         Assert.That(history, Is.Not.Null);
-        
     }
 }

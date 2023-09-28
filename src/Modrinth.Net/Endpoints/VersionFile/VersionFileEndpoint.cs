@@ -25,7 +25,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "algorithm", hashAlgorithm.ToString().ToLower() }
+            {"algorithm", hashAlgorithm.ToString().ToLower()}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -43,7 +43,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "algorithm", hashAlgorithm.ToString().ToLower() }
+            {"algorithm", hashAlgorithm.ToString().ToLower()}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -83,7 +83,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "algorithm", hashAlgorithm.ToString().ToLower() }
+            {"algorithm", hashAlgorithm.ToString().ToLower()}
         };
 
         parameters.AddToRequest(reqMsg);

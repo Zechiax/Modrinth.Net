@@ -46,7 +46,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "ids", ids.ToModrinthQueryString() }
+            {"ids", ids.ToModrinthQueryString()}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -86,7 +86,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "ext", extension }
+            {"ext", extension}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -100,12 +100,13 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<PayoutHistory> GetPayoutHistoryAsync(string usernameOrId, CancellationToken cancellationToken = default)
+    public async Task<PayoutHistory> GetPayoutHistoryAsync(string usernameOrId,
+        CancellationToken cancellationToken = default)
     {
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "payouts", UriKind.Relative);
-        
+
         return await Requester.GetJsonAsync<PayoutHistory>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }

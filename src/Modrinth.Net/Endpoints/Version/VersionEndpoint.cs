@@ -58,7 +58,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "ids", ids.ToModrinthQueryString() }
+            {"ids", ids.ToModrinthQueryString()}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -97,8 +97,8 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "time", date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") },
-            { "requested_status", requestedStatus.ToString().ToLower() }
+            {"time", date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")},
+            {"requested_status", requestedStatus.ToString().ToLower()}
         };
 
         parameters.AddToRequest(reqMsg);
