@@ -155,7 +155,7 @@ public class Requester : IRequester
             // Add request information to the exception
             message += $"{Environment.NewLine}Request: {request.Method} {request.RequestUri}";
 
-            throw new ModrinthApiException(message, response);
+            throw new ModrinthApiException(message, response, error);
         }
     }
 
