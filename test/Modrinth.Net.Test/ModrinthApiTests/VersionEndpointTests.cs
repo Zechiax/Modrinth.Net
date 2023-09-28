@@ -61,7 +61,7 @@ public class VersionEndpointTests : EndpointTests
     }
 
     [Test]
-    [TestCase(new[] { "fabric" }, new[] { "1.19.2" }, false)]
+    [TestCase(new[] {"fabric"}, new[] {"1.19.2"}, false)]
     //TODO: Somehow, the API endpoint returns versions with Featured = false, even if we request Featured = true
     //[TestCase(new[] {"fabric"}, new[] {"1.19.2"}, true)]
     public async Task TestGetProjectVersionListWithFilters(string[]? loaders = null, string[]? gameVersions = null,
@@ -87,8 +87,8 @@ public class VersionEndpointTests : EndpointTests
     public async Task TestGetProjectVersionListWithInvalidFilters()
     {
         var versions =
-            await Client.Version.GetProjectVersionListAsync(TestProjectSlug, new[] { "invalid_loader" },
-                new[] { "invalid_game_version" });
+            await Client.Version.GetProjectVersionListAsync(TestProjectSlug, new[] {"invalid_loader"},
+                new[] {"invalid_game_version"});
         Assert.That(versions, Is.Not.Null);
         Assert.That(versions, Is.Empty);
     }

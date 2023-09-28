@@ -229,7 +229,7 @@ catch (ModrinthApiException e)
 | Change user's avatar                       | PATCH  | ✅           |
 | Get user's projects                        | GET    | ✅           |
 | Get user's followed projects               | GET    | ✅           |
-| Get user's payout history                  | GET    | ❌           |
+| Get user's payout history                  | GET    | ✅           |
 | Withdraw payout balance to PayPal or Venmo | POST   | ❌           |
 
 ### Threads endpoints

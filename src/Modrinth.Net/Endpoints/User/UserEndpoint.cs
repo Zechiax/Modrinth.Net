@@ -1,5 +1,7 @@
 ﻿using Modrinth.Extensions;
 using Modrinth.Http;
+using Modrinth.Models;
+using File = System.IO.File;
 
 namespace Modrinth.Endpoints.User;
 
@@ -44,7 +46,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "ids", ids.ToModrinthQueryString() }
+            {"ids", ids.ToModrinthQueryString()}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -84,7 +86,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "ext", extension }
+            {"ext", extension}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -95,5 +97,16 @@ public class UserEndpoint : Endpoint, IUserEndpoint
         reqMsg.Content = streamContent;
 
         await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    public async Task<PayoutHistory> GetPayoutHistoryAsync(string usernameOrId,
+        CancellationToken cancellationToken = default)
+    {
+        var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Get;
+        reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "payouts", UriKind.Relative);
+
+        return await Requester.GetJsonAsync<PayoutHistory>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Modrinth.Exceptions;
+using Modrinth.Models;
 
 namespace Modrinth.Endpoints.User;
 
@@ -63,4 +64,13 @@ public interface IUserEndpoint
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task ChangeIconAsync(string usernameOrId, string iconPath, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    ///     Gets the payout history of a user by their username or ID
+    /// </summary>
+    /// <param name="usernameOrId"> The username or ID of the user to retrieve the payout history from </param>
+    /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
+    /// <returns></returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
+    Task<PayoutHistory> GetPayoutHistoryAsync(string usernameOrId, CancellationToken cancellationToken = default);
 }
