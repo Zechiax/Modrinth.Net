@@ -136,7 +136,6 @@ Which will create the same query as the previous example.
 
 - If the API call was unsuccessful, the client will throw an `ModrinthApiException` exception
 - This will be thrown if the API call return non-200 status code, or if the response body is not valid JSON
-- This approach will be revisited in future versions
 
 ```csharp
 using Modrinth;
