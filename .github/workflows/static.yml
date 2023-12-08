@@ -34,7 +34,7 @@ jobs:
         
       # Generate docs
       - name: Dotnet Setup
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '6.x'
       - run: dotnet tool update -g docfx
