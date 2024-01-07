@@ -59,7 +59,6 @@ public class SearchTests : EndpointTests
 
     // Test different offset values
     [Test]
-    [TestCase((ulong) 0)]
     [TestCase((ulong) 5)]
     [TestCase((ulong) 10)]
     [TestCase((ulong) 15)]

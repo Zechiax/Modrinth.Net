@@ -9,7 +9,7 @@ public class EndpointTests
     protected const string ModrinthNetTestProjectId = "zNefrWnf";
     protected const string ModrinthNetTestUploadedVersionId = "dJIVHDfy";
 
-    protected const string TestProjectSlug = "gravestones";
+    protected const string TestProjectSlug = "fabric-api";
 
     protected static readonly string[] ValidSha512Hashes =
     {
