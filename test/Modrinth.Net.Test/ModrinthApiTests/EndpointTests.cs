@@ -6,7 +6,7 @@ namespace Modrinth.Net.Test.ModrinthApiTests;
 [SetUpFixture]
 public class EndpointTests
 {
-    protected const string ModrinthNetTestProjectId = "jKePI2WR";
+    protected const string ModrinthNetTestProjectId = "zNefrWnf";
     protected const string ModrinthNetTestUploadedVersionId = "dJIVHDfy";
 
     protected const string TestProjectSlug = "gravestones";
