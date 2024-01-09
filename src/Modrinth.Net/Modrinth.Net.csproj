@@ -6,7 +6,7 @@
         <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
         <Description>An asynchronous Modrinth API wrapper</Description>
         <RepositoryUrl>https://github.com/Zechiax/Modrinth.Net.git</RepositoryUrl>
-        <PackageTags>modrinth;api;labrinth;restease</PackageTags>
+        <PackageTags>modrinth;api;labrinth</PackageTags>
         <Authors>Zechiax</Authors>
         <PackageReleaseNotes>https://github.com/Zechiax/Modrinth.Net/releases</PackageReleaseNotes>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
