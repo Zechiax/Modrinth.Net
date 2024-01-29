@@ -230,7 +230,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"query", query.EscapeIfContains()},
+            {"query", query.Replace(' ', '_')},
             {"index", index.ToString().ToLower()},
             {"offset", offset},
             {"limit", limit}
