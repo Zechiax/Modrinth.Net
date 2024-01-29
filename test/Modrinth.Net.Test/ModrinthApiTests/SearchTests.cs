@@ -168,4 +168,22 @@ public class SearchTests : EndpointTests
         // Check that every search result has the adventure and cursed category
         Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure") && c.Contains("cursed")));
     }
+
+    [Test]
+    public async Task Search_PopularModWithSpacesInName_ShouldReturnMultipleResults()
+    {
+        string[] testedMods = new string[] 
+        { 
+            "industrial craft 2",
+            "divine rpg",
+            "just enough items",
+            "better biomes"
+        };
+        
+        foreach(var mod in testedMods)
+        {
+            var result = await Client.Project.SearchAsync(mod);
+            Assert.That(result.TotalHits, Is.GreaterThan(3)); // query="just enough items" returns 3 results, query=just_enough_items returns a lot
+        }
+    }
 }
