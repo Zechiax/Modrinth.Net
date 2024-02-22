@@ -38,5 +38,20 @@ public enum ProjectStatus
     /// <summary>
     ///     Project status is unknown
     /// </summary>
-    Unknown
+    Unknown,
+    
+    /// <summary>
+    ///     Project is witheld
+    /// </summary>
+    Witheld,
+    
+    /// <summary>
+    ///     Project is scheduled for release
+    /// </summary>
+    Scheduled,
+    
+    /// <summary>
+    ///    Project is private
+    /// </summary>
+    Private
 }
