@@ -23,5 +23,10 @@ public enum ProjectType
     /// <summary>
     ///     Project is a shader
     /// </summary>
-    Shader
+    Shader,
+
+    /// <summary>
+    ///     Project is a datapack
+    /// </summary>
+    Datapack
 }
