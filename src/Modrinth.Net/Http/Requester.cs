@@ -104,7 +104,15 @@ public class Requester : IRequester
         var retryCount = 0;
         while (true)
         {
-            var response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            HttpResponseMessage response;
+            try
+            {
+                response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+            }
+            catch (HttpRequestException e)
+            {
+                throw new ModrinthApiException("An error occurred while sending the request.", innerException: e);
+            }
 
             if (response.IsSuccessStatusCode) return response;
 
