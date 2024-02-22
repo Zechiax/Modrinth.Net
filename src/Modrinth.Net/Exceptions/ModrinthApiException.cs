@@ -15,7 +15,7 @@ public class ModrinthApiException : Exception
     /// <param name="response"> The HTTP response message. </param>
     /// <param name="error"> The error returned by the Modrinth API. </param>
     /// <param name="innerException"> The inner exception. </param>
-    public ModrinthApiException(string message, HttpResponseMessage response,
+    public ModrinthApiException(string message, HttpResponseMessage? response = null,
         ResponseError? error = null, Exception? innerException = null) : base(message, innerException)
     {
         Error = error;
@@ -23,21 +23,9 @@ public class ModrinthApiException : Exception
     }
 
     /// <summary>
-    ///     The status code of the HTTP response.
-    /// </summary>
-    [Obsolete("Use Response.StatusCode instead. This property will be removed in a future version of the API.")]
-    public HttpStatusCode StatusCode => Response.StatusCode;
-
-    /// <summary>
-    ///     The HTTP response content.
-    /// </summary>
-    [Obsolete("Use Response.Content instead. This property will be removed in a future version of the API.")]
-    public HttpContent Content => Response.Content;
-
-    /// <summary>
     ///     The HTTP response message.
     /// </summary>
-    public HttpResponseMessage Response { get; }
+    public HttpResponseMessage? Response { get; }
 
     /// <summary>
     ///     The error returned by the Modrinth API.
