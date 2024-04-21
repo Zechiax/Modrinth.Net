@@ -13,5 +13,5 @@ public class Dependencies
     /// <summary>
     ///     The versions of the projects that the project depends on
     /// </summary>
-    public System.Version[] Versions { get; set; } = null!;
+    public Models.Version[] Versions { get; set; } = null!;
 }
