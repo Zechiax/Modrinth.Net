@@ -83,7 +83,8 @@ public class Requester : IRequester
         }
         catch (JsonException e)
         {
-            throw new ModrinthApiException("Response could not be deserialized", response, innerException: e);
+            throw new ModrinthApiException($"Response could not be deserialize for Path {e.Path} | URL {request.RequestUri} | Response {response.StatusCode}",
+                                           response, innerException: e);
         }
     }
 
