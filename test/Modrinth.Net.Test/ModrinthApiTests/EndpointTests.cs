@@ -6,8 +6,7 @@ namespace Modrinth.Net.Test.ModrinthApiTests;
 [SetUpFixture]
 public class EndpointTests
 {
-    protected const string ModrinthNetTestProjectId = "zNefrWnf";
-    protected const string ModrinthNetTestUploadedVersionId = "dJIVHDfy";
+    protected const string ModrinthNetTestProjectId = "8crNATHo";
 
     protected const string TestProjectSlug = "fabric-api";
 
@@ -62,13 +61,13 @@ public class EndpointTests
         var configAuth = new ModrinthClientConfig
         {
             ModrinthToken = token,
-            BaseUrl = ModrinthClient.StagingBaseUrl,
+            BaseUrl = ModrinthClient.BaseUrl,
             UserAgent = userAgent.ToString()
         };
 
         var configNoAuth = new ModrinthClientConfig
         {
-            BaseUrl = ModrinthClient.StagingBaseUrl,
+            BaseUrl = ModrinthClient.BaseUrl,
             UserAgent = userAgent.ToString()
         };
 

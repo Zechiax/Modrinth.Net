@@ -1,7 +1,7 @@
 ﻿namespace Modrinth.Models.Enums.Project;
 
 /// <summary>
-///     Type of a project
+///     Type of project
 /// </summary>
 public enum ProjectType
 {
@@ -28,5 +28,15 @@ public enum ProjectType
     /// <summary>
     ///     Project is a datapack
     /// </summary>
-    Datapack
+    Datapack,
+    
+    /// <summary>
+    ///    Project is a plugin
+    /// </summary>
+    Plugin,
+    
+    /// <summary>
+    ///   Generic project type
+    /// </summary>
+    Project
 }
