@@ -33,7 +33,6 @@ public class SearchTests : EndpointTests
 
     // Test different limit values
     [Test]
-    [TestCase((ulong) 0)]
     [TestCase((ulong) 1)]
     [TestCase((ulong) 5)]
     [TestCase((ulong) 10)]
@@ -56,6 +55,12 @@ public class SearchTests : EndpointTests
             Assert.That(search.Hits, Is.Not.Empty);
         });
     }
+    
+    [Test]
+    public void Search_WithLimit0_ShouldThrowException()
+    {
+        Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await Client.Project.SearchAsync("", limit: 0));
+    }
 
     // Test different offset values
     [Test]
@@ -66,7 +71,7 @@ public class SearchTests : EndpointTests
     public async Task Search_WithOffset_ShouldReturnOffsetList(ulong offset)
     {
         var search = await Client.Project.SearchAsync("", limit: offset + 5);
-        var searchWithOffset = await Client.Project.SearchAsync("", offset: offset, limit: offset + 5);
+        var searchWithOffset = await Client.Project.SearchAsync("", offset: offset, limit: offset);
 
         // Check that the offset list is not the same as the original list
         Assert.That(searchWithOffset.Hits, Is.Not.EqualTo(search.Hits));

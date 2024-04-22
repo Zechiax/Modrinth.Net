@@ -224,6 +224,11 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     public async Task<SearchResponse> SearchAsync(string query, Index index = Index.Downloads, ulong offset = 0,
         ulong limit = 10, FacetCollection? facets = null, CancellationToken cancellationToken = default)
     {
+        if (limit <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(limit), "Limit must be greater than 0");
+        }
+
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("search", UriKind.Relative);

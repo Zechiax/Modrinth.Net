@@ -16,7 +16,7 @@ public interface IProjectEndpoint
     /// <param name="facets">Facets to filter the search by</param>
     /// <param name="index">The sorting method used for sorting search results</param>
     /// <param name="offset">The offset into the search. Skips this number of results</param>
-    /// <param name="limit">The number of results returned by the search</param>
+    /// <param name="limit">The number of results returned by the search. Must be greater than zero</param>
     /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>

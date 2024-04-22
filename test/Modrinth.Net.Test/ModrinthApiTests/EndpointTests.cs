@@ -28,7 +28,7 @@ public class EndpointTests
     ///     Must be users that have at least one project
     ///     The first ID should be the ID of the user that will be authenticated
     /// </summary>
-    protected readonly string[] TestUserIds = {"MaovZxtD", "5XoMa0C4"};
+    protected readonly string[] TestUserIds = {"JZA4dW8o", "TEZXhE2U"};
 
     protected IModrinthClient Client = null!;
     protected IModrinthClient NoAuthClient = null!;
