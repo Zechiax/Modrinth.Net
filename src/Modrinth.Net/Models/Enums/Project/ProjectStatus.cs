@@ -41,9 +41,9 @@ public enum ProjectStatus
     Unknown,
     
     /// <summary>
-    ///     Project is witheld
+    ///     Project is withheld
     /// </summary>
-    Witheld,
+    Withheld,
     
     /// <summary>
     ///     Project is scheduled for release
