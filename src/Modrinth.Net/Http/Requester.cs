@@ -19,7 +19,8 @@ public class Requester : IRequester
         {
             new ColorConverter(),
             new JsonStringEnumConverter()
-        }
+        },
+        PropertyNamingPolicy = JsonNamingPolicy.KebabCaseLower
     };
 
     /// <summary>
