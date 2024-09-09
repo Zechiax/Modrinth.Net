@@ -18,8 +18,9 @@ public class Requester : IRequester
         Converters =
         {
             new ColorConverter(),
-            new JsonStringEnumConverter()
-        }
+            new JsonStringEnumConverter(namingPolicy: JsonNamingPolicy.SnakeCaseLower)
+        },
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
 
     /// <summary>
@@ -83,8 +84,7 @@ public class Requester : IRequester
         }
         catch (JsonException e)
         {
-            throw new ModrinthApiException($"Response could not be deserialize for Path {e.Path} | URL {request.RequestUri} | Response {response.StatusCode}",
-                                           response, innerException: e);
+            throw new ModrinthApiException($"Response could not be deserialize for Path {e.Path} | URL {request.RequestUri} | Response {response.StatusCode} | Data {await response.Content.ReadAsStringAsync(cancellationToken)}", response, innerException: e);
         }
     }
 
