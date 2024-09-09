@@ -12,12 +12,12 @@ public class EndpointTests
 
     protected static readonly string[] ValidSha512Hashes =
     {
-        "bace1768e893e60574dcb1155e057a2fd0da3f3400c862a93c37dfe4d7908de1739b3b72190353f1a2a981ec18e1175d1dcf2109f0fb64ffdc73c45629a4cf55",
-        "3651e6cdb1dbb46580f27386caa01c88d28e51a5feec57cc435be73be25d718da9a719798e2b887e0fde14b6eaa970f30ee7220ff1f81489acd6174840c34d06"
+        "11732c4e36c3909360a24aa42a44da89048706cf10aaafa0404d7153cbc7395ff68a130f7b497828d6932740e004416b692650c3fbcc1f32babd7cb6eb9791d8",
+        "bffb4f0b5347ddcf85ee5d12a6a771098b7bb61a3354ce4afa6bcd4ab88e438d2b05380481995eb58ec1a0404fdddd9bd27706f2782e828628fc9dd12208e501"
     };
 
     protected static readonly string[] ValidSha1Hashes =
-        {"8b0a4139d9e82300b7aac82f2402ec3497991c52", "429eb439f0835e31fbbfd00234ef2daa8ecc8a87"};
+        {"43035a1c6f506285a9910bc8038d1b1b925f8dd1", "2f73c4a26c553bf0f0d2f921dd5a09ed90c515d8"};
 
     private static readonly IConfigurationRoot Configuration =
         new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();

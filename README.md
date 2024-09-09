@@ -17,7 +17,7 @@ C# Wrapper for the [Modrinth API](https://docs.modrinth.com/)
     - Retry count is configurable
 - No dependencies
 - Fully documented
-- Support for .NET 6.0 and newer
+- Support for .NET 8.0 and newer
 
 ## Usage
 
