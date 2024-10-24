@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Modrinth.JsonConverters;
+namespace Modrinth.Json;
 
 /// <inheritdoc />
 public class ColorConverter : JsonConverter<Color?>

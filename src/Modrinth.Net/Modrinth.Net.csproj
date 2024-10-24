@@ -32,6 +32,9 @@
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
     </PropertyGroup>
 
+    <PropertyGroup>
+        <IsTrimmable>true</IsTrimmable>
+    </PropertyGroup>
 
     <ItemGroup>
         <None Include="..\..\README.md">

@@ -1,9 +1,11 @@
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 using Modrinth.Exceptions;
-using Modrinth.JsonConverters;
+using Modrinth.Json;
 using Modrinth.Models.Errors;
+using ModrinthJsonContext = Modrinth.Json.ModrinthJsonContext;
 
 namespace Modrinth.Http;
 
@@ -73,18 +75,35 @@ public class Requester : IRequester
 
         try
         {
-            var deserializedT = await JsonSerializer
-                .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(cancellationToken),
-                    _jsonSerializerOptions,
-                    cancellationToken)
-                .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized",
-                response);
+            // Use the generated context to get the correct JsonTypeInfo<T>
+            var typeInfo = ModrinthJsonContext.Default.GetTypeInfo(typeof(T)) as JsonTypeInfo<T>;
 
-            return deserializedT;
+            if (typeInfo != null)
+            {
+                // Deserialize using the type info for trimming safety
+                return await JsonSerializer
+                    .DeserializeAsync(await response.Content.ReadAsStreamAsync(cancellationToken), 
+                        typeInfo, 
+                        cancellationToken)
+                    .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized", response);
+            }
+            else
+            {
+                throw new InvalidOperationException($"Type {typeof(T)} is not supported for deserialization. " +
+                                                    "Make sure it's included in the ModrinthJsonContext.");
+                // Fallback to the default behavior for unknown types (not trimming-safe)
+                // return await JsonSerializer
+                //     .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(cancellationToken), 
+                //         _jsonSerializerOptions, 
+                //         cancellationToken)
+                //     .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized", response);
+            }
         }
         catch (JsonException e)
         {
-            throw new ModrinthApiException($"Response could not be deserialize for Path {e.Path} | URL {request.RequestUri} | Response {response.StatusCode} | Data {await response.Content.ReadAsStringAsync(cancellationToken)}", response, innerException: e);
+            throw new ModrinthApiException(
+                $"Response could not be deserialize for Path {e.Path} | URL {request.RequestUri} | Response {response.StatusCode} | Data {await response.Content.ReadAsStringAsync(cancellationToken)}",
+                response, innerException: e);
         }
     }
 
@@ -147,10 +166,11 @@ public class Requester : IRequester
             ResponseError? error = null;
             try
             {
-                error = await JsonSerializer.DeserializeAsync<ResponseError>(
-                        await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions,
-                        cancellationToken)
-                    .ConfigureAwait(false);
+                error = await JsonSerializer.DeserializeAsync(
+                    await response.Content.ReadAsStreamAsync(cancellationToken), 
+                    ModrinthJsonContext.Default.ResponseError,
+                    cancellationToken
+                ).ConfigureAwait(false);
             }
             catch (JsonException)
             {

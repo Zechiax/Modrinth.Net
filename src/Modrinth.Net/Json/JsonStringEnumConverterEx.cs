@@ -1,11 +1,12 @@
-﻿using System.Runtime.Serialization;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Modrinth.JsonConverters;
+namespace Modrinth.Json;
 
 /// <inheritdoc />
-public class JsonStringEnumConverterEx<TEnum> : JsonConverter<TEnum> where TEnum : struct, Enum
+public class JsonStringEnumConverterEx<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.PublicMethods | DynamicallyAccessedMemberTypes.PublicProperties)] TEnum> : JsonConverter<TEnum> where TEnum : struct, Enum
 {
     // Credit to:
     // https://github.com/dotnet/runtime/issues/31081#issuecomment-848697673
@@ -21,20 +22,28 @@ public class JsonStringEnumConverterEx<TEnum> : JsonConverter<TEnum> where TEnum
 
         foreach (var value in values)
         {
-            var enumMember = type.GetMember(value.ToString())[0];
-            var attr = enumMember.GetCustomAttributes(typeof(EnumMemberAttribute), false)
-                .Cast<EnumMemberAttribute>()
-                .FirstOrDefault();
-
-            _stringToEnum.Add(value.ToString(), value);
-
-            if (attr?.Value != null)
+            var enumMember = type.GetMember(value.ToString()).FirstOrDefault();
+            if (enumMember != null)
             {
-                _enumToString.Add(value, attr.Value);
-                _stringToEnum.Add(attr.Value, value);
+                var attr = enumMember.GetCustomAttributes(typeof(EnumMemberAttribute), false)
+                    .Cast<EnumMemberAttribute>()
+                    .FirstOrDefault();
+
+                _stringToEnum.Add(value.ToString(), value);
+
+                if (attr?.Value != null)
+                {
+                    _enumToString.Add(value, attr.Value);
+                    _stringToEnum.Add(attr.Value, value);
+                }
+                else
+                {
+                    _enumToString.Add(value, value.ToString());
+                }
             }
             else
             {
+                _stringToEnum.Add(value.ToString(), value);
                 _enumToString.Add(value, value.ToString());
             }
         }
