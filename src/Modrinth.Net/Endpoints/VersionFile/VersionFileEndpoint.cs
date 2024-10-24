@@ -1,9 +1,21 @@
 ﻿using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Modrinth.Http;
 using Modrinth.Models.Enums;
 
 namespace Modrinth.Endpoints.VersionFile;
+
+[JsonSerializable(typeof(VersionFileRequest))]
+[JsonSerializable(typeof(LatestVersionRequest))]
+[JsonSerializable(typeof(GetMultipleVersionRequest))]
+internal partial class VersionFileEndpointJsonContext : JsonSerializerContext;
+
+// ReSharper disable InconsistentNaming
+internal record VersionFileRequest(string[] hashes, string algorithm);
+internal record LatestVersionRequest(string[] loaders, string[] game_versions);
+internal record GetMultipleVersionRequest(string algorithm, string[] hashes, string[] loaders, string[] game_versions);
+// ReSharper restore InconsistentNaming
 
 /// <inheritdoc cref="Modrinth.Endpoints.VersionFile.IVersionFileEndpoint" />
 public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
@@ -60,13 +72,10 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
         reqMsg.RequestUri = new Uri("version_files", UriKind.Relative);
 
         // Info in request body application/json
-        var requestBody = new
-        {
-            hashes,
-            algorithm = hashAlgorithm.ToString().ToLower()
-        };
+        var requestBody = new VersionFileRequest(hashes, hashAlgorithm.ToString().ToLower());
 
-        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+        var json = JsonSerializer.Serialize(requestBody, VersionFileEndpointJsonContext.Default.VersionFileRequest);
+        reqMsg.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
         return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken)
             .ConfigureAwait(false);
@@ -94,8 +103,10 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
             loaders,
             game_versions = gameVersions
         };
+        var requestBodyJson = new LatestVersionRequest(loaders, gameVersions);
 
-        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+        var json = JsonSerializer.Serialize(requestBody, VersionFileEndpointJsonContext.Default.LatestVersionRequest);
+        reqMsg.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
         return await Requester.GetJsonAsync<Models.Version>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
@@ -117,8 +128,10 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
             loaders,
             game_versions = gameVersions
         };
+        var requestBodyJson = new GetMultipleVersionRequest(hashAlgorithm.ToString().ToLower(), hashes, loaders, gameVersions);
 
-        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+        var json = JsonSerializer.Serialize(requestBody, VersionFileEndpointJsonContext.Default.GetMultipleVersionRequest);
+        reqMsg.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
         return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken)
             .ConfigureAwait(false);
