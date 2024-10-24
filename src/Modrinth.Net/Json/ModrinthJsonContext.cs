@@ -1,4 +1,6 @@
 ﻿using System.Text.Json.Serialization;
+using Modrinth.Endpoints.Miscellaneous;
+using Modrinth.Endpoints.Project;
 using Modrinth.Models;
 using Modrinth.Models.Enums;
 using Modrinth.Models.Enums.File;
@@ -6,7 +8,7 @@ using Modrinth.Models.Enums.Project;
 using Modrinth.Models.Enums.Version;
 using Modrinth.Models.Errors;
 using Modrinth.Models.Tags;
-using Version = System.Version;
+using Version = Modrinth.Models.Version;
 
 namespace Modrinth.Json;
 
@@ -51,8 +53,9 @@ using Index = Models.Enums.Index;
 [JsonSerializable(typeof(SearchResult))]
 [JsonSerializable(typeof(TeamMember))]
 [JsonSerializable(typeof(User))]
+[JsonSerializable(typeof(User[]))]
 [JsonSerializable(typeof(UserPayoutHistoryEntry))]
 [JsonSerializable(typeof(Version))]
-public partial class ModrinthJsonContext : JsonSerializerContext
-{
-}
+[JsonSerializable(typeof(ModrinthStatistics))]
+[JsonSerializable(typeof(SlugIdValidity))]
+internal partial class ModrinthJsonContext : JsonSerializerContext;

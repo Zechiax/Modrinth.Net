@@ -5,7 +5,6 @@ using System.Text.Json.Serialization.Metadata;
 using Modrinth.Exceptions;
 using Modrinth.Json;
 using Modrinth.Models.Errors;
-using ModrinthJsonContext = Modrinth.Json.ModrinthJsonContext;
 
 namespace Modrinth.Http;
 
