@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Modrinth.Extensions;
 using Modrinth.Http;
 using Modrinth.Models;
@@ -7,11 +8,22 @@ using Modrinth.Models.Enums;
 
 namespace Modrinth.Endpoints.Team;
 
+[JsonSerializable(typeof(AddUserRequest))]
+[JsonSerializable(typeof(ModifyMemberRequest))]
+[JsonSerializable(typeof(TransferOwnershipRequest))]
+internal partial class TeamEndpointJsonContext : JsonSerializerContext;
+    
+// ReSharper disable InconsistentNaming
+internal record AddUserRequest(string user_id);
+internal record ModifyMemberRequest(string role, Permissions permissions, int payouts_split, int ordering);
+internal record TransferOwnershipRequest(string user_id);
+// ReSharper restore InconsistentNaming
+
 /// <inheritdoc cref="Modrinth.Endpoints.Team.ITeamEndpoint" />
 public class TeamEndpoint : Endpoint, ITeamEndpoint
 {
     private const string TeamsPathSegment = "team";
-
+    
     /// <inheritdoc />
     public TeamEndpoint(IRequester requester) : base(requester)
     {
@@ -62,12 +74,10 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members", UriKind.Relative);
 
-        var requestBody = new
-        {
-            user_id = userId
-        };
+        var requestBody = new AddUserRequest(userId);
 
-        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+        var json = JsonSerializer.Serialize(requestBody, TeamEndpointJsonContext.Default.AddUserRequest);
+        reqMsg.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
         await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
@@ -100,12 +110,10 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "owner", UriKind.Relative);
 
-        var requestBody = new
-        {
-            user_id = userId
-        };
-
-        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+        var requestBody = new TransferOwnershipRequest(userId);
+        
+        var json = JsonSerializer.Serialize(requestBody, TeamEndpointJsonContext.Default.TransferOwnershipRequest);
+        reqMsg.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
         await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
@@ -119,15 +127,10 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
         reqMsg.Method = HttpMethod.Patch;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members" + '/' + userId, UriKind.Relative);
 
-        var requestBody = new
-        {
-            role,
-            permissions,
-            payouts_split = payoutsSplit,
-            ordering
-        };
+        var requestBody = new ModifyMemberRequest(role, permissions, payoutsSplit, ordering);
 
-        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+        var json = JsonSerializer.Serialize(requestBody, TeamEndpointJsonContext.Default.ModifyMemberRequest);
+        reqMsg.Content = new StringContent(json, Encoding.UTF8, "application/json");
 
         await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
