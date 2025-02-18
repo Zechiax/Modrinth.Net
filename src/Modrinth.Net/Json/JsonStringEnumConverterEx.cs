@@ -2,50 +2,43 @@
 using System.Runtime.Serialization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Modrinth.Models.Enums.Project;
+using Modrinth.Models.Enums.Version;
 
 namespace Modrinth.Json;
 
 /// <inheritdoc />
-public class JsonStringEnumConverterEx<[DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicFields | DynamicallyAccessedMemberTypes.PublicMethods | DynamicallyAccessedMemberTypes.PublicProperties)] TEnum> : JsonConverter<TEnum> where TEnum : struct, Enum
+public class JsonStringEnumConverterEx<TEnum> : JsonConverter<TEnum> where TEnum : struct, Enum
 {
-    // Credit to:
-    // https://github.com/dotnet/runtime/issues/31081#issuecomment-848697673
+    private static readonly Dictionary<TEnum, string> _enumToString;
+    private static readonly Dictionary<string, TEnum> _stringToEnum;
 
-    private readonly Dictionary<TEnum, string> _enumToString = new();
-    private readonly Dictionary<string, TEnum> _stringToEnum = new();
-
-    /// <inheritdoc />
-    public JsonStringEnumConverterEx()
+    static JsonStringEnumConverterEx()
     {
-        var type = typeof(TEnum);
-        var values = Enum.GetValues<TEnum>();
+        _enumToString = new Dictionary<TEnum, string>();
+        _stringToEnum = new Dictionary<string, TEnum>();
 
-        foreach (var value in values)
+        var enumMappings = new Dictionary<TEnum, string>
         {
-            var enumMember = type.GetMember(value.ToString()).FirstOrDefault();
-            if (enumMember != null)
-            {
-                var attr = enumMember.GetCustomAttributes(typeof(EnumMemberAttribute), false)
-                    .Cast<EnumMemberAttribute>()
-                    .FirstOrDefault();
+            { (TEnum)(object)ProjectStatus.Approved, "approved" },
+            { (TEnum)(object)ProjectStatus.Draft, "draft" },
+            { (TEnum)(object)ProjectStatus.Rejected, "rejected" },
+            { (TEnum)(object)ProjectStatus.Unlisted, "unlisted" },
 
-                _stringToEnum.Add(value.ToString(), value);
+            { (TEnum)(object)ProjectType.Mod, "mod" },
+            { (TEnum)(object)ProjectType.Project, "resourcepack" },
+            
 
-                if (attr?.Value != null)
-                {
-                    _enumToString.Add(value, attr.Value);
-                    _stringToEnum.Add(attr.Value, value);
-                }
-                else
-                {
-                    _enumToString.Add(value, value.ToString());
-                }
-            }
-            else
-            {
-                _stringToEnum.Add(value.ToString(), value);
-                _enumToString.Add(value, value.ToString());
-            }
+            { (TEnum)(object)VersionStatus.Listed, "listed" },
+            { (TEnum)(object)VersionStatus.Archived, "archived" },
+
+            // Add mappings for other enums...
+        };
+
+        foreach (var pair in enumMappings)
+        {
+            _enumToString[pair.Key] = pair.Value;
+            _stringToEnum[pair.Value] = pair.Key;
         }
     }
 
@@ -53,15 +46,24 @@ public class JsonStringEnumConverterEx<[DynamicallyAccessedMembers(DynamicallyAc
     public override TEnum Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
         var stringValue = reader.GetString();
+        if (stringValue != null && _stringToEnum.TryGetValue(stringValue, out var enumValue))
+        {
+            return enumValue;
+        }
 
-        if (_stringToEnum.TryGetValue(stringValue!, out var enumValue)) return enumValue;
-
-        return default;
+        throw new JsonException($"Unknown value '{stringValue}' for enum {typeof(TEnum).Name}");
     }
 
     /// <inheritdoc />
     public override void Write(Utf8JsonWriter writer, TEnum value, JsonSerializerOptions options)
     {
-        writer.WriteStringValue(_enumToString[value]);
+        if (_enumToString.TryGetValue(value, out var stringValue))
+        {
+            writer.WriteStringValue(stringValue);
+        }
+        else
+        {
+            throw new JsonException($"Unknown enum value {value} for {typeof(TEnum).Name}");
+        }
     }
 }

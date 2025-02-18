@@ -74,12 +74,9 @@ public class Requester : IRequester
 
         try
         {
-            // Use the generated context to get the correct JsonTypeInfo<T>
-            var typeInfo = ModrinthJsonContext.Default.GetTypeInfo(typeof(T)) as JsonTypeInfo<T>;
-
-            if (typeInfo != null)
+            if (ModrinthJsonContext.TypeInfoMap.TryGetValue(typeof(T), out var typeInfoObj) && 
+                typeInfoObj is JsonTypeInfo<T> typeInfo)
             {
-                // Deserialize using the type info for trimming safety
                 return await JsonSerializer
                     .DeserializeAsync(await response.Content.ReadAsStreamAsync(cancellationToken), 
                         typeInfo, 
@@ -88,23 +85,18 @@ public class Requester : IRequester
             }
             else
             {
-                throw new InvalidOperationException($"Type {typeof(T)} is not supported for deserialization. " +
-                                                    "Make sure it's included in the ModrinthJsonContext.");
-                // Fallback to the default behavior for unknown types (not trimming-safe)
-                // return await JsonSerializer
-                //     .DeserializeAsync<T>(await response.Content.ReadAsStreamAsync(cancellationToken), 
-                //         _jsonSerializerOptions, 
-                //         cancellationToken)
-                //     .ConfigureAwait(false) ?? throw new ModrinthApiException("Response could not be deserialized", response);
+                throw new InvalidOperationException($"Type {typeof(T)} is not registered in ModrinthJsonContext. " +
+                                                    "Ensure it's added to the TypeInfoMap.");
             }
         }
         catch (JsonException e)
         {
             throw new ModrinthApiException(
-                $"Response could not be deserialize for Path {e.Path} | URL {request.RequestUri} | Response {response.StatusCode} | Data {await response.Content.ReadAsStringAsync(cancellationToken)}",
+                $"Failed to deserialize response for Path {e.Path} | URL {request.RequestUri} | Response {response.StatusCode} | Data {await response.Content.ReadAsStringAsync(cancellationToken)}",
                 response, innerException: e);
         }
     }
+
 
 
     /// <summary>
