@@ -23,8 +23,8 @@ public interface IProjectEndpoint
     Task<SearchResponse> SearchAsync(
         string query,
         Index index = Index.Downloads,
-        ulong offset = 0,
-        ulong limit = 10,
+        int offset = 0,
+        int limit = 10,
         FacetCollection? facets = null, CancellationToken cancellationToken = default);
 
     /// <summary>
@@ -43,7 +43,7 @@ public interface IProjectEndpoint
     /// <param name="cancellationToken"> The cancellation token to cancel operation </param>
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    Task<Models.Project[]> GetRandomAsync(ulong count = 10, CancellationToken cancellationToken = default);
+    Task<Models.Project[]> GetRandomAsync(int count = 10, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Deletes project by slug or ID
@@ -132,7 +132,7 @@ public interface IProjectEndpoint
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task AddGalleryImageAsync(string slugOrId, string imagePath, bool featured, string? title = null,
-        string? description = null, ulong? ordering = null, CancellationToken cancellationToken = default);
+        string? description = null, int? ordering = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Modifies an existing gallery image
@@ -147,7 +147,7 @@ public interface IProjectEndpoint
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task ModifyGalleryImageAsync(string slugOrId, string url, bool? featured = null, string? title = null,
-        string? description = null, ulong? ordering = null, CancellationToken cancellationToken = default);
+        string? description = null, int? ordering = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Deletes an existing gallery image
