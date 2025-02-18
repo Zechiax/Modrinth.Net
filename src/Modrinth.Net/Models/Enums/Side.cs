@@ -25,3 +25,26 @@ public enum Side
     /// </summary>
     Unknown
 }
+
+/// <summary>
+///    Extensions for <see cref="Side" />
+/// </summary>
+public static class SideExtensions
+{
+    /// <summary>
+    ///     Convert Side to string for Modrinth API
+    /// </summary>
+    /// <param name="side"></param>
+    /// <returns></returns>
+    public static string ToModrinthString(this Side side)
+    {
+        return side switch
+        {
+            Side.Required => "required",
+            Side.Optional => "optional",
+            Side.Unsupported => "unsupported",
+            Side.Unknown => "unknown",
+            _ => throw new ArgumentOutOfRangeException(nameof(side), side, null)
+        };
+    }
+}
