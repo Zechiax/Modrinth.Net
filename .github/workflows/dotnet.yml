@@ -26,5 +26,14 @@ jobs:
       run: dotnet build --no-restore
     - name: Test
       env:
-        MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
-      run: dotnet test --no-build --verbosity normal
+        MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN || '' }}
+      run: |
+        if [ "${{ github.event_name }}" == "pull_request" ]; then
+          if [ -n "${{ secrets.MODRINTH_TOKEN }}" ]; then
+            dotnet test --no-build --verbosity normal
+          else
+            echo "MODRINTH_TOKEN is not set, skipping tests."
+          fi
+        else
+          dotnet test --no-build --verbosity normal
+        fi

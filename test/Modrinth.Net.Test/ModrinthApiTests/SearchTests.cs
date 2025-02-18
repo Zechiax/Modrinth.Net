@@ -33,11 +33,11 @@ public class SearchTests : EndpointTests
 
     // Test different limit values
     [Test]
-    [TestCase((ulong) 1)]
-    [TestCase((ulong) 5)]
-    [TestCase((ulong) 10)]
-    [TestCase((ulong) 20)]
-    public async Task Search_WithLimit_ShouldReturnLimitedList(ulong limit)
+    [TestCase(1)]
+    [TestCase(5)]
+    [TestCase(10)]
+    [TestCase(20)]
+    public async Task Search_WithLimit_ShouldReturnLimitedList(int limit)
     {
         var search = await Client.Project.SearchAsync("", limit: limit);
 
@@ -64,11 +64,11 @@ public class SearchTests : EndpointTests
 
     // Test different offset values
     [Test]
-    [TestCase((ulong) 5)]
-    [TestCase((ulong) 10)]
-    [TestCase((ulong) 15)]
-    [TestCase((ulong) 20)]
-    public async Task Search_WithOffset_ShouldReturnOffsetList(ulong offset)
+    [TestCase(5)]
+    [TestCase(10)]
+    [TestCase(15)]
+    [TestCase(20)]
+    public async Task Search_WithOffset_ShouldReturnOffsetList(int offset)
     {
         var search = await Client.Project.SearchAsync("", limit: offset + 5);
         var searchWithOffset = await Client.Project.SearchAsync("", offset: offset, limit: offset);
