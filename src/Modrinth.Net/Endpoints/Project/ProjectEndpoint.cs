@@ -27,8 +27,13 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Project[]> GetRandomAsync(ulong count = 10, CancellationToken cancellationToken = default)
+    public async Task<Models.Project[]> GetRandomAsync(int count = 10, CancellationToken cancellationToken = default)
     {
+        if (count <= 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(count), "Count must be greater than 0");
+        }
+        
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("projects_random", UriKind.Relative);
@@ -150,8 +155,18 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
     /// <inheritdoc />
     public async Task AddGalleryImageAsync(string slugOrId, string imagePath, bool featured, string? title = null,
-        string? description = null, ulong? ordering = null, CancellationToken cancellationToken = default)
+        string? description = null, int? ordering = null, CancellationToken cancellationToken = default)
     {
+        if (!File.Exists(imagePath))
+        {
+            throw new FileNotFoundException("Image not found", imagePath);
+        }
+        
+        if (ordering < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(ordering), "Ordering must be greater than or equal to 0");
+        }
+        
         var extension = Path.GetExtension(imagePath).TrimStart('.');
 
         var reqMsg = new HttpRequestMessage();
@@ -180,8 +195,13 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
     /// <inheritdoc />
     public async Task ModifyGalleryImageAsync(string slugOrId, string url, bool? featured = null, string? title = null,
-        string? description = null, ulong? ordering = null, CancellationToken cancellationToken = default)
+        string? description = null, int? ordering = null, CancellationToken cancellationToken = default)
     {
+        if (ordering < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(ordering), "Ordering must be greater than or equal to 0");
+        }
+        
         var reqMsg = new HttpRequestMessage();
 
         reqMsg.Method = HttpMethod.Patch;
@@ -221,12 +241,17 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<SearchResponse> SearchAsync(string query, Index index = Index.Downloads, ulong offset = 0,
-        ulong limit = 10, FacetCollection? facets = null, CancellationToken cancellationToken = default)
+    public async Task<SearchResponse> SearchAsync(string query, Index index = Index.Downloads, int offset = 0,
+        int limit = 10, FacetCollection? facets = null, CancellationToken cancellationToken = default)
     {
         if (limit <= 0)
         {
             throw new ArgumentOutOfRangeException(nameof(limit), "Limit must be greater than 0");
+        }
+        
+        if (offset < 0)
+        {
+            throw new ArgumentOutOfRangeException(nameof(offset), "Offset must be greater than or equal to 0");
         }
 
         var reqMsg = new HttpRequestMessage();
