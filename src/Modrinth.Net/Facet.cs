@@ -12,40 +12,44 @@ public abstract class Facet
     ///     Creates a new facet for the filtering by category or loader
     /// </summary>
     /// <param name="value"> The loader or category to filter the results from </param>
+    /// <param name="facetOperator"> The operator to use for filtering (defaults to equals) </param>
     /// <returns> The created facet </returns>
-    public static Facet<string> Category(string value)
+    public static Facet<string> Category(string value, FacetOperator facetOperator = FacetOperator.Equals)
     {
-        return new Facet<string>(FacetType.Categories, value);
+        return new Facet<string>(FacetType.Categories, value, facetOperator);
     }
 
     /// <summary>
     ///     Creates a new facet for the filtering by Minecraft version
     /// </summary>
     /// <param name="value"> The minecraft version to filter the results from </param>
+    /// <param name="facetOperator"> The operator to use for filtering (defaults to equals) </param>
     /// <returns> The created facet </returns>
-    public static Facet<string> Version(string value)
+    public static Facet<string> Version(string value, FacetOperator facetOperator = FacetOperator.Equals)
     {
-        return new Facet<string>(FacetType.Versions, value);
+        return new Facet<string>(FacetType.Versions, value, facetOperator);
     }
 
     /// <summary>
     ///     Creates a new facet for the filtering by license
     /// </summary>
     /// <param name="value"> The license ID to filter the results from </param>
+    /// <param name="facetOperator"> The operator to use for filtering (defaults to equals) </param>
     /// <returns> The created facet </returns>
-    public static Facet<string> License(string value)
+    public static Facet<string> License(string value, FacetOperator facetOperator = FacetOperator.Equals)
     {
-        return new Facet<string>(FacetType.License, value);
+        return new Facet<string>(FacetType.License, value, facetOperator);
     }
 
     /// <summary>
     ///     Creates a new facet for the filtering by project type
     /// </summary>
-    /// <param name="projectType">  The project type to filter the results from </param>
+    /// <param name="projectType"> The project type to filter the results from </param>
+    /// <param name="facetOperator"> The operator to use for filtering (defaults to equals) </param>
     /// <returns> The created facet </returns>
-    public static Facet<string> ProjectType(ProjectType projectType)
+    public static Facet<string> ProjectType(ProjectType projectType, FacetOperator facetOperator = FacetOperator.Equals)
     {
-        return new Facet<string>(FacetType.ProjectType, projectType.ToModrinthString());
+        return new Facet<string>(FacetType.ProjectType, projectType.ToModrinthString(), facetOperator);
     }
 }
 
@@ -55,10 +59,11 @@ public abstract class Facet
 /// <typeparam name="T"></typeparam>
 public class Facet<T> : Facet
 {
-    internal Facet(FacetType type, T value)
+    internal Facet(FacetType type, T value, FacetOperator facetOperator = FacetOperator.Equals)
     {
         Type = type;
         Value = value;
+        Operator = facetOperator;
     }
 
     /// <summary>
@@ -72,24 +77,42 @@ public class Facet<T> : Facet
     public T Value { get; }
 
     /// <summary>
+    ///     The operator to use for filtering
+    /// </summary>
+    public FacetOperator Operator { get; }
+
+    /// <summary>
     ///     Returns a string representation of the facet, so that it is usable in API requests
     /// </summary>
     /// <returns></returns>
     public override string ToString()
     {
-        return Type switch
+        var facetKey = Type switch
         {
-            FacetType.Categories => $"categories:{Value}",
-            FacetType.Versions => $"versions:{Value}",
-            FacetType.License => $"license:{Value}",
-            FacetType.ProjectType => $"project_type:{Value}",
+            FacetType.Categories => "categories",
+            FacetType.Versions => "versions",
+            FacetType.License => "license",
+            FacetType.ProjectType => "project_type",
             _ => string.Empty
         };
+
+        var operatorStr = Operator switch
+        {
+            FacetOperator.Equals => ":",
+            FacetOperator.NotEquals => "!=",
+            FacetOperator.GreaterThan => ">",
+            FacetOperator.GreaterThanOrEqual => ">=",
+            FacetOperator.LessThan => "<",
+            FacetOperator.LessThanOrEqual => "<=",
+            _ => ":"
+        };
+
+        return $"{facetKey}{operatorStr}{Value}";
     }
 }
 
 /// <summary>
-///     The type of a facet
+///     The type of facet
 /// </summary>
 public enum FacetType
 {
@@ -113,3 +136,40 @@ public enum FacetType
     /// </summary>
     ProjectType
 }
+
+/// <summary>
+///     The operator to use for filtering
+/// </summary>
+public enum FacetOperator
+{
+    /// <summary>
+    ///     Equals (=)
+    /// </summary>
+    Equals,
+
+    /// <summary>
+    ///     Not equals (!=)
+    /// </summary>
+    NotEquals,
+
+    /// <summary>
+    ///     Greater than (>)
+    /// </summary>
+    GreaterThan,
+
+    /// <summary>
+    ///     Greater than or equal (>=)
+    /// </summary>
+    GreaterThanOrEqual,
+
+    /// <summary>
+    ///     Less than (&lt;)
+    /// </summary>
+    LessThan,
+
+    /// <summary>
+    ///     Less than or equal (&lt;=)
+    /// </summary>
+    LessThanOrEqual
+}
+
