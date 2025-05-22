@@ -55,7 +55,7 @@ public class FacetOperatorTests
             Facet.Version("1.19", FacetOperator.GreaterThanOrEqual),
             Facet.Category("adventure")
         };
-        Assert.That(collection.ToString(), Is.EqualTo("[[\"versions>=1.19\"],[\"categories=adventure\"]]"));
+        Assert.That(collection.ToString(), Is.EqualTo("[[\"versions>=1.19\"],[\"categories:adventure\"]]"));
     }
 
     [Test]

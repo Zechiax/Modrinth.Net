@@ -104,7 +104,7 @@ public class Facet<T> : Facet
             FacetOperator.GreaterThanOrEqual => ">=",
             FacetOperator.LessThan => "<",
             FacetOperator.LessThanOrEqual => "<=",
-            _ => "="
+            _ => ":"
         };
 
         return $"{facetKey}{operatorStr}{Value}";
