@@ -1,4 +1,5 @@
 ﻿using Modrinth.Extensions;
+using Modrinth.Helpers;
 using Modrinth.Http;
 using Modrinth.Models;
 using File = System.IO.File;
@@ -29,18 +30,15 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     /// <inheritdoc />
     public async Task<Models.Project[]> GetRandomAsync(int count = 10, CancellationToken cancellationToken = default)
     {
-        if (count <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(count), "Count must be greater than 0");
-        }
-        
+        if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count), "Count must be greater than 0");
+
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("projects_random", UriKind.Relative);
 
         var parameters = new ParameterBuilder
         {
-            {"count", count.ToString()}
+            { "count", count.ToString() }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -62,18 +60,23 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
-        reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri("projects", UriKind.Relative);
+        return await BatchingHelper.GetFromBatchesAsync(ids, FetchProjectBatchAsync, 100, cancellationToken);
 
-        var parameters = new ParameterBuilder
+        async Task<Models.Project[]> FetchProjectBatchAsync(string[] batch, CancellationToken ct)
         {
-            {"ids", ids.ToModrinthQueryString()}
-        };
+            var reqMsg = new HttpRequestMessage();
+            reqMsg.Method = HttpMethod.Get;
+            reqMsg.RequestUri = new Uri("projects", UriKind.Relative);
 
-        parameters.AddToRequest(reqMsg);
+            var parameters = new ParameterBuilder
+            {
+                { "ids", batch.ToModrinthQueryString() }
+            };
 
-        return await Requester.GetJsonAsync<Models.Project[]>(reqMsg, cancellationToken).ConfigureAwait(false);
+            parameters.AddToRequest(reqMsg);
+
+            return await Requester.GetJsonAsync<Models.Project[]>(reqMsg, ct).ConfigureAwait(false);
+        }
     }
 
     /// <inheritdoc />
@@ -140,7 +143,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"ext", extension}
+            { "ext", extension }
         };
 
         var stream = File.OpenRead(iconPath);
@@ -157,16 +160,11 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     public async Task AddGalleryImageAsync(string slugOrId, string imagePath, bool featured, string? title = null,
         string? description = null, int? ordering = null, CancellationToken cancellationToken = default)
     {
-        if (!File.Exists(imagePath))
-        {
-            throw new FileNotFoundException("Image not found", imagePath);
-        }
-        
+        if (!File.Exists(imagePath)) throw new FileNotFoundException("Image not found", imagePath);
+
         if (ordering < 0)
-        {
             throw new ArgumentOutOfRangeException(nameof(ordering), "Ordering must be greater than or equal to 0");
-        }
-        
+
         var extension = Path.GetExtension(imagePath).TrimStart('.');
 
         var reqMsg = new HttpRequestMessage();
@@ -176,11 +174,11 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"featured", featured.ToString().ToLower()},
-            {"title", title},
-            {"description", description},
-            {"ordering", ordering},
-            {"ext", extension}
+            { "featured", featured.ToString().ToLower() },
+            { "title", title },
+            { "description", description },
+            { "ordering", ordering },
+            { "ext", extension }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -198,10 +196,8 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
         string? description = null, int? ordering = null, CancellationToken cancellationToken = default)
     {
         if (ordering < 0)
-        {
             throw new ArgumentOutOfRangeException(nameof(ordering), "Ordering must be greater than or equal to 0");
-        }
-        
+
         var reqMsg = new HttpRequestMessage();
 
         reqMsg.Method = HttpMethod.Patch;
@@ -209,11 +205,11 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"url", url},
-            {"featured", featured?.ToString().ToLower()},
-            {"title", title},
-            {"description", description},
-            {"ordering", ordering}
+            { "url", url },
+            { "featured", featured?.ToString().ToLower() },
+            { "title", title },
+            { "description", description },
+            { "ordering", ordering }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -232,7 +228,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"url", url}
+            { "url", url }
         };
 
         parameters.AddToRequest(reqMsg);
@@ -244,15 +240,10 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     public async Task<SearchResponse> SearchAsync(string query, Index index = Index.Downloads, int offset = 0,
         int limit = 10, FacetCollection? facets = null, CancellationToken cancellationToken = default)
     {
-        if (limit <= 0)
-        {
-            throw new ArgumentOutOfRangeException(nameof(limit), "Limit must be greater than 0");
-        }
-        
+        if (limit <= 0) throw new ArgumentOutOfRangeException(nameof(limit), "Limit must be greater than 0");
+
         if (offset < 0)
-        {
             throw new ArgumentOutOfRangeException(nameof(offset), "Offset must be greater than or equal to 0");
-        }
 
         var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
@@ -260,13 +251,13 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"query", query.Replace(' ', '_')},
-            {"index", index.ToString().ToLower()},
-            {"offset", offset},
-            {"limit", limit}
+            { "query", query.Replace(' ', '_') },
+            { "index", index.ToString().ToLower() },
+            { "offset", offset },
+            { "limit", limit }
         };
 
-        if (facets is {Count: > 0}) parameters.Add("facets", facets.ToString());
+        if (facets is { Count: > 0 }) parameters.Add("facets", facets.ToString());
 
         parameters.AddToRequest(reqMsg);
 
