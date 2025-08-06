@@ -19,6 +19,12 @@ public class EndpointTests
     protected static readonly string[] ValidSha1Hashes =
         {"43035a1c6f506285a9910bc8038d1b1b925f8dd1", "2f73c4a26c553bf0f0d2f921dd5a09ed90c515d8"};
 
+    protected static readonly string[] ValidFileName =
+    {
+        "fabric-api-0.102.0+1.21.jar",
+        "sodium-fabric-0.5.8+mc1.20.6.jar"
+    };
+
     private static readonly IConfigurationRoot Configuration =
         new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
 

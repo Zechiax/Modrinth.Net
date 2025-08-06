@@ -23,7 +23,7 @@ public class File
     /// <summary>
     ///     The name of the file
     /// </summary>
-    public string FileName { get; set; }
+    [JsonPropertyName("filename")] public string FileName { get; set; }
 
     /// <summary>
     ///     Whether the file is the primary file of the version

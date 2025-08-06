@@ -40,6 +40,23 @@ public class VersionFileTests : EndpointTests
     }
 
     [Test]
+    [TestCase(0)]
+    [TestCase(1)]
+    public async Task EnsureFileNameSerializationCorrect(int index)
+    {
+        var hash = ValidSha1Hashes[index];
+        var fileName = ValidFileName[index];
+
+        var version = await Client.VersionFile.GetVersionByHashAsync(hash);
+
+        Assert.That(version, Is.Not.Null);
+
+        var file = version.Files.FirstOrDefault(f => f.Hashes.Sha1 == hash && f.FileName == fileName);
+        
+        Assert.That(file, Is.Not.Null);
+    }
+
+    [Test]
     public async Task GetMultipleVersionsFromHashesSha1()
     {
         var hashes = ValidSha1Hashes;
