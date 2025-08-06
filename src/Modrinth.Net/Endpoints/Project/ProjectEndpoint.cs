@@ -60,7 +60,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     public async Task<Models.Project[]> GetMultipleAsync(IEnumerable<string> ids,
         CancellationToken cancellationToken = default)
     {
-        return await BatchingHelper.GetFromBatchesAsync(ids, FetchProjectBatchAsync, 100, cancellationToken);
+        return await BatchingHelper.GetFromBatchesAsync(ids, FetchProjectBatchAsync, Config.BatchSize, cancellationToken);
 
         async Task<Models.Project[]> FetchProjectBatchAsync(string[] batch, CancellationToken ct)
         {

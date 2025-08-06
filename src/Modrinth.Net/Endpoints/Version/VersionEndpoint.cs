@@ -53,7 +53,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     public async Task<Models.Version[]> GetMultipleAsync(IEnumerable<string> ids,
         CancellationToken cancellationToken = default)
     {
-        return await BatchingHelper.GetFromBatchesAsync(ids, FetchVersionBatchAsync, 100, cancellationToken);
+        return await BatchingHelper.GetFromBatchesAsync(ids, FetchVersionBatchAsync, Config.BatchSize, cancellationToken);
     
         async Task<Models.Version[]> FetchVersionBatchAsync(string[] batch, CancellationToken ct)
         {

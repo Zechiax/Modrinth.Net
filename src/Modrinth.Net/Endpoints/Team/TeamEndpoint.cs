@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using System.Text.Json;
 using Modrinth.Extensions;
+using Modrinth.Helpers;
 using Modrinth.Http;
 using Modrinth.Models;
 using Modrinth.Models.Enums;
@@ -41,18 +42,23 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     public async Task<TeamMember[][]> GetMultipleAsync(IEnumerable<string> ids,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
-        reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri("teams", UriKind.Relative);
+        return await BatchingHelper.GetFromBatchesAsync(ids, FetchTeamBatchAsync, Config.BatchSize, cancellationToken);
 
-        var parameters = new ParameterBuilder
+        async Task<TeamMember[][]> FetchTeamBatchAsync(string[] batch, CancellationToken ct)
         {
-            {"ids", ids.ToModrinthQueryString()}
-        };
+            var reqMsg = new HttpRequestMessage();
+            reqMsg.Method = HttpMethod.Get;
+            reqMsg.RequestUri = new Uri("teams", UriKind.Relative);
 
-        parameters.AddToRequest(reqMsg);
+            var parameters = new ParameterBuilder
+            {
+                {"ids", batch.ToModrinthQueryString()}
+            };
 
-        return await Requester.GetJsonAsync<TeamMember[][]>(reqMsg, cancellationToken).ConfigureAwait(false);
+            parameters.AddToRequest(reqMsg);
+
+            return await Requester.GetJsonAsync<TeamMember[][]>(reqMsg, ct).ConfigureAwait(false);
+        }
     }
 
     /// <inheritdoc />

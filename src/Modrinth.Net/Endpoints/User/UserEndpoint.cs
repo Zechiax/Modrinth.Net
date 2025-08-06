@@ -1,4 +1,5 @@
 ﻿using Modrinth.Extensions;
+using Modrinth.Helpers;
 using Modrinth.Http;
 using Modrinth.Models;
 using File = System.IO.File;
@@ -40,18 +41,23 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     public async Task<Models.User[]> GetMultipleAsync(IEnumerable<string> ids,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
-        reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri("users", UriKind.Relative);
+        return await BatchingHelper.GetFromBatchesAsync(ids, FetchUserBatchAsync, Config.BatchSize, cancellationToken);
 
-        var parameters = new ParameterBuilder
+        async Task<Models.User[]> FetchUserBatchAsync(string[] batch, CancellationToken ct)
         {
-            {"ids", ids.ToModrinthQueryString()}
-        };
+            var reqMsg = new HttpRequestMessage();
+            reqMsg.Method = HttpMethod.Get;
+            reqMsg.RequestUri = new Uri("users", UriKind.Relative);
 
-        parameters.AddToRequest(reqMsg);
+            var parameters = new ParameterBuilder
+            {
+                {"ids", batch.ToModrinthQueryString()}
+            };
 
-        return await Requester.GetJsonAsync<Models.User[]>(reqMsg, cancellationToken).ConfigureAwait(false);
+            parameters.AddToRequest(reqMsg);
+
+            return await Requester.GetJsonAsync<Models.User[]>(reqMsg, ct).ConfigureAwait(false);
+        }
     }
 
     /// <inheritdoc />
