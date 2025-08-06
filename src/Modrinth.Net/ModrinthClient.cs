@@ -96,13 +96,34 @@ public class ModrinthClient : IModrinthClient
         Notification = new NotificationsEndpoint(_requester);
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    ///     Disposes the underlying <see cref="HttpClient" /> and other resources.
+    /// </summary>
     public void Dispose()
     {
-        if (IsDisposed || _requester.IsDisposed) return;
-        _requester.Dispose();
-        IsDisposed = true;
+        Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    ///     Disposes the resources used by the <see cref="ModrinthClient" />.
+    /// </summary>
+    /// <param name="disposing">
+    ///     Indicates whether the method was called from the <see cref="Dispose()" /> method or from the finalizer.
+    /// </param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (IsDisposed)
+        {
+            return;
+        }
+
+        if (disposing)
+        {
+            _requester.Dispose();
+        }
+        
+        IsDisposed = true;
     }
 
     #region Endpoints

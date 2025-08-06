@@ -190,22 +190,27 @@ public class Requester : IRequester
     public void Dispose()
     {
         Dispose(true);
-        IsDisposed = true;
-        
         GC.SuppressFinalize(this);
     }
     
     /// <summary>
-    ///     
+    ///      Disposes the underlying resources.
     /// </summary>
-    /// <param name="disposing"></param>
+    /// Indicates whether the method was called from the <see cref="Dispose()" /> method or from the finalizer.
     protected virtual void Dispose(bool disposing)
     {
+        if (IsDisposed)
+        {
+            return;
+        }
+        
         if (disposing)
         {
             HttpClient.Dispose();
             _semaphore.Dispose();
         }
+        
+        IsDisposed = true;
     }
 
     private static HttpRequestMessage CopyRequest(HttpRequestMessage request)
