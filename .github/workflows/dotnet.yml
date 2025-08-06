@@ -6,34 +6,37 @@ on:
   pull_request:
     branches: [ "main" ]
   schedule:
-    - cron: "0 4 * * 0" # Runs every Sunday at midnight UTC
+    # Runs every Sunday at 4 AM UTC
+    - cron: "0 4 * * 0"
 
 jobs:
-  build:
+  build-and-test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet: [ '8.0.x' ]
+    
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{ matrix.dotnet }}
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      env:
-        MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN || '' }}
-      run: |
-        if [ "${{ github.event_name }}" == "pull_request" ]; then
-          if [ -n "${{ secrets.MODRINTH_TOKEN }}" ]; then
-            dotnet test --no-build --verbosity normal
-          else
-            echo "MODRINTH_TOKEN is not set, skipping tests."
-          fi
-        else
-          dotnet test --no-build --verbosity normal
-        fi
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{ matrix.dotnet }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --no-restore
+
+      - name: Test on Pull Requests (Unauthenticated only)
+        if: github.event_name == 'pull_request'
+        run: dotnet test --no-build --verbosity normal --filter "Category!=Authenticated"
+
+      - name: Test on Main Branch & Scheduled Runs (All tests)
+        if: github.event_name != 'pull_request'
+        env:
+          MODRINTH_API_KEY: ${{ secrets.MODRINTH_TOKEN }}
+        run: dotnet test --no-build --verbosity normal
