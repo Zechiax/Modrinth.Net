@@ -7,7 +7,7 @@ namespace Modrinth.Endpoints.Notifications;
 public class NotificationsEndpoint : Endpoint, INotificationsEndpoint
 {
     /// <inheritdoc />
-    public NotificationsEndpoint(IRequester requester) : base(requester)
+    public NotificationsEndpoint(IRequester requester, ModrinthClientConfig config) : base(requester, config)
     {
     }
 

@@ -13,7 +13,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     private const string ProjectPathSegment = "project";
 
     /// <inheritdoc />
-    public ProjectEndpoint(IRequester requester) : base(requester)
+    public ProjectEndpoint(IRequester requester, ModrinthClientConfig config) : base(requester, config)
     {
     }
 

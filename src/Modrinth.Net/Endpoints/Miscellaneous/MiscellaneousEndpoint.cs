@@ -6,7 +6,7 @@ namespace Modrinth.Endpoints.Miscellaneous;
 public class MiscellaneousEndpoint : Endpoint, IMiscellaneousEndpoint
 {
     /// <inheritdoc />
-    public MiscellaneousEndpoint(IRequester requester) : base(requester)
+    public MiscellaneousEndpoint(IRequester requester, ModrinthClientConfig config) : base(requester, config)
     {
     }
 

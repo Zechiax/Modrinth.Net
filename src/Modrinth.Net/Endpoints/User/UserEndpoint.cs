@@ -11,7 +11,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     private const string UserPathSegment = "user";
 
     /// <inheritdoc />
-    public UserEndpoint(IRequester requester) : base(requester)
+    public UserEndpoint(IRequester requester, ModrinthClientConfig config) : base(requester, config)
     {
     }
 

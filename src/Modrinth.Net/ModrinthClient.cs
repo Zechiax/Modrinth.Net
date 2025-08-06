@@ -86,14 +86,14 @@ public class ModrinthClient : IModrinthClient
         _config = config;
         _requester = new Requester(config, httpClient);
 
-        Project = new ProjectEndpoint(_requester);
-        Tag = new TagEndpoint(_requester);
-        Team = new TeamEndpoint(_requester);
-        User = new UserEndpoint(_requester);
-        Version = new VersionEndpoint(_requester);
-        VersionFile = new VersionFileEndpoint(_requester);
-        Miscellaneous = new MiscellaneousEndpoint(_requester);
-        Notification = new NotificationsEndpoint(_requester);
+        Project = new ProjectEndpoint(_requester, config);
+        Tag = new TagEndpoint(_requester, config);
+        Team = new TeamEndpoint(_requester, config);
+        User = new UserEndpoint(_requester, config);
+        Version = new VersionEndpoint(_requester, config);
+        VersionFile = new VersionFileEndpoint(_requester, config);
+        Miscellaneous = new MiscellaneousEndpoint(_requester, config);
+        Notification = new NotificationsEndpoint(_requester, config);
     }
 
     /// <summary>

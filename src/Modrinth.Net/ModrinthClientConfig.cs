@@ -25,13 +25,22 @@ public class ModrinthClientConfig
 
     /// <summary>
     ///     The number of times to retry a request if the rate limit is hit
+    ///     Default is 5.
     /// </summary>
     public int RateLimitRetryCount { get; set; } = 5;
 
     /// <summary>
     ///     The maximum number of concurrent requests to send
+    ///     Default is 10.
     /// </summary>
     public int MaxConcurrentRequests { get; set; } = 10;
+    
+    /// <summary>
+    ///     The size of the batch when sending requests that require multiple IDs (e.g., getting multiple projects by their IDs).
+    ///     This is the number of IDs to send in a single request.
+    ///     Default is 100.
+    /// </summary>
+    public int BatchSize { get; set; } = 100;
 
     /// <summary>
     ///     Validates the configuration options.
@@ -55,5 +64,9 @@ public class ModrinthClientConfig
         if (MaxConcurrentRequests <= 0)
             throw new ArgumentOutOfRangeException(nameof(MaxConcurrentRequests),
                 "MaxConcurrentRequests must be greater than zero.");
+        
+        if (BatchSize <= 0)
+            throw new ArgumentOutOfRangeException(nameof(BatchSize),
+                "BatchSize must be greater than zero.");
     }
 }

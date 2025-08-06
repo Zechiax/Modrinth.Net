@@ -13,7 +13,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     private const string TeamsPathSegment = "team";
 
     /// <inheritdoc />
-    public TeamEndpoint(IRequester requester) : base(requester)
+    public TeamEndpoint(IRequester requester, ModrinthClientConfig config) : base(requester, config)
     {
     }
 

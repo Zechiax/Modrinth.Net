@@ -11,7 +11,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     private const string VersionsPath = "version";
 
     /// <inheritdoc />
-    public VersionEndpoint(IRequester requester) : base(requester)
+    public VersionEndpoint(IRequester requester, ModrinthClientConfig config) : base(requester, config)
     {
     }
 
