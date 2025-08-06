@@ -12,19 +12,61 @@ public class ModrinthClientConfig
 
     /// <summary>
     ///     The base URL to use for requests, you don't need to change this unless you want to use a different instance of
-    ///     Modrinth (e.g. a staging server)
+    ///     Modrinth (e.g., a staging server)
     ///     Default is <see cref="ModrinthClient.BaseUrl" />
     /// </summary>
     public string BaseUrl { get; set; } = ModrinthClient.BaseUrl;
 
     /// <summary>
     ///     User-Agent you want to use while communicating with Modrinth API, it's recommended to
-    ///     set a uniquely-identifying one (<a href="https://docs.modrinth.com/api-spec/#section/User-Agents">see the docs</a>)
+    ///     set a uniquely identifying one (<a href="https://docs.modrinth.com/api-spec/#section/User-Agents">see the docs</a>)
     /// </summary>
     public string UserAgent { get; set; } = $"Modrinth.Net/{PackageVersion.GetVersion()}";
 
     /// <summary>
     ///     The number of times to retry a request if the rate limit is hit
+    ///     Default is 5.
     /// </summary>
     public int RateLimitRetryCount { get; set; } = 5;
+
+    /// <summary>
+    ///     The maximum number of concurrent requests to send
+    ///     Default is 10.
+    /// </summary>
+    public int MaxConcurrentRequests { get; set; } = 10;
+    
+    /// <summary>
+    ///     The size of the batch when sending requests that require multiple IDs (e.g., getting multiple projects by their IDs).
+    ///     This is the number of IDs to send in a single request.
+    ///     Default is 100.
+    /// </summary>
+    public int BatchSize { get; set; } = 100;
+
+    /// <summary>
+    ///     Validates the configuration options.
+    ///     Throws an <see cref="ArgumentException" /> if any of the required properties are null or empty,
+    ///     or an <see cref="ArgumentOutOfRangeException" /> if any of the numeric properties are out of range.
+    /// </summary>
+    /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
+    public void Validate()
+    {
+        if (string.IsNullOrWhiteSpace(UserAgent))
+            throw new ArgumentException("User-Agent cannot be null or empty.", nameof(UserAgent));
+
+        if (string.IsNullOrWhiteSpace(BaseUrl))
+            throw new ArgumentException("BaseUrl cannot be null or empty.", nameof(BaseUrl));
+
+        if (RateLimitRetryCount < 0)
+            throw new ArgumentOutOfRangeException(nameof(RateLimitRetryCount),
+                "RateLimitRetryCount must be non-negative.");
+
+        if (MaxConcurrentRequests <= 0)
+            throw new ArgumentOutOfRangeException(nameof(MaxConcurrentRequests),
+                "MaxConcurrentRequests must be greater than zero.");
+        
+        if (BatchSize <= 0)
+            throw new ArgumentOutOfRangeException(nameof(BatchSize),
+                "BatchSize must be greater than zero.");
+    }
 }

@@ -71,35 +71,59 @@ public class ModrinthClient : IModrinthClient
     /// </summary>
     /// <param name="config"> Configuration for the client </param>
     /// <param name="httpClient">
-    ///     Custom <see cref="HttpClient" /> to use for requests, if null a new one will be created, some
-    ///     options like user-agent or base url will be overwritten by the config
+    ///     Custom <see cref="HttpClient" /> to use for requests, if null a new one will be created, the config
+    ///     will overwrite some options like user-agent or base url
     /// </param>
-    /// <exception cref="ArgumentException"> Thrown when the User-Agent is empty </exception>
+    /// <exception cref="ArgumentException">Thrown when the configuration is invalid, e.g., User-Agent is empty</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     Thrown when the configuration contains invalid numeric values, e.g.,
+    ///     MaxConcurrentRequests is less than or equal to zero
+    /// </exception>
     public ModrinthClient(ModrinthClientConfig config, HttpClient? httpClient = null)
     {
-        if (string.IsNullOrEmpty(config.UserAgent))
-            throw new ArgumentException("User-Agent cannot be empty", nameof(config.UserAgent));
+        config.Validate();
 
         _config = config;
         _requester = new Requester(config, httpClient);
 
-        Project = new ProjectEndpoint(_requester);
-        Tag = new TagEndpoint(_requester);
-        Team = new TeamEndpoint(_requester);
-        User = new UserEndpoint(_requester);
-        Version = new VersionEndpoint(_requester);
-        VersionFile = new VersionFileEndpoint(_requester);
-        Miscellaneous = new MiscellaneousEndpoint(_requester);
-        Notification = new NotificationsEndpoint(_requester);
+        Project = new ProjectEndpoint(_requester, config);
+        Tag = new TagEndpoint(_requester, config);
+        Team = new TeamEndpoint(_requester, config);
+        User = new UserEndpoint(_requester, config);
+        Version = new VersionEndpoint(_requester, config);
+        VersionFile = new VersionFileEndpoint(_requester, config);
+        Miscellaneous = new MiscellaneousEndpoint(_requester, config);
+        Notification = new NotificationsEndpoint(_requester, config);
     }
 
-    /// <inheritdoc />
+    /// <summary>
+    ///     Disposes the underlying <see cref="HttpClient" /> and other resources.
+    /// </summary>
     public void Dispose()
     {
-        if (IsDisposed || _requester.IsDisposed) return;
-        _requester.Dispose();
-        IsDisposed = true;
+        Dispose(true);
         GC.SuppressFinalize(this);
+    }
+
+    /// <summary>
+    ///     Disposes the resources used by the <see cref="ModrinthClient" />.
+    /// </summary>
+    /// <param name="disposing">
+    ///     Indicates whether the method was called from the <see cref="Dispose()" /> method or from the finalizer.
+    /// </param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (IsDisposed)
+        {
+            return;
+        }
+
+        if (disposing)
+        {
+            _requester.Dispose();
+        }
+        
+        IsDisposed = true;
     }
 
     #region Endpoints

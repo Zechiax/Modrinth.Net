@@ -32,7 +32,8 @@ public interface IVersionEndpoint
         string[]? gameVersions = null, bool? featured = null, CancellationToken cancellationToken = default);
 
     /// <summary>
-    ///     Gets multiple versions by their ids
+    ///     Gets multiple versions by their ids, if the number of ids is greater than 100, it will be split into multiple
+    ///     requests
     /// </summary>
     /// <param name="ids">The IDs of the versions</param>
     /// <param name="cancellationToken"> The cancellation token to cancel operation </param>

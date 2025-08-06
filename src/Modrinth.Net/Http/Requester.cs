@@ -18,10 +18,12 @@ public class Requester : IRequester
         Converters =
         {
             new ColorConverter(),
-            new JsonStringEnumConverter(namingPolicy: JsonNamingPolicy.SnakeCaseLower)
+            new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower)
         },
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower
     };
+
+    private readonly SemaphoreSlim _semaphore;
 
     /// <summary>
     ///     Creates a new <see cref="Requester" /> with the specified <see cref="ModrinthClientConfig" />
@@ -31,6 +33,8 @@ public class Requester : IRequester
     public Requester(ModrinthClientConfig config, HttpClient? httpClient = null)
     {
         _config = config;
+        _semaphore = new SemaphoreSlim(_config.MaxConcurrentRequests);
+
         HttpClient = httpClient ?? new HttpClient();
 
         BaseAddress = new Uri(config.BaseUrl);
@@ -84,7 +88,9 @@ public class Requester : IRequester
         }
         catch (JsonException e)
         {
-            throw new ModrinthApiException($"Response could not be deserialize for Path {e.Path} | URL {request.RequestUri} | Response {response.StatusCode} | Data {await response.Content.ReadAsStringAsync(cancellationToken)}", response, innerException: e);
+            throw new ModrinthApiException(
+                $"Response could not be deserialize for Path {e.Path} | URL {request.RequestUri} | Response {response.StatusCode} | Data {await response.Content.ReadAsStringAsync(cancellationToken)}",
+                response, innerException: e);
         }
     }
 
@@ -102,76 +108,108 @@ public class Requester : IRequester
         if (IsDisposed)
             throw new ObjectDisposedException(nameof(Requester));
 
-        var retryCount = 0;
-        while (true)
+        // Throttle the number of concurrent requests
+        await _semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
+
+        try
         {
-            HttpResponseMessage response;
-            try
+            var retryCount = 0;
+            while (true)
             {
-                response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
-            }
-            catch (HttpRequestException e)
-            {
-                throw new ModrinthApiException("An error occurred while sending the request.", innerException: e);
-            }
-
-            if (response.IsSuccessStatusCode) return response;
-
-            if (response.StatusCode == HttpStatusCode.TooManyRequests)
-            {
-                if (cancellationToken.IsCancellationRequested)
-                    throw new OperationCanceledException(
-                        "The operation was canceled",
-                        cancellationToken);
-
-                if (retryCount >= _config.RateLimitRetryCount)
-                    throw new ModrinthApiException(
-                        $"Request was rate limited and retry limit ({_config.RateLimitRetryCount}) was reached",
-                        response);
-
-                if (response.Headers.TryGetValues("X-Ratelimit-Reset", out var resetValues))
+                HttpResponseMessage response;
+                try
                 {
-                    var resetInSeconds = int.Parse(resetValues.First());
-                    // Reset time + 1 seconds to be sure
-                    var resetTime = DateTimeOffset.Now.AddSeconds(resetInSeconds + 1);
-                    await Task.Delay(resetTime - DateTimeOffset.Now, cancellationToken).ConfigureAwait(false);
-
-                    retryCount++;
-                    // We need to create a new request message because the old one has already been sent
-                    request = CopyRequest(request);
-                    continue;
+                    response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
                 }
+                catch (HttpRequestException e)
+                {
+                    throw new ModrinthApiException("An error occurred while sending the request.", innerException: e);
+                }
+
+                // Response was successful
+                if (response.IsSuccessStatusCode) return response;
+
+                // Handle rate-limiting (429 Too Many Requests).
+                if (response.StatusCode == HttpStatusCode.TooManyRequests)
+                {
+                    if (cancellationToken.IsCancellationRequested)
+                        throw new OperationCanceledException(
+                            "The operation was canceled",
+                            cancellationToken);
+
+                    if (retryCount >= _config.RateLimitRetryCount)
+                        throw new ModrinthApiException(
+                            $"Request was rate limited and retry limit ({_config.RateLimitRetryCount}) was reached",
+                            response);
+
+                    // Wait for the duration specified by the 'X-Ratelimit-Reset' header.
+                    if (response.Headers.TryGetValues("X-Ratelimit-Reset", out var resetValues))
+                    {
+                        var resetInSeconds = int.Parse(resetValues.First());
+                        // Add a small buffer (e.g., 500 ms) to be safe.
+                        await Task.Delay(TimeSpan.FromSeconds(resetInSeconds).Add(TimeSpan.FromMilliseconds(500)),
+                            cancellationToken).ConfigureAwait(false);
+
+                        retryCount++;
+                        // A request message cannot be sent twice, so we must create a copy for the retry.
+                        request = CopyRequest(request);
+                        continue; // Continue to the next iteration of the while loop to retry the request.
+                    }
+                }
+                
+                // If we reach here, the response was not successful and not rate-limited.
+                ResponseError? error = null;
+                try
+                {
+                    error = await JsonSerializer.DeserializeAsync<ResponseError>(
+                            await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions,
+                            cancellationToken)
+                        .ConfigureAwait(false);
+                }
+                catch (JsonException)
+                {
+                    // The error response wasn't in the expected format; proceed with a generic error.
+                }
+
+                var message = "An error occurred while communicating with Modrinth API (HTTP " +
+                              $"{(int)response.StatusCode} {response.StatusCode})";
+                if (error != null) message += $": {error.Error}: {error.Description}";
+
+                message += $"{Environment.NewLine}Request: {request.Method} {request.RequestUri}";
+
+                throw new ModrinthApiException(message, response, error);
             }
-
-            // Error handling
-            ResponseError? error = null;
-            try
-            {
-                error = await JsonSerializer.DeserializeAsync<ResponseError>(
-                        await response.Content.ReadAsStreamAsync(cancellationToken), _jsonSerializerOptions,
-                        cancellationToken)
-                    .ConfigureAwait(false);
-            }
-            catch (JsonException)
-            {
-                // Ignore
-            }
-
-            var message = "An error occurred while communicating with Modrinth API (HTTP " +
-                          $"{(int) response.StatusCode} {response.StatusCode})";
-            if (error != null) message += $": {error.Error}: {error.Description}";
-
-            // Add request information to the exception
-            message += $"{Environment.NewLine}Request: {request.Method} {request.RequestUri}";
-
-            throw new ModrinthApiException(message, response, error);
+        }
+        finally
+        {
+            _semaphore.Release();
         }
     }
 
     /// <inheritdoc />
     public void Dispose()
     {
-        HttpClient.Dispose();
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+    
+    /// <summary>
+    ///      Disposes the underlying resources.
+    /// </summary>
+    /// <param name="disposing">Indicates whether the method was called from the <see cref="Dispose()" /> method or from the finalizer.</param>
+    protected virtual void Dispose(bool disposing)
+    {
+        if (IsDisposed)
+        {
+            return;
+        }
+        
+        if (disposing)
+        {
+            HttpClient.Dispose();
+            _semaphore.Dispose();
+        }
+        
         IsDisposed = true;
     }
 

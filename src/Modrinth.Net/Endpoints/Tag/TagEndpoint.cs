@@ -9,7 +9,7 @@ public class TagEndpoint : Endpoint, ITagEndpoint
     private const string TagPathSegment = "tag";
 
     /// <inheritdoc />
-    public TagEndpoint(IRequester requester) : base(requester)
+    public TagEndpoint(IRequester requester, ModrinthClientConfig config) : base(requester, config)
     {
     }
 

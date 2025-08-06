@@ -55,7 +55,7 @@ public interface IProjectEndpoint
     Task DeleteAsync(string slugOrId, CancellationToken cancellationToken = default);
 
     /// <summary>
-    ///     Gets multiple projects by their IDs
+    ///     Gets multiple projects by their IDs, if the number of IDs is greater than 100, it will be split into multiple requests.
     /// </summary>
     /// <param name="ids">IEnumerable of string ids</param>
     /// <param name="cancellationToken"> The cancellation token to cancel operation </param>

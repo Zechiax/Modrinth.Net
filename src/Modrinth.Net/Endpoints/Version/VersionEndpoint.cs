@@ -1,4 +1,5 @@
 ﻿using Modrinth.Extensions;
+using Modrinth.Helpers;
 using Modrinth.Http;
 using Modrinth.Models.Enums.Version;
 
@@ -10,7 +11,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     private const string VersionsPath = "version";
 
     /// <inheritdoc />
-    public VersionEndpoint(IRequester requester) : base(requester)
+    public VersionEndpoint(IRequester requester, ModrinthClientConfig config) : base(requester, config)
     {
     }
 
@@ -52,18 +53,23 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     public async Task<Models.Version[]> GetMultipleAsync(IEnumerable<string> ids,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
-        reqMsg.Method = HttpMethod.Get;
-        reqMsg.RequestUri = new Uri("versions", UriKind.Relative);
-
-        var parameters = new ParameterBuilder
+        return await BatchingHelper.GetFromBatchesAsync(ids, FetchVersionBatchAsync, Config.BatchSize, cancellationToken);
+    
+        async Task<Models.Version[]> FetchVersionBatchAsync(string[] batch, CancellationToken ct)
         {
-            {"ids", ids.ToModrinthQueryString()}
-        };
-
-        parameters.AddToRequest(reqMsg);
-
-        return await Requester.GetJsonAsync<Models.Version[]>(reqMsg, cancellationToken).ConfigureAwait(false);
+            var reqMsg = new HttpRequestMessage();
+            reqMsg.Method = HttpMethod.Get;
+            reqMsg.RequestUri = new Uri("versions", UriKind.Relative);
+    
+            var parameters = new ParameterBuilder
+            {
+                { "ids", batch.ToModrinthQueryString() }
+            };
+    
+            parameters.AddToRequest(reqMsg);
+    
+            return await Requester.GetJsonAsync<Models.Version[]>(reqMsg, ct).ConfigureAwait(false);
+        }
     }
 
     /// <inheritdoc />
@@ -97,8 +103,8 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"time", date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ")},
-            {"requested_status", requestedStatus.ToString().ToLower()}
+            { "time", date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") },
+            { "requested_status", requestedStatus.ToString().ToLower() }
         };
 
         parameters.AddToRequest(reqMsg);
