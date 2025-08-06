@@ -9,7 +9,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithEmptySearchTerm_ShouldReturnNonEmptyList()
     {
-        var search = await Client.Project.SearchAsync("");
+        var search = await NoAuthClient.Project.SearchAsync("");
         Assert.Multiple(() =>
         {
             Assert.That(search.TotalHits, Is.GreaterThan(0));
@@ -21,7 +21,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithFabricSearchTerm_ShouldReturnNonEmptyList()
     {
-        var search = await Client.Project.SearchAsync("fabric");
+        var search = await NoAuthClient.Project.SearchAsync("fabric");
 
         Assert.Multiple(() =>
         {
@@ -39,7 +39,7 @@ public class SearchTests : EndpointTests
     [TestCase(20)]
     public async Task Search_WithLimit_ShouldReturnLimitedList(int limit)
     {
-        var search = await Client.Project.SearchAsync("", limit: limit);
+        var search = await NoAuthClient.Project.SearchAsync("", limit: limit);
 
         Assert.Multiple(() =>
         {
@@ -59,7 +59,7 @@ public class SearchTests : EndpointTests
     [Test]
     public void Search_WithLimit0_ShouldThrowException()
     {
-        Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await Client.Project.SearchAsync("", limit: 0));
+        Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await NoAuthClient.Project.SearchAsync("", limit: 0));
     }
 
     // Test different offset values
@@ -70,8 +70,8 @@ public class SearchTests : EndpointTests
     [TestCase(20)]
     public async Task Search_WithOffset_ShouldReturnOffsetList(int offset)
     {
-        var search = await Client.Project.SearchAsync("", limit: offset + 5);
-        var searchWithOffset = await Client.Project.SearchAsync("", offset: offset, limit: offset);
+        var search = await NoAuthClient.Project.SearchAsync("", limit: offset + 5);
+        var searchWithOffset = await NoAuthClient.Project.SearchAsync("", offset: offset, limit: offset);
 
         // Check that the offset list is not the same as the original list
         Assert.That(searchWithOffset.Hits, Is.Not.EqualTo(search.Hits));
@@ -87,7 +87,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithDownloadsSort_ShouldReturnSortedByDownloadsList()
     {
-        var search = await Client.Project.SearchAsync("");
+        var search = await NoAuthClient.Project.SearchAsync("");
 
         // Check that the list is sorted by downloads
         Assert.That(
@@ -99,7 +99,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithFollowersSort_ShouldReturnSortedByFollowersList()
     {
-        var search = await Client.Project.SearchAsync("", Index.Follows);
+        var search = await NoAuthClient.Project.SearchAsync("", Index.Follows);
 
         // Check that the list is sorted by followers
         Assert.That(
@@ -111,7 +111,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithNewestSort_ShouldReturnSortedByNewestList()
     {
-        var search = await Client.Project.SearchAsync("", Index.Newest);
+        var search = await NoAuthClient.Project.SearchAsync("", Index.Newest);
 
         // Check that the list is sorted by newest
         Assert.That(
@@ -123,7 +123,7 @@ public class SearchTests : EndpointTests
     [Test]
     public async Task Search_WithUpdatedSort_ShouldReturnSortedByUpdatedList()
     {
-        var search = await Client.Project.SearchAsync("", Index.Updated);
+        var search = await NoAuthClient.Project.SearchAsync("", Index.Updated);
 
         // Check that the list is sorted by updated
         Assert.That(
@@ -139,7 +139,7 @@ public class SearchTests : EndpointTests
 
         facets.Add(Facet.Category("adventure"));
 
-        var search = await Client.Project.SearchAsync("", facets: facets);
+        var search = await NoAuthClient.Project.SearchAsync("", facets: facets);
 
         // Check that every search result has the adventure category
         Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure")));
@@ -153,7 +153,7 @@ public class SearchTests : EndpointTests
 
         facets.Add(Facet.ProjectType(ProjectType.Modpack));
 
-        var search = await Client.Project.SearchAsync("", facets: facets);
+        var search = await NoAuthClient.Project.SearchAsync("", facets: facets);
 
         // Check that every search result has the modpack project type
         Assert.That(search.Hits.Select(p => p.ProjectType).All(c => c == ProjectType.Modpack));
@@ -168,7 +168,7 @@ public class SearchTests : EndpointTests
         facets.Add(Facet.Category("adventure"));
         facets.Add(Facet.Category("cursed"));
 
-        var search = await Client.Project.SearchAsync("", facets: facets);
+        var search = await NoAuthClient.Project.SearchAsync("", facets: facets);
 
         // Check that every search result has the adventure and cursed category
         Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure") && c.Contains("cursed")));
@@ -187,7 +187,7 @@ public class SearchTests : EndpointTests
         
         foreach(var mod in testedMods)
         {
-            var result = await Client.Project.SearchAsync(mod);
+            var result = await NoAuthClient.Project.SearchAsync(mod);
             Assert.That(result.TotalHits, Is.GreaterThan(3)); // query="just enough items" returns 3 results, query=just_enough_items returns a lot
         }
     }

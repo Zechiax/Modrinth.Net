@@ -6,7 +6,7 @@ public class ProjectColorTests : EndpointTests
     [Test]
     public async Task ProjectColor()
     {
-        var project = await Client.Project.GetAsync(TestProjectSlug);
+        var project = await NoAuthClient.Project.GetAsync(TestProjectSlug);
 
         // Check that the project color is not null
         Assert.That(project.Color, Is.Not.Null);

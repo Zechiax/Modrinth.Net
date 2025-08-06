@@ -6,7 +6,7 @@ public class MiscellaneousTests : EndpointTests
     [Test]
     public async Task GetStatisticsAsync()
     {
-        var statistics = await Client.Miscellaneous.GetStatisticsAsync();
+        var statistics = await NoAuthClient.Miscellaneous.GetStatisticsAsync();
         Assert.That(statistics, Is.Not.Null);
         Assert.Multiple(() =>
         {

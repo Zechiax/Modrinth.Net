@@ -27,7 +27,7 @@ public class UserEndpointTests : EndpointTests
     {
         var currentUser = await Client.User.GetCurrentAsync();
 
-        var user = await Client.User.GetAsync(currentUser.Id);
+        var user = await NoAuthClient.User.GetAsync(currentUser.Id);
 
         Assert.That(user, Is.Not.Null);
         Assert.That(user.Id, Is.EqualTo(currentUser.Id));

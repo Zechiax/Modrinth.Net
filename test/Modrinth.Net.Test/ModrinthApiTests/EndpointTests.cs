@@ -39,8 +39,6 @@ public class EndpointTests
     protected IModrinthClient Client = null!;
     protected IModrinthClient NoAuthClient = null!;
 
-    protected IModrinthClient ProductionClientNoAuth = null!;
-
     protected string TestUserId => TestUserIds[0];
 
     private static string GetToken()
@@ -85,8 +83,6 @@ public class EndpointTests
 
         Client = new ModrinthClient(configAuth);
         NoAuthClient = new ModrinthClient(configNoAuth);
-
-        ProductionClientNoAuth = new ModrinthClient(productionConfig);
     }
 
     [OneTimeTearDown]
@@ -94,6 +90,5 @@ public class EndpointTests
     {
         Client.Dispose();
         NoAuthClient.Dispose();
-        ProductionClientNoAuth.Dispose();
     }
 }

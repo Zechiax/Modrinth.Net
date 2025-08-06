@@ -12,7 +12,7 @@ public class VersionFileTests : EndpointTests
     {
         var hash = ValidSha512Hashes[index];
 
-        var version = await Client.VersionFile.GetVersionByHashAsync(hash, HashAlgorithm.Sha512);
+        var version = await NoAuthClient.VersionFile.GetVersionByHashAsync(hash, HashAlgorithm.Sha512);
 
         Assert.That(version, Is.Not.Null);
         // Check that one of the files has the correct hash
@@ -29,7 +29,7 @@ public class VersionFileTests : EndpointTests
     {
         var hash = ValidSha1Hashes[index];
 
-        var version = await Client.VersionFile.GetVersionByHashAsync(hash);
+        var version = await NoAuthClient.VersionFile.GetVersionByHashAsync(hash);
 
         Assert.That(version, Is.Not.Null);
         // Check that one of the files has the correct hash
@@ -47,7 +47,7 @@ public class VersionFileTests : EndpointTests
         var hash = ValidSha1Hashes[index];
         var fileName = ValidFileName[index];
 
-        var version = await Client.VersionFile.GetVersionByHashAsync(hash);
+        var version = await NoAuthClient.VersionFile.GetVersionByHashAsync(hash);
 
         Assert.That(version, Is.Not.Null);
 
@@ -61,7 +61,7 @@ public class VersionFileTests : EndpointTests
     {
         var hashes = ValidSha1Hashes;
 
-        var versions = await Client.VersionFile.GetMultipleVersionsByHashAsync(hashes);
+        var versions = await NoAuthClient.VersionFile.GetMultipleVersionsByHashAsync(hashes);
 
         Assert.That(versions, Is.Not.Null);
         Assert.That(versions, Is.Not.Empty);
@@ -74,7 +74,7 @@ public class VersionFileTests : EndpointTests
     {
         var hashes = ValidSha512Hashes;
 
-        var versions = await Client.VersionFile.GetMultipleVersionsByHashAsync(hashes, HashAlgorithm.Sha512);
+        var versions = await NoAuthClient.VersionFile.GetMultipleVersionsByHashAsync(hashes, HashAlgorithm.Sha512);
 
         Assert.That(versions, Is.Not.Null);
         Assert.That(versions, Is.Not.Empty);
@@ -89,7 +89,7 @@ public class VersionFileTests : EndpointTests
         var hash = ValidSha1Hashes[index];
 
         var version =
-            await Client.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha1, loaders, gameVersions);
+            await NoAuthClient.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha1, loaders, gameVersions);
 
         Assert.Multiple(() =>
         {
@@ -106,7 +106,7 @@ public class VersionFileTests : EndpointTests
         var hash = ValidSha512Hashes[index];
 
         var version =
-            await Client.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha512, loaders, gameVersions);
+            await NoAuthClient.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha512, loaders, gameVersions);
 
         Assert.Multiple(() =>
         {
@@ -124,7 +124,7 @@ public class VersionFileTests : EndpointTests
         var hashes = ValidSha1Hashes;
 
         var versions =
-            await Client.VersionFile.GetMultipleLatestVersionsByHashAsync(hashes, HashAlgorithm.Sha1, loaders,
+            await NoAuthClient.VersionFile.GetMultipleLatestVersionsByHashAsync(hashes, HashAlgorithm.Sha1, loaders,
                 gameVersions);
 
         Assert.Multiple(() =>
@@ -148,7 +148,7 @@ public class VersionFileTests : EndpointTests
         var hashes = ValidSha512Hashes;
 
         var versions =
-            await Client.VersionFile.GetMultipleLatestVersionsByHashAsync(hashes, HashAlgorithm.Sha512, loaders,
+            await NoAuthClient.VersionFile.GetMultipleLatestVersionsByHashAsync(hashes, HashAlgorithm.Sha512, loaders,
                 gameVersions);
 
         Assert.Multiple(() =>

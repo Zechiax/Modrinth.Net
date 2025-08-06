@@ -10,7 +10,7 @@ public class SearchWithOperatorsTests : EndpointTests
     {
         var facets = new FacetCollection { Facet.Category("adventure", FacetOperator.NotEquals) };
 
-        var search = await Client.Project.SearchAsync("", facets: facets, limit: 20);
+        var search = await NoAuthClient.Project.SearchAsync("", facets: facets, limit: 20);
         using (Assert.EnterMultipleScope())
         {
             Assert.That(search.TotalHits, Is.GreaterThan(0));
@@ -24,4 +24,3 @@ public class SearchWithOperatorsTests : EndpointTests
         }
     }
 }
-
