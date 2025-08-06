@@ -300,10 +300,9 @@ catch (ModrinthApiException e)
 
 Library uses [NUnit](https://nunit.org/) for testing.
 
-- To run tests, you can use the `dotnet test` command
-- To run authenticated tests, you need to set the `ModrinthApiKey` secret for the test project.
+To run tests, you can use the `dotnet test` command. To run authenticated tests, you need to set the `ModrinthApiKey` secret for the test project.
 
-- You can do this by running the following command in the terminal, in the root of the project:
+You can do this by running the following command in the terminal, in the root of the project:
 
 ```bash
 dotnet user-secrets init --project .\test\Modrinth.Net.Test

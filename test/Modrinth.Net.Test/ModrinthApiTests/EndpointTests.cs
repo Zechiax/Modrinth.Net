@@ -125,7 +125,7 @@ public abstract class AuthenticatedTestBase : UnauthenticatedTestBase
         
         // Ensure that the API key is set, otherwise skip the tests
         Assume.That(token, Is.Not.Null.And.Not.Empty, 
-            "API key not found. Skipping authenticated tests. (Set via user secrets or MODRINTH_API_KEY environment variable, more info in README.md - https://github.com/Zechiax/Modrinth.Net?tab=readme-ov-file#testing )");
+            "API key not found. Skipping authenticated tests. (Set via user secrets or MODRINTH_API_KEY environment variable, more info in README.md - https://github.com/Zechiax/Modrinth.Net?tab=readme-ov-file#testing)");
 
         var userAgent = new UserAgent
         {
