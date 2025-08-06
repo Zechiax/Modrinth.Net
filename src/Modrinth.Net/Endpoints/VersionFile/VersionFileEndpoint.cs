@@ -52,24 +52,41 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<IDictionary<string, Models.Version>> GetMultipleVersionsByHashAsync(string[] hashes,
-        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1, CancellationToken cancellationToken = default)
+    public async Task<IDictionary<string, Models.Version>> GetMultipleVersionsByHashAsync(
+        string[] hashes,
+        HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1, 
+        CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
-        reqMsg.Method = HttpMethod.Post;
-        reqMsg.RequestUri = new Uri("version_files", UriKind.Relative);
-
-        // Info in request body application/json
-        var requestBody = new
+        var hashBatches = hashes.Chunk(Config.BatchSize).ToArray();
+        
+        var tasks = hashBatches.Select(async batch =>
         {
-            hashes,
-            algorithm = hashAlgorithm.ToString().ToLower()
-        };
+            var reqMsg = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("version_files", UriKind.Relative)
+            };
+            
+            var requestBody = new
+            {
+                hashes = batch,
+                algorithm = hashAlgorithm.ToString().ToLower()
+            };
 
-        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+            reqMsg.Content = new StringContent(
+                JsonSerializer.Serialize(requestBody), 
+                Encoding.UTF8, 
+                "application/json");
 
-        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken)
-            .ConfigureAwait(false);
+            return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken)
+                .ConfigureAwait(false);
+        });
+        
+        var results = await Task.WhenAll(tasks).ConfigureAwait(false);
+        
+        return results
+            .SelectMany(dict => dict)
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
     }
 
     /// <inheritdoc />
@@ -101,26 +118,44 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<IDictionary<string, Models.Version>> GetMultipleLatestVersionsByHashAsync(string[] hashes,
+    public async Task<IDictionary<string, Models.Version>> GetMultipleLatestVersionsByHashAsync(
+        string[] hashes,
         HashAlgorithm hashAlgorithm,
-        string[] loaders, string[] gameVersions, CancellationToken cancellationToken = default)
+        string[] loaders, 
+        string[] gameVersions, 
+        CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
-        reqMsg.Method = HttpMethod.Post;
-        reqMsg.RequestUri = new Uri("version_files/update", UriKind.Relative);
-
-        // Info in request body application/json
-        var requestBody = new
+        var hashBatches = hashes.Chunk(Config.BatchSize).ToArray();
+        
+        var tasks = hashBatches.Select(async batch =>
         {
-            algorithm = hashAlgorithm.ToString().ToLower(),
-            hashes,
-            loaders,
-            game_versions = gameVersions
-        };
+            var reqMsg = new HttpRequestMessage
+            {
+                Method = HttpMethod.Post,
+                RequestUri = new Uri("version_files/update", UriKind.Relative)
+            };
+            
+            var requestBody = new
+            {
+                algorithm = hashAlgorithm.ToString().ToLower(),
+                hashes = batch,
+                loaders,
+                game_versions = gameVersions
+            };
 
-        reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+            reqMsg.Content = new StringContent(
+                JsonSerializer.Serialize(requestBody), 
+                Encoding.UTF8, 
+                "application/json");
 
-        return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken)
-            .ConfigureAwait(false);
+            return await Requester.GetJsonAsync<IDictionary<string, Models.Version>>(reqMsg, cancellationToken)
+                .ConfigureAwait(false);
+        });
+        
+        var results = await Task.WhenAll(tasks).ConfigureAwait(false);
+        
+        return results
+            .SelectMany(dict => dict)
+            .ToDictionary(pair => pair.Key, pair => pair.Value);
     }
 }
