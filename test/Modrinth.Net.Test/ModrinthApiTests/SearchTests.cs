@@ -4,7 +4,7 @@ using Index = Modrinth.Models.Enums.Index;
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class SearchTests : EndpointTests
+public class SearchTests : UnauthenticatedTestBase
 {
     [Test]
     public async Task Search_WithEmptySearchTerm_ShouldReturnNonEmptyList()

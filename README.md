@@ -294,6 +294,30 @@ catch (ModrinthApiException e)
 | Forge Updates JSON file                         | GET    | ❌           |
 | Various statistics about this Modrinth instance | GET    | ✅           |
 
+## Development
+
+### Testing
+
+Library uses [NUnit](https://nunit.org/) for testing.
+
+- To run tests, you can use the `dotnet test` command
+- To run authenticated tests, you need to set the `ModrinthApiKey` secret for the test project.
+
+- You can do this by running the following command in the terminal, in the root of the project:
+
+```bash
+dotnet user-secrets init --project .\test\Modrinth.Net.Test
+dotnet user-secrets set ModrinthApiKey "Your_Authentication_Token" --project .\test\Modrinth.Net.Test
+```
+
+If you wish to remove the secret you can run:
+
+```bash
+dotnet user-secrets remove ModrinthApiKey --project .\test\Modrinth.Net.Test
+```
+
+Optionally, you can also set the `MODRINTH_API_KEY` environment variable, but secrets are preffered.
+
 ## Disclaimer
 
 This is not an official Modrinth project. This is a third-party project that is not affiliated with Modrinth in any way.

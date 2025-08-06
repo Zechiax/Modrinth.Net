@@ -1,7 +1,7 @@
 ﻿namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class TagEndpointTests : EndpointTests
+public class TagEndpointTests : UnauthenticatedTestBase
 {
     [Test]
     public async Task GetCategories_ShouldReturnCategories()

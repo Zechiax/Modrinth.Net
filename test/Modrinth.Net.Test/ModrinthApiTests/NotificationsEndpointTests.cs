@@ -1,7 +1,7 @@
 ﻿namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class NotificationsEndpointTests : EndpointTests
+public class NotificationsEndpointTests : AuthenticatedTestBase
 {
     [Test]
     public async Task TestGetNotifications()

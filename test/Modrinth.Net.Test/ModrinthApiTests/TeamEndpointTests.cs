@@ -1,12 +1,12 @@
 ﻿namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class TeamEndpointTests : EndpointTests
+public class TeamEndpointTests : UnauthenticatedTestBase
 {
     [Test]
     public async Task GetProjectTeamAsync_WithValidSlugOrId_ShouldReturnProjectTeam()
     {
-        var team = await NoAuthClient.Team.GetProjectTeamAsync(TestProjectSlug);
+        var team = await NoAuthClient.Team.GetProjectTeamAsync(TestData.TestProjectSlug);
 
         Assert.That(team, Is.Not.Null);
         Assert.That(team, Is.Not.Empty);
@@ -15,7 +15,7 @@ public class TeamEndpointTests : EndpointTests
     [Test]
     public async Task GetTeamMembersAsync_WithValidSlugOrId_ShouldReturnTeamMembers()
     {
-        var project = await NoAuthClient.Project.GetAsync(TestProjectSlug);
+        var project = await NoAuthClient.Project.GetAsync(TestData.TestProjectSlug);
 
         var members = await NoAuthClient.Team.GetAsync(project.Team);
 

@@ -3,7 +3,7 @@ using Modrinth.Models.Enums.Project;
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class SearchWithOperatorsTests : EndpointTests
+public class SearchWithOperatorsTests : UnauthenticatedTestBase
 {
     [Test]
     public async Task Search_WithNotEqualsOperator_ShouldFilterCorrectly()

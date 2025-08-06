@@ -3,14 +3,14 @@ using Modrinth.Models.Enums;
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class VersionFileTests : EndpointTests
+public class VersionFileTests : UnauthenticatedTestBase
 {
     [Test]
     [TestCase(0)]
     [TestCase(1)]
     public async Task GetVersionFromHashSha512(int index)
     {
-        var hash = ValidSha512Hashes[index];
+        var hash = TestData.ValidSha512Hashes[index];
 
         var version = await NoAuthClient.VersionFile.GetVersionByHashAsync(hash, HashAlgorithm.Sha512);
 
@@ -27,7 +27,7 @@ public class VersionFileTests : EndpointTests
     [TestCase(1)]
     public async Task GetVersionFromHashSha1(int index)
     {
-        var hash = ValidSha1Hashes[index];
+        var hash = TestData.ValidSha1Hashes[index];
 
         var version = await NoAuthClient.VersionFile.GetVersionByHashAsync(hash);
 
@@ -44,8 +44,8 @@ public class VersionFileTests : EndpointTests
     [TestCase(1)]
     public async Task EnsureFileNameSerializationCorrect(int index)
     {
-        var hash = ValidSha1Hashes[index];
-        var fileName = ValidFileName[index];
+        var hash = TestData.ValidSha1Hashes[index];
+        var fileName = TestData.ValidFileNames[index];
 
         var version = await NoAuthClient.VersionFile.GetVersionByHashAsync(hash);
 
@@ -59,7 +59,7 @@ public class VersionFileTests : EndpointTests
     [Test]
     public async Task GetMultipleVersionsFromHashesSha1()
     {
-        var hashes = ValidSha1Hashes;
+        var hashes = TestData.ValidSha1Hashes;
 
         var versions = await NoAuthClient.VersionFile.GetMultipleVersionsByHashAsync(hashes);
 
@@ -72,7 +72,7 @@ public class VersionFileTests : EndpointTests
     [Test]
     public async Task GetMultipleVersionsFromHashesSha512()
     {
-        var hashes = ValidSha512Hashes;
+        var hashes = TestData.ValidSha512Hashes;
 
         var versions = await NoAuthClient.VersionFile.GetMultipleVersionsByHashAsync(hashes, HashAlgorithm.Sha512);
 
@@ -86,7 +86,7 @@ public class VersionFileTests : EndpointTests
     [TestCase(0, new[] {"fabric"}, new[] {"1.17.1"})]
     public async Task GetLatestVersionFromHashSha1WithFilters(int index, string[] loaders, string[] gameVersions)
     {
-        var hash = ValidSha1Hashes[index];
+        var hash = TestData.ValidSha1Hashes[index];
 
         var version =
             await NoAuthClient.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha1, loaders, gameVersions);
@@ -103,7 +103,7 @@ public class VersionFileTests : EndpointTests
     [TestCase(0, new[] {"fabric"}, new[] {"1.17.1"})]
     public async Task GetLatestVersionFromHashSha512WithFilters(int index, string[] loaders, string[] gameVersions)
     {
-        var hash = ValidSha512Hashes[index];
+        var hash = TestData.ValidSha512Hashes[index];
 
         var version =
             await NoAuthClient.VersionFile.GetLatestVersionByHashAsync(hash, HashAlgorithm.Sha512, loaders, gameVersions);
@@ -121,7 +121,7 @@ public class VersionFileTests : EndpointTests
     public async Task GetMultipleLatestVersionsFromHashSha1WithFilters(int index, string[] loaders,
         string[] gameVersions)
     {
-        var hashes = ValidSha1Hashes;
+        var hashes = TestData.ValidSha1Hashes;
 
         var versions =
             await NoAuthClient.VersionFile.GetMultipleLatestVersionsByHashAsync(hashes, HashAlgorithm.Sha1, loaders,
@@ -145,7 +145,7 @@ public class VersionFileTests : EndpointTests
     public async Task GetMultipleLatestVersionsFromHashSha512WithFilters(int index, string[] loaders,
         string[] gameVersions)
     {
-        var hashes = ValidSha512Hashes;
+        var hashes = TestData.ValidSha512Hashes;
 
         var versions =
             await NoAuthClient.VersionFile.GetMultipleLatestVersionsByHashAsync(hashes, HashAlgorithm.Sha512, loaders,

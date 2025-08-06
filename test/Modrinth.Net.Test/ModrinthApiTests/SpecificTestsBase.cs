@@ -3,7 +3,7 @@
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class SpecificTests : EndpointTests
+public class SpecificTests : UnauthenticatedTestBase
 {
     [Test]
     public async Task FileTypeFieldNotDeserializable()
