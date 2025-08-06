@@ -196,7 +196,7 @@ public class Requester : IRequester
     /// <summary>
     ///      Disposes the underlying resources.
     /// </summary>
-    /// Indicates whether the method was called from the <see cref="Dispose()" /> method or from the finalizer.
+    /// <param name="disposing">Indicates whether the method was called from the <see cref="Dispose()" /> method or from the finalizer.</param>
     protected virtual void Dispose(bool disposing)
     {
         if (IsDisposed)
