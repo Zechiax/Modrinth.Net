@@ -71,14 +71,17 @@ public class ModrinthClient : IModrinthClient
     /// </summary>
     /// <param name="config"> Configuration for the client </param>
     /// <param name="httpClient">
-    ///     Custom <see cref="HttpClient" /> to use for requests, if null a new one will be created, some
-    ///     options like user-agent or base url will be overwritten by the config
+    ///     Custom <see cref="HttpClient" /> to use for requests, if null a new one will be created, the config
+    ///     will overwrite some options like user-agent or base url
     /// </param>
-    /// <exception cref="ArgumentException"> Thrown when the User-Agent is empty </exception>
+    /// <exception cref="ArgumentException">Thrown when the configuration is invalid, e.g., User-Agent is empty</exception>
+    /// <exception cref="ArgumentOutOfRangeException">
+    ///     Thrown when the configuration contains invalid numeric values, e.g.,
+    ///     MaxConcurrentRequests is less than or equal to zero
+    /// </exception>
     public ModrinthClient(ModrinthClientConfig config, HttpClient? httpClient = null)
     {
-        if (string.IsNullOrEmpty(config.UserAgent))
-            throw new ArgumentException("User-Agent cannot be empty", nameof(config.UserAgent));
+        config.Validate();
 
         _config = config;
         _requester = new Requester(config, httpClient);
