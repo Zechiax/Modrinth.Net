@@ -1,12 +1,12 @@
 ﻿namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class MiscellaneousTests : EndpointTests
+public class MiscellaneousTests : UnauthenticatedTestBase
 {
     [Test]
     public async Task GetStatisticsAsync()
     {
-        var statistics = await Client.Miscellaneous.GetStatisticsAsync();
+        var statistics = await NoAuthClient.Miscellaneous.GetStatisticsAsync();
         Assert.That(statistics, Is.Not.Null);
         Assert.Multiple(() =>
         {

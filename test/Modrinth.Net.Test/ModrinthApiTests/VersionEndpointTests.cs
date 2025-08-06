@@ -1,13 +1,13 @@
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class VersionEndpointTests : EndpointTests
+public class VersionEndpointTests : UnauthenticatedTestBase
 {
     [Test]
     public async Task TestGetVersions()
     {
-        var project = await Client.Project.GetAsync(TestProjectSlug);
-        var version = await Client.Version.GetAsync(project.Versions[0]);
+        var project = await NoAuthClient.Project.GetAsync(TestData.TestProjectSlug);
+        var version = await NoAuthClient.Version.GetAsync(project.Versions[0]);
         Assert.That(version, Is.Not.Null);
         Assert.That(version.ProjectId, Is.EqualTo(project.Id));
     }
@@ -15,7 +15,7 @@ public class VersionEndpointTests : EndpointTests
     [Test]
     public async Task TestGetProjectVersionList()
     {
-        var versions = await Client.Version.GetProjectVersionListAsync(TestProjectSlug);
+        var versions = await NoAuthClient.Version.GetProjectVersionListAsync(TestData.TestProjectSlug);
         Assert.That(versions, Is.Not.Null);
         // BUG: Test versions should not be empty, but they are for now
         // Assert.That(versions, Is.Not.Empty);
@@ -25,7 +25,7 @@ public class VersionEndpointTests : EndpointTests
     public async Task TestGetMultipleVersions()
     {
         // Not really a 'unit' test, but we need to find a project with more than one version
-        var search = await Client.Project.SearchAsync("");
+        var search = await NoAuthClient.Project.SearchAsync("");
 
         // We will find the first project that has more than one version
         var projectWithMoreVersions = search.Hits.FirstOrDefault(p => p.DateCreated != p.DateModified);
@@ -36,7 +36,7 @@ public class VersionEndpointTests : EndpointTests
             return;
         }
 
-        var project = await Client.Project.GetAsync(projectWithMoreVersions.ProjectId);
+        var project = await NoAuthClient.Project.GetAsync(projectWithMoreVersions.ProjectId);
 
         if (project.Versions.Length < 2)
         {
@@ -44,7 +44,7 @@ public class VersionEndpointTests : EndpointTests
             return;
         }
 
-        var versions = await Client.Version.GetMultipleAsync(project.Versions);
+        var versions = await NoAuthClient.Version.GetMultipleAsync(project.Versions);
 
         Assert.That(versions, Is.Not.Null);
         Assert.That(versions, Is.Not.Empty);
@@ -54,8 +54,8 @@ public class VersionEndpointTests : EndpointTests
     public async Task TestGetVersionByNumber()
     {
         // Actually we test by version id, but it's the same as using the version number
-        var project = await Client.Project.GetAsync(TestProjectSlug);
-        var version = await Client.Version.GetByVersionNumberAsync(TestProjectSlug, project.Versions[0]);
+        var project = await NoAuthClient.Project.GetAsync(TestData.TestProjectSlug);
+        var version = await NoAuthClient.Version.GetByVersionNumberAsync(TestData.TestProjectSlug, project.Versions[0]);
         Assert.That(version, Is.Not.Null);
         Assert.That(version.ProjectId, Is.EqualTo(project.Id));
     }
@@ -68,7 +68,7 @@ public class VersionEndpointTests : EndpointTests
         bool? featured = null)
     {
         var versions =
-            await Client.Version.GetProjectVersionListAsync(TestProjectSlug, loaders, gameVersions, featured);
+            await NoAuthClient.Version.GetProjectVersionListAsync(TestData.TestProjectSlug, loaders, gameVersions, featured);
         Assert.That(versions, Is.Not.Null);
         Assert.That(versions, Is.Not.Empty);
         foreach (var version in versions)
@@ -87,7 +87,7 @@ public class VersionEndpointTests : EndpointTests
     public async Task TestGetProjectVersionListWithInvalidFilters()
     {
         var versions =
-            await Client.Version.GetProjectVersionListAsync(TestProjectSlug, new[] {"invalid_loader"},
+            await NoAuthClient.Version.GetProjectVersionListAsync(TestData.TestProjectSlug, new[] {"invalid_loader"},
                 new[] {"invalid_game_version"});
         Assert.That(versions, Is.Not.Null);
         Assert.That(versions, Is.Empty);

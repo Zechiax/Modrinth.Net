@@ -1,12 +1,12 @@
 ﻿namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class TagEndpointTests : EndpointTests
+public class TagEndpointTests : UnauthenticatedTestBase
 {
     [Test]
     public async Task GetCategories_ShouldReturnCategories()
     {
-        var categories = await Client.Tag.GetCategoriesAsync();
+        var categories = await NoAuthClient.Tag.GetCategoriesAsync();
         Assert.That(categories, Is.Not.Null);
         Assert.That(categories, Is.Not.Empty);
     }
@@ -14,7 +14,7 @@ public class TagEndpointTests : EndpointTests
     [Test]
     public async Task GetLoaders_ShouldReturnLoaders()
     {
-        var loaders = await Client.Tag.GetLoadersAsync();
+        var loaders = await NoAuthClient.Tag.GetLoadersAsync();
         Assert.That(loaders, Is.Not.Null);
         Assert.That(loaders, Is.Not.Empty);
     }
@@ -22,7 +22,7 @@ public class TagEndpointTests : EndpointTests
     [Test]
     public async Task GetGameVersions_ShouldReturnGameVersions()
     {
-        var gameVersions = await Client.Tag.GetGameVersionsAsync();
+        var gameVersions = await NoAuthClient.Tag.GetGameVersionsAsync();
         Assert.That(gameVersions, Is.Not.Null);
         Assert.That(gameVersions, Is.Not.Empty);
     }
@@ -30,7 +30,7 @@ public class TagEndpointTests : EndpointTests
     [Test]
     public async Task GetLicenseById_ShouldReturnLicense()
     {
-        var licenseTag = await Client.Tag.GetLicenseAsync("MIT");
+        var licenseTag = await NoAuthClient.Tag.GetLicenseAsync("MIT");
 
         Assert.Multiple(() =>
         {
@@ -44,7 +44,7 @@ public class TagEndpointTests : EndpointTests
     [Test]
     public async Task GetDonationPlatforms_ShouldReturnDonationPlatforms()
     {
-        var donationPlatforms = await Client.Tag.GetDonationPlatformsAsync();
+        var donationPlatforms = await NoAuthClient.Tag.GetDonationPlatformsAsync();
         Assert.That(donationPlatforms, Is.Not.Null);
         Assert.That(donationPlatforms, Is.Not.Empty);
     }
@@ -52,7 +52,7 @@ public class TagEndpointTests : EndpointTests
     [Test]
     public async Task GetReportTypes_ShouldReturnReportTypes()
     {
-        var reportTypes = await Client.Tag.GetReportTypesAsync();
+        var reportTypes = await NoAuthClient.Tag.GetReportTypesAsync();
         Assert.That(reportTypes, Is.Not.Null);
         Assert.That(reportTypes, Is.Not.Empty);
     }
@@ -60,7 +60,7 @@ public class TagEndpointTests : EndpointTests
     [Test]
     public async Task GetProjectTypes_ShouldReturnProjectTypes()
     {
-        var projectTypes = await Client.Tag.GetProjectTypesAsync();
+        var projectTypes = await NoAuthClient.Tag.GetProjectTypesAsync();
         Assert.That(projectTypes, Is.Not.Null);
         Assert.That(projectTypes, Is.Not.Empty);
     }
@@ -68,7 +68,7 @@ public class TagEndpointTests : EndpointTests
     [Test]
     public async Task GetSideTypes_ShouldReturnSideTypes()
     {
-        var sideTypes = await Client.Tag.GetSideTypesAsync();
+        var sideTypes = await NoAuthClient.Tag.GetSideTypesAsync();
         Assert.That(sideTypes, Is.Not.Null);
         Assert.That(sideTypes, Is.Not.Empty);
     }

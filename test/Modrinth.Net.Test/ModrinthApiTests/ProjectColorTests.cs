@@ -1,12 +1,12 @@
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class ProjectColorTests : EndpointTests
+public class ProjectColorTests : UnauthenticatedTestBase
 {
     [Test]
     public async Task ProjectColor()
     {
-        var project = await Client.Project.GetAsync(TestProjectSlug);
+        var project = await NoAuthClient.Project.GetAsync(TestData.TestProjectSlug);
 
         // Check that the project color is not null
         Assert.That(project.Color, Is.Not.Null);
@@ -20,7 +20,10 @@ public class ProjectColorTests : EndpointTests
             Assert.That(project.Color.Value.B, Is.Not.EqualTo(0));
         });
     }
+}
 
+public class AuthenticatedProjectColorTests : AuthenticatedTestBase
+{
     [Test]
     public async Task ProjectColor_WithNoColor()
     {

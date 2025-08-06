@@ -3,14 +3,14 @@ using Modrinth.Models.Enums.Project;
 namespace Modrinth.Net.Test.ModrinthApiTests;
 
 [TestFixture]
-public class SearchWithOperatorsTests : EndpointTests
+public class SearchWithOperatorsTests : UnauthenticatedTestBase
 {
     [Test]
     public async Task Search_WithNotEqualsOperator_ShouldFilterCorrectly()
     {
         var facets = new FacetCollection { Facet.Category("adventure", FacetOperator.NotEquals) };
 
-        var search = await Client.Project.SearchAsync("", facets: facets, limit: 20);
+        var search = await NoAuthClient.Project.SearchAsync("", facets: facets, limit: 20);
         using (Assert.EnterMultipleScope())
         {
             Assert.That(search.TotalHits, Is.GreaterThan(0));
@@ -24,4 +24,3 @@ public class SearchWithOperatorsTests : EndpointTests
         }
     }
 }
-
