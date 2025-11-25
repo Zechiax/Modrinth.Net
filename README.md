@@ -315,7 +315,7 @@ If you wish to remove the secret you can run:
 dotnet user-secrets remove ModrinthApiKey --project .\test\Modrinth.Net.Test
 ```
 
-Optionally, you can also set the `MODRINTH_API_KEY` environment variable, but secrets are preffered.
+Optionally, you can also set the `MODRINTH_API_KEY` environment variable, but secrets are preferred.
 
 ## Disclaimer
 
