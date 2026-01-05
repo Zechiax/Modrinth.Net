@@ -1,4 +1,6 @@
 ﻿using Modrinth.Exceptions;
+using Modrinth.Models;
+using Modrinth.Models.Enums.Project;
 using Modrinth.Models.Enums.Version;
 
 namespace Modrinth.Endpoints.Version;
@@ -52,6 +54,31 @@ public interface IVersionEndpoint
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber,
         CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Creates a version
+    /// </summary>
+    /// <param name="projectId">Project ID to create the version on (does not support slugs)</param>
+    /// <param name="files">List of files to add to this version (must include atleast 1 file)</param>
+    /// <param name="primaryFile">Primary (featured) filename</param>
+    /// <param name="name">Version name</param>
+    /// <param name="versionNumber">Version number</param>
+    /// <param name="changelog">Changelog</param>
+    /// <param name="dependencies">Modrinth project dependencies</param>
+    /// <param name="gameVersions">Supported Minecraft versions</param>
+    /// <param name="versionType">Version type</param>
+    /// <param name="loaders">Supported Minecraft modloaders</param>
+    /// <param name="featured">Whether to feature it on the mod page</param>
+    /// <param name="status">Unknown, but the mod seemingly doesn't show up if this is not VersionStatus.Listed.</param>
+    /// <param name="requestedStatus">Unknown</param>
+    /// <param name="cancellationToken"></param>
+    /// <returns>The newly created Version</returns>
+    /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
+    Task<Models.Version> CreateAsync(string projectId, List<UploadableFile> files, string primaryFile, string name, string versionNumber,
+                                     string? changelog, List<Dependency> dependencies, List<string> gameVersions,
+                                     ProjectVersionType versionType, List<string> loaders, bool featured,
+                                     VersionStatus status, VersionStatus? requestedStatus,
+                                     CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Deletes a version by its ID
