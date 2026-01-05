@@ -32,9 +32,9 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     }
 
     /// <inheritdoc />
-    public async Task<Models.Version> CreateAsync(string projectId, List<UploadableFile> files, string primaryFile, string name, string versionNumber,
-                                                  string? changelog, List<Dependency> dependencies, List<string> gameVersions,
-                                                  ProjectVersionType versionType, List<string> loaders, bool featured,
+    public async Task<Models.Version> CreateAsync(string projectId, IEnumerable<UploadableFile> files, string primaryFile, string name, string versionNumber,
+                                                  string? changelog, IEnumerable<Dependency> dependencies, IEnumerable<string> gameVersions,
+                                                  ProjectVersionType versionType, IEnumerable<string> loaders, bool featured,
                                                   VersionStatus status, VersionStatus? requestedStatus,
                                                   CancellationToken cancellationToken = default) {
 	    // todo this is really messy, imo should do builder or maybe take struct/class directly and have serializer function in it
@@ -54,28 +54,30 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
 	    }).ToList();
 
 	    // data
-	    string j = JsonSerializer.Serialize(new
-	    {
-		    name = name,
-		    version_number = versionNumber,
-		    changelog = changelog,
-		    dependencies = deps,
-		    game_versions = gameVersions,
-		    version_type = versionType.ToModrinthString(),
-		    loaders = loaders,
-		    featured = featured,
-		    status = status.ToModrinthString(),
-		    requested_status = requestedStatus?.ToModrinthString(),
-		    project_id = projectId,
-		    file_parts = files.Select(f => f.FileName),
-		    primary_file = primaryFile
-	    });
+        var uploadableFiles = files as UploadableFile[] ?? files.ToArray();
+        string j = JsonSerializer.Serialize(new
+        {
+            name = name,
+            version_number = versionNumber,
+            changelog = changelog,
+            dependencies = deps,
+            game_versions = gameVersions,
+            version_type = versionType.ToModrinthString(),
+            loaders = loaders,
+            featured = featured,
+            status = status.ToModrinthString(),
+            requested_status = requestedStatus?.ToModrinthString(),
+            project_id = projectId,
+            file_parts = uploadableFiles.Select(f => f.FileName),
+            primary_file = primaryFile
+        });
 
 	    MultipartFormDataContent c = new();
 	    c.Add(new StringContent(j, Encoding.UTF8, "application/json"), "data");
-	    files.ForEach(f => {
-		    c.Add(new StreamContent(f.Stream), f.FileName, f.FileName);
-	    });
+        foreach (UploadableFile file in uploadableFiles)
+        {
+            c.Add(new StreamContent(file.Stream), file.FileName, file.FileName);
+        }
 
 	    reqMsg.Content = c;
 

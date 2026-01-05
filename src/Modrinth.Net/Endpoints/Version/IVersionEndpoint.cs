@@ -74,9 +74,9 @@ public interface IVersionEndpoint
     /// <param name="cancellationToken"></param>
     /// <returns>The newly created Version</returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
-    Task<Models.Version> CreateAsync(string projectId, List<UploadableFile> files, string primaryFile, string name, string versionNumber,
-                                     string? changelog, List<Dependency> dependencies, List<string> gameVersions,
-                                     ProjectVersionType versionType, List<string> loaders, bool featured,
+    Task<Models.Version> CreateAsync(string projectId, IEnumerable<UploadableFile> files, string primaryFile, string name, string versionNumber,
+                                     string? changelog, IEnumerable<Dependency> dependencies, IEnumerable<string> gameVersions,
+                                     ProjectVersionType versionType, IEnumerable<string> loaders, bool featured,
                                      VersionStatus status, VersionStatus? requestedStatus,
                                      CancellationToken cancellationToken = default);
 
