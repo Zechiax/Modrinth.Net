@@ -20,6 +20,7 @@ public static class ProjectTypeExtensions
             ProjectType.Modpack => "modpack",
             ProjectType.Resourcepack => "resourcepack",
             ProjectType.Shader => "shader",
+            ProjectType.MinecraftJavaServer => "minecraft_java_server",
             // Return lower string, this should work for all, but it is not guaranteed
             _ => projectType.ToString().ToLower()
         };
