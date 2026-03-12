@@ -1,4 +1,4 @@
-﻿using Modrinth.Http;
+using Modrinth.Http;
 
 namespace Modrinth.Endpoints.Miscellaneous;
 
@@ -13,7 +13,7 @@ public class MiscellaneousEndpoint : Endpoint, IMiscellaneousEndpoint
     /// <inheritdoc />
     public async Task<ModrinthStatistics> GetStatisticsAsync(CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("statistics", UriKind.Relative);
 

@@ -1,4 +1,4 @@
-﻿using Modrinth.Http;
+using Modrinth.Http;
 using Modrinth.Models.Tags;
 
 namespace Modrinth.Endpoints.Tag;
@@ -16,7 +16,7 @@ public class TagEndpoint : Endpoint, ITagEndpoint
     /// <inheritdoc />
     public async Task<Category[]> GetCategoriesAsync(CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "category", UriKind.Relative);
 
@@ -26,7 +26,7 @@ public class TagEndpoint : Endpoint, ITagEndpoint
     /// <inheritdoc />
     public async Task<Loader[]> GetLoadersAsync(CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "loader", UriKind.Relative);
 
@@ -36,7 +36,7 @@ public class TagEndpoint : Endpoint, ITagEndpoint
     /// <inheritdoc />
     public async Task<GameVersion[]> GetGameVersionsAsync(CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "game_version", UriKind.Relative);
 
@@ -46,7 +46,7 @@ public class TagEndpoint : Endpoint, ITagEndpoint
     /// <inheritdoc />
     public async Task<LicenseTag> GetLicenseAsync(string id, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "license" + '/' + id, UriKind.Relative);
 
@@ -61,7 +61,7 @@ public class TagEndpoint : Endpoint, ITagEndpoint
     /// <inheritdoc />
     public async Task<DonationPlatform[]> GetDonationPlatformsAsync(CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "donation_platform", UriKind.Relative);
 
@@ -71,7 +71,7 @@ public class TagEndpoint : Endpoint, ITagEndpoint
     /// <inheritdoc />
     public async Task<string[]> GetReportTypesAsync(CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "report_type", UriKind.Relative);
 
@@ -81,7 +81,7 @@ public class TagEndpoint : Endpoint, ITagEndpoint
     /// <inheritdoc />
     public async Task<string[]> GetProjectTypesAsync(CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "project_type", UriKind.Relative);
 
@@ -91,7 +91,7 @@ public class TagEndpoint : Endpoint, ITagEndpoint
     /// <inheritdoc />
     public async Task<string[]> GetSideTypesAsync(CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TagPathSegment + '/' + "side_type", UriKind.Relative);
 

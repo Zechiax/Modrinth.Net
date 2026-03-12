@@ -1,4 +1,4 @@
-﻿using Modrinth.Http;
+using Modrinth.Http;
 using Modrinth.Models;
 
 namespace Modrinth.Endpoints.Notifications;
@@ -15,7 +15,7 @@ public class NotificationsEndpoint : Endpoint, INotificationsEndpoint
     public async Task<Notification[]> GetNotificationsAsync(string usernameOrId,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("user" + '/' + usernameOrId + '/' + "notifications", UriKind.Relative);
 

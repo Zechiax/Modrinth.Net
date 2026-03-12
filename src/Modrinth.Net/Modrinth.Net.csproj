@@ -18,7 +18,7 @@
         <RootNamespace>Modrinth</RootNamespace>
         <RepositoryType>git</RepositoryType>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <LangVersion>12</LangVersion>
     </PropertyGroup>
 
@@ -38,6 +38,10 @@
             <Pack>True</Pack>
             <PackagePath>\</PackagePath>
         </None>
+    </ItemGroup>
+
+    <ItemGroup>
+        <InternalsVisibleTo Include="Modrinth.Net.Test" />
     </ItemGroup>
 
 

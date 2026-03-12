@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Text.Json;
 using Modrinth.Http;
 using Modrinth.Models.Enums;
@@ -19,13 +19,13 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
     public async Task<Models.Version> GetVersionByHashAsync(string hash,
         HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(VersionFilePathSegment + '/' + hash, UriKind.Relative);
 
         var parameters = new ParameterBuilder
         {
-            {"algorithm", hashAlgorithm.ToString().ToLower()}
+            {"algorithm", hashAlgorithm.ToString().ToLowerInvariant()}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -37,18 +37,18 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
     public async Task DeleteVersionByHashAsync(string hash, HashAlgorithm hashAlgorithm = HashAlgorithm.Sha1,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(VersionFilePathSegment + '/' + hash, UriKind.Relative);
 
         var parameters = new ParameterBuilder
         {
-            {"algorithm", hashAlgorithm.ToString().ToLower()}
+            {"algorithm", hashAlgorithm.ToString().ToLowerInvariant()}
         };
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -61,16 +61,14 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
         
         var tasks = hashBatches.Select(async batch =>
         {
-            var reqMsg = new HttpRequestMessage
-            {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri("version_files", UriKind.Relative)
-            };
-            
+            using var reqMsg = new HttpRequestMessage();
+            reqMsg.Method = HttpMethod.Post;
+            reqMsg.RequestUri = new Uri("version_files", UriKind.Relative);
+
             var requestBody = new
             {
                 hashes = batch,
-                algorithm = hashAlgorithm.ToString().ToLower()
+                algorithm = hashAlgorithm.ToString().ToLowerInvariant()
             };
 
             reqMsg.Content = new StringContent(
@@ -94,13 +92,13 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
         HashAlgorithm hashAlgorithm,
         string[] loaders, string[] gameVersions, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(VersionFilePathSegment + '/' + hash + "/update", UriKind.Relative);
 
         var parameters = new ParameterBuilder
         {
-            {"algorithm", hashAlgorithm.ToString().ToLower()}
+            {"algorithm", hashAlgorithm.ToString().ToLowerInvariant()}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -129,15 +127,13 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
         
         var tasks = hashBatches.Select(async batch =>
         {
-            var reqMsg = new HttpRequestMessage
-            {
-                Method = HttpMethod.Post,
-                RequestUri = new Uri("version_files/update", UriKind.Relative)
-            };
-            
+            using var reqMsg = new HttpRequestMessage();
+            reqMsg.Method = HttpMethod.Post;
+            reqMsg.RequestUri = new Uri("version_files/update", UriKind.Relative);
+
             var requestBody = new
             {
-                algorithm = hashAlgorithm.ToString().ToLower(),
+                algorithm = hashAlgorithm.ToString().ToLowerInvariant(),
                 hashes = batch,
                 loaders,
                 game_versions = gameVersions

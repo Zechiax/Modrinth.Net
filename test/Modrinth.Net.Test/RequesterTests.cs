@@ -1,3 +1,5 @@
+using System.Net;
+using System.Text;
 using Modrinth.Exceptions;
 using Modrinth.Http;
 
@@ -6,26 +8,162 @@ namespace Modrinth.Net.Test;
 [TestFixture]
 public class RequesterTests
 {
-    [Test]
-    public void Requester_ShouldNotThrow_HttpException()
+    private sealed class DelegateMessageHandler : HttpMessageHandler
     {
-        // Arrange
-        var mockHttpClient = new Mock<HttpClient>();
-        mockHttpClient.Setup(client => client.SendAsync(It.IsAny<HttpRequestMessage>(), It.IsAny<CancellationToken>()))
-            .Throws(new HttpRequestException("An error occurred while sending the request."));
+        private readonly Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> _sendAsync;
 
+        public DelegateMessageHandler(Func<HttpRequestMessage, CancellationToken, Task<HttpResponseMessage>> sendAsync)
+        {
+            _sendAsync = sendAsync;
+        }
+
+        public int Calls { get; private set; }
+
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
+            CancellationToken cancellationToken)
+        {
+            Calls++;
+            return await _sendAsync(request, cancellationToken).ConfigureAwait(false);
+        }
+    }
+
+    private static Requester CreateRequester(HttpMessageHandler handler, int retryCount = 5, int maxConcurrent = 10)
+    {
         var config = new ModrinthClientConfig
         {
             BaseUrl = "http://test.com",
             UserAgent = "TestAgent",
-            ModrinthToken = "TestToken"
+            RateLimitRetryCount = retryCount,
+            MaxConcurrentRequests = maxConcurrent
         };
 
-        var requester = new Requester(config, mockHttpClient.Object);
+        return new Requester(config, new HttpClient(handler));
+    }
+
+    [Test]
+    public void Requester_ShouldWrap_HttpRequestException()
+    {
+        var handler = new DelegateMessageHandler((_, _) => throw new HttpRequestException("boom"));
+        using var requester = CreateRequester(handler);
 
         var request = new HttpRequestMessage(HttpMethod.Get, "http://test.com");
-        
+
         Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.GetJsonAsync<object>(request));
     }
 
+    [Test]
+    public async Task SendAsync_429Then200_RetriesAndSucceeds()
+    {
+        var bodies = new List<string>();
+        var handler = new DelegateMessageHandler(async (request, cancellationToken) =>
+        {
+            if (request.Content is not null)
+                bodies.Add(await request.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false));
+
+            if (bodies.Count == 1)
+            {
+                var rateLimited = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+                rateLimited.Headers.Add("X-Ratelimit-Reset", "0");
+                return rateLimited;
+            }
+
+            return new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{}", Encoding.UTF8, "application/json")
+            };
+        });
+
+        using var requester = CreateRequester(handler, retryCount: 2);
+
+        var request = new HttpRequestMessage(HttpMethod.Post, "http://test.com")
+        {
+            Content = new StringContent("payload", Encoding.UTF8, "text/plain")
+        };
+
+        using var response = await requester.SendAsync(request);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+            Assert.That(handler.Calls, Is.EqualTo(2));
+            Assert.That(bodies, Is.EqualTo(new[] { "payload", "payload" }));
+        }
+    }
+
+    [Test]
+    public void SendAsync_429BeyondRetryCount_ThrowsModrinthApiException()
+    {
+        var handler = new DelegateMessageHandler((_, _) =>
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+            response.Headers.Add("X-Ratelimit-Reset", "0");
+            return Task.FromResult(response);
+        });
+
+        using var requester = CreateRequester(handler, retryCount: 1);
+        var request = new HttpRequestMessage(HttpMethod.Get, "http://test.com");
+
+        Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.SendAsync(request));
+        Assert.That(handler.Calls, Is.EqualTo(2));
+    }
+
+    [Test]
+    public void SendAsync_429WithoutResetHeader_DoesNotRetry()
+    {
+        var handler = new DelegateMessageHandler((_, _) =>
+            Task.FromResult(new HttpResponseMessage(HttpStatusCode.TooManyRequests)));
+
+        using var requester = CreateRequester(handler, retryCount: 5);
+        var request = new HttpRequestMessage(HttpMethod.Get, "http://test.com");
+
+        Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.SendAsync(request));
+        Assert.That(handler.Calls, Is.EqualTo(1));
+    }
+
+    [Test]
+    public void SendAsync_CancelledDuringRateLimitDelay_ThrowsOperationCanceledException()
+    {
+        var handler = new DelegateMessageHandler((_, _) =>
+        {
+            var response = new HttpResponseMessage(HttpStatusCode.TooManyRequests);
+            response.Headers.Add("X-Ratelimit-Reset", "5");
+            return Task.FromResult(response);
+        });
+
+        using var requester = CreateRequester(handler, retryCount: 2);
+        using var cts = new CancellationTokenSource(TimeSpan.FromMilliseconds(50));
+        var token = cts.Token;
+
+        Assert.That(async () => await requester.SendAsync(new HttpRequestMessage(HttpMethod.Get, "http://test.com"), token),
+            Throws.InstanceOf<OperationCanceledException>());
+        Assert.That(handler.Calls, Is.EqualTo(1));
+    }
+
+    [Test]
+    public async Task SendAsync_ReleasesSemaphoreAfterFailureOrCancellation()
+    {
+        var call = 0;
+        var handler = new DelegateMessageHandler((_, _) =>
+        {
+            call++;
+            if (call == 1)
+                throw new HttpRequestException("first call fails");
+
+            return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent("{}", Encoding.UTF8, "application/json")
+            });
+        });
+
+        using var requester = CreateRequester(handler, maxConcurrent: 1);
+
+        var first = new HttpRequestMessage(HttpMethod.Get, "http://test.com/one");
+        Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.SendAsync(first));
+
+        var second = new HttpRequestMessage(HttpMethod.Get, "http://test.com/two");
+        using var response = await requester.SendAsync(second);
+
+        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
+        Assert.That(handler.Calls, Is.EqualTo(2));
+    }
 }
