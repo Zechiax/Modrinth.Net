@@ -202,7 +202,7 @@ catch (ModrinthApiException e)
 | Modify a version                           | PATCH  | ❌           |
 | Delete a version                           | DELETE | ⚠️          |
 | Get a version given a version number or ID | GET    | ❌           |
-| Create a version                           | POST   | ❌           |
+| Create a version                           | POST   | ✅           |
 | Schedule a version                         | POST   | ⚠️          |
 | Get multiple versions                      | GET    | ✅           |
 | Add files to version                       | POST   | ❌           |

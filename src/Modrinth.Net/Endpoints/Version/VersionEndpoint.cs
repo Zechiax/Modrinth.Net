@@ -1,7 +1,13 @@
-﻿using Modrinth.Extensions;
+﻿using System.Text;
+using System.Text.Json;
+using Modrinth.Endpoints.Project;
+using Modrinth.Extensions;
 using Modrinth.Helpers;
 using Modrinth.Http;
+using Modrinth.Models;
+using Modrinth.Models.Enums.Project;
 using Modrinth.Models.Enums.Version;
+using File = System.IO.File;
 
 namespace Modrinth.Endpoints.Version;
 
@@ -25,6 +31,59 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
         return await Requester.GetJsonAsync<Models.Version>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
+    /// <inheritdoc />
+    public async Task<Models.Version> CreateAsync(string projectId, IEnumerable<UploadableFile> files, string primaryFile, string name, string versionNumber,
+                                                  string? changelog, IEnumerable<Dependency> dependencies, IEnumerable<string> gameVersions,
+                                                  ProjectVersionType versionType, IEnumerable<string> loaders, bool featured,
+                                                  VersionStatus status, VersionStatus? requestedStatus,
+                                                  CancellationToken cancellationToken = default) {
+	    // todo this is really messy, imo should do builder or maybe take struct/class directly and have serializer function in it
+	    var reqMsg = new HttpRequestMessage();
+	    reqMsg.Method = HttpMethod.Post;
+	    reqMsg.RequestUri = new Uri(VersionsPath, UriKind.Relative);
+
+	    // transform for web
+	    // might be better to make some kind of base class like ModrinthApiSerializer and ModrinthApiDeserializer
+	    // and then extend those
+	    var deps = dependencies.Select(d => new
+	    {
+		    version_id = d.VersionId,
+		    project_id = d.ProjectId,
+		    file_name = d.FileName,
+		    dependency_type = d.DependencyType
+	    }).ToList();
+
+	    // data
+        var uploadableFiles = files as UploadableFile[] ?? files.ToArray();
+        string j = JsonSerializer.Serialize(new
+        {
+            name = name,
+            version_number = versionNumber,
+            changelog = changelog,
+            dependencies = deps,
+            game_versions = gameVersions,
+            version_type = versionType.ToModrinthString(),
+            loaders = loaders,
+            featured = featured,
+            status = status.ToModrinthString(),
+            requested_status = requestedStatus?.ToModrinthString(),
+            project_id = projectId,
+            file_parts = uploadableFiles.Select(f => f.FileName),
+            primary_file = primaryFile
+        });
+
+	    MultipartFormDataContent c = new();
+	    c.Add(new StringContent(j, Encoding.UTF8, "application/json"), "data");
+        foreach (UploadableFile file in uploadableFiles)
+        {
+            c.Add(new StreamContent(file.Stream), file.FileName, file.FileName);
+        }
+
+	    reqMsg.Content = c;
+
+	    return await Requester.GetJsonAsync<Models.Version>(reqMsg, cancellationToken).ConfigureAwait(false);
+    }
+    
     /// <inheritdoc />
     public async Task<Models.Version[]> GetProjectVersionListAsync(string slugOrId, string[]? loaders = null,
         string[]? gameVersions = null, bool? featured = null, CancellationToken cancellationToken = default)

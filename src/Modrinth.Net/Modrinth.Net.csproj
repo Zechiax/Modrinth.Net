@@ -12,7 +12,7 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-        <PackageVersion>3.6.0</PackageVersion>
+        <PackageVersion>3.6.1</PackageVersion>
         <Version>$(PackageVersion)</Version>
         <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>Modrinth</RootNamespace>
