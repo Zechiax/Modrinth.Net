@@ -22,7 +22,7 @@ public static class ProjectTypeExtensions
             ProjectType.Shader => "shader",
             ProjectType.MinecraftJavaServer => "minecraft_java_server",
             // Return lower string, this should work for all, but it is not guaranteed
-            _ => projectType.ToString().ToLower()
+            _ => projectType.ToString().ToLowerInvariant()
         };
     }
 }

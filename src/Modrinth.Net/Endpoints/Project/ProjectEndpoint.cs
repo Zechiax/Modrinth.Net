@@ -174,7 +174,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "featured", featured.ToString().ToLower() },
+            { "featured", featured.ToString().ToLowerInvariant() },
             { "title", title },
             { "description", description },
             { "ordering", ordering },
@@ -206,7 +206,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
         var parameters = new ParameterBuilder
         {
             { "url", url },
-            { "featured", featured?.ToString().ToLower() },
+            { "featured", featured?.ToString().ToLowerInvariant() },
             { "title", title },
             { "description", description },
             { "ordering", ordering }
@@ -252,7 +252,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
         var parameters = new ParameterBuilder
         {
             { "query", Uri.EscapeDataString(query) },
-            { "index", index.ToString().ToLower() },
+            { "index", index.ToString().ToLowerInvariant() },
             { "offset", offset },
             { "limit", limit }
         };

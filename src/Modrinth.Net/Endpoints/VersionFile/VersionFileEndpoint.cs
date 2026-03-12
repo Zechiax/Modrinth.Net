@@ -25,7 +25,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"algorithm", hashAlgorithm.ToString().ToLower()}
+            {"algorithm", hashAlgorithm.ToString().ToLowerInvariant()}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -43,7 +43,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"algorithm", hashAlgorithm.ToString().ToLower()}
+            {"algorithm", hashAlgorithm.ToString().ToLowerInvariant()}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -70,7 +70,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
             var requestBody = new
             {
                 hashes = batch,
-                algorithm = hashAlgorithm.ToString().ToLower()
+                algorithm = hashAlgorithm.ToString().ToLowerInvariant()
             };
 
             reqMsg.Content = new StringContent(
@@ -100,7 +100,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         var parameters = new ParameterBuilder
         {
-            {"algorithm", hashAlgorithm.ToString().ToLower()}
+            {"algorithm", hashAlgorithm.ToString().ToLowerInvariant()}
         };
 
         parameters.AddToRequest(reqMsg);
@@ -137,7 +137,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
             
             var requestBody = new
             {
-                algorithm = hashAlgorithm.ToString().ToLower(),
+                algorithm = hashAlgorithm.ToString().ToLowerInvariant(),
                 hashes = batch,
                 loaders,
                 game_versions = gameVersions

@@ -42,7 +42,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
             parameters.Add("game_versions", gameVersions.ToModrinthQueryString());
 
         if (featured != null)
-            parameters.Add("featured", featured.Value.ToString().ToLower());
+            parameters.Add("featured", featured.Value.ToString().ToLowerInvariant());
 
         parameters.AddToRequest(reqMsg);
 
@@ -104,7 +104,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
         var parameters = new ParameterBuilder
         {
             { "time", date.ToString("yyyy-MM-ddTHH:mm:ss.fffZ") },
-            { "requested_status", requestedStatus.ToString().ToLower() }
+            { "requested_status", requestedStatus.ToString().ToLowerInvariant() }
         };
 
         parameters.AddToRequest(reqMsg);
