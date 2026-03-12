@@ -16,7 +16,7 @@ public class ParameterBuilderTests
         builder.Add("key2", 2);
 
         // Assert
-        Assert.That(builder.ToString(), Is.EqualTo("key1=value1&key2=2&"));
+        Assert.That(builder.ToString(), Is.EqualTo("key1=value1&key2=2"));
     }
 
     [Test]
@@ -30,7 +30,7 @@ public class ParameterBuilderTests
         builder.Add("key2", "value2");
 
         // Assert
-        Assert.That(builder.ToString(), Is.EqualTo("key2=value2&"));
+        Assert.That(builder.ToString(), Is.EqualTo("key2=value2"));
     }
 
     [Test]
@@ -47,6 +47,22 @@ public class ParameterBuilderTests
         builder.AddToRequest(request);
 
         // Assert
-        Assert.That(request.RequestUri, Is.EqualTo(new Uri("https://example.com?key1=value1&key2=2&")));
+        Assert.That(request.RequestUri, Is.EqualTo(new Uri("https://example.com?key1=value1&key2=2")));
+    }
+
+    [Test]
+    public void AddToRequest_Appends_With_Ampersand_When_Query_Exists()
+    {
+        // Arrange
+        var builder = new ParameterBuilder();
+        builder.Add("key2", "value2");
+
+        var request = new HttpRequestMessage(HttpMethod.Get, "https://example.com?key1=value1");
+
+        // Act
+        builder.AddToRequest(request);
+
+        // Assert
+        Assert.That(request.RequestUri, Is.EqualTo(new Uri("https://example.com?key1=value1&key2=value2")));
     }
 }

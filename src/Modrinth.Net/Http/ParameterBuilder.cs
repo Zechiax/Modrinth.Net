@@ -7,7 +7,7 @@ namespace Modrinth.Http;
 /// <summary>
 ///     A class used to build a collection of parameters
 /// </summary>
-public class ParameterBuilder : IEnumerable
+internal class ParameterBuilder : IEnumerable
 {
     /// <summary>
     ///     Initializes a new instance of the <see cref="ParameterBuilder" /> class
@@ -30,7 +30,7 @@ public class ParameterBuilder : IEnumerable
     /// </summary>
     /// <param name="key"> The key of the parameter </param>
     /// <param name="value"> The value of the parameter </param>
-    /// <param name="ignoreNull"> Whether or not to ignore null values </param>
+    /// <param name="ignoreNull"> Whether to ignore null values </param>
     /// <returns> The current instance of <see cref="ParameterBuilder" /> </returns>
     public ParameterBuilder Add(string key, string? value, bool ignoreNull = true)
     {
@@ -44,7 +44,7 @@ public class ParameterBuilder : IEnumerable
     /// </summary>
     /// <param name="key"> The key of the parameter </param>
     /// <param name="value"> The value of the parameter </param>
-    /// <param name="ignoreNull"> Whether or not to ignore null values </param>
+    /// <param name="ignoreNull"> Whether to ignore null values </param>
     /// <returns> The current instance of <see cref="ParameterBuilder" /> </returns>
     public ParameterBuilder Add(string key, object? value, bool ignoreNull = true)
     {
@@ -68,7 +68,8 @@ public class ParameterBuilder : IEnumerable
             foreach (var value in values)
             {
                 if (value == string.Empty) continue;
-                sb.Append($"{key}={value}&");
+                if (sb.Length > 0) sb.Append('&');
+                sb.Append($"{key}={value}");
             }
         }
 
@@ -83,6 +84,9 @@ public class ParameterBuilder : IEnumerable
     {
         var query = ToString();
         if (query == string.Empty) return;
-        request.RequestUri = new Uri(request.RequestUri + "?" + query, UriKind.RelativeOrAbsolute);
+        
+        var uriText = request.RequestUri!.ToString();
+        var separator = uriText.Contains('?') ? "&" : "?";
+        request.RequestUri = new Uri(uriText + separator + query, UriKind.RelativeOrAbsolute);
     }
 }
