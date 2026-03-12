@@ -1,4 +1,4 @@
-﻿using Modrinth.Extensions;
+using Modrinth.Extensions;
 using Modrinth.Helpers;
 using Modrinth.Http;
 using Modrinth.Models.Enums.Version;
@@ -18,7 +18,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     /// <inheritdoc />
     public async Task<Models.Version> GetAsync(string versionId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(VersionsPath + '/' + versionId, UriKind.Relative);
 
@@ -29,7 +29,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     public async Task<Models.Version[]> GetProjectVersionListAsync(string slugOrId, string[]? loaders = null,
         string[]? gameVersions = null, bool? featured = null, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("project/" + slugOrId + '/' + VersionsPath, UriKind.Relative);
 
@@ -57,7 +57,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     
         async Task<Models.Version[]> FetchVersionBatchAsync(string[] batch, CancellationToken ct)
         {
-            var reqMsg = new HttpRequestMessage();
+            using var reqMsg = new HttpRequestMessage();
             reqMsg.Method = HttpMethod.Get;
             reqMsg.RequestUri = new Uri("versions", UriKind.Relative);
     
@@ -76,7 +76,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     public async Task<Models.Version> GetByVersionNumberAsync(string slugOrId, string versionNumber,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("project/" + slugOrId + '/' + VersionsPath + '/' + versionNumber, UriKind.Relative);
 
@@ -86,7 +86,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     /// <inheritdoc />
     public async Task DeleteAsync(string versionId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(VersionsPath + '/' + versionId, UriKind.Relative);
 
@@ -97,7 +97,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
     public async Task ScheduleAsync(string versionId, DateTime date, VersionRequestedStatus requestedStatus,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(VersionsPath + '/' + versionId + '/' + "schedule", UriKind.Relative);
 

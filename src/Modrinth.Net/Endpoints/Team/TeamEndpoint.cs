@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System.Text.Json;
 using Modrinth.Extensions;
 using Modrinth.Helpers;
@@ -21,7 +21,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     /// <inheritdoc />
     public async Task<TeamMember[]> GetProjectTeamAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("project" + '/' + slugOrId + '/' + "members", UriKind.Relative);
 
@@ -31,7 +31,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     /// <inheritdoc />
     public async Task<TeamMember[]> GetAsync(string teamId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members", UriKind.Relative);
 
@@ -46,7 +46,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
 
         async Task<TeamMember[][]> FetchTeamBatchAsync(string[] batch, CancellationToken ct)
         {
-            var reqMsg = new HttpRequestMessage();
+            using var reqMsg = new HttpRequestMessage();
             reqMsg.Method = HttpMethod.Get;
             reqMsg.RequestUri = new Uri("teams", UriKind.Relative);
 
@@ -64,7 +64,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     /// <inheritdoc />
     public async Task AddUserAsync(string teamId, string userId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members", UriKind.Relative);
 
@@ -81,7 +81,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     /// <inheritdoc />
     public async Task RemoveMemberAsync(string teamId, string userId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members" + '/' + userId, UriKind.Relative);
 
@@ -91,7 +91,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     /// <inheritdoc />
     public async Task JoinAsync(string teamId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "join", UriKind.Relative);
 
@@ -102,7 +102,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     public async Task TransferOwnershipAsync(string teamId, string userId,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "owner", UriKind.Relative);
 
@@ -121,7 +121,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
         int payoutsSplit,
         int ordering, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Patch;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members" + '/' + userId, UriKind.Relative);
 

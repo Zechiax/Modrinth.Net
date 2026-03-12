@@ -1,4 +1,4 @@
-﻿using Modrinth.Extensions;
+using Modrinth.Extensions;
 using Modrinth.Helpers;
 using Modrinth.Http;
 using Modrinth.Models;
@@ -19,7 +19,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     /// <inheritdoc />
     public async Task<Models.User> GetAsync(string usernameOrId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId, UriKind.Relative);
 
@@ -30,7 +30,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     public async Task<Models.Project[]> GetProjectsAsync(string usernameOrId,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "projects", UriKind.Relative);
 
@@ -45,7 +45,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         async Task<Models.User[]> FetchUserBatchAsync(string[] batch, CancellationToken ct)
         {
-            var reqMsg = new HttpRequestMessage();
+            using var reqMsg = new HttpRequestMessage();
             reqMsg.Method = HttpMethod.Get;
             reqMsg.RequestUri = new Uri("users", UriKind.Relative);
 
@@ -63,7 +63,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     /// <inheritdoc />
     public async Task<Models.User> GetCurrentAsync(CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment, UriKind.Relative);
 
@@ -74,7 +74,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     public async Task<Models.Project[]> GetFollowedProjectsAsync(string usernameOrId,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "follows", UriKind.Relative);
 
@@ -85,7 +85,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     public async Task ChangeIconAsync(string usernameOrId, string iconPath,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Patch;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "icon", UriKind.Relative);
         var extension = Path.GetExtension(iconPath).TrimStart('.');
@@ -109,7 +109,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
     public async Task<PayoutHistory> GetPayoutHistoryAsync(string usernameOrId,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(UserPathSegment + '/' + usernameOrId + '/' + "payouts", UriKind.Relative);
 

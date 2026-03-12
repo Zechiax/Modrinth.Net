@@ -1,4 +1,4 @@
-﻿using Modrinth.Exceptions;
+using Modrinth.Exceptions;
 using Modrinth.Models.Tags;
 
 namespace Modrinth.Endpoints.Tag;

@@ -1,4 +1,4 @@
-﻿using Modrinth.Extensions;
+using Modrinth.Extensions;
 using Modrinth.Helpers;
 using Modrinth.Http;
 using Modrinth.Models;
@@ -20,7 +20,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     /// <inheritdoc />
     public async Task<Models.Project> GetAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
 
@@ -32,7 +32,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     {
         if (count <= 0) throw new ArgumentOutOfRangeException(nameof(count), "Count must be greater than 0");
 
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("projects_random", UriKind.Relative);
 
@@ -49,7 +49,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     /// <inheritdoc />
     public async Task DeleteAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
 
@@ -64,7 +64,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         async Task<Models.Project[]> FetchProjectBatchAsync(string[] batch, CancellationToken ct)
         {
-            var reqMsg = new HttpRequestMessage();
+            using var reqMsg = new HttpRequestMessage();
             reqMsg.Method = HttpMethod.Get;
             reqMsg.RequestUri = new Uri("projects", UriKind.Relative);
 
@@ -82,7 +82,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     /// <inheritdoc />
     public async Task<string> CheckIdSlugValidityAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/check", UriKind.Relative);
 
@@ -94,7 +94,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     /// <inheritdoc />
     public async Task<Dependencies> GetDependenciesAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/dependencies", UriKind.Relative);
 
@@ -104,7 +104,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     /// <inheritdoc />
     public async Task FollowAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
 
@@ -114,7 +114,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     /// <inheritdoc />
     public async Task UnfollowAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
 
@@ -124,7 +124,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     /// <inheritdoc />
     public async Task DeleteIconAsync(string slugOrId, CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/icon", UriKind.Relative);
 
@@ -136,7 +136,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     {
         var extension = Path.GetExtension(iconPath).TrimStart('.');
 
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
 
         reqMsg.Method = HttpMethod.Patch;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/icon", UriKind.Relative);
@@ -167,7 +167,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var extension = Path.GetExtension(imagePath).TrimStart('.');
 
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
 
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/gallery", UriKind.Relative);
@@ -198,7 +198,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
         if (ordering < 0)
             throw new ArgumentOutOfRangeException(nameof(ordering), "Ordering must be greater than or equal to 0");
 
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
 
         reqMsg.Method = HttpMethod.Patch;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/gallery", UriKind.Relative);
@@ -221,7 +221,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
     public async Task DeleteGalleryImageAsync(string slugOrId, string url,
         CancellationToken cancellationToken = default)
     {
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
 
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/gallery", UriKind.Relative);
@@ -245,7 +245,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
         if (offset < 0)
             throw new ArgumentOutOfRangeException(nameof(offset), "Offset must be greater than or equal to 0");
 
-        var reqMsg = new HttpRequestMessage();
+        using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri("search", UriKind.Relative);
 
