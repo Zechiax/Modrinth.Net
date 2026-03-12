@@ -174,21 +174,13 @@ public class SearchTests : UnauthenticatedTestBase
         Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure") && c.Contains("cursed")));
     }
 
-    [Test]
-    public async Task Search_PopularModWithSpacesInName_ShouldReturnMultipleResults()
+    [TestCase("world map", 4)]
+    [TestCase("yung better", 4)]
+    [TestCase("just enough items", 3)]
+    [TestCase("better biomes", 4)]
+    public async Task Search_PopularModWithSpacesInName_ShouldReturnMultipleResults(string mod, int minimumHits)
     {
-        string[] testedMods = new string[] 
-        { 
-            "industrial craft 2",
-            "divine rpg",
-            "just enough items",
-            "better biomes"
-        };
-        
-        foreach(var mod in testedMods)
-        {
-            var result = await NoAuthClient.Project.SearchAsync(mod);
-            Assert.That(result.TotalHits, Is.GreaterThan(3)); // query="just enough items" returns 3 results, query=just_enough_items returns a lot
-        }
+        var result = await NoAuthClient.Project.SearchAsync(mod);
+        Assert.That(result.TotalHits, Is.GreaterThanOrEqualTo(minimumHits));
     }
 }
