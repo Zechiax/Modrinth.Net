@@ -48,7 +48,7 @@ public class VersionFileEndpoint : Endpoint, IVersionFileEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />

@@ -53,7 +53,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId, UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -108,7 +108,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -118,7 +118,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/follow", UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -128,7 +128,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(ProjectPathSegment + "/" + slugOrId + "/icon", UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -153,7 +153,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -188,7 +188,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         reqMsg.Content = streamContent;
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -214,7 +214,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -233,7 +233,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />

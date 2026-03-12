@@ -102,7 +102,7 @@ public class UserEndpoint : Endpoint, IUserEndpoint
 
         reqMsg.Content = streamContent;
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />

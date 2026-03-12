@@ -75,7 +75,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
 
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -85,7 +85,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "members" + '/' + userId, UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -95,7 +95,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
         reqMsg.Method = HttpMethod.Post;
         reqMsg.RequestUri = new Uri(TeamsPathSegment + '/' + teamId + '/' + "join", UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -113,7 +113,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
 
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -135,6 +135,6 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
 
         reqMsg.Content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }

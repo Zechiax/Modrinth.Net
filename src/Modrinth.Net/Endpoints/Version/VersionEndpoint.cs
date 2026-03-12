@@ -90,7 +90,7 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
         reqMsg.Method = HttpMethod.Delete;
         reqMsg.RequestUri = new Uri(VersionsPath + '/' + versionId, UriKind.Relative);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 
     /// <inheritdoc />
@@ -109,6 +109,6 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
 
         parameters.AddToRequest(reqMsg);
 
-        await Requester.SendAsync(reqMsg, cancellationToken).ConfigureAwait(false);
+        await SendWithoutResponseAsync(reqMsg, cancellationToken).ConfigureAwait(false);
     }
 }

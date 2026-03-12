@@ -24,6 +24,18 @@ public abstract class Endpoint
     protected IRequester Requester { get; }
 
     /// <summary>
+    ///     Sends a request and disposes of the response when the caller does not need it.
+    ///     Use this for fire-and-forget API calls (DELETE, POST, PATCH without return values).
+    /// </summary>
+    /// <param name="request">The request to send</param>
+    /// <param name="cancellationToken">The cancellation token</param>
+    protected async Task SendWithoutResponseAsync(HttpRequestMessage request,
+        CancellationToken cancellationToken = default)
+    {
+        using var response = await Requester.SendAsync(request, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <summary>
     ///     The configuration used by the endpoint
     /// </summary>
     protected ModrinthClientConfig Config { get; }
