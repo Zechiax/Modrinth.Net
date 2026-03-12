@@ -1,4 +1,5 @@
 using System.Net;
+using System.Globalization;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Modrinth.Exceptions;
@@ -73,7 +74,7 @@ public class Requester : IRequester
         if (IsDisposed)
             throw new ObjectDisposedException(nameof(Requester));
 
-        var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
+        using var response = await SendAsync(request, cancellationToken).ConfigureAwait(false);
 
         try
         {
@@ -105,8 +106,12 @@ public class Requester : IRequester
     public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request,
         CancellationToken cancellationToken = default)
     {
-        if (IsDisposed)
-            throw new ObjectDisposedException(nameof(Requester));
+        ObjectDisposedException.ThrowIf(IsDisposed, nameof(Requester));
+        
+        ArgumentNullException.ThrowIfNull(request);
+
+        using var requestTemplate = await CopyRequestAsync(request, cancellationToken).ConfigureAwait(false);
+        request.Dispose();
 
         // Throttle the number of concurrent requests
         await _semaphore.WaitAsync(cancellationToken).ConfigureAwait(false);
@@ -116,10 +121,12 @@ public class Requester : IRequester
             var retryCount = 0;
             while (true)
             {
+                using var requestToSend = await CopyRequestAsync(requestTemplate, cancellationToken).ConfigureAwait(false);
+
                 HttpResponseMessage response;
                 try
                 {
-                    response = await HttpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
+                    response = await HttpClient.SendAsync(requestToSend, cancellationToken).ConfigureAwait(false);
                 }
                 catch (HttpRequestException e)
                 {
@@ -133,9 +140,12 @@ public class Requester : IRequester
                 if (response.StatusCode == HttpStatusCode.TooManyRequests)
                 {
                     if (cancellationToken.IsCancellationRequested)
+                    {
+                        response.Dispose();
                         throw new OperationCanceledException(
                             "The operation was canceled",
                             cancellationToken);
+                    }
 
                     if (retryCount >= _config.RateLimitRetryCount)
                         throw new ModrinthApiException(
@@ -145,15 +155,19 @@ public class Requester : IRequester
                     // Wait for the duration specified by the 'X-Ratelimit-Reset' header.
                     if (response.Headers.TryGetValues("X-Ratelimit-Reset", out var resetValues))
                     {
-                        var resetInSeconds = int.Parse(resetValues.First());
-                        // Add a small buffer (e.g., 500 ms) to be safe.
-                        await Task.Delay(TimeSpan.FromSeconds(resetInSeconds).Add(TimeSpan.FromMilliseconds(500)),
-                            cancellationToken).ConfigureAwait(false);
+                        var resetRawValue = resetValues.FirstOrDefault();
+                        if (int.TryParse(resetRawValue, NumberStyles.Integer, CultureInfo.InvariantCulture,
+                                out var resetInSeconds) && resetInSeconds >= 0)
+                        {
+                            response.Dispose();
 
-                        retryCount++;
-                        // A request message cannot be sent twice, so we must create a copy for the retry.
-                        request = CopyRequest(request);
-                        continue; // Continue to the next iteration of the while loop to retry the request.
+                            // Add a small buffer (e.g., 500 ms) to be safe.
+                            await Task.Delay(TimeSpan.FromSeconds(resetInSeconds).Add(TimeSpan.FromMilliseconds(500)),
+                                cancellationToken).ConfigureAwait(false);
+
+                            retryCount++;
+                            continue; // Continue to the next iteration of the while loop to retry the request.
+                        }
                     }
                 }
                 
@@ -175,7 +189,7 @@ public class Requester : IRequester
                               $"{(int)response.StatusCode} {response.StatusCode})";
                 if (error != null) message += $": {error.Error}: {error.Description}";
 
-                message += $"{Environment.NewLine}Request: {request.Method} {request.RequestUri}";
+                message += $"{Environment.NewLine}Request: {requestTemplate.Method} {requestTemplate.RequestUri}";
 
                 throw new ModrinthApiException(message, response, error);
             }
@@ -213,14 +227,30 @@ public class Requester : IRequester
         IsDisposed = true;
     }
 
-    private static HttpRequestMessage CopyRequest(HttpRequestMessage request)
+    private static async Task<HttpRequestMessage> CopyRequestAsync(HttpRequestMessage request,
+        CancellationToken cancellationToken)
     {
         var newRequest = new HttpRequestMessage(request.Method, request.RequestUri);
-        newRequest.Content = request.Content;
-        newRequest.Method = request.Method;
         newRequest.Version = request.Version;
-        foreach (var header in request.Headers) newRequest.Headers.Add(header.Key, header.Value);
+        foreach (var header in request.Headers)
+            newRequest.Headers.TryAddWithoutValidation(header.Key, header.Value);
+
         newRequest.VersionPolicy = request.VersionPolicy;
+
+        foreach (var option in request.Options)
+            newRequest.Options.TryAdd(option.Key, option.Value);
+
+        if (request.Content is null)
+            return newRequest;
+
+        var body = await request.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
+        var content = new ByteArrayContent(body);
+
+        foreach (var contentHeader in request.Content.Headers)
+            content.Headers.TryAddWithoutValidation(contentHeader.Key, contentHeader.Value);
+
+        newRequest.Content = content;
+
         return newRequest;
     }
 }
