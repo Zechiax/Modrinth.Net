@@ -251,7 +251,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
         var parameters = new ParameterBuilder
         {
-            { "query", query.Replace(' ', '_') },
+            { "query", Uri.EscapeDataString(query) },
             { "index", index.ToString().ToLower() },
             { "offset", offset },
             { "limit", limit }
