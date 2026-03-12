@@ -38,5 +38,10 @@ public enum ProjectType
     /// <summary>
     ///   Generic project type
     /// </summary>
-    Project
+    Project,
+    
+    /// <summary>
+    ///     Project is a Minecraft Java server
+    /// </summary>
+    MinecraftJavaServer
 }
