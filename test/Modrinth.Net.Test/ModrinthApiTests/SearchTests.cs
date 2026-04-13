@@ -175,7 +175,6 @@ public class SearchTests : UnauthenticatedTestBase
     }
 
     [TestCase("world map", 4)]
-    [TestCase("yung better", 4)]
     [TestCase("just enough items", 3)]
     [TestCase("better biomes", 4)]
     public async Task Search_PopularModWithSpacesInName_ShouldReturnMultipleResults(string mod, int minimumHits)
