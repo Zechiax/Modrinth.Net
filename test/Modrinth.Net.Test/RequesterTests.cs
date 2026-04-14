@@ -2,6 +2,7 @@ using System.Net;
 using System.Text;
 using Modrinth.Exceptions;
 using Modrinth.Http;
+using Modrinth.Models;
 
 namespace Modrinth.Net.Test;
 
@@ -165,5 +166,53 @@ public class RequesterTests
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         Assert.That(handler.Calls, Is.EqualTo(2));
+    }
+
+    [Test]
+    public async Task GetJsonAsync_GalleryOrderingAboveInt32Max_DeserializesSuccessfully()
+    {
+        const long expectedOrdering = 6844313514;
+        var json =
+            "[{\"url\":\"https://example.com/image.png\",\"featured\":false,\"title\":\"t\",\"description\":\"d\",\"created\":\"2026-01-01T00:00:00Z\",\"ordering\":" +
+            expectedOrdering + "}]";
+
+        var handler = new DelegateMessageHandler((_, _) =>
+            Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            }));
+
+        using var requester = CreateRequester(handler);
+        var request = new HttpRequestMessage(HttpMethod.Get, "http://test.com");
+
+        var galleries = await requester.GetJsonAsync<Gallery[]>(request);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(galleries, Has.Length.EqualTo(1));
+            Assert.That(galleries[0].Ordering, Is.EqualTo(expectedOrdering));
+        }
+    }
+
+    [Test]
+    public async Task GetJsonAsync_GalleryOrderingHugeInt64_DeserializesSuccessfully()
+    {
+        const long expectedOrdering = 68541332132131350;
+        var json =
+            "[{\"url\":\"https://example.com/image.png\",\"featured\":true,\"title\":\"t\",\"description\":\"d\",\"created\":\"2026-01-01T00:00:00Z\",\"ordering\":" +
+            expectedOrdering + "}]";
+
+        var handler = new DelegateMessageHandler((_, _) =>
+            Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            }));
+
+        using var requester = CreateRequester(handler);
+        var request = new HttpRequestMessage(HttpMethod.Get, "http://test.com");
+
+        var galleries = await requester.GetJsonAsync<Gallery[]>(request);
+
+        Assert.That(galleries[0].Ordering, Is.EqualTo(expectedOrdering));
     }
 }

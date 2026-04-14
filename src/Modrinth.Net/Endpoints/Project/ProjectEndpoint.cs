@@ -158,7 +158,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
     /// <inheritdoc />
     public async Task AddGalleryImageAsync(string slugOrId, string imagePath, bool featured, string? title = null,
-        string? description = null, int? ordering = null, CancellationToken cancellationToken = default)
+        string? description = null, long? ordering = null, CancellationToken cancellationToken = default)
     {
         if (!File.Exists(imagePath)) throw new FileNotFoundException("Image not found", imagePath);
 
@@ -193,7 +193,7 @@ public class ProjectEndpoint : Endpoint, IProjectEndpoint
 
     /// <inheritdoc />
     public async Task ModifyGalleryImageAsync(string slugOrId, string url, bool? featured = null, string? title = null,
-        string? description = null, int? ordering = null, CancellationToken cancellationToken = default)
+        string? description = null, long? ordering = null, CancellationToken cancellationToken = default)
     {
         if (ordering < 0)
             throw new ArgumentOutOfRangeException(nameof(ordering), "Ordering must be greater than or equal to 0");

@@ -34,5 +34,5 @@ public class Gallery
     /// <summary>
     ///     The order of the gallery image. Gallery images are sorted by this field and then alphabetically by title.
     /// </summary>
-    public int Ordering { get; set; }
+    public long Ordering { get; set; }
 }
