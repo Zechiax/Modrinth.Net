@@ -132,7 +132,7 @@ public interface IProjectEndpoint
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task AddGalleryImageAsync(string slugOrId, string imagePath, bool featured, string? title = null,
-        string? description = null, int? ordering = null, CancellationToken cancellationToken = default);
+        string? description = null, long? ordering = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Modifies an existing gallery image
@@ -147,7 +147,7 @@ public interface IProjectEndpoint
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task ModifyGalleryImageAsync(string slugOrId, string url, bool? featured = null, string? title = null,
-        string? description = null, int? ordering = null, CancellationToken cancellationToken = default);
+        string? description = null, long? ordering = null, CancellationToken cancellationToken = default);
 
     /// <summary>
     ///     Deletes an existing gallery image
