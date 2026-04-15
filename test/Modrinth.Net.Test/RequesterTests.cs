@@ -215,4 +215,30 @@ public class RequesterTests
 
         Assert.That(galleries[0].Ordering, Is.EqualTo(expectedOrdering));
     }
+
+    [Test]
+    public async Task GetJsonAsync_TeamMemberOrderingAboveInt32Max_DeserializesSuccessfully()
+    {
+        const long expectedOrdering = 6844313514;
+        var json =
+            "[{\"team_id\":\"team_1\",\"user\":{\"username\":\"user\",\"name\":\"User\",\"id\":\"u1\",\"github_id\":null,\"avatar_url\":\"https://example.com/avatar.png\",\"bio\":\"\",\"created\":\"2026-01-01T00:00:00Z\",\"role\":\"developer\"},\"role\":\"Owner\",\"permissions\":null,\"accepted\":true,\"payouts_split\":null,\"ordering\":" +
+            expectedOrdering + "}]";
+
+        var handler = new DelegateMessageHandler((_, _) =>
+            Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            }));
+
+        using var requester = CreateRequester(handler);
+        var request = new HttpRequestMessage(HttpMethod.Get, "http://test.com");
+
+        var teamMembers = await requester.GetJsonAsync<TeamMember[]>(request);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(teamMembers, Has.Length.EqualTo(1));
+            Assert.That(teamMembers[0].Ordering, Is.EqualTo(expectedOrdering));
+        }
+    }
 }

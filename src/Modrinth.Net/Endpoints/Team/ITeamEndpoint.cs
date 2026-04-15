@@ -93,5 +93,5 @@ public interface ITeamEndpoint
     /// <returns></returns>
     /// <exception cref="ModrinthApiException"> Thrown when the API returns an error or the request fails </exception>
     Task ModifyMemberAsync(string teamId, string userId, string role, Permissions permissions, int payoutsSplit,
-        int ordering, CancellationToken cancellationToken = default);
+        long ordering, CancellationToken cancellationToken = default);
 }

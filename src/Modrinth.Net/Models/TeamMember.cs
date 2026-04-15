@@ -50,5 +50,5 @@ public class TeamMember
     /// <summary>
     ///     The order of the team member.
     /// </summary>
-    public int? Ordering { get; set; }
+    public long? Ordering { get; set; }
 }
