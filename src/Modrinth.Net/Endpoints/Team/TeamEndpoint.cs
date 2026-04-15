@@ -119,7 +119,7 @@ public class TeamEndpoint : Endpoint, ITeamEndpoint
     /// <inheritdoc />
     public async Task ModifyMemberAsync(string teamId, string userId, string role, Permissions permissions,
         int payoutsSplit,
-        int ordering, CancellationToken cancellationToken = default)
+        long ordering, CancellationToken cancellationToken = default)
     {
         using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Patch;
