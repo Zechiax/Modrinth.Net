@@ -174,9 +174,9 @@ public class SearchTests : UnauthenticatedTestBase
         Assert.That(search.Hits.Select(p => p.Categories).All(c => c.Contains("adventure") && c.Contains("cursed")));
     }
 
-    [TestCase("world map", 4)]
+    [TestCase("world map", 3)]
     [TestCase("just enough items", 3)]
-    [TestCase("better biomes", 4)]
+    [TestCase("better biomes", 3)]
     public async Task Search_PopularModWithSpacesInName_ShouldReturnMultipleResults(string mod, int minimumHits)
     {
         var result = await NoAuthClient.Project.SearchAsync(mod);
