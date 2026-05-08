@@ -1,13 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net8.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
 
         <IsPackable>false</IsPackable>
 
-        <LangVersion>12</LangVersion>
+        <LangVersion>latestmajor</LangVersion>
       <UserSecretsId>7946fc6c-e1df-4ca5-957f-cb311e3b435d</UserSecretsId>
   </PropertyGroup>
 
