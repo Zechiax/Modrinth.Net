@@ -1,4 +1,6 @@
-﻿namespace Modrinth;
+﻿using System.Text.Json.Serialization.Metadata;
+
+namespace Modrinth;
 
 /// <summary>
 ///     Object containing options for <see cref="ModrinthClient" />
@@ -41,6 +43,12 @@ public class ModrinthClientConfig
     ///     Default is 100.
     /// </summary>
     public int BatchSize { get; set; } = 100;
+    
+    /// <summary>
+    ///     The JSON serializer context to use for serialization and deserialization.
+    ///     If null, the client will use the default serializer with reflection-based serialization, which is less performant.
+    /// </summary>
+    public IJsonTypeInfoResolver? JsonSerializerContext { get; set; }
 
     /// <summary>
     ///     Validates the configuration options.

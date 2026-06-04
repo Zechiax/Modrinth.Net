@@ -34,6 +34,8 @@ public class Requester : IRequester
     public Requester(ModrinthClientConfig config, HttpClient? httpClient = null)
     {
         _config = config;
+        if (config.JsonSerializerContext != null)
+            _jsonSerializerOptions.TypeInfoResolverChain.Add(config.JsonSerializerContext);
         _semaphore = new SemaphoreSlim(_config.MaxConcurrentRequests);
 
         HttpClient = httpClient ?? new HttpClient();
