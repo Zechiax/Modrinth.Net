@@ -19,6 +19,31 @@ C# Wrapper for the [Modrinth API](https://docs.modrinth.com/)
 - Fully documented
 - Support for .NET 8.0 and newer
 
+## AOT / source-generated JSON
+
+For Native AOT or trimmed deployments, pass a `JsonSerializerContext` via `ModrinthClientConfig.JsonSerializerContext`.
+The context is merged into the serializer's type resolver chain, so you only need to declare types for the endpoints you actually use.
+
+```csharp
+using System.Text.Json.Serialization;
+using Modrinth;
+using Modrinth.Models;
+
+// Declare a source-generated context for the endpoints you use
+[JsonSerializable(typeof(SearchResponse))]
+[JsonSerializable(typeof(SearchResult[]))]
+internal partial class MyModrinthContext : JsonSerializerContext;
+
+var client = new ModrinthClient(new ModrinthClientConfig
+{
+    UserAgent = "MyAwesomeProject",
+    JsonSerializerContext = MyModrinthContext.Default
+});
+
+var results = await client.Project.SearchAsync("sodium");
+Console.WriteLine(results.Hits[0].Title);
+```
+
 ## Usage
 
 - Install the [NuGet package](https://www.nuget.org/packages/Modrinth.Net)
