@@ -18,7 +18,7 @@ public class Requester : IRequester
         PropertyNameCaseInsensitive = true,
         Converters =
         {
-            new ColorConverter(),
+            new ModrinthColorConverter(),
             new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower)
         },
         PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower

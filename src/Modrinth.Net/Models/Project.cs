@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Text.Json.Serialization;
 using Modrinth.Helpers;
+using Modrinth.JsonConverters;
 using Modrinth.Models.Enums;
 using Modrinth.Models.Enums.Project;
 
@@ -172,7 +173,7 @@ public class Project
     /// <summary>
     ///     The RGB color of the project, automatically generated from the project icon
     /// </summary>
-    [JsonConverter(typeof(ColorConverter))]
+    [JsonConverter(typeof(ModrinthColorConverter))]
     public Color? Color { get; set; }
 
     /// <summary>

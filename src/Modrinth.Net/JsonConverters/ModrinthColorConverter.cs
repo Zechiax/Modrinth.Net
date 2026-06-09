@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 namespace Modrinth.JsonConverters;
 
 /// <inheritdoc />
-public class ColorConverter : JsonConverter<Color?>
+public class ModrinthColorConverter : JsonConverter<Color?>
 {
     /// <inheritdoc />
     public override Color? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
