@@ -124,6 +124,7 @@ public class SearchResult
     /// <summary>
     ///     The RGB color of the project, automatically generated from the project icon
     /// </summary>
+    [JsonConverter(typeof(ColorConverter))]
     public Color? Color { get; set; }
 
     /// <summary>
