@@ -1,14 +1,21 @@
 name: publish to nuget
 on:
-  push:
-    branches:
-      - main # Default release branch, may also be named 'master' or 'develop'
+  # Runs only after the CI workflow has finished; the job below checks that it succeeded
+  workflow_run:
+    workflows: [ ".NET (CI)" ]
+    types: [ completed ]
+    branches: [ main ]
 jobs:
   publish:
     name: build, pack & publish
     runs-on: ubuntu-latest
+    # Only publish when CI passed for a push to main (not for scheduled runs)
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
     steps:
       - uses: actions/checkout@v7
+        with:
+          # Publish exactly the commit that CI validated
+          ref: ${{ github.event.workflow_run.head_sha }}
 
       - name: Setup dotnet
         uses: actions/setup-dotnet@v6
