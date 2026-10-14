@@ -1,10 +1,9 @@
 namespace Modrinth;
 
-// where do I put this???
 /// <summary>
 /// Wraps a stream with a filename, used for uploading files to Modrinth.
 /// </summary>
-public class UploadableFile
+public class UploadableFile : IDisposable
 {
     /// <summary>
     /// The name of our file
@@ -38,5 +37,14 @@ public class UploadableFile
             throw new FileNotFoundException();
 
         Stream = new FileStream(path, FileMode.Open);
+    }
+
+    /// <summary>
+    /// Disposes the underlying stream
+    /// </summary>
+    public void Dispose()
+    {
+        Stream.Dispose();
+        GC.SuppressFinalize(this);
     }
 }
