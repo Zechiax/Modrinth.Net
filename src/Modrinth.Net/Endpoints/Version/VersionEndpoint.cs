@@ -1,7 +1,13 @@
+﻿using System.Text;
+using System.Text.Json;
+using Modrinth.Endpoints.Project;
 using Modrinth.Extensions;
 using Modrinth.Helpers;
 using Modrinth.Http;
+using Modrinth.Models;
+using Modrinth.Models.Enums.Project;
 using Modrinth.Models.Enums.Version;
+using File = System.IO.File;
 
 namespace Modrinth.Endpoints.Version;
 
@@ -21,6 +27,53 @@ public class VersionEndpoint : Endpoint, IVersionEndpoint
         using var reqMsg = new HttpRequestMessage();
         reqMsg.Method = HttpMethod.Get;
         reqMsg.RequestUri = new Uri(VersionsPath + '/' + versionId, UriKind.Relative);
+
+        return await Requester.GetJsonAsync<Models.Version>(reqMsg, cancellationToken).ConfigureAwait(false);
+    }
+
+    /// <inheritdoc />
+    public async Task<Models.Version> CreateAsync(string projectId, IEnumerable<UploadableFile> files, string primaryFile, string name, string versionNumber,
+                                                  string? changelog, IEnumerable<Dependency> dependencies, IEnumerable<string> gameVersions,
+                                                  ProjectVersionType versionType, IEnumerable<string> loaders, bool featured,
+                                                  VersionStatus status, VersionStatus? requestedStatus,
+                                                  CancellationToken cancellationToken = default)
+    {
+        using var reqMsg = new HttpRequestMessage();
+        reqMsg.Method = HttpMethod.Post;
+        reqMsg.RequestUri = new Uri(VersionsPath, UriKind.Relative);
+
+        var deps = dependencies.Select(d => new
+        {
+            version_id = d.VersionId,
+            project_id = d.ProjectId,
+            file_name = d.FileName,
+            dependency_type = d.DependencyType
+        }).ToList();
+
+        var uploadableFiles = files as UploadableFile[] ?? files.ToArray();
+        var json = JsonSerializer.Serialize(new
+        {
+            name,
+            version_number = versionNumber,
+            changelog,
+            dependencies = deps,
+            game_versions = gameVersions,
+            version_type = versionType.ToModrinthString(),
+            loaders,
+            featured,
+            status = status.ToModrinthString(),
+            requested_status = requestedStatus?.ToModrinthString(),
+            project_id = projectId,
+            file_parts = uploadableFiles.Select(f => f.FileName),
+            primary_file = primaryFile
+        });
+
+        using var content = new MultipartFormDataContent();
+        content.Add(new StringContent(json, Encoding.UTF8, "application/json"), "data");
+        foreach (var file in uploadableFiles)
+            content.Add(new StreamContent(file.Stream), file.FileName, file.FileName);
+
+        reqMsg.Content = content;
 
         return await Requester.GetJsonAsync<Models.Version>(reqMsg, cancellationToken).ConfigureAwait(false);
     }
