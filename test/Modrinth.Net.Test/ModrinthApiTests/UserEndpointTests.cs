@@ -7,9 +7,9 @@ public class UserEndpointTests : UnauthenticatedTestBase
 {
     // Test for current user with unauthenticated client
     [Test]
-    public void TestGetCurrentUser_Unauthenticated()
+    public async Task TestGetCurrentUser_Unauthenticated()
     {
-        Assert.ThrowsAsync<ModrinthApiException>(async () => await NoAuthClient.User.GetCurrentAsync());
+        await Assert.ThrowsAsync<ModrinthApiException>(async () => await NoAuthClient.User.GetCurrentAsync());
     }
     
     // [Test]

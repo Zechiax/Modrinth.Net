@@ -42,14 +42,13 @@ public class RequesterTests
     }
 
     [Test]
-    public void Requester_ShouldWrap_HttpRequestException()
+    public async Task Requester_ShouldWrap_HttpRequestException()
     {
         var handler = new DelegateMessageHandler((_, _) => throw new HttpRequestException("boom"));
         using var requester = CreateRequester(handler);
 
         var request = new HttpRequestMessage(HttpMethod.Get, "http://test.com");
-
-        Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.GetJsonAsync<object>(request));
+        await Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.GetJsonAsync<object>(request));
     }
 
     [Test]
@@ -92,7 +91,7 @@ public class RequesterTests
     }
 
     [Test]
-    public void SendAsync_429BeyondRetryCount_ThrowsModrinthApiException()
+    public async Task SendAsync_429BeyondRetryCount_ThrowsModrinthApiException()
     {
         var handler = new DelegateMessageHandler((_, _) =>
         {
@@ -103,21 +102,19 @@ public class RequesterTests
 
         using var requester = CreateRequester(handler, retryCount: 1);
         var request = new HttpRequestMessage(HttpMethod.Get, "http://test.com");
-
-        Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.SendAsync(request));
+        await Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.SendAsync(request));
         Assert.That(handler.Calls, Is.EqualTo(2));
     }
 
     [Test]
-    public void SendAsync_429WithoutResetHeader_DoesNotRetry()
+    public async Task SendAsync_429WithoutResetHeader_DoesNotRetry()
     {
         var handler = new DelegateMessageHandler((_, _) =>
             Task.FromResult(new HttpResponseMessage(HttpStatusCode.TooManyRequests)));
 
         using var requester = CreateRequester(handler, retryCount: 5);
         var request = new HttpRequestMessage(HttpMethod.Get, "http://test.com");
-
-        Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.SendAsync(request));
+        await Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.SendAsync(request));
         Assert.That(handler.Calls, Is.EqualTo(1));
     }
 
@@ -159,7 +156,7 @@ public class RequesterTests
         using var requester = CreateRequester(handler, maxConcurrent: 1);
 
         var first = new HttpRequestMessage(HttpMethod.Get, "http://test.com/one");
-        Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.SendAsync(first));
+        await Assert.ThrowsAsync<ModrinthApiException>(async () => await requester.SendAsync(first));
 
         var second = new HttpRequestMessage(HttpMethod.Get, "http://test.com/two");
         using var response = await requester.SendAsync(second);

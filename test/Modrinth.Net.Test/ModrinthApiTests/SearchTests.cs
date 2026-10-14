@@ -57,9 +57,9 @@ public class SearchTests : UnauthenticatedTestBase
     }
     
     [Test]
-    public void Search_WithLimit0_ShouldThrowException()
+    public async Task Search_WithLimit0_ShouldThrowException()
     {
-        Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await NoAuthClient.Project.SearchAsync("", limit: 0));
+        await Assert.ThrowsAsync<ArgumentOutOfRangeException>(async () => await NoAuthClient.Project.SearchAsync("", limit: 0));
     }
 
     // Test different offset values
