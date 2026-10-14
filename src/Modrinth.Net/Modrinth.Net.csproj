@@ -14,12 +14,12 @@
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageVersion>3.8.0</PackageVersion>
         <Version>$(PackageVersion)</Version>
-        <TargetFramework>net8.0</TargetFramework>
         <RootNamespace>Modrinth</RootNamespace>
         <RepositoryType>git</RepositoryType>
         <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
         <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
         <LangVersion>12</LangVersion>
+        <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
