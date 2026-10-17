@@ -27,6 +27,12 @@ public class ModrinthColorConverter : JsonConverter<Color?>
     /// <inheritdoc />
     public override void Write(Utf8JsonWriter writer, Color? value, JsonSerializerOptions options)
     {
-        throw new NotImplementedException();
+        if (value is null)
+        {
+            writer.WriteNullValue();
+            return;
+        }
+        
+        writer.WriteNumberValue(value.Value.ToArgb());
     }
 }
