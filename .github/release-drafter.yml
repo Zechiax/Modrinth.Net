@@ -1,6 +1,7 @@
 # Release Drafter configuration
 # See https://github.com/release-drafter/release-drafter#configuration
-# The real release version comes from <PackageVersion> in the csproj (passed in by the CI publish job);
+# Used by the publish and update-release-draft jobs in .github/workflows/dotnet.yml.
+# The real release version comes from <PackageVersion> in the csproj (passed in by the publish job);
 # the version resolver below only affects the title of the draft between releases.
 name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'

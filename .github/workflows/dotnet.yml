@@ -116,3 +116,18 @@ jobs:
         with:
           version: ${{ steps.release_version.outputs.version }}
           publish: true
+
+  update-release-draft:
+    name: Update release draft
+    # Runs after publish, so a freshly published release is the base for the next draft
+    needs: publish
+    # Also run when publish was skipped (no version bump) or tests failed, but only for pushes to main
+    if: ${{ !cancelled() && github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+
+    steps:
+      - name: Update draft release notes
+        uses: release-drafter/release-drafter@v7
