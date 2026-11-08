@@ -12,6 +12,8 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         dotnet: [ '8.x', '10.x' ]
